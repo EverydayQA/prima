@@ -1,0 +1,14 @@
+*** python unittest
+
+Tasks:
+
+1) Install python if not
+2) Write a simple testcase in a text file - google for a simple example for referene
+2a) a simple copy is acceptable for this practice if there is no experince in python before
+3) Write a python script with 1 function
+4) Write 1 python test script to test using unittest
+5) document briefly the process
+6) commit and pushed to github
+
+
+Time expected: 20 minutes - 2 hours

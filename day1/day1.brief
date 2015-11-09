@@ -1,0 +1,95 @@
+
+# first time, clone the repo 
+ 1017  git clone https://github.com/EverydayQA/prima.git
+
+ 1016  git pull https://github.com/EverydayQA/prima.git
+ 1017  git clone https://github.com/EverydayQA/prima.git
+ 1023  git status
+ 1037  cat .git/config 
+ 1038  git config --global user.name "Gxxx xxxx"
+ 1039  git config --global user.email gxxx.lxxx.2xxx@gmail.com
+ 1040  git config --global core.editor vim
+ 1041  git config --list
+ 1042  history >> history
+user.name=xxxx Lxxxx
+user.email=xxx.lxxxx.2011@gmail.com
+core.editor=vim
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+remote.origin.url=https://github.com/EverydayQA/prima.git
+branch.master.remote=origin
+branch.master.merge=refs/heads/master
+ 1059  git status
+ 1060  git add first_time.setup 
+ 1061  git commit
+# working version with https
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = https://github.com/EverydayQA/prima.git
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = ssh://git@github.com/EverydayQA/prima.git
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+
+# 
+ 1060  git add first_time.setup 
+ 1061  git commit
+
+
+ 1065  git push
+ 1068  [gliang@www prima]$ git push
+ 1069  error: The requested URL returned error: 403 Forbidden while accessing https://github.com/EverydayQA/prima.git/info/refs
+ 1070  fatal: HTTP request failed
+
+ 1087  ssh-agent -s
+ 1088  eval $(ssh-agent -s)
+
+# wrong - should be git@
+ 1090  ssh -vT EverydayQA@github.com
+ 1092  ssh -vT EverydayQA@github.com
+ 1122  ssh -vT EverydayQA@github.com
+ 1118  ssh -vT EverydayQA@github.com
+
+# correct git@
+ 1123  ssh -vT git@github.com
+ 1138  git config --list
+ 1139  git push remote origin
+
+# git - not username 
+ 1140  git remote add origin ssh://git@github.com/EverydayQA/prima.git
+ 1141  cat .git/config 
+
+# first push
+ 1142  git push -u origin master
+ 1143  history |tail -n 100 >> history
+
+# working .git/config using ssh
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = ssh://git@github.com/EverydayQA/prima.git
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
