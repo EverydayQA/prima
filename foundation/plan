@@ -1,0 +1,115 @@
+*** Day1
+
+create github account
+clone
+document cmds
+commit
+push with ssh
+document github url
+expected: 20 minutes - 2 hours 
+
+
+*** Day2 
+python unittest
+Tasks:
+1) Install python if not
+2) Write a simple testcase in a text file - google for a simple example for referene
+2a) a simple copy is acceptable for this practice if there is no experince in python before
+3) Write a python script with 1 function
+4) Write 1 python test script to test using unittest
+5) document briefly the process
+6) commit and pushed to github
+Time expected: 20 minutes - 2 hours
+
+
+*** Day 3 
+unittest with python and testCase
+
+install unittest2
+install doctest
+
+1) design a standard test case form in text/doc/pdf
+
+# keep it simple
+2) test case/test data in text file 
+web page login and password
+
+3) write 2 python scripts
+division.py with only 1 function local_division()
+input 2 numbers
+output division result
+division_unittest.py
+write testcase and test data in text file, comma separated
+
+must include
+test discovery - find all python tests in sub directories
+testid
+message/comment
+exception handling
+logging
+
+4) simple python script using unittest2 on 3)
+5) simple python script using doctest on 3)
+
+
+hours: 40 minutes - 2 hours
+
+
+*** Day 4 
+
+4) write a bug report standard form for future usage in text file
+keep it simple but the developer can debug it quickly
+
+install python nose
+install pytest
+install python-coverage
+install mock
+install tox
+install bugzilla
+
+
+
+minimium:
+
+selenium properly installed and configured
+browsers: chrome, fireforx
+IDE: familiar with proper Python IDE, pycharm or Eclipse
+write python script to use  webdirver to load browsers
+
+
+# design a standard bug report form in text/doc/pdf
+# list 3 most popular bug report tools
+
+hours: 2 hours
+
+
+*** Day 5 Installation
+
+
+user acceptance test
+read testdata file as expectd result
+find 1 perl script from github with active status
+document the process, and update the result
+
+# Advanced
+
+prepare test automation using selenium
+install selenium 
+google a small python project to use selenium webdriver
+
+regression test 
+Junit and testNg
+navigation
+interrogation
+locators,xpath and cSS selectors
+Id, name, link, DOM,Xpath,CSS
+Manipulation
+Synchronization
+Selenium Grid 
+data driven testing
+
+# Expert
+cmake/cpack/ctest/cdash
+packaging test
+version control - push/test/package for every build
+
