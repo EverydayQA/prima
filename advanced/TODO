@@ -1,0 +1,13 @@
+cd zlib
+mkdir -p build
+cd build
+cmake28 ..
+make 
+make test
+ctest
+
+# this is tested in centos 6.3
+practise cmake/ctest/cpack
+add 1 more test to this project
+write test case to existing test
+

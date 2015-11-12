@@ -1,0 +1,18 @@
+Nov 11, 2015 gliang
+
+change from python selenium to php selenium
+
+Day1
+
+install php and phpUnit
+cd examples/php
+run phpunit --verbose ArrayTest.php
+
+
+write down procedure
+write wiki in github
+save a logfile named, php_t1_date_time.log
+again, no space, no special char in file name
+
+the log shows you that the installation is sucess.
+
