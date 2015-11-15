@@ -1,0 +1,2 @@
+# cmake variable is case sensitive, while function name is not
+# undefined reference 
