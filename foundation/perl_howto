@@ -1,0 +1,38 @@
+XUnit testing framework for perl
+Test::Harness
+Test::Builder
+Test::More
+
+perl-qa qa.perl.org
+
+The majority of testing modules on CPAN are built with Test::Builder and work togetehr with Test::More
+
+Test::ISBN  - number
+Test::Pod::Coverage - POD coverage
+Test::Exception - exceptions easier than Test::More
+
+overide test overide subroutine?
+
+
+# start a new perl package
+# deprecated - Nov 16, 2015
+h2xs -A -X -n Module::Foo
+h2xs -AX -n Foo::Bar 
+
+# prefered , fodora project - best Perl Practices - all new projects will follow this guildline
+module-starter --module=My::Module --author="Jane Smith"
+    --email=jane.smith@example.com --builder=Module::Install
+
+module-starter --module=Module::Foo,Module::Bar --author="ME" --email="me@me.com"
+
+# prefered
+Module::Build
+
+# author is negative about it , recommend module::build 
+ExtUtils::MakeMaker
+
+#
+module-starter --module=Module::Foo,Module::Bar --author="ME" --email="me@me.com"
+
+#
+https://github.com/xsawyerx/module-starter.git
