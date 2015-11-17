@@ -1,6 +1,6 @@
 #include <limits.h>
 #include <gtest/gtest.h>
-#include "../../src/Addition.hpp"
+#include "Addition.hpp"
 
 class AdditionTest : public ::testing::Test{
     protected:

@@ -1,6 +1,6 @@
 #include <limits.h>
 #include <gtest/gtest.h>
-#include "../../src/Multiply.hpp"
+#include "Multiply.hpp"
 
 class MultiplyTest : public ::testing::Test{
 
