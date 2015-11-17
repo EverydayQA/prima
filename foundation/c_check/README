@@ -1,0 +1,29 @@
+# verify check for c unit test is installed properly
+# simple example for unit test
+# with possibility to expand
+
+example from check.sourceforget.net - modified a little
+
+.
+|--CMakeLists.txt
+|--README
++__cmake
+|  |--config.h.in
+|  |--FindCheck.cmake
++--src
+|  |--CMakeLists.txt
+|  |--main.c
+|  |--money.c
+|  |--money.h
++--tests
+   |--CMakeLists.txt
+   |--check_money.c
+
+
+
+
+
+# another source in 
+https://github.com/redjack/check.git
+
+# with compiling error -

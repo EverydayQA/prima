@@ -1,0 +1,19 @@
+  936  cd cpp2
+  937  vi DemoTest.h
+  938  vi DemoTest.cpp
+  939  vi TestMain.cpp
+  940  g++ -o test DemoTest.cpp TestMain.cpp -lcppunit
+  941  :q
+  942  vi TestMain.cpp
+  943  vi DemoTest.cpp
+  944  vi DemoTest.h
+  999  g++ -o test DemoTest.cpp TestMain.cpp -lcppunit
+ 1000  ./test
+
+cpp2
+|--DemoTest.h
+|--DemoTest.cpp
+|--TestMain.cpp
+
+cppunit test example
+cmake?
