@@ -35,18 +35,49 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head2 hello
 
 =cut
 
-sub function1 {
+sub hello {
+    return "Kurt W. Leucht, good example!";
 }
 
-=head2 function2
+=head2 bye
 
 =cut
 
-sub function2 {
+sub bye {
+    my $name = $_[0];
+    if($name){
+        return $name;
+    }else{
+        return "StackOverflow";
+    }
+}
+
+=head2 repeat
+=cut
+sub repeat{
+    return 1;
+}
+
+=head2 argumentTest
+=cut
+sub argumentTest{
+    my ($booleanArg) = @_;
+    if($booleanArg){
+        #do nothing
+    }else{
+        return "null or 0";
+    }
+    if($booleanArg eq "false"){
+        return "false";
+    }
+    if($booleanArg eq "true"){
+        return "true";
+    }
+    return "unknown";
 }
 
 =head1 AUTHOR

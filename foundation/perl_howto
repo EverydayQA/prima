@@ -36,3 +36,11 @@ module-starter --module=Module::Foo,Module::Bar --author="ME" --email="me@me.com
 
 #
 https://github.com/xsawyerx/module-starter.git
+
+# how to get test coverage
+# yum install perl-Devel-Cover
+
+perl Makefile.PL
+make
+cover --test
+

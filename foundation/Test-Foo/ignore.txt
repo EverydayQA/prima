@@ -14,5 +14,3 @@ inc/
 nytprof.out
 pod2htm*.tmp
 pm_to_blib
-Test-Foo-*
-Test-Foo-*.tar.gz

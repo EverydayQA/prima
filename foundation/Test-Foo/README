@@ -83,3 +83,11 @@ CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR
 CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE,
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# everything works as planned except coverage ignore Foo by defaut
+# I am sure that I am going to let it go
+# use module-starter to make a package - No Foo, never
+perl Makefile.PL
+make
+make test
+covert -test
+# gliang Nov 17, 2015
