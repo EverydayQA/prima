@@ -1,0 +1,33 @@
+
+quiz
+|
+|--README
++--quiz
+|  |-- __init__.py
+|  |-- add_quiz.py
+|  |-- take_quiz.py
+|
+|--setup.py
+|
++--test
++--docs
+
+python
+multiple choices quiz
+
+for Software Testing Theory QA
+expand to other fields
+
+Test a little, Code a little
+
+unittest for each function
+
+test coverage 
+
+
+test data
+test automation
+plan for regression test
+OO
+
+ 

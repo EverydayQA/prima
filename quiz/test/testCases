@@ -1,0 +1,27 @@
+
+quiz
++--lib
++--test
++--docs
+
+ 
+select_from_list() 
+input - lists of any, do not care right/wrong
+output - the selections - one or many
+
+# 
+get_quiz_reference()
+input - quiz_number
+output - url of the reference or paragraph
+
+# 
+get_quiz_answer()
+input -- selections[], quiz_number
+output -- right/wrong
+
+#
+get_quiz_lists()
+input - quiz_number
+output - 1 list of multiple questions or simple question
+
+
