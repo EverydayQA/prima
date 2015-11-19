@@ -1,0 +1,77 @@
+
+Pre-requisities:
+
+  * Python 3.4 (with SSL support, since that is required for pip)
+  * gcc, make, etc
+  * SQLite3 (or...?)
+
+To build:
+
+  autoreconf -fi
+  ./configure
+  make
+
+
+To test:
+
+  make check
+
+
+To build doxygen docs
+
+  make html
+
+
+To test ODBC:
+
+  * Install postgres client, server and ODBC library (including any GUI
+    package like unixODBC-kde)
+  * sudo service postgresql initdb
+  * sudo service postgresql start
+  * sudo su
+    su - postgres
+    createuser -S corm -P
+    createdb -O corm corm
+  * add local/corm/corm/md5 or similar to pg_hba.conf
+    (if you use "local" then don't specify a server for DSN; if you do
+    specify a server in DSN then use "host" instead)
+  * sudo service postgresql restart
+  * psql -U corm corm   # this should prompt for passwd and connect
+  * use ODBCconfig to create the corm DSN
+  * isql corm   # this should connect
+  * ./configure --with-test-dsn=corm
+  * If you use values other than "corm" above you will need to modify
+    clib/tests/test_isti_odbc.sh
+
+# gliang Nov 19, 2015  - take from above and make it an example of check unit test on centos
+# as a working example
+# end up partial compile
+# examples from Andrew Cooke on bitbucket isti
+# modified to accomodate my os and force of habits
+|--build
+|  -- for tmp build
++--CMakeModules
+   |--FindCheck.cmake
+|--CMakeLists.txt
+|--src
+|  |--CMakeLists.txt
+|  |--isti.h
+|  |--isti_str.c
+|  |--isti_str.h
++--tests
+   |--CMakeLists.txt
+   |--CtestTestfile.cmake
+   |--test-isti_str.c
+
+
+# compile failed for tests
+#
+# find_package does not work for check , compiled and installed with auto tools
+mkdir build
+cd build
+cmake28 ..
+make
+make test
+# do not install - only partial for example showing c unit testing
+# for a full compile, more with sqlite3 ODBC etc installation
+
