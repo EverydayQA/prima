@@ -4,7 +4,7 @@ money.h
 money.c
 )
 
-add_library(money ${money_SRCS})
+add_library(money SHARED ${money_SRCS})
 
 
 
