@@ -25,8 +25,12 @@ credit to [this blog post](http://kaizou.org/2014/11/gtest-cmake/) for a detaile
 
 ~~~
 install gtest
+install boost test
 
  1180  ./testAll --gtest_output="xml:./testAll.xml"
  1182  cat testAll.xml 
  1189  history|tail -n 40 >>README 
+
+
+
 ~~~

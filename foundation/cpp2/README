@@ -3,17 +3,21 @@
   938  vi DemoTest.cpp
   939  vi TestMain.cpp
   940  g++ -o test DemoTest.cpp TestMain.cpp -lcppunit
-  941  :q
-  942  vi TestMain.cpp
-  943  vi DemoTest.cpp
-  944  vi DemoTest.h
-  999  g++ -o test DemoTest.cpp TestMain.cpp -lcppunit
  1000  ./test
+
+# using cmake
+mkdir -p build
+cd build
+cmake28 ..
+make
+make test
 
 cpp2
 |--DemoTest.h
 |--DemoTest.cpp
 |--TestMain.cpp
-
+|--CMakeLists.txt
+|--cpp2.spec (next time after git rename)
 cppunit test example
-cmake?
+
+gliang Nov 18, 2015

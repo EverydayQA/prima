@@ -6,6 +6,7 @@ Multiply_Test.cpp
 
 )
 
+# original - download gtest
 #add_library(libgtest IMPORTED STATIC GLOBAL)
 #add_dependencies(libgtest gtest)
 
@@ -17,10 +18,11 @@ include_directories(
 link_directories(
     ${CMAKE_BINARY_DIR}/libmath
 )
+# orignal - download gmock
 #add_library(libgmock IMPORTED STATIC GLOBAL)
 #add_dependencies(libgmock gmock)
-add_executable(testAll ${test_SRCS})
+add_executable(gtest_all ${test_SRCS})
 
-target_link_libraries(testAll foomath gtest gtest_main pthread m)
+target_link_libraries(gtest_all foomath gtest gtest_main pthread m)
 
-add_test(NAME testAll COMMAND "${CMAKE_BINARY_DIR}/test_gtest/test/testAll")
+add_test(NAME gtest_all COMMAND "${CMAKE_BINARY_DIR}/test_gtest/test/gtest_all")
