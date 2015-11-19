@@ -13,9 +13,7 @@ link_directories(
 add_subdirectory(libmath)
 add_subdirectory(main)
 add_subdirectory(test_gtest)
-# boost test is not working - find_package or find_brary()
-# find another boost test example and work back here 
-#add_subdirectory(test_boost)
+add_subdirectory(test_boost)
 
 
 
