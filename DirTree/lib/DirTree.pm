@@ -1,4 +1,4 @@
-package cleanCache;
+package DirTree;
 
 use 5.006;
 use strict;
@@ -6,7 +6,7 @@ use warnings FATAL => 'all';
 
 =head1 NAME
 
-cleanCache - The great new cleanCache!
+DirTree - The great new DirTree!
 
 =head1 VERSION
 
@@ -23,9 +23,9 @@ Quick summary of what the module does.
 
 Perhaps a little code snippet.
 
-    use cleanCache;
+    use DirTree;
 
-    my $foo = cleanCache->new();
+    my $foo = DirTree->new();
     ...
 
 =head1 EXPORT
@@ -55,8 +55,8 @@ Gang Liang, C<< <gang.liang.2011 at gmail.com> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-cleancache at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=cleanCache>.  I will be notified, and then you'll
+Please report any bugs or feature requests to C<bug-dirtree at rt.cpan.org>, or through
+the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=DirTree>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
 
@@ -66,7 +66,7 @@ automatically be notified of progress on your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc cleanCache
+    perldoc DirTree
 
 
 You can also look for information at:
@@ -75,19 +75,19 @@ You can also look for information at:
 
 =item * RT: CPAN's request tracker (report bugs here)
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=cleanCache>
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=DirTree>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/cleanCache>
+L<http://annocpan.org/dist/DirTree>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/cleanCache>
+L<http://cpanratings.perl.org/d/DirTree>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/dist/cleanCache/>
+L<http://search.cpan.org/dist/DirTree/>
 
 =back
 
@@ -138,4 +138,4 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =cut
 
-1; # End of cleanCache
+1; # End of DirTree

@@ -4,10 +4,10 @@ use warnings FATAL => 'all';
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME             => 'cleanCache',
+    NAME             => 'DirTree',
     AUTHOR           => q{Gang Liang <gang.liang.2011@gmail.com>},
-    VERSION_FROM     => 'lib/cleanCache.pm',
-    ABSTRACT_FROM    => 'lib/cleanCache.pm',
+    VERSION_FROM     => 'lib/DirTree.pm',
+    ABSTRACT_FROM    => 'lib/DirTree.pm',
     LICENSE          => 'Artistic_2_0',
     PL_FILES         => {},
     MIN_PERL_VERSION => 5.006,
@@ -22,5 +22,5 @@ WriteMakefile(
         #'Foo::Bar::Module' => 5.0401,
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean => { FILES => 'cleanCache-*' },
+    clean => { FILES => 'DirTree-*' },
 );

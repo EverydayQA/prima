@@ -1,5 +1,5 @@
 Changes
-lib/cleanCache.pm
+lib/DirTree.pm
 Makefile.PL
 MANIFEST			This list of files
 README
