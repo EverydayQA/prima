@@ -18,9 +18,9 @@ our $VERSION = '0.01';
 sub new{
     my $class = shift;
     my $self = {
-        _dir_aref =>shift,
-        _file_aref=>shift,
-        _depth=>shift
+        _directory =>shift,
+        _depth=>shift,
+        _files_aref=>shift
 
     };
     bless $self, $class;
@@ -52,15 +52,37 @@ if you don't export anything, such as for a purely object-oriented module.
 
 sub get_directory {
     my ($self) = @_;
-    return $self->{_dir_aref};
+    return $self->{_directory};
 }
-=head2 get_file
+
+=head2 get_depth
 
 =cut
 
-sub get_file {
+sub get_depth {
+    my ($self) = @_;
+    return $self->{_depth};
 
 }
+=head2 get_files
+
+=cut
+
+sub get_files {
+    my ($self) = @_;
+    return $self->{_files_aref};
+}
+=head2 set_files
+
+=cut
+
+sub set_files {
+    my ($self) = @_;
+
+    my @files = `find $self->{_directory} -maxdepth 1`;
+    $self->{_files} = \@files;
+}
+
 
 =head1 AUTHOR
 
