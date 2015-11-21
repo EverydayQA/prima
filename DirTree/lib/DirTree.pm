@@ -15,6 +15,17 @@ Version 0.01
 =cut
 
 our $VERSION = '0.01';
+sub new{
+    my $class = shift;
+    my $self = {
+        _dir_aref =>shift,
+        _file_aref=>shift,
+        _depth=>shift
+
+    };
+    bless $self, $class;
+    return $self;
+}
 
 
 =head1 SYNOPSIS
@@ -35,18 +46,20 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head2 get_directory
 
 =cut
 
-sub function1 {
+sub get_directory {
+    my ($self) = @_;
+    return $self->{_dir_aref};
 }
-
-=head2 function2
+=head2 get_file
 
 =cut
 
-sub function2 {
+sub get_file {
+
 }
 
 =head1 AUTHOR
