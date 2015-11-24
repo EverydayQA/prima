@@ -1,0 +1,66 @@
+Loaded plugins: fastestmirror, priorities, refresh-packagekit, security
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.rafal.ca
+ * centosplus: centos.bhs.mirrors.ovh.net
+ * contrib: centos.mirror.rafal.ca
+ * elrepo: ftp.osuosl.org
+ * elrepo-extras: ftp.osuosl.org
+ * epel: mirror.nexcess.net
+ * extras: centos.mirror.rafal.ca
+ * nux-dextop: mirror.li.nux.ro
+ * updates: centos.bhs.mirrors.ovh.net
+191 packages excluded due to repository priority protections
+repo id                repo name                             status
+C6.0-base              CentOS-6.0 - Base                     disabled
+C6.0-centosplus        CentOS-6.0 - CentOSPlus               disabled
+C6.0-contrib           CentOS-6.0 - Contrib                  disabled
+C6.0-extras            CentOS-6.0 - Extras                   disabled
+C6.0-updates           CentOS-6.0 - Updates                  disabled
+C6.1-base              CentOS-6.1 - Base                     disabled
+C6.1-centosplus        CentOS-6.1 - CentOSPlus               disabled
+C6.1-contrib           CentOS-6.1 - Contrib                  disabled
+C6.1-extras            CentOS-6.1 - Extras                   disabled
+C6.1-updates           CentOS-6.1 - Updates                  disabled
+C6.2-base              CentOS-6.2 - Base                     disabled
+C6.2-centosplus        CentOS-6.2 - CentOSPlus               disabled
+C6.2-contrib           CentOS-6.2 - Contrib                  disabled
+C6.2-extras            CentOS-6.2 - Extras                   disabled
+C6.2-updates           CentOS-6.2 - Updates                  disabled
+C6.3-base              CentOS-6.3 - Base                     disabled
+C6.3-centosplus        CentOS-6.3 - CentOSPlus               disabled
+C6.3-contrib           CentOS-6.3 - Contrib                  disabled
+C6.3-extras            CentOS-6.3 - Extras                   disabled
+C6.3-updates           CentOS-6.3 - Updates                  disabled
+adobe-linux-x86_64     Adobe Systems Incorporated            enabled:          2
+base                   CentOS-6 - Base                       enabled:      6,575
+c6-media               CentOS-6 - Media                      disabled
+centosplus             CentOS-6 - Plus                       enabled:         44
+chromium-el6           CentOS-6 - Chromium EL6               enabled:          8
+chromium-el6-Source    CentOS-6 - Chromium EL6 - Source      enabled:        0+1
+chromium-el6-debug     CentOS-6 - Chromium EL6 - Debug       enabled:          3
+contrib                CentOS-6 - Contrib                    enabled:          0
+debug                  CentOS-6 - Debuginfo                  disabled
+elrepo                 ELRepo.org Community Enterprise Linux enabled:        314
+elrepo-extras          ELRepo.org Community Enterprise Linux enabled:       8+55
+elrepo-kernel          ELRepo.org Community Enterprise Linux disabled
+elrepo-testing         ELRepo.org Community Enterprise Linux disabled
+*epel                  Extra Packages for Enterprise Linux 6 enabled: 11,747+119
+epel-debuginfo         Extra Packages for Enterprise Linux 6 disabled
+epel-source            Extra Packages for Enterprise Linux 6 disabled
+epel-testing           Extra Packages for Enterprise Linux 6 disabled
+epel-testing-debuginfo Extra Packages for Enterprise Linux 6 disabled
+epel-testing-source    Extra Packages for Enterprise Linux 6 disabled
+extras                 CentOS-6 - Extras                     enabled:         45
+local                  My Awesome Repo                       enabled:       36+1
+nux-dextop             Nux.Ro RPMs for general desktop use   enabled:   1,471+17
+nux-dextop-testing     Nux.Ro RPMs for general desktop use - disabled
+updates                CentOS-6 - Updates                    enabled:        670
+repolist: 20,923
+ 1000  yum repolist all >> yum.repolist
+ 1003  history |tail -n 5 >> yum.repolist 
+common repos
+rpmforge - (replaced by repoforge)
+phusion passenger rpm repo
+postgre repo
+puppet repo
+
