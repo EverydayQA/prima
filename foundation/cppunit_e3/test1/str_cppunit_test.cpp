@@ -7,7 +7,8 @@ class mystringTest : public CppUnit::TestCase{
 public:
     void runTest(){
         mystring s;
-        CPPUNIT_ASSERT_MESSAGE("String Length NON-ZERO",1 !=0);
+        s.setbuffer("hello");
+        CPPUNIT_ASSERT_MESSAGE("String Length NON-ZERO",s.size() !=0);
     }
 
 };
