@@ -5,7 +5,7 @@ class mystring{
     char* buffer;
     int length;
     public:
-        void setbuffer(char* s){
+        void setbuffer(char *s){
             buffer =s;
             length = strlen(s);
         }
