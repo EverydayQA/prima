@@ -35,8 +35,6 @@ const char hello[] = "hello, hello!";
 const char dictionary[] = "hello";
 uLong dictId; /* Adler32 value of the dictionary */
 
-void test_compress      OF((Byte *compr, uLong comprLen,
-                            Byte *uncompr, uLong uncomprLen));
 void test_gzio          OF((const char *fname,
                             Byte *uncompr, uLong uncomprLen));
 void test_deflate       OF((Byte *compr, uLong comprLen));
@@ -57,28 +55,6 @@ int  somethingelse               OF((int argc, char *argv[]));
 /* ===========================================================================
  * Test compress() and uncompress()
  */
-void test_compress(compr, comprLen, uncompr, uncomprLen)
-    Byte *compr, *uncompr;
-    uLong comprLen, uncomprLen;
-{
-    int err;
-    uLong len = (uLong)strlen(hello)+1;
-
-    err = compress(compr, &comprLen, (const Bytef*)hello, len);
-    CHECK_ERR(err, "compress");
-
-    strcpy((char*)uncompr, "garbage");
-
-    err = uncompress(uncompr, &uncomprLen, compr, comprLen);
-    CHECK_ERR(err, "uncompress");
-
-    if (strcmp((char*)uncompr, hello)) {
-        fprintf(stderr, "bad uncompress\n");
-        exit(1);
-    } else {
-        printf("uncompress(): %s\n", (char *)uncompr);
-    }
-}
 
 START_TEST(test_compress_xunit)
 {
@@ -96,19 +72,20 @@ START_TEST(test_compress_xunit)
     compr    = (Byte*)calloc((uInt)comprLen, 1);
     uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
 
-    //ck_assert(compr == Z_NULL);
-    //ck_assert(uncompr == Z_NULL);
+    ck_assert(compr != Z_NULL);
+    ck_assert(uncompr != Z_NULL);
 
-    //test_compress(compr, comprLen, uncompr, uncomprLen);
     int err;
     uLong len = (uLong)strlen(hello)+1;
 
     err = compress(compr, &comprLen, (const Bytef*)hello, len);
     ck_assert_int_eq(err,0);
-    //CHECK_ERR(err, "compress");
 
+    strcpy((char*)uncompr, "garbage");
+    err = uncompress(uncompr, &uncomprLen, compr, comprLen);
+    ck_assert_int_eq(err,0);
 
-
+    ck_assert_str_eq((char*)uncompr, hello);
 
 }
 END_TEST
@@ -119,7 +96,7 @@ Suite * compress_suite(void)
     Suite *s;
     TCase *tc_core;
 
-    s = suite_create("Money");
+    s = suite_create("zlibSuite");
     /*Core test case */
     tc_core = tcase_create("Core");
     tcase_add_test(tc_core, test_compress_xunit);
@@ -172,7 +149,6 @@ int somethingelse(argc, argv)
         printf("out of memory\n");
         exit(1);
     }
-    test_compress(compr, comprLen, uncompr, uncomprLen);
 
     /*
     test_gzio((argc > 1 ? argv[1] : TESTFILE),

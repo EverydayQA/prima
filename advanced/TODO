@@ -11,3 +11,10 @@ practise cmake/ctest/cpack
 add 1 more test to this project
 write test case to existing test
 
+
+# seems to be a good example of check unittest
+# not sure easy to be compiled
+https://github.com/atrinik/atrinik.git
+
+
+
