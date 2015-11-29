@@ -15,6 +15,11 @@ Version 0.01
 =cut
 
 our $VERSION = '0.01';
+
+=head2 new
+
+=cut
+
 sub new{
     my $class = shift;
     my $self = {
@@ -55,25 +60,27 @@ sub get_directory {
     return $self->{_directory};
 }
 
-=head2 get_depth
 
+=head2 get_depth
+    # fixed depth - do not change
 =cut
 
 sub get_depth {
     my ($self) = @_;
     return $self->{_depth};
-
 }
-=head2 get_files
 
+=head2 get_files
+    not being used - 
 =cut
 
 sub get_files {
     my ($self) = @_;
     return $self->{_files_aref};
 }
-=head2 set_files
 
+=head2 set_files
+    not being used
 =cut
 
 sub set_files {

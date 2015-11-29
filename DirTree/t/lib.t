@@ -12,13 +12,20 @@ use Test::More qw(no_plan);
 BEGIN {use_ok('DirTree') };
 
 require_ok("DirTree");
+my $pwd = `pwd`;
+chomp($pwd);
+my $obj = new DirTree($pwd,1,undef);
+my $dir = $obj->get_directory();
 
-my $obj = new DirTree("DirTree","READE",1);
-my $get_directory = $obj->get_directory();
+is($dir, $pwd, "get_directory() passed");
 
-#like($get_directory, qr/DirTree/,"get_directory() RE test");
-
-is($get_directory, "DirTree", "get_directory() IS test");
-
+$pwd = "/opt/hdf5/lib64";
+$obj = new DirTree($pwd,1,undef);
+$dir = $obj->get_directory();
+my $depth = $obj->get_depth();
+is($depth,1,"get_depth()");
+isnt($depth,3,"get_depth()");
+like($dir, qr/hdf5/, "get_directory()");
+cmp_ok($dir, 'eq', $pwd, "$dir return $pwd");
 
 
