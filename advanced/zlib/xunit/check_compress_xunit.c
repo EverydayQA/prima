@@ -35,8 +35,6 @@ const char hello[] = "hello, hello!";
 const char dictionary[] = "hello";
 uLong dictId; /* Adler32 value of the dictionary */
 
-void test_gzio          OF((const char *fname,
-                            Byte *uncompr, uLong uncomprLen));
 void test_deflate       OF((Byte *compr, uLong comprLen));
 void test_inflate       OF((Byte *compr, uLong comprLen,
                             Byte *uncompr, uLong uncomprLen));
@@ -50,7 +48,34 @@ void test_sync          OF((Byte *compr, uLong comprLen,
 void test_dict_deflate  OF((Byte *compr, uLong comprLen));
 void test_dict_inflate  OF((Byte *compr, uLong comprLen,
                             Byte *uncompr, uLong uncomprLen));
-int  somethingelse               OF((int argc, char *argv[]));
+
+START_TEST(test_gzio_xunit)
+{
+    Byte *uncompr;
+    const char *fname; /* compressed file name */
+    uLong uncomprLen;
+
+    int err;
+    int len = (int)strlen(hello)+1;
+    gzFile file;
+    z_off_t pos;
+
+    file = gzopen(fname,"wb");
+    ck_assert(file == NULL);
+    gzputc(file, 'h');
+    ck_assert_int_ne(gzputs(file,"ello"),4);
+
+    ck_assert_int_ne(gzprintf(file, ",%s!","hellow"),0);
+    gzseek(file, 1L, SEEK_CUR); /* add 1 zero byte */
+    gzclose(file);
+
+    file = gzopen(fname,"rb");
+    ck_assert(file == NULL);
+
+
+    gzclose(file);
+}
+END_TEST
 
 /* ===========================================================================
  * Test compress() and uncompress()
@@ -100,8 +125,9 @@ Suite * compress_suite(void)
     /*Core test case */
     tc_core = tcase_create("Core");
     tcase_add_test(tc_core, test_compress_xunit);
-    suite_add_tcase(s, tc_core);
+    tcase_add_test(tc_core, test_gzio_xunit);
 
+    suite_add_tcase(s, tc_core);
     return s;
 }
 
@@ -119,57 +145,3 @@ int main(void)
     return (number_failed ==0) ? EXIT_SUCCESS:EXIT_FAILURE;
 }
 
-int somethingelse(argc, argv)
-    int argc;
-    char *argv[];
-{
-    Byte *compr, *uncompr;
-    uLong comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
-    uLong uncomprLen = comprLen;
-    static const char* myVersion = ZLIB_VERSION;
-
-    if(zlibVersion()[0] != myVersion[0]){ 
-
-        fprintf(stderr, "incompatible zlib version\n");
-        exit(1);
-
-    } else if (strcmp(zlibVersion(), ZLIB_VERSION) != 0) {
-        fprintf(stderr, "warning: different zlib version\n");
-    }
-
-    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
-            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
-
-    compr    = (Byte*)calloc((uInt)comprLen, 1);
-    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
-    /* compr and uncompr are cleared to avoid reading uninitialized
-     * data and to ensure that uncompr compresses well.
-     */
-    if (compr == Z_NULL || uncompr == Z_NULL) {
-        printf("out of memory\n");
-        exit(1);
-    }
-
-    /*
-    test_gzio((argc > 1 ? argv[1] : TESTFILE),
-              uncompr, uncomprLen);
-
-    test_deflate(compr, comprLen);
-    test_inflate(compr, comprLen, uncompr, uncomprLen);
-
-    test_large_deflate(compr, comprLen, uncompr, uncomprLen);
-    test_large_inflate(compr, comprLen, uncompr, uncomprLen);
-
-    test_flush(compr, &comprLen);
-    test_sync(compr, comprLen, uncompr, uncomprLen);
-    comprLen = uncomprLen;
-
-    test_dict_deflate(compr, comprLen);
-    test_dict_inflate(compr, comprLen, uncompr, uncomprLen);
-*/
-
-    free(compr);
-    free(uncompr);
-
-    return 0;
-}
