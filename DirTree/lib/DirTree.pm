@@ -79,7 +79,7 @@ sub get_files {
 sub set_files {
     my ($self) = @_;
 
-    my @files = `find $self->{_directory} -maxdepth 1`;
+    my @files = `find $self->{_directory} -maxdepth 1 -type f`;
     $self->{_files} = \@files;
 }
 

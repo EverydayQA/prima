@@ -13,18 +13,25 @@ sub recursive_dir{
     $depth = $obj->get_depth();
     my $files_aref = $obj->get_files();
 
+    # current dir
+    format_dir($dir, $depth);
     foreach my $file(@$files_aref){
         chomp($file);
-        if(-d $file){
-            if($file eq $dir){
-                format_dir($file, $depth);
+        format_file($file, $depth);
+    }
 
-            }else{
-                recursive_dir($file, $depth);
-            }
+    my @subdirs = get_dirs($dir);
+    if(scalar(@subdirs)<=1){
+        return;
+    } 
+    foreach  my $subdir(@subdirs){
+        chomp($subdir);
+        if(-d $subdir){
+
         }else{
-            format_file($file, $depth);
+            next;
         }
+        recursive_dir($subdir, $depth);
     }
 }
 sub format_dir{
@@ -35,10 +42,10 @@ sub format_dir{
     my $margin = scalar(@splits) - $depth;
     $margin = ($margin)*2;
     my $i=0;
-    my $str = "+--";
+    my $str = "__";
     while($i<=$margin/2){
         $i++;
-        $str = " ${str}";
+        $str = "_${str}";
     }
 
     $fileparse = "${str}${fileparse}";
@@ -56,7 +63,7 @@ sub format_file{
     my $margin = scalar(@splits) - $depth;
     $margin = $margin*2;
     my $i=0;
-    my $str = "|--";
+    my $str = "|__";
     while($i<=$margin){
         $i++;
         $str = " ${str}";
@@ -68,11 +75,18 @@ sub format_file{
 
     return $fileparse;
 }
+sub get_dirs{
+    my $dir = shift;
+    my @lists = `find $dir -mindepth 1 -maxdepth 1 -type d`;
+
+    return @lists;
+}
 
 sub get_lists{
     my $dir = shift;
-    my @lists = `find $dir -maxdepth 1`;
+    my @lists = `find $dir -mindepth 1 -maxdepth 1 -type f`;
 
+    
     return @lists;
 }
 
