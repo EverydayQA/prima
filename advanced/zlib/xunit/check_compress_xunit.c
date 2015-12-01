@@ -90,7 +90,7 @@ START_TEST(test_compress_xunit)
 
     ck_assert_int_eq(zlibVersion()[0] , myVersion[0]); 
     ck_assert_int_eq(5.0,5);
-    ck_assert_str_ne(zlibVersion(), ZLIB_VERSION);
+    ck_assert_str_eq(zlibVersion(), ZLIB_VERSION);
     printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
             ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
 
