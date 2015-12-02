@@ -21,8 +21,8 @@ Suite * money_suite(void)
     s = suite_create("Money");
     /*Core test case */
     tc_core = tcase_create("Core");
-    tcase_add_test(tc_core, test_money_create);
     suite_add_tcase(s, tc_core);
+    tcase_add_test(tc_core, test_money_create);
 
     return s;
 }
@@ -35,7 +35,10 @@ int main(void)
     SRunner *sr;
     s = money_suite();
     sr = srunner_create(s);
-    srunner_run_all(sr, CK_NORMAL);
+    
+    //srunner_run_all(sr, CK_NORMAL);
+    srunner_run_all(sr, CK_VERBOSE);
+
     number_failed  = srunner_ntests_failed(sr);
     srunner_free(sr);
     return (number_failed ==0) ? EXIT_SUCCESS:EXIT_FAILURE;
