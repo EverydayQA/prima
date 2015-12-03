@@ -1,0 +1,12 @@
+Requirements:
+
+# test can read test_data file with input and expected results
+# test data can be modified over time
+# use setUp() to use the test data
+ 
+main(file)
+make_add_suite2(file)
+setUp(file)
+tearDown(file)
+
+
