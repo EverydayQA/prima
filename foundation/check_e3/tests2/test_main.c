@@ -4,8 +4,6 @@
 
 int main(int argc, char *argv[]){
     if(argc !=2){
-
-
         printf("Usage: %s filename", argv[0]);
         exit(EXIT_FAILURE);
     }
@@ -15,11 +13,14 @@ int main(int argc, char *argv[]){
         printf("could not open file\n");
         exit(EXIT_FAILURE);
     }
+
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
+    TestData *tdata; 
     while ((read = getline(&line, &len,file))!=-1){
         printf("Retrieved line of length %zu :\n", read);
+        
         printf("%s", line);
     }
     fclose(file);
@@ -27,7 +28,7 @@ int main(int argc, char *argv[]){
     /*
      *
      *
-     * how do we pass the lines to check - setup()?
+     * def struct to hold test data
      *
      */
     int n;
