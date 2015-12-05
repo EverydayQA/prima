@@ -1,6 +1,7 @@
 #include "test.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "vector.h"
 
 int main(int argc, char *argv[]){
     if(argc !=2){
@@ -18,9 +19,16 @@ int main(int argc, char *argv[]){
     size_t len = 0;
     ssize_t read;
     TestData *tdata; 
+    vector v;
+    vector_init(&v);
+    /*
+     * TestData struct not fit in
+     * hold test data in vector 
+     *
+     */
     while ((read = getline(&line, &len,file))!=-1){
         printf("Retrieved line of length %zu :\n", read);
-        
+        vector_add(&v,line); 
         printf("%s", line);
     }
     fclose(file);
@@ -33,7 +41,7 @@ int main(int argc, char *argv[]){
      */
     int n;
     SRunner *sr;
-    sr = srunner_create(make_add_suite());
+    sr = srunner_create(make_add_suite2());
     srunner_run_all(sr, CK_VERBOSE);
     n = srunner_ntests_failed(sr);
     srunner_free(sr);
