@@ -15,5 +15,9 @@ BEGIN {use_ok('Test::Foo') };
 # you do not have to execute it first
 # and you can test the main() as well
 require "${Bin}/../permission3.pl";
+ok(defined(is_writable("."))==1,"cwd should be writable");
+# the main() can be tested, but to be modified to make sense
+ok(defined(main())==1,"main reurn nothing");
 
+# the example shows how to comprise and test as many as you could
 

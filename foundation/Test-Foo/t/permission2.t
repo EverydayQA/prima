@@ -15,4 +15,7 @@ BEGIN {use_ok('Test::Foo') };
 # you do not have to execute it first
 require "${Bin}/../permission2.pl";
 
+# able to test 
+my $result = is_writable(".");
+ok(defined($result)==1,"cwd should be writable");
 
