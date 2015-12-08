@@ -466,6 +466,71 @@ void test_dict_deflate(compr, comprLen)
 /* ===========================================================================
  * Test inflate() with a preset dictionary
  */
+START_TEST(test_dict_inflate_xunit)
+{
+    Byte *compr, *uncompr;
+    uLong comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
+    uLong uncomprLen = comprLen;
+    static const char* myVersion = ZLIB_VERSION;
+
+    ck_assert_int_eq(zlibVersion()[0] , myVersion[0]); 
+    ck_assert_int_eq(5.0,5);
+    ck_assert_str_eq(zlibVersion(), ZLIB_VERSION);
+    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
+            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
+
+    compr    = (Byte*)calloc((uInt)comprLen, 1);
+    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
+
+    ck_assert(compr != Z_NULL);
+    ck_assert(uncompr != Z_NULL);
+
+    //***
+    int err;
+    z_stream d_stream; /* decompression stream */
+
+    strcpy((char*)uncompr, "garbage");
+
+    d_stream.zalloc = (alloc_func)0;
+    d_stream.zfree = (free_func)0;
+    d_stream.opaque = (voidpf)0;
+
+    d_stream.next_in  = compr;
+    d_stream.avail_in = (uInt)comprLen;
+
+    err = inflateInit(&d_stream);
+    ck_assert_int_eq(err,0);
+    CHECK_ERR(err, "inflateInit");
+
+    d_stream.next_out = uncompr;
+    d_stream.avail_out = (uInt)uncomprLen;
+    /*
+    for (;;) {
+        err = inflate(&d_stream, Z_NO_FLUSH);
+        if (err == Z_STREAM_END) break;
+        if (err == Z_NEED_DICT) {
+            if (d_stream.adler != dictId) {
+                fprintf(stderr, "unexpected dictionary");
+                exit(1);
+            }
+            err = inflateSetDictionary(&d_stream, (const Bytef*)dictionary,
+                                       sizeof(dictionary));
+        }
+        CHECK_ERR(err, "inflate with dict");
+    }
+    err = inflateEnd(&d_stream);
+    CHECK_ERR(err, "inflateEnd");
+
+    if (strcmp((char*)uncompr, hello)) {
+        fprintf(stderr, "bad inflate with dict\n");
+        exit(1);
+    } else {
+        printf("inflate with dictionary: %s\n", (char *)uncompr);
+    }
+    */
+}
+END_TEST
+
 void test_dict_inflate(compr, comprLen, uncompr, uncomprLen)
     Byte *compr, *uncompr;
     uLong comprLen, uncomprLen;
@@ -613,9 +678,11 @@ Suite * compress_suite(void)
     s = suite_create("zlibSuite");
     /*Core test case */
     tc_core = tcase_create("Core");
-    tcase_add_test(tc_core, compress_xunit);
-
     suite_add_tcase(s, tc_core);
+
+    tcase_add_test(tc_core, compress_xunit);
+    tcase_add_test(tc_core, test_dict_inflate_xunit);
+
     return s;
 }
 
