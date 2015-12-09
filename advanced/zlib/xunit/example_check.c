@@ -85,6 +85,40 @@ void test_compress(compr, comprLen, uncompr, uncomprLen)
     }
 }
 
+START_TEST(test_compress_xunit)
+{
+    Byte *compr, *uncompr;
+    uLong comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
+    uLong uncomprLen = comprLen;
+    static const char* myVersion = ZLIB_VERSION;
+
+    ck_assert_int_eq(zlibVersion()[0] , myVersion[0]); 
+    ck_assert_int_eq(5.0,5);
+    ck_assert_str_eq(zlibVersion(), ZLIB_VERSION);
+    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
+            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
+
+    compr    = (Byte*)calloc((uInt)comprLen, 1);
+    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
+
+    ck_assert(compr != Z_NULL);
+    ck_assert(uncompr != Z_NULL);
+
+    int err;
+    uLong len = (uLong)strlen(hello)+1;
+
+    err = compress(compr, &comprLen, (const Bytef*)hello, len);
+    ck_assert_int_eq(err,0);
+
+    strcpy((char*)uncompr, "garbage");
+    err = uncompress(uncompr, &uncomprLen, compr, comprLen);
+    ck_assert_int_eq(err,0);
+
+    ck_assert_str_eq((char*)uncompr, hello);
+
+}
+END_TEST
+
 /* ===========================================================================
  * Test read/write of .gz files
  */
@@ -168,6 +202,42 @@ void test_gzio(fname, uncompr, uncomprLen)
     gzclose(file);
 #endif
 }
+
+START_TEST(test_gzio_xunit)
+{
+    Byte *compr, *uncompr;
+    uLong comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
+    uLong uncomprLen = comprLen;
+    static const char* myVersion = ZLIB_VERSION;
+
+    ck_assert_int_eq(zlibVersion()[0] , myVersion[0]); 
+    ck_assert_int_eq(5.0,5);
+    ck_assert_str_eq(zlibVersion(), ZLIB_VERSION);
+    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
+            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
+
+    compr    = (Byte*)calloc((uInt)comprLen, 1);
+    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
+
+    ck_assert(compr != Z_NULL);
+    ck_assert(uncompr != Z_NULL);
+
+    int err;
+    int len = (int)strlen(hello)+1;
+    gzFile file;
+    z_off_t pos;
+
+    file = gzopen(TESTFILE, "wb");
+    if (file == NULL) {
+        ck_assert(file == NULL);
+        
+        fprintf(stderr, "gzopen error\n");
+        exit(1);
+    }
+
+
+}
+END_TEST
 
 /* ===========================================================================
  * Test deflate() with small buffers
@@ -504,21 +574,29 @@ START_TEST(test_dict_inflate_xunit)
 
     d_stream.next_out = uncompr;
     d_stream.avail_out = (uInt)uncomprLen;
-    /*
+
     for (;;) {
         err = inflate(&d_stream, Z_NO_FLUSH);
         if (err == Z_STREAM_END) break;
         if (err == Z_NEED_DICT) {
+            ck_assert_int_eq(err,Z_NEED_DICT);
+
             if (d_stream.adler != dictId) {
                 fprintf(stderr, "unexpected dictionary");
                 exit(1);
             }
-            err = inflateSetDictionary(&d_stream, (const Bytef*)dictionary,
-                                       sizeof(dictionary));
+            err = inflateSetDictionary(&d_stream, (const Bytef*)dictionary, sizeof(dictionary));
         }
         CHECK_ERR(err, "inflate with dict");
+        //ck_assert_int_eq(err,1);
+
     }
+    // break
+    ck_assert_int_eq(err,Z_STREAM_END);
+
     err = inflateEnd(&d_stream);
+    ck_assert_int_eq(err,0);
+
     CHECK_ERR(err, "inflateEnd");
 
     if (strcmp((char*)uncompr, hello)) {
@@ -527,7 +605,7 @@ START_TEST(test_dict_inflate_xunit)
     } else {
         printf("inflate with dictionary: %s\n", (char *)uncompr);
     }
-    */
+
 }
 END_TEST
 
@@ -635,39 +713,6 @@ int disable_main(argc, argv)
     return 0;
 }
 
-START_TEST(compress_xunit)
-{
-    Byte *compr, *uncompr;
-    uLong comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
-    uLong uncomprLen = comprLen;
-    static const char* myVersion = ZLIB_VERSION;
-
-    ck_assert_int_eq(zlibVersion()[0] , myVersion[0]); 
-    ck_assert_int_eq(5.0,5);
-    ck_assert_str_eq(zlibVersion(), ZLIB_VERSION);
-    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
-            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
-
-    compr    = (Byte*)calloc((uInt)comprLen, 1);
-    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
-
-    ck_assert(compr != Z_NULL);
-    ck_assert(uncompr != Z_NULL);
-
-    int err;
-    uLong len = (uLong)strlen(hello)+1;
-
-    err = compress(compr, &comprLen, (const Bytef*)hello, len);
-    ck_assert_int_eq(err,0);
-
-    strcpy((char*)uncompr, "garbage");
-    err = uncompress(uncompr, &uncomprLen, compr, comprLen);
-    ck_assert_int_eq(err,0);
-
-    ck_assert_str_eq((char*)uncompr, hello);
-
-}
-END_TEST
 
 
 Suite * compress_suite(void)
@@ -680,8 +725,9 @@ Suite * compress_suite(void)
     tc_core = tcase_create("Core");
     suite_add_tcase(s, tc_core);
 
-    tcase_add_test(tc_core, compress_xunit);
-    tcase_add_test(tc_core, test_dict_inflate_xunit);
+    tcase_add_test(tc_core, test_compress_xunit);
+    //tcase_add_test(tc_core, test_dict_inflate_xunit);
+    tcase_add_test(tc_core, test_gzio_xunit);
 
     return s;
 }
