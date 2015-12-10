@@ -132,7 +132,7 @@ void test_gzio(fname, uncompr, uncomprLen)
 #else
     int err;
     int len = (int)strlen(hello)+1;
-    gzFile file;
+    gzFile file ;
     z_off_t pos;
 
     file = gzopen(fname, "wb");
@@ -205,6 +205,7 @@ void test_gzio(fname, uncompr, uncomprLen)
 
 START_TEST(test_gzio_xunit)
 {
+
     Byte *compr, *uncompr;
     uLong comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
     uLong uncomprLen = comprLen;
@@ -221,6 +222,9 @@ START_TEST(test_gzio_xunit)
 
     ck_assert(compr != Z_NULL);
     ck_assert(uncompr != Z_NULL);
+#ifdef NO_GZCOMPRESS
+    fprintf(stderr, "NO_GZCOMPRESS -- gz* functions cannot compress\n");
+#else
 
     int err;
     int len = (int)strlen(hello)+1;
@@ -228,13 +232,51 @@ START_TEST(test_gzio_xunit)
     z_off_t pos;
 
     file = gzopen(TESTFILE, "wb");
-    if (file == NULL) {
-        ck_assert(file == NULL);
+    ck_assert_msg(file != NULL, "Error with gzopen\n");
         
-        fprintf(stderr, "gzopen error\n");
+    strcpy((char*)uncompr, "garbage");
+
+    ck_assert_msg(gzread(file, uncompr, (unsigned)uncomprLen) != len, "ERROR - gzread\n");
+
+    //fprintf(stderr, "gzread err: %s\n", gzerror(file, &err));
+
+    if (strcmp((char*)uncompr, hello)) {
+        fprintf(stderr, "bad gzread: %s\n", (char*)uncompr);
+        exit(1);
+    } else {
+        printf("gzread(): %s\n", (char*)uncompr);
+    }
+    pos = gzseek(file, -8L, SEEK_CUR);
+    if (pos != 6 || gztell(file) != pos) {
+        fprintf(stderr, "gzseek error, pos=%ld, gztell=%ld\n",
+                (long)pos, (long)gztell(file));
         exit(1);
     }
 
+    if (gzgetc(file) != ' ') {
+        fprintf(stderr, "gzgetc error\n");
+        exit(1);
+    }
+
+    if (gzungetc(' ', file) != ' ') {
+        fprintf(stderr, "gzungetc error\n");
+        exit(1);
+    }
+
+    gzgets(file, (char*)uncompr, (int)uncomprLen);
+    if (strlen((char*)uncompr) != 7) { /* " hello!" */
+        fprintf(stderr, "gzgets err after gzseek: %s\n", gzerror(file, &err));
+        exit(1);
+    }
+    if (strcmp((char*)uncompr, hello + 6)) {
+        fprintf(stderr, "bad gzgets after gzseek\n");
+        exit(1);
+    } else {
+        printf("gzgets() after gzseek: %s\n", (char*)uncompr);
+    }
+
+    gzclose(file);
+#endif
 
 }
 END_TEST
