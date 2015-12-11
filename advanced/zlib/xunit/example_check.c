@@ -233,44 +233,47 @@ START_TEST(test_gzio_xunit)
 
     file = gzopen(TESTFILE, "wb");
     ck_assert_msg(file != NULL, "Error with gzopen\n");
-        
+
+    gzputc(file, 'h');
+    ck_assert_msg(gzputs(file, "ello") == 4, "ERR:gputs \n");
+
+    ck_assert_msg(gzprintf(file, ", %s!", "hello") == 8, "ERR: gprintf\n");
+
+    gzseek(file, 1L, SEEK_CUR); /* add one zero byte */
+    gzclose(file);
+
+    file = gzopen(TESTFILE, "rb");
+    ck_assert_msg(file != NULL, "gzopen error\n");
+
     strcpy((char*)uncompr, "garbage");
-
-    ck_assert_msg(gzread(file, uncompr, (unsigned)uncomprLen) != len, "ERROR - gzread\n");
-
-    //fprintf(stderr, "gzread err: %s\n", gzerror(file, &err));
-
+    if (gzread(file, uncompr, (unsigned)uncomprLen) != len) {
+        ck_abort_msg( gzerror(file, &err));
+    }
     if (strcmp((char*)uncompr, hello)) {
         fprintf(stderr, "bad gzread: %s\n", (char*)uncompr);
-        exit(1);
+        ck_abort_msg("bad gzread\n");
     } else {
         printf("gzread(): %s\n", (char*)uncompr);
     }
-    pos = gzseek(file, -8L, SEEK_CUR);
-    if (pos != 6 || gztell(file) != pos) {
-        fprintf(stderr, "gzseek error, pos=%ld, gztell=%ld\n",
-                (long)pos, (long)gztell(file));
-        exit(1);
-    }
 
-    if (gzgetc(file) != ' ') {
-        fprintf(stderr, "gzgetc error\n");
-        exit(1);
-    }
+    pos = gzseek(file, -8L, SEEK_CUR);
+    ck_assert_msg(pos ==6,"gzseek error\n");
+    ck_assert_msg(gztell(file) == pos, "gzseek error\n");
+
+    ck_assert_msg( gzgetc(file) == ' ', "gzgetc error\n");
 
     if (gzungetc(' ', file) != ' ') {
-        fprintf(stderr, "gzungetc error\n");
-        exit(1);
+        ck_abort_msg("gzungetc error\n");
     }
 
     gzgets(file, (char*)uncompr, (int)uncomprLen);
     if (strlen((char*)uncompr) != 7) { /* " hello!" */
         fprintf(stderr, "gzgets err after gzseek: %s\n", gzerror(file, &err));
-        exit(1);
+        ck_abort_msg(gzerror(file,&err));
     }
+
     if (strcmp((char*)uncompr, hello + 6)) {
-        fprintf(stderr, "bad gzgets after gzseek\n");
-        exit(1);
+        ck_abort_msg("bad gzgets after gzseek\n");
     } else {
         printf("gzgets() after gzseek: %s\n", (char*)uncompr);
     }
@@ -594,8 +597,8 @@ START_TEST(test_dict_inflate_xunit)
     compr    = (Byte*)calloc((uInt)comprLen, 1);
     uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
 
-    ck_assert(compr != Z_NULL);
-    ck_assert(uncompr != Z_NULL);
+    ck_assert_msg(compr != Z_NULL,"compress null");
+    ck_assert_msg(uncompr != Z_NULL,"uncompre null");
 
     //***
     int err;
@@ -611,7 +614,6 @@ START_TEST(test_dict_inflate_xunit)
     d_stream.avail_in = (uInt)comprLen;
 
     err = inflateInit(&d_stream);
-    ck_assert_int_eq(err,0);
     CHECK_ERR(err, "inflateInit");
 
     d_stream.next_out = uncompr;
@@ -624,8 +626,7 @@ START_TEST(test_dict_inflate_xunit)
             ck_assert_int_eq(err,Z_NEED_DICT);
 
             if (d_stream.adler != dictId) {
-                fprintf(stderr, "unexpected dictionary");
-                exit(1);
+                ck_abort_msg("unexpected diectionayr");
             }
             err = inflateSetDictionary(&d_stream, (const Bytef*)dictionary, sizeof(dictionary));
         }
@@ -639,11 +640,10 @@ START_TEST(test_dict_inflate_xunit)
     err = inflateEnd(&d_stream);
     ck_assert_int_eq(err,0);
 
-    CHECK_ERR(err, "inflateEnd");
+    //CHECK_ERR(err, "inflateEnd");
 
     if (strcmp((char*)uncompr, hello)) {
-        fprintf(stderr, "bad inflate with dict\n");
-        exit(1);
+        ck_abort_msg("bad inflate with dict\n");
     } else {
         printf("inflate with dictionary: %s\n", (char *)uncompr);
     }
@@ -768,8 +768,9 @@ Suite * compress_suite(void)
     suite_add_tcase(s, tc_core);
 
     tcase_add_test(tc_core, test_compress_xunit);
-    //tcase_add_test(tc_core, test_dict_inflate_xunit);
     tcase_add_test(tc_core, test_gzio_xunit);
+
+    tcase_add_test(tc_core, test_dict_inflate_xunit);
 
     return s;
 }
