@@ -36,6 +36,10 @@ const char hello[] = "hello, hello!";
 /* "hello world" would be more standard, but the repeated "hello"
  * stresses the compression code better, sorry...
  */
+Byte *compr, *uncompr;
+uLong comprLen, uncomprLen;
+static const char* myVersion;
+
 
 const char dictionary[] = "hello";
 uLong dictId; /* Adler32 value of the dictionary */
@@ -87,20 +91,6 @@ void test_compress(compr, comprLen, uncompr, uncomprLen)
 
 START_TEST(test_compress_xunit)
 {
-    Byte *compr, *uncompr;
-    uLong comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
-    uLong uncomprLen = comprLen;
-    static const char* myVersion = ZLIB_VERSION;
-
-    ck_assert_int_eq(zlibVersion()[0] , myVersion[0]); 
-    ck_assert_int_eq(5.0,5);
-    ck_assert_str_eq(zlibVersion(), ZLIB_VERSION);
-    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
-            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
-
-    compr    = (Byte*)calloc((uInt)comprLen, 1);
-    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
-
     ck_assert(compr != Z_NULL);
     ck_assert(uncompr != Z_NULL);
 
@@ -109,11 +99,9 @@ START_TEST(test_compress_xunit)
 
     err = compress(compr, &comprLen, (const Bytef*)hello, len);
     ck_assert_int_eq(err,0);
-
     strcpy((char*)uncompr, "garbage");
     err = uncompress(uncompr, &uncomprLen, compr, comprLen);
     ck_assert_int_eq(err,0);
-
     ck_assert_str_eq((char*)uncompr, hello);
 
 }
@@ -206,20 +194,6 @@ void test_gzio(fname, uncompr, uncomprLen)
 START_TEST(test_gzio_xunit)
 {
 
-    Byte *compr, *uncompr;
-    uLong comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
-    uLong uncomprLen = comprLen;
-    static const char* myVersion = ZLIB_VERSION;
-
-    ck_assert_int_eq(zlibVersion()[0] , myVersion[0]); 
-    ck_assert_int_eq(5.0,5);
-    ck_assert_str_eq(zlibVersion(), ZLIB_VERSION);
-    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
-            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
-
-    compr    = (Byte*)calloc((uInt)comprLen, 1);
-    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
-
     ck_assert(compr != Z_NULL);
     ck_assert(uncompr != Z_NULL);
 #ifdef NO_GZCOMPRESS
@@ -287,9 +261,7 @@ END_TEST
 /* ===========================================================================
  * Test deflate() with small buffers
  */
-void test_deflate(compr, comprLen)
-    Byte *compr;
-    uLong comprLen;
+START_TEST(test_deflate_xunit)
 {
     z_stream c_stream; /* compression stream */
     int err;
@@ -321,13 +293,11 @@ void test_deflate(compr, comprLen)
     err = deflateEnd(&c_stream);
     CHECK_ERR(err, "deflateEnd");
 }
-
+END_TEST
 /* ===========================================================================
  * Test inflate() with small buffers
  */
-void test_inflate(compr, comprLen, uncompr, uncomprLen)
-    Byte *compr, *uncompr;
-    uLong comprLen, uncomprLen;
+START_TEST(test_inflate_xunit)
 {
     int err;
     z_stream d_stream; /* decompression stream */
@@ -362,7 +332,7 @@ void test_inflate(compr, comprLen, uncompr, uncomprLen)
         printf("inflate(): %s\n", (char *)uncompr);
     }
 }
-
+END_TEST
 /* ===========================================================================
  * Test deflate() with large buffers and dynamic change of compression level
  */
@@ -583,27 +553,12 @@ void test_dict_deflate(compr, comprLen)
  */
 START_TEST(test_dict_inflate_xunit)
 {
-    Byte *compr, *uncompr;
-    uLong comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
-    uLong uncomprLen = comprLen;
-    static const char* myVersion = ZLIB_VERSION;
+    if (compr == Z_NULL || uncompr == Z_NULL) {
+        ck_abort_msg("out of memory\n");
+    }
 
-    ck_assert_int_eq(zlibVersion()[0] , myVersion[0]); 
-    ck_assert_int_eq(5.0,5);
-    ck_assert_str_eq(zlibVersion(), ZLIB_VERSION);
-    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
-            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
-
-    compr    = (Byte*)calloc((uInt)comprLen, 1);
-    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
-
-    ck_assert_msg(compr != Z_NULL,"compress null");
-    ck_assert_msg(uncompr != Z_NULL,"uncompre null");
-
-    //***
     int err;
     z_stream d_stream; /* decompression stream */
-
     strcpy((char*)uncompr, "garbage");
 
     d_stream.zalloc = (alloc_func)0;
@@ -623,31 +578,22 @@ START_TEST(test_dict_inflate_xunit)
         err = inflate(&d_stream, Z_NO_FLUSH);
         if (err == Z_STREAM_END) break;
         if (err == Z_NEED_DICT) {
-            ck_assert_int_eq(err,Z_NEED_DICT);
-
             if (d_stream.adler != dictId) {
-                ck_abort_msg("unexpected diectionayr");
+                ck_abort_msg("unexpected dictionary");
             }
-            err = inflateSetDictionary(&d_stream, (const Bytef*)dictionary, sizeof(dictionary));
+            err = inflateSetDictionary(&d_stream, (const Bytef*)dictionary,
+                                       sizeof(dictionary));
         }
         CHECK_ERR(err, "inflate with dict");
-        //ck_assert_int_eq(err,1);
-
     }
-    // break
-    ck_assert_int_eq(err,Z_STREAM_END);
-
     err = inflateEnd(&d_stream);
-    ck_assert_int_eq(err,0);
-
-    //CHECK_ERR(err, "inflateEnd");
+    CHECK_ERR(err, "inflateEnd");
 
     if (strcmp((char*)uncompr, hello)) {
         ck_abort_msg("bad inflate with dict\n");
     } else {
         printf("inflate with dictionary: %s\n", (char *)uncompr);
     }
-
 }
 END_TEST
 
@@ -701,6 +647,37 @@ void test_dict_inflate(compr, comprLen, uncompr, uncomprLen)
 /* ===========================================================================
  * Usage:  example [output.gz  [input.gz]]
  */
+void teardown(void){
+    free(compr);
+    free(uncompr);
+}
+
+void setup(void){
+    comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
+    uncomprLen = comprLen;
+    myVersion = ZLIB_VERSION;
+
+    if (zlibVersion()[0] != myVersion[0]) {
+        fprintf(stderr, "incompatible zlib version\n");
+        exit(1);
+
+    } else if (strcmp(zlibVersion(), ZLIB_VERSION) != 0) {
+        fprintf(stderr, "warning: different zlib version\n");
+    }
+
+    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
+            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
+
+    compr    = (Byte*)calloc((uInt)comprLen, 1);
+    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
+    /* compr and uncompr are cleared to avoid reading uninitialized
+     * data and to ensure that uncompr compresses well.
+     */
+    if (compr == Z_NULL || uncompr == Z_NULL) {
+        printf("out of memory\n");
+        exit(1);
+    }
+}
 
 int disable_main(argc, argv)
     int argc;
@@ -736,16 +713,16 @@ int disable_main(argc, argv)
     test_gzio((argc > 1 ? argv[1] : TESTFILE),
               uncompr, uncomprLen);
 
-    test_deflate(compr, comprLen);
-    test_inflate(compr, comprLen, uncompr, uncomprLen);
+    //test_deflate(compr, comprLen);
+    //test_inflate(compr, comprLen, uncompr, uncomprLen);
 
     test_large_deflate(compr, comprLen, uncompr, uncomprLen);
     test_large_inflate(compr, comprLen, uncompr, uncomprLen);
 
     test_flush(compr, &comprLen);
     test_sync(compr, comprLen, uncompr, uncomprLen);
-    comprLen = uncomprLen;
 
+    comprLen = uncomprLen;
     test_dict_deflate(compr, comprLen);
     test_dict_inflate(compr, comprLen, uncompr, uncomprLen);
 
@@ -765,12 +742,18 @@ Suite * compress_suite(void)
     s = suite_create("zlibSuite");
     /*Core test case */
     tc_core = tcase_create("Core");
-    suite_add_tcase(s, tc_core);
+    tcase_add_checked_fixture(tc_core,setup,teardown);
 
     tcase_add_test(tc_core, test_compress_xunit);
     tcase_add_test(tc_core, test_gzio_xunit);
+    tcase_add_test(tc_core, test_deflate_xunit);
 
-    tcase_add_test(tc_core, test_dict_inflate_xunit);
+
+    //tcase_add_test(tc_core, test_inflate_xunit);
+
+    //tcase_add_test(tc_core, test_dict_inflate_xunit);
+
+    suite_add_tcase(s, tc_core);
 
     return s;
 }
