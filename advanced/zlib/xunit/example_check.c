@@ -303,7 +303,6 @@ END_TEST
 START_TEST(check_inflate)
 {
 
-    // init compre /compreLen uncompreLne ??
     ck_assert(compr != Z_NULL);
     ck_assert(uncompr != Z_NULL);
     printf("check_inflate() compre: %s\n", (char *)compr);
@@ -332,10 +331,11 @@ START_TEST(check_inflate)
     while (d_stream.total_out < uncomprLen && d_stream.total_in < comprLen) {
         d_stream.avail_in = d_stream.avail_out = 1; /* force small buffers */
         err = inflate(&d_stream, Z_NO_FLUSH);
+        printf("check_inflate inflate  return err: %d break Z_STREAM_END:%d\n", err, Z_STREAM_END);
         if (err == Z_STREAM_END) {
             break;
         }
-        ck_assert_msg(err == Z_OK, "inflate");
+        ck_assert_msg(err == Z_OK, "check_inflate expect:%d, but got:%d\n",Z_OK,err);
     }
 
     err = inflateEnd(&d_stream);
@@ -757,15 +757,19 @@ Suite * compress_suite(void)
     tc_core = tcase_create("Core");
     tc2 = tcase_create("tcase2");
     suite_add_tcase(s, tc2);
+    setup();
 
-    tcase_add_checked_fixture(tc_core,setup,teardown);
+    //tcase_add_checked_fixture(tc_core,setup,teardown);
     suite_add_tcase(s, tc_core);
 
     tcase_add_test(tc_core, check_compress);
-    tcase_add_test(tc_core, check_gzio);
 
-    setup();
+
+
+    tcase_add_test(tc2, check_gzio);
+
     tcase_add_test(tc2, check_deflate);
+
     //error - do not know why - put it aside
     tcase_add_test(tc2, check_inflate);
     
