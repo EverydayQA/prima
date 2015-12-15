@@ -1,0 +1,7 @@
+/home/gliang/work/prima/advanced/zlib/build/xunit/CMakeFiles/check_compress_xunit.dir
+/home/gliang/work/prima/advanced/zlib/build/xunit/CMakeFiles/check_example_xunit.dir
+/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/example.dir
+/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/example64.dir
+/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/minigzip.dir
+/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/minigzip64.dir
+/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/zlib.dir

@@ -1,0 +1,1 @@
+/usr/bin/gcc      CMakeFiles/minigzip.dir/minigzip.o  -o minigzip -rdynamic libz.so.1.2.5 -Wl,-rpath,/home/gliang/work/prima/advanced/zlib/build 

@@ -1,0 +1,211 @@
+The system is: Linux - 2.6.32-358.11.1.el6.x86_64 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/bin/gcc 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is GNU, found in "/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CompilerIdC/a.out"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec2979872740/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2979872740.dir/build.make CMakeFiles/cmTryCompileExec2979872740.dir/build
+gmake[1]: Entering directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake28 -E cmake_progress_report /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2979872740.dir/testCCompiler.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec2979872740.dir/testCCompiler.c.o   -c /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTryCompileExec2979872740
+/usr/bin/cmake28 -E cmake_link_script CMakeFiles/cmTryCompileExec2979872740.dir/link.txt --verbose=1
+/usr/bin/gcc         CMakeFiles/cmTryCompileExec2979872740.dir/testCCompiler.c.o  -o cmTryCompileExec2979872740 -rdynamic 
+gmake[1]: Leaving directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec786784257/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec786784257.dir/build.make CMakeFiles/cmTryCompileExec786784257.dir/build
+gmake[1]: Entering directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake28 -E cmake_progress_report /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec786784257.dir/CMakeCCompilerABI.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec786784257.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake28/Modules/CMakeCCompilerABI.c
+Linking C executable cmTryCompileExec786784257
+/usr/bin/cmake28 -E cmake_link_script CMakeFiles/cmTryCompileExec786784257.dir/link.txt --verbose=1
+/usr/bin/gcc       -v CMakeFiles/cmTryCompileExec786784257.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec786784257 -rdynamic  
+Using built-in specs.
+Target: x86_64-redhat-linux
+Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux
+Thread model: posix
+gcc version 4.4.7 20120313 (Red Hat 4.4.7-11) (GCC) 
+COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec786784257' '-rdynamic' '-mtune=generic'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.4.7/collect2 --eh-frame-hdr --build-id -m elf_x86_64 --hash-style=gnu -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec786784257 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../.. CMakeFiles/cmTryCompileExec786784257.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crtn.o
+gmake[1]: Leaving directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:/usr/bin/gmake "cmTryCompileExec786784257/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTryCompileExec786784257.dir/build.make CMakeFiles/cmTryCompileExec786784257.dir/build]
+  ignore line: [gmake[1]: Entering directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/cmake28 -E cmake_progress_report /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building C object CMakeFiles/cmTryCompileExec786784257.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec786784257.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake28/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTryCompileExec786784257]
+  ignore line: [/usr/bin/cmake28 -E cmake_link_script CMakeFiles/cmTryCompileExec786784257.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/gcc       -v CMakeFiles/cmTryCompileExec786784257.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec786784257 -rdynamic  ]
+  ignore line: [Using built-in specs.]
+  ignore line: [Target: x86_64-redhat-linux]
+  ignore line: [Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 4.4.7 20120313 (Red Hat 4.4.7-11) (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec786784257' '-rdynamic' '-mtune=generic']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.4.7/collect2 --eh-frame-hdr --build-id -m elf_x86_64 --hash-style=gnu -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTryCompileExec786784257 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../.. CMakeFiles/cmTryCompileExec786784257.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crtn.o]
+    arg [/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/collect2] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [--build-id] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [--hash-style=gnu] ==> ignore
+    arg [-export-dynamic] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec786784257] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtbegin.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64]
+    arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+    arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../..]
+    arg [CMakeFiles/cmTryCompileExec786784257.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [-lc] ==> lib [c]
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtend.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crtn.o] ==> ignore
+  remove lib [gcc]
+  remove lib [gcc_s]
+  remove lib [gcc]
+  remove lib [gcc_s]
+  collapse dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+  collapse dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+  collapse dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64] ==> [/usr/lib64]
+  collapse dir [/lib/../lib64] ==> [/lib64]
+  collapse dir [/usr/lib/../lib64] ==> [/usr/lib64]
+  collapse dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../..] ==> [/usr/lib]
+  implicit libs: [c]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.4.7;/usr/lib64;/lib64;/usr/lib]
+
+
+Determining if the include file sys/types.h exists passed with the following output:
+Change Dir: /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1113635535/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1113635535.dir/build.make CMakeFiles/cmTryCompileExec1113635535.dir/build
+gmake[1]: Entering directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake28 -E cmake_progress_report /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1113635535.dir/CheckIncludeFile.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec1113635535.dir/CheckIncludeFile.c.o   -c /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec1113635535
+/usr/bin/cmake28 -E cmake_link_script CMakeFiles/cmTryCompileExec1113635535.dir/link.txt --verbose=1
+/usr/bin/gcc         CMakeFiles/cmTryCompileExec1113635535.dir/CheckIncludeFile.c.o  -o cmTryCompileExec1113635535 -rdynamic 
+gmake[1]: Leaving directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file stdint.h exists passed with the following output:
+Change Dir: /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec668960213/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec668960213.dir/build.make CMakeFiles/cmTryCompileExec668960213.dir/build
+gmake[1]: Entering directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake28 -E cmake_progress_report /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec668960213.dir/CheckIncludeFile.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec668960213.dir/CheckIncludeFile.c.o   -c /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec668960213
+/usr/bin/cmake28 -E cmake_link_script CMakeFiles/cmTryCompileExec668960213.dir/link.txt --verbose=1
+/usr/bin/gcc         CMakeFiles/cmTryCompileExec668960213.dir/CheckIncludeFile.c.o  -o cmTryCompileExec668960213 -rdynamic 
+gmake[1]: Leaving directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file stddef.h exists passed with the following output:
+Change Dir: /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1751240973/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1751240973.dir/build.make CMakeFiles/cmTryCompileExec1751240973.dir/build
+gmake[1]: Entering directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake28 -E cmake_progress_report /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1751240973.dir/CheckIncludeFile.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec1751240973.dir/CheckIncludeFile.c.o   -c /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec1751240973
+/usr/bin/cmake28 -E cmake_link_script CMakeFiles/cmTryCompileExec1751240973.dir/link.txt --verbose=1
+/usr/bin/gcc         CMakeFiles/cmTryCompileExec1751240973.dir/CheckIncludeFile.c.o  -o cmTryCompileExec1751240973 -rdynamic 
+gmake[1]: Leaving directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+
+
+Determining size of off64_t passed with the following output:
+Change Dir: /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec3274863455/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec3274863455.dir/build.make CMakeFiles/cmTryCompileExec3274863455.dir/build
+gmake[1]: Entering directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake28 -E cmake_progress_report /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3274863455.dir/OFF64_T.c.o
+/usr/bin/gcc  -D_LARGEFILE64_SOURCE=1 -DHAVE_SYS_TYPES_H -DHAVE_STDINT_H -DHAVE_STDDEF_H  -o CMakeFiles/cmTryCompileExec3274863455.dir/OFF64_T.c.o   -c /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CheckTypeSize/OFF64_T.c
+Linking C executable cmTryCompileExec3274863455
+/usr/bin/cmake28 -E cmake_link_script CMakeFiles/cmTryCompileExec3274863455.dir/link.txt --verbose=1
+/usr/bin/gcc         CMakeFiles/cmTryCompileExec3274863455.dir/OFF64_T.c.o  -o cmTryCompileExec3274863455 -rdynamic 
+gmake[1]: Leaving directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the function fseeko exists passed with the following output:
+Change Dir: /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec2107824476/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec2107824476.dir/build.make CMakeFiles/cmTryCompileExec2107824476.dir/build
+gmake[1]: Entering directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake28 -E cmake_progress_report /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2107824476.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=fseeko   -o CMakeFiles/cmTryCompileExec2107824476.dir/CheckFunctionExists.c.o   -c /usr/share/cmake28/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec2107824476
+/usr/bin/cmake28 -E cmake_link_script CMakeFiles/cmTryCompileExec2107824476.dir/link.txt --verbose=1
+/usr/bin/gcc     -DCHECK_FUNCTION_EXISTS=fseeko    CMakeFiles/cmTryCompileExec2107824476.dir/CheckFunctionExists.c.o  -o cmTryCompileExec2107824476 -rdynamic 
+gmake[1]: Leaving directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+
+
+Determining if the include file unistd.h exists passed with the following output:
+Change Dir: /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/gmake "cmTryCompileExec1572228955/fast"
+/usr/bin/gmake -f CMakeFiles/cmTryCompileExec1572228955.dir/build.make CMakeFiles/cmTryCompileExec1572228955.dir/build
+gmake[1]: Entering directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake28 -E cmake_progress_report /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1572228955.dir/CheckIncludeFile.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTryCompileExec1572228955.dir/CheckIncludeFile.c.o   -c /home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTryCompileExec1572228955
+/usr/bin/cmake28 -E cmake_link_script CMakeFiles/cmTryCompileExec1572228955.dir/link.txt --verbose=1
+/usr/bin/gcc         CMakeFiles/cmTryCompileExec1572228955.dir/CheckIncludeFile.c.o  -o cmTryCompileExec1572228955 -rdynamic 
+gmake[1]: Leaving directory `/home/gliang/work/prima/advanced/zlib/build/CMakeFiles/CMakeTmp'
+
+

@@ -305,11 +305,17 @@ START_TEST(check_inflate)
 
     ck_assert(compr != Z_NULL);
     ck_assert(uncompr != Z_NULL);
-    printf("check_inflate() compre: %s\n", (char *)compr);
-    printf("check_inflate() uncompre: %s\n", (char *)uncompr);
+    printf("***check_inflate() start\n");
 
     int err;
     z_stream d_stream; /* decompression stream */
+
+    /* this is the compre required for this test
+     *
+     * gliang 
+     */
+    uLong len = (uLong)strlen(hello)+1;
+    err = compress(compr, &comprLen, (const Bytef*)hello, len);
     
     strcpy((char*)uncompr, "garbage");
     ck_assert_str_eq( (char*)uncompr, "garbage");
@@ -331,7 +337,7 @@ START_TEST(check_inflate)
     while (d_stream.total_out < uncomprLen && d_stream.total_in < comprLen) {
         d_stream.avail_in = d_stream.avail_out = 1; /* force small buffers */
         err = inflate(&d_stream, Z_NO_FLUSH);
-        printf("check_inflate inflate  return err: %d break Z_STREAM_END:%d\n", err, Z_STREAM_END);
+        //printf("check_inflate inflate  return err: %d break Z_STREAM_END:%d\n", err, Z_STREAM_END);
         if (err == Z_STREAM_END) {
             break;
         }
@@ -346,6 +352,8 @@ START_TEST(check_inflate)
     } else {
         printf("inflate(): %s\n", (char *)uncompr);
     }
+    printf("***check_inflate() end\n");
+
 }
 END_TEST
 /* ===========================================================================
@@ -449,6 +457,9 @@ void test_large_inflate(compr, comprLen, uncompr, uncomprLen)
  */
 START_TEST(check_flush)
 {
+
+    // compr, comprLen to be init
+
     z_stream c_stream; /* compression stream */
     int err;
     uInt len = (uInt)strlen(hello)+1;
@@ -458,7 +469,7 @@ START_TEST(check_flush)
     c_stream.opaque = (voidpf)0;
 
     err = deflateInit(&c_stream, Z_DEFAULT_COMPRESSION);
-    ck_assert_msg(err==Z_OK, "deflateInit");
+    ck_assert_msg(err==Z_OK, "deflateInit got:%d\n",err);
 
     c_stream.next_in  = (Bytef*)hello;
     c_stream.next_out = compr;
@@ -474,11 +485,11 @@ START_TEST(check_flush)
     if (err != Z_STREAM_END) {
         ck_assert_msg(err==Z_OK, "deflate");
     }
+
     err = deflateEnd(&c_stream);
     ck_assert_msg(err==Z_OK, "deflateEnd");
-
-    
     comprLen = c_stream.total_out;
+    printf("***check_flush() ends with comprLen:%d compre:%s\n",comprLen,(char*)compr);
 }
 END_TEST
 /* ===========================================================================
@@ -486,8 +497,13 @@ END_TEST
  */
 START_TEST(check_sync)
 {
+
+    // compr, comprLen to be init
+
+
     int err;
     z_stream d_stream; /* decompression stream */
+    printf("***inflateSync() starts with: hel%s\n", (char *)compr);
 
     strcpy((char*)uncompr, "garbage");
 
@@ -499,28 +515,27 @@ START_TEST(check_sync)
     d_stream.avail_in = 2; /* just read the zlib header */
 
     err = inflateInit(&d_stream);
-    CHECK_ERR(err, "inflateInit");
+    ck_assert_msg(err==Z_OK, "inflateInit got:%d\n",err);
 
     d_stream.next_out = uncompr;
     d_stream.avail_out = (uInt)uncomprLen;
 
     inflate(&d_stream, Z_NO_FLUSH);
-    CHECK_ERR(err, "inflate");
+    ck_assert_msg(err==Z_OK, "inflate got:%d\n",err);
 
     d_stream.avail_in = (uInt)comprLen-2;   /* read all compressed data */
     err = inflateSync(&d_stream);           /* but skip the damaged part */
-    CHECK_ERR(err, "inflateSync");
+    ck_assert_msg(err==Z_OK, "inflateSync got:%d\n",err);
 
     err = inflate(&d_stream, Z_FINISH);
     if (err != Z_DATA_ERROR) {
-        fprintf(stderr, "inflate should report DATA_ERROR\n");
+        ck_abort_msg("inflate should report DATA_ERROR\n");
         /* Because of incorrect adler32 */
-        exit(1);
     }
     err = inflateEnd(&d_stream);
-    CHECK_ERR(err, "inflateEnd");
+    ck_assert_msg(err==Z_OK, "inflateEnd got:%d\n",err);
 
-    //printf("after inflateSync(): hel%s\n", (char *)uncompr);
+    printf("***inflateSync() ends with: hel%s\n", (char *)uncompr);
 }
 END_TEST
 /* ===========================================================================
@@ -750,37 +765,32 @@ Suite * compress_suite(void)
 {
     Suite *s;
     TCase *tc_core;
-    TCase *tc2;
 
     s = suite_create("zlibSuite");
     /*Core test case */
     tc_core = tcase_create("Core");
-    tc2 = tcase_create("tcase2");
-    suite_add_tcase(s, tc2);
-    setup();
-
-    //tcase_add_checked_fixture(tc_core,setup,teardown);
+    tcase_add_checked_fixture(tc_core,setup,teardown);
     suite_add_tcase(s, tc_core);
 
     tcase_add_test(tc_core, check_compress);
+    tcase_add_test(tc_core, check_gzio);
 
+    tcase_add_test(tc_core, check_deflate);
+    tcase_add_test(tc_core, check_inflate);
 
-
-    tcase_add_test(tc2, check_gzio);
-
-    tcase_add_test(tc2, check_deflate);
-
-    //error - do not know why - put it aside
-    tcase_add_test(tc2, check_inflate);
+    //test_large_deflate(compr, comprLen, uncompr, uncomprLen);
+    //test_large_inflate(compr, comprLen, uncompr, uncomprLen);
     
-    //tcase_add_test(tc_core, check_flush);
-    //errr
-    //tcase_add_test(tc_core, check_sync);
 
-    // error
-    //tcase_add_test(tc_core, check_dict_inflate);
+    tcase_add_test(tc_core, check_flush);
+    tcase_add_test(tc_core, check_sync);
 
+    /*
 
+    comprLen = uncomprLen;
+    test_dict_deflate(compr, comprLen);
+    tcase_add_test(tc_core, check_dict_inflate);
+*/
     return s;
 }
 

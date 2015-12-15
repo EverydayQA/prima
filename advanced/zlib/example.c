@@ -160,6 +160,9 @@ void test_gzio(fname, uncompr, uncomprLen)
     }
 
     gzclose(file);
+    printf("gzio()uncompr:%s\n", (char *)uncompr);
+    printf("gzio() uncomprLen:%d\n", uncomprLen);
+
 #endif
 }
 
@@ -199,6 +202,7 @@ void test_deflate(compr, comprLen)
 
     err = deflateEnd(&c_stream);
     CHECK_ERR(err, "deflateEnd");
+
 }
 
 /* ===========================================================================
@@ -210,7 +214,12 @@ void test_inflate(compr, comprLen, uncompr, uncomprLen)
 {
     int err;
     z_stream d_stream; /* decompression stream */
+    printf("inflate()uncompr:%s\n", (char *)uncompr);
+    printf("inflate()compr:%s\n", (char *)compr);
+    printf("inflate() uncomprLen:%d\n", uncomprLen);
+    printf("inflate():%d\n", comprLen);
 
+    
     strcpy((char*)uncompr, "garbage");
 
     d_stream.zalloc = (alloc_func)0;
