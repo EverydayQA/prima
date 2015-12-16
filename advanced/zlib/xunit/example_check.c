@@ -457,11 +457,11 @@ void test_large_inflate(compr, comprLen, uncompr, uncomprLen)
  */
 START_TEST(check_flush)
 {
+    int err;
 
     // compr, comprLen to be init
 
     z_stream c_stream; /* compression stream */
-    int err;
     uInt len = (uInt)strlen(hello)+1;
 
     c_stream.zalloc = (alloc_func)0;
@@ -497,11 +497,10 @@ END_TEST
  */
 START_TEST(check_sync)
 {
+    int err;
 
     // compr, comprLen to be init
 
-
-    int err;
     z_stream d_stream; /* decompression stream */
     printf("***inflateSync() starts with: hel%s\n", (char *)compr);
 

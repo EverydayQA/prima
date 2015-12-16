@@ -1,1 +1,0 @@
-/usr/bin/gcc      CMakeFiles/check_compress_xunit.dir/check_compress_xunit.o  -o check_compress_xunit -rdynamic -L/home/gliang/work/prima/advanced/zlib/build -lz -lcheck -Wl,-rpath,/home/gliang/work/prima/advanced/zlib/build 

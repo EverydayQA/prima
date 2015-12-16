@@ -1,1 +1,0 @@
-/usr/bin/gcc      CMakeFiles/example64.dir/example.o  -o example64 -rdynamic libz.so.1.2.5 -Wl,-rpath,/home/gliang/work/prima/advanced/zlib/build 

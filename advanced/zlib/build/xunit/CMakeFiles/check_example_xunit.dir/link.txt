@@ -1,1 +1,0 @@
-/usr/bin/gcc      CMakeFiles/check_example_xunit.dir/example_check.o  -o check_example_xunit -rdynamic -L/home/gliang/work/prima/advanced/zlib/build -lz -lcheck -Wl,-rpath,/home/gliang/work/prima/advanced/zlib/build 
