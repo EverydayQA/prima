@@ -17,4 +17,11 @@ write test case to existing test
 https://github.com/atrinik/atrinik.git
 
 
+# need a few functions to setup initial status for each test
+# 
+
+# road block - using test double
+real/mock/stubs/fake/dummy - without proper setup, check is going nowhere
+http://martinfowler.com/articles/mocksArentStubs.html
+
 

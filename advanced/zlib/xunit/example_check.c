@@ -492,6 +492,7 @@ START_TEST(check_flush)
     printf("***check_flush() ends with comprLen:%d compre:%s\n",comprLen,(char*)compr);
 }
 END_TEST
+
 /* ===========================================================================
  * Test inflateSync()
  */
@@ -499,7 +500,9 @@ START_TEST(check_sync)
 {
     int err;
 
-    // compr, comprLen to be init
+    // compr, comprLen to be init from output check_flush
+    // copied from test flush
+    // end test_flush
 
     z_stream d_stream; /* decompression stream */
     printf("***inflateSync() starts with: hel%s\n", (char *)compr);
@@ -678,32 +681,6 @@ void teardown(void){
     free(uncompr);
 }
 
-void setup(void){
-    comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
-    uncomprLen = comprLen;
-    myVersion = ZLIB_VERSION;
-
-    if (zlibVersion()[0] != myVersion[0]) {
-        fprintf(stderr, "incompatible zlib version\n");
-        exit(1);
-
-    } else if (strcmp(zlibVersion(), ZLIB_VERSION) != 0) {
-        fprintf(stderr, "warning: different zlib version\n");
-    }
-
-    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
-            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
-
-    compr    = (Byte*)calloc((uInt)comprLen, 1);
-    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
-    /* compr and uncompr are cleared to avoid reading uninitialized
-     * data and to ensure that uncompr compresses well.
-     */
-    if (compr == Z_NULL || uncompr == Z_NULL) {
-        printf("out of memory\n");
-        exit(1);
-    }
-}
 
 int disable_main(argc, argv)
     int argc;
@@ -765,10 +742,38 @@ Suite * compress_suite(void)
     Suite *s;
     TCase *tc_core;
 
+    comprLen = 10000*sizeof(int); /* don't overflow on MSDOS */
+    uncomprLen = comprLen;
+    myVersion = ZLIB_VERSION;
+
+    if (zlibVersion()[0] != myVersion[0]) {
+        fprintf(stderr, "incompatible zlib version\n");
+        exit(1);
+
+    } else if (strcmp(zlibVersion(), ZLIB_VERSION) != 0) {
+        fprintf(stderr, "warning: different zlib version\n");
+    }
+
+    printf("zlib version %s = 0x%04x, compile flags = 0x%lx\n",
+            ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
+
+    compr    = (Byte*)calloc((uInt)comprLen, 1);
+    uncompr  = (Byte*)calloc((uInt)uncomprLen, 1);
+    /* compr and uncompr are cleared to avoid reading uninitialized
+     * data and to ensure that uncompr compresses well.
+     */
+    if (compr == Z_NULL || uncompr == Z_NULL) {
+        printf("out of memory\n");
+        exit(1);
+    }
+
     s = suite_create("zlibSuite");
     /*Core test case */
     tc_core = tcase_create("Core");
-    tcase_add_checked_fixture(tc_core,setup,teardown);
+    // compr uncompr changed by each test in exact order
+    // this is the flaw of these tests
+    // disable this setup for each test
+    //tcase_add_checked_fixture(tc_core,setup,teardown);
     suite_add_tcase(s, tc_core);
 
     tcase_add_test(tc_core, check_compress);

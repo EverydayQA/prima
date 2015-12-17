@@ -561,6 +561,8 @@ int main(argc, argv)
     test_large_inflate(compr, comprLen, uncompr, uncomprLen);
 
     test_flush(compr, &comprLen);
+    printf("after test_flush comprLen:%d uncomprLen:%d compre:%s uncompr:%s\n",comprLen,uncomprLen,(char*)compr, (char*)uncompr);
+
     test_sync(compr, comprLen, uncompr, uncomprLen);
     comprLen = uncomprLen;
 
