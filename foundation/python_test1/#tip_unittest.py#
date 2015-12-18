@@ -1,4 +1,4 @@
-#!/usr/bin/python
+q#!/usr/bin/python
 import unittest
 from tip import tip_amount
 
@@ -11,7 +11,7 @@ class TipTest(unittest.TestCase):
     def test2(self):
         # 15% tip of 40 dollar
         tip = tip_amount(40,0.15)
-        self.assertEqual(tip,6)
+        self.assertEqual(tip,8)
 
 
 if __name__ == '__main__':
