@@ -1,4 +1,7 @@
 parameters_check()
 args.py
 
+lib/ - with or without main()
+bin/ - executable using lib
+tests - test lib/
 
