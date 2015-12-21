@@ -5,3 +5,11 @@ lib/ - with or without main()
 bin/ - executable using lib
 tests - test lib/
 
+find_duplicate.py
+find_broken_link.py
+find_hard_link.py
+
+find_file.py
+
+run_cmd(cmd, run)
+
