@@ -1,0 +1,3 @@
+#awk -v RS= -v ORS='\n\n' '/^\[pqr\]/{sub(/para2=[^\n]*/, "para2=foobar")} 1' 1.txt
+awk -v RS= -v ORS=\n\n /pqr/{sub(/para2=foobar/,"para2=new")}1 1.txt
+awk /^\[/{b=0} /^\[pqr\]/{b=1} /^para2=/{if(b) {sub(/=.*/,"=newvalue")}} 1 1.txt

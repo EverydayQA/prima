@@ -1,0 +1,24 @@
+------------------- Start of header -------------------
+Delivered-To: mhq@example.com
+Received: by 10.103.191.13 with SMTP id t13cs383005mup;
+        Tue, 9 Sep 2008 15:59:22 -0700 (PDT)
+Received: by 10.90.93.13 with SMTP id q13mr377626agb.106.1221001160730;
+        Tue, 09 Sep 2008 15:59:20 -0700 (PDT)
+Return-Path: <paypal@email.paypal.com>
+Received: from email-109.paypal.com (email-109.paypal.com [206.165.243.109])
+        by mx.google.com with ESMTP id 20si10298798agb.38.2008.09.09.15.59.18;
+        Tue, 09 Sep 2008 15:59:20 -0700 (PDT)
+Received-SPF: pass (google.com: domain of paypal@email.paypal.com designates 206.165.243.109 as permitted sender) client-ip=206.165.243.109;
+DomainKey-Status: good
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of paypal@email.paypal.com designates 206.165.243.109 as permitted sender) smtp.mail=paypal@email.paypal.com; domainkeys=pass header.From=paypal@email.paypal.com
+DomainKey-Signature: a=rsa-sha1; h=Date:From:Subject:To:X-Header-CompanyDBUserName:List-Unsubscribe:Reply-To:X-Header-MasterId:X-Header-Versions:Message-ID:MIME-Version:Content-Type; b=EAjWb+kXvANOAKi0R+cTQIT3usS6jVmuWl5p6G5FxVsHa7YX3tklAvHn/U2itZZmBxcUfBcWaXALx27ncz/Mz4v9mpP9Y3zBlfrZPYDiM4HOJPGxa0oINaBaMQv9pwmS; c=nofws; d=email.paypal.com; q=dns; s=yesmail1
+Date: Tue, 09 Sep 2008 15:59:02 PDT
+From: PayPal <paypal@email.paypal.com>
+Subject: Surprise her with something she'll love - up to 50% off fall's hottest looks
+To: "Tom Tom" <mhq@example.com>
+X-Header-CompanyDBUserName: paypalunica
+List-Unsubscribe: <mailto:paypalunica6-6-d0jyl.6fc4f@email.paypal.com?subject=unsubscribe>
+Reply-To: PayPal.6-6-d0jyl.fc4f@email.paypal.com
+X-Header-MasterId: 1023076
+X-Header-Versions: PayPal.6-6-d0jyl.fc4f@email.paypal.com
+Message-ID: <PayPal.6-6-d0jyl.fc4f@email.paypal.com>

@@ -32,15 +32,17 @@ foreach my $ref (@refs){
 }
 
 my %hash_of_array;
-$hash_of_array{"a"} = @types;
-$hash_of_array{"b"} = @array;
-print %hash_of_array;
+$hash_of_array{"aa"} = @types;
+$hash_of_array{"bb"} = @array;
+my $href2 = \%hash_of_array;
+
+print $href2;
 print "\n";
 
 my @twod;
 $twod[0] = $href;
 $twod[1] = $href;
 my $twod_aref = \@twod;
-print "<$towd_aref>\n";
+print "array of href<$towd_aref>\n";
 
 

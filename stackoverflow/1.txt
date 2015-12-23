@@ -1,0 +1,14 @@
+[abc]
+para1=123
+para2=456
+para3=111
+
+[pqr]
+para1=333
+para2=foobar
+para3=1345
+
+[xyz]
+para1=888
+para2=236
+para3=964
