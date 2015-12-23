@@ -1,0 +1,14 @@
+    urModule.pm
+    
+    1649  module-starter --module urModule --author="xx xxxx" --email="a.xxxx@xxx.com"
+    1651  cd urModule/
+    1653  perl Makefile.PL 
+    1654  make
+    1655  make test
+    # test coverage
+    1656  cover -test
+    # make tar.gz
+    1658  make dist
+    # make spec file for building a rpm
+    1660  cpanspec DirTree-0.01.tar.gz 
+    # get an account over pause.perl.org

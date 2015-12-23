@@ -1,0 +1,23 @@
+    # inside some other scripts
+    my $cmd = "/usr/local/bin/ren.pl aaa_777-1 bbb-6666-2 'Result Review' -reason 'too long, mail me at ben@example.com :) >>\n<*&'";
+    sysmtem($cmd);
+    
+    # /usr/local/bin/ren3.pl
+    # is a wrapper to call specific version
+    my @parameters = @ARGV;
+    
+    # the parameters passed is different from the command line
+    my $cmd = "/opt/bin/3.3.11/ren.pl @parameters";
+    sysmtem($cmd);
+    
+    # my previous solution
+    my $parameters_str = get_parameters_str(@parameters);
+    my $cmd = "/opt/bin/3.3.11/ren.pl $parameter_str";
+    sysmtem($cmd);
+    
+
+ 
+
+
+
+

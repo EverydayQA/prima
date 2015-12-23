@@ -15,10 +15,7 @@ Requires:       perl(Test::More)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %description
-The README is used to introduce the module and provide instructions on how
-to install the module, any machine dependencies it may have (for example C
-compilers and installed libraries) and any other information that should be
-provided before the module is installed.
+DirTree, similar to tree, perl implementation to display project struture
 
 %prep
 %setup -q -n DirTree-%{version}

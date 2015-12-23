@@ -1,0 +1,18 @@
+    #/usr/bin/perl -w
+    use strict;
+    return 1 unless $0 eq __FILE__;
+    main() if $0 eq __FILE__;
+    sub main{
+        my $str = "ru8xysyyyyyyysss6s5s";
+        my $char = "y";
+        my $count = count_occurrence($str, $char);
+        print "count<$count> of <$char> in <$str>\n";   
+    }
+    sub count_occurrence{
+        my ($str, $char) = @_;
+        my $len = length($str);
+        $str =~ s/$char//g;
+        my $len_new = length($str);
+        my $count = $len - $len_new;
+        return $count;
+    }
