@@ -1,3 +1,4 @@
+------------------- Start of header -------------------
 Delivered-To: mhq@example.com
 Received: by 10.103.191.13 with SMTP id t13cs383005mup;
         Tue, 9 Sep 2008 15:59:22 -0700 (PDT)
@@ -21,3 +22,7 @@ Reply-To: PayPal.6-6-d0jyl.fc4f@email.paypal.com
 X-Header-MasterId: 1023076
 X-Header-Versions: PayPal.6-6-d0jyl.fc4f@email.paypal.com
 Message-ID: <PayPal.6-6-d0jyl.fc4f@email.paypal.com>
+MIME-Version:1.0
+Content-Type: multipart/alternative;
+        boundary="==========_ALT_1451519089_====="
+------------------- End of header -------------------
