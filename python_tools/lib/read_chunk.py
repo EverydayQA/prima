@@ -27,7 +27,11 @@ def check_for_duplicates(paths, hash=hashlib.sha1):
                 else:
                     hashes[file_id] = full_path
 
-if sys.argv[1:]:
-    check_for_duplicates(sys.argv[1:])
-else:
-    print "Please pass the paths to check as parameters to the script"
+def main():
+    if sys.argv[1:]:
+        check_for_duplicates(sys.argv[1:])
+    else:
+        print "Please pass the paths to check as parameters to the script"
+
+if __name__ == '__main__':
+    main()

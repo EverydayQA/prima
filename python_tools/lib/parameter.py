@@ -43,32 +43,28 @@ def add_comments(comment):
     print comment
     return comment
 
+def main():
+    class C(object):
+        pass
 
-class C(object):
-    pass
+    c = C()
+    args = parser.parse_args(namespace=c)
+    parser.print_help()
+    #print args.accumulate(args.integers)
 
-c = C()
-args = parser.parse_args(namespace=c)
-parser.print_help()
-#print args.accumulate(args.integers)
+    if c.email is True:
+        print "email true"
+    print c.high
+    print c.run
+    print c.email
+    print c.remove
+    print c.search
+    print (vars(args))
+    #search_string("Email")
+    #print type(C())
+    #print C().__class__.__name__
 
-if c.email is True:
-    print "email true"
-print c.high
-print c.run
-
-print c.email
-print c.remove
-print c.search
-
-print (vars(args))
-#
-#search_string("Email")
-
-#print type(C())
-
-#print C().__class__.__name__
-
-
+if __name__ == '__main__':
+    main()
 
 
