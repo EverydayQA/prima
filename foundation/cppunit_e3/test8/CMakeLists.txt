@@ -19,7 +19,10 @@ mystringTest.cpp
 #TestMain.cpp
 
 )
+add_executable(sort sort.cc)
 
 add_executable(test8 ${test_SRCS} )
+
 target_link_libraries(test8 cppunit)
+
 add_test(NAME test8 COMMAND ${CMAKE_BINARY_DIR}/test8/test8)

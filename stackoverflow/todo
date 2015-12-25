@@ -1,0 +1,12 @@
+# a tool for the stackoverflow toolbox
+4 spaces for code
+url
+and others
+perl or python
+
+# a tool to extract code from the page interested
+# instead of copy paste - and losing format
+copy code from html - paster to text, use nano
+why vim cannot keep original format?
+:set paste
+:set nopaste
