@@ -1,0 +1,4 @@
+ 1529  gcc -fprofile-arcs -ftest-coverage coverage.cpp
+ 1550  history |grep profile
+ 1551  history |grep profile>> todo
+gcov -o CMakeFiles/Coverage.dir/coverage.cpp.gcno -f ../coverage.cpp

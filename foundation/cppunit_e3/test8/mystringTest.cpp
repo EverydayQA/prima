@@ -26,7 +26,7 @@ public:
     void checkValue(){
         mystring s;
         s.setbuffer("hello world!\n");
-        CPPUNIT_ASSERT_EQUAL_MESSAGE("Corrupt String Data",s[0],'w');
+        CPPUNIT_ASSERT_EQUAL_MESSAGE("Corrupt String Data",s[0],'h');
 
     }
     CPPUNIT_TEST_SUITE(mystringTest);
@@ -50,6 +50,7 @@ int main()
 {
     CppUnit::TestSuite* suite = new CppUnit::TestSuite("mystringTest");
     suite->addTest(new CppUnit::TestCaller<mystringTest>("checkLength",&mystringTest::checkLength));
+    suite->addTest(new CppUnit::TestCaller<mystringTest>("checkValuue",&mystringTest::checkValue));
     suite->addTest(new CppUnit::TestCaller<mystringTest>("checkValuue",&mystringTest::checkValue));
 
     //client code follows next

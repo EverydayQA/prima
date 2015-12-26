@@ -3,6 +3,7 @@
 url
 and others
 perl or python
+extention .stk - a script to clean up before commit
 
 # a tool to extract code from the page interested
 # instead of copy paste - and losing format
