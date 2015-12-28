@@ -1,6 +1,5 @@
 
-
-While waiting, as suggested by Rob and Robert, it is has sth to do with inode.
+Here is the solution to keep ownership, if anyone interested.
 
 I modified the procedures, it passed the current basic tests. 
 

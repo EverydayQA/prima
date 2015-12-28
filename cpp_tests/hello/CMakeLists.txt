@@ -14,11 +14,14 @@ set(test_SRCS
 add_executable(cppunit_test ${test_SRCS} )
 add_executable(cppunit_simple simple.cc )
 add_executable(suba subarray.cc )
+add_executable(cppunit_demo demo.cc )
 
 target_link_libraries(cppunit_test cppunit)
 target_link_libraries(cppunit_simple cppunit)
+target_link_libraries(cppunit_demo cppunit)
 
 add_test(NAME cppunit_test COMMAND ${CMAKE_BINARY_DIR}/cppunit_test)
 add_test(NAME cppunit_simple COMMAND ${CMAKE_BINARY_DIR}/cppunit_simple)
+add_test(NAME cppunit_demo COMMAND ${CMAKE_BINARY_DIR}/cppunit_demo)
 
 
