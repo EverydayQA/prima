@@ -1,0 +1,25 @@
+
+
+While waiting, as suggested by Rob and Robert, it is has sth to do with inode.
+
+I modified the procedures, it passed the current basic tests. 
+
+    # the original file information
+    ok 1 - /shared/shared/colourbar.nii.gz Found
+    ok 2 - /shared/shared/colourbar.nii.gz -- fileowner <504>
+    ok 3 - /shared/shared/colourbar.nii.gz -- inode <692254>
+
+    # copy file to /tmp, processed by uid 500
+    ***cp -vf /shared/shared/colourbar.nii.gz /tmp
+    `/shared/shared/colourbar.nii.gz' -> `/tmp/colourbar.nii.gz'
+    ***gunzip -f /tmp/colourbar.nii.gz
+    ***gzip -f /tmp/colourbar.nii
+    ok 4 - /tmp/colourbar.nii.gz -- fileowner <500>
+    ok 5 - /tmp/colourbar.nii.gz -- inode <31>
+
+
+    # copy back to overwrite, and the ownership preserved
+    ***cp -vf /tmp/colourbar.nii.gz /shared/shared
+    `/tmp/colourbar.nii.gz' -> `/shared/shared/colourbar.nii.gz'
+    ok 6 - /shared/shared/colourbar.nii.gz -- fileowner <504>
+    ok 7 - /shared/shared/colourbar.nii.gz -- inode <692254>

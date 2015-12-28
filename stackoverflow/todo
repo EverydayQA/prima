@@ -1,7 +1,10 @@
 # a tool for the stackoverflow toolbox
 4 spaces for code
 url
-and others
+> block on each line - no line break or need to 2 lines break
+
+edit OP causing more attentions
+
 perl or python
 extention .stk - a script to clean up before commit
 

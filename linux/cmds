@@ -1,3 +1,5 @@
 sed -n 1,33p file
 cat file | head -n 16482 | tail -n 258
 Shift+v,naviagat,d,:tabnew lib/m.pm,navigate to the end,p,:wa||:wqa
+ 1432  echo sth sth something sth1|sed 's/ /\n/g'|grep -w sth
+ 1435  echo sth sth something sth1|tr ' ' '\n'|grep  -w sth
