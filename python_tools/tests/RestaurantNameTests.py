@@ -1,12 +1,12 @@
 #!/usr/bin/python
 import unittest
 import sys,os
-pwd = os.path.dirname(os.path.realpath(__file__))
-basedir = os.path.join(pwd,'..')
-print basedir
-sys.path.append(basedir)
+    pwd = os.path.dirname(os.path.realpath(__file__))
+    basedir = os.path.join(pwd,'..')
+    print basedir
+    sys.path.append(basedir)
 
-from lib import Restaurant
+    from lib import Restaurant
 
 class RestaurantNameTests(unittest.TestCase):
 

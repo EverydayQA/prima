@@ -1,0 +1,48 @@
+
+
+
+# There is a difference with <W/w>orld
+# Not sure if this is what you wanted, the last_write is definitely not working!
+
+
+    F
+    ======================================================================
+    FAIL: test_show_command (__main__.CmdUiTest)
+    ----------------------------------------------------------------------
+    Traceback (most recent call last):
+      File "./int.py", line 32, in test_show_command
+        self.assertEqual('Hello World!', fakeOutput.getvalue().strip())
+    AssertionError: 'Hello World!' != 'Hello world!'
+    - Hello World!
+    ?       ^
+    + Hello world!
+    ?       ^
+    
+    
+    ----------------------------------------------------------------------
+    Ran 1 test in 0.003s
+    
+    FAILED (failures=1)
+
+Change to use unitte.mock.patch - my python version is 3.5    
+
+    from unittest.mock import patch
+    from io import StringIO
+    
+    
+        # not working for reasons unknown
+        def _last_write(self, nr=None):
+            """:return: last `n` output lines"""
+            if nr is None:
+                return self.mock_stdout.write.call_args[0][0]
+            return "".join(map(lambda c: c[0][0], self.mock_stdout.write.call_args_list[-nr:]))
+        
+        # modified with unittest.mock.patch
+        def test_show_command(self):
+            # Interpreter obj
+            cli = self.create()
+            with patch('sys.stdout', new=StringIO()) as fakeOutput:
+                #print ('hello world')
+                self.assertFalse(cli.onecmd('show'))
+            self.assertEqual('Hello World!', fakeOutput.getvalue().strip())
+    

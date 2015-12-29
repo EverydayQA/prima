@@ -1,0 +1,10 @@
+
+if you blackbox test is for validation to comply with contract,industry standard etc
+it has to be very formal
+
+>Date and initial on every page  
+>Sign on the last page  
+>Attach test log if it is an automated test  
+>Provide screenshot only if necessary, try an automated test with log  
+>Failed Test will not be accepted in this case  
+

@@ -1,0 +1,10 @@
+ 1039  python int.py 
+ 1040  yum search python3
+ 1041  yum search python
+ 1042  yum search python2
+ 1043  python int.py 
+ 1044  yum search ius
+ 1045  sudo yum install https://centos6.iuscommunity.org/ius-release.rpm
+ 1046  yum search python3
+ 1047  sudo yum install python35u-*
+ 1048  history |tail -n 10 >>cmds

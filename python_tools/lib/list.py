@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# retrieve a list a list
 def combinations(L,length): #L is list [A,A+1, ... ,B]  
     length_L = len(L)
     L_new=[]

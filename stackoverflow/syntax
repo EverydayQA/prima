@@ -1,0 +1,54 @@
+paragraph - newline or returns - multiple
+
+line breaks - add 2 spaces at end
+
+_italic_
+
+**bold***
+
+code - indent 4 spaces
+
+backticks escape  => `sth backgroup grey` - highlight
+
+quote - no line break, 2 spaces at end of a line
+>
+>
+>
+
+[github] (url)
+<a href = "url">foo</a>
+a>              - hyperlink.
+
+ALLOWED html syntax
+
+<b>              - bold, use as last resort <h1>-<h3>, <em>, and <strong> are 
+                   preferred.
+<blockquote>     - specifies a section that is quoted from another source.
+<code>           - defines a piece of computer code.
+<del>            - delete, used to indicate modifications.
+<dd>             - describes the item in a <dl> description list.
+<dl>             - description list.
+<dt>             - title of an item in a <dl> description list.
+<em>             - emphasized.
+<h1>, <h2>, <h3> - headings.
+<i>              - italic.
+<img>            - specifies an image tag.
+<kbd>            - represents user input (usually keyboard input).
+<li>             - list item in an ordered list <ol> or an unordered list <ul>.
+<ol>             - ordered list.
+<p>              - paragraph.
+<pre>            - pre-element displayed in a fixed width font and and 
+                   unchanged line breaks.
+<s>              - strikethrough.
+<sup>            - superscript text appears 1/2 character above the baseline 
+                   used for footnotes and other formatting.
+<sub>            - subscript appears 1/2 character below the baseline.
+<strong>         - defines important text.
+<strike>         - strikethrough is deprecated, use <del> instead.
+<ul>             - unordered list.
+<br>             - line break.
+<hr>             - defines a thematic change in the content, usually via a 
+                   horizontal line.
+
+
+

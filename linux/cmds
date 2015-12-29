@@ -3,3 +3,11 @@ cat file | head -n 16482 | tail -n 258
 Shift+v,naviagat,d,:tabnew lib/m.pm,navigate to the end,p,:wa||:wqa
  1432  echo sth sth something sth1|sed 's/ /\n/g'|grep -w sth
  1435  echo sth sth something sth1|tr ' ' '\n'|grep  -w sth
+
+# 
+cat file|tr -d "\t\n\r"
+# delete all whitespace
+cat file|tr -d "[:space:]"
+# delte all horizontal space
+cat file|tr -d "[:blank:]"
+
