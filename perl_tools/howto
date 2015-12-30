@@ -1,0 +1,6 @@
+ 1068  for file in `find ~/work/prima/ -type f -name "*.pl"`; do perl -c $file; done
+ 1069  for file in `find ~/work/prima/ -type f -name "*.pm"`; do perl -c $file; done
+ 1112  cd perl_tools/
+ 1113  ls -ltr
+ 1114  perlcritic --brutal --verbose 9 env_get.pl 
+ 1115  history|tail -n 4 >>howto 

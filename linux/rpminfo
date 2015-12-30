@@ -1,0 +1,15 @@
+
+
+tend out that  rpminfo is never meant for perl
+most for c/c++ etc 
+There is nothing wrong with rpmbuild
+
+    
+    READELF=/usr/bin/readelf
+    EU_READELF=/usr/bin/eu-readelf
+    OBJDUMP=/usr/bin/objdump
+    TMPDIR=/tmp
+    
+    progname=`basename $0`
+
+    

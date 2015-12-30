@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-
 my $cmd;
 # fille contains env variables and @INC
 # could be saved somewhere else
@@ -16,12 +15,10 @@ foreach my $line(@lines){
         $ENV{$key} = $splits[1];
     }
 }
-
 my @parameters = @ARGV;
 if(scalar(@parameters)==0){
     print "no parameters defined\n";
     exit(0);
 }
 my $script = $parameters[0];
-
 system($script);

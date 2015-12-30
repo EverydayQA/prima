@@ -1,0 +1,66 @@
+
+
+ cron,ssh,sudo are most likely to have different env than the termnimal one
+
+especially cron and ssh
+    
+ a solution is  run you cron like this
+
+ env_wrapper.pl to pass the env you want to perl_file.pl
+a shell script could be used to replace env_wrapper.pl as well
+
+ perl_file.pl will get the correct env in cron setting
+d/tmp/debug.log will help to debug, can be changed to /dev/null later on
+full_path is needed for cron
+
+    * * * * * /full_path/env_wrapper.pl /full_path/perl_file.pl > /tmp/debug.log
+
+   
+    
+This is an example env_wrapper.pl script to get env from txt file
+
+
+    #!/usr/bin/perl
+    use strict;
+    use warnings;
+    my $cmd;
+    # fille contains env variables and @INC
+    # could be saved somewhere else
+    my @lines = `cat /tmp/env.txt`;
+    foreach my $line(@lines){
+        chomp($line);
+        my @splits = split(/,/, $line);
+        my $key = $splits[0];
+        if($key eq "INC"){
+            push(@INC, $line);
+        }else{
+            $ENV{$key} = $splits[1];
+        }
+    }
+    my @parameters = @ARGV;
+    if(scalar(@parameters)==0){
+        print "no parameters defined\n";
+        exit(0);
+    }
+    my $script = $parameters[0];
+    system($script);
+
+
+This is a script write current env to file for env_wrapper.pl to load
+
+
+    #!/usr/bin/perl
+    use strict;
+    use warnings;
+    my $cmd;
+    foreach my $key(keys(%ENV)){
+        if($key=~ m/PATH/|| $key=~ m/PERL/){
+            $cmd = "echo '$key,$ENV{$key}' >> /tmp/env.txt";
+            system($cmd);
+    }
+    foreach my $inc (@INC){
+        $cmd = "echo 'INC,$inc'>> /tmp/env.txt";
+        system($cmd);
+    }
+    print "current env saved in this file: /tmp/env.txt\n";
+

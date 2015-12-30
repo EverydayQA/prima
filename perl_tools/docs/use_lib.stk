@@ -1,0 +1,78 @@
+
+
+Which is a better place to place use lib?<br>
+or does it make a difference at all?<br>
+
+
+    #module.pm
+    use A;
+    use B;
+    use C;
+
+    #example.pl
+    use A;
+    use B;
+    use C;
+
+<p>
+but if you have multiple libs, depending on each other<br>
+if you want to test a B-devel.pm, you do not know your specific B.subx is from B.pm or B-devel.pm.
+
+
+    The in-house production lib is added to @PERL5
+    
+    # perl scripts
+    /nfs_share/perl/bin
+
+    # perl libs
+    /nfs_share/perl/lib
+    with modA.pm, modB.pm, modC.pm
+
+    #modB.pm
+    use modA,modC;
+
+    #modA.pm
+    use modB,modC;
+
+    #modC.pm
+    use modA,modB;
+
+ Now you have hg local repo
+
+    # /hg_local_repo/bin/example.pl
+    use lib "/hg_local_repo/lib/";
+    use modA, modB, modC;
+
+    my $result = modB_compare(x,y);
+
+
+since on modA/B/C, they use each other, modB_compare() could
+either came from hg_local_repo or /nfs_shared/perl/lib.
+Is any suggestion to this problem?
+
+so is there a way to untangle this without a virtual machine?
+    
+
+about how subs can be accessed:
+
+    plain simple - add the path to env PERL5 
+    # the subs are accessible by env 
+    env|grep -i perl
+    PERL5:/usr/local/perl:/nfs_share/lib/
+
+    modB.pm
+    #!/usr/bin/perl
+    
+    =start
+    # package modB -- NO
+    # use Exporter; -- NO
+    =cut
+
+    sub modB_compare{
+        my (x,y) = @_;
+        # .....   
+        return x-y;
+    }
+
+
+
