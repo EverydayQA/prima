@@ -1,0 +1,247 @@
+total 60
+
+-rw-r--r--. 1 root root  493 Aug 16  2010 Xresources
+-rw-r--r--. 1 root root  547 Aug 16  2010 Xmodmap
+drwxr-xr-x. 2 root root 4096 Sep 23  2011 applnk
+drwxr-xr-x. 2 root root 4096 Feb 22  2013 xorg.conf.d
+-rwxr-xr-x. 1 root root 1328 Mar 18  2013 prefdm
+drwxr-xr-x. 5 root root 4096 Jun  9  2013 xinit
+drwxr-xr-x. 2 root root 4096 Jun 12  2013 mwm
+drwxr-xr-x. 2 root root 4096 Jun 12  2013 fontpath.d
+-rw-r--r--. 1 root root 8185 Aug 13  2014 xorg.conf.new
+-rw-r--r--. 1 root root 1021 Aug 14  2014 bumblebee-xorg.backup
+-rw-r--r--. 1 root root 1483 Aug 14  2014 xorg.conf.backup
+-rw-r--r--. 1 root root 1488 Aug 14  2014 xorg.conf.uninstalled-nvidia
+-rw-r--r--. 1 root root    0 Aug 14  2014 xorg.conf.nvidia-xconfig-original
+-rw-r--r--. 1 root root 1484 Aug 14  2014 xorg.conf.backup-nvidia
+-rw-r--r--. 1 root root 1412 Aug 14  2014 xorg.conf
+  983  exit
+  984  su joe
+  985  exit
+  986  su joe
+  987  exit
+  988  su joe
+  989  exit
+  990  reboot
+  991  exit
+  992  yum clean all && yum update
+  993   yum --skip-broken update
+  994  yum update Cython
+  995  yum update cython
+  996  yum update libcpp
+  997  yum update cpp
+  998  exit
+  999  ls -ltr
+ 1000  cd /etc
+ 1001  ls -ltr
+ 1002  cd X11
+ 1003  pwd
+ 1004  ls -ltr
+ 1005  cd /etc/X11
+ 1006  ls -ltr   >> /home/gliang/work/prima/linux/centos.howto
+ 1007  mv xconf xconf.old_kernel
+ 1008  mv xorg.conf xorg.conf.old_kernel
+ 1009  service X restart
+ 1010  service X11 restart
+ 1011* hiso
+ 1012  history|tail -n 30   >> /home/gliang/work/prima/linux/centos.howto
+
+
+[root@www gliang]# nvidia-smi
+FATAL: Module nvidia not found.
+NVIDIA: failed to load the NVIDIA kernel module.
+NVIDIA-SMI has failed because it couldn't communicate with NVIDIA driver. Make                                            sure that latest NVIDIA driver is installed and running.
+
+
+
+
+===============================================================================
+ Package             Arch         Version                   Repository    Size
+===============================================================================
+Updating:
+ nvidia-detect       x86_64       352.63-1.el6.elrepo       elrepo        20 k
+
+Transaction Summary
+===============================================================================
+Upgrade       1 Package(s)
+
+Total size: 20 k
+Is this ok [y/N]: y
+Downloading Packages:
+Running rpm_check_debug
+Running Transaction Test
+Transaction Test Succeeded
+Running Transaction
+  Updating   : nvidia-detect-352.63-1.el6.elrepo.x86_64                                                               1/2
+  Cleanup    : nvidia-detect-340.24-1.el6.elrepo.x86_64                                                               2/2
+  Verifying  : nvidia-detect-352.63-1.el6.elrepo.x86_64                                                               1/2
+  Verifying  : nvidia-detect-340.24-1.el6.elrepo.x86_64                                                               2/2
+
+Updated:
+  nvidia-detect.x86_64 0:352.63-1.el6.elrepo
+
+[root@www X11]# nvidia-smi
+FATAL: Module nvidia not found.
+NVIDIA: failed to load the NVIDIA kernel module.
+NVIDIA-SMI has failed because it couldn't communicate with NVIDIA driver. Make sure that latest NVIDIA driver is installed and running.
+
+[root@www X11]# nvidia-detect
+kmod-nvidia-304xx
+
+
+Done.
+  Updating   : nvidia-x11-drv-304xx-304.131-1.el6.elrepo.x86_64                                                       2/4
+  Cleanup    : nvidia-x11-drv-304xx-304.123-1.el6.elrepo.x86_64                                                       3/4
+  Cleanup    : kmod-nvidia-304xx-304.123-1.el6.elrepo.x86_64                                                          4/4
+  Verifying  : kmod-nvidia-304xx-304.131-1.el6.elrepo.x86_64                                                          1/4
+  Verifying  : nvidia-x11-drv-304xx-304.131-1.el6.elrepo.x86_64                                                       2/4
+  Verifying  : kmod-nvidia-304xx-304.123-1.el6.elrepo.x86_64                                                          3/4
+  Verifying  : nvidia-x11-drv-304xx-304.123-1.el6.elrepo.x86_64                                                       4/4
+
+Updated:
+  kmod-nvidia-304xx.x86_64 0:304.131-1.el6.elrepo
+
+Dependency Updated:
+  nvidia-x11-drv-304xx.x86_64 0:304.131-1.el6.elrepo
+
+
+config-original
+-rw-r--r--. 1 root root 1484 Aug 14  2014 xorg.conf.backup-nvidia
+[root@www X11]# find /lib/modules/ -name "*nvidia*"
+/lib/modules/2.6.32-358.el6.x86_64/kernel/drivers/video/nvidia
+/lib/modules/2.6.32-358.el6.x86_64/kernel/drivers/video/nvidia/nvidiafb.ko
+/lib/modules/2.6.32-358.el6.x86_64/kernel/drivers/video/backlight/mbp_nvidia_bl.ko
+/lib/modules/2.6.32-504.el6.x86_64/extra/nvidia-304xx
+/lib/modules/2.6.32-504.el6.x86_64/extra/nvidia-304xx/nvidia.ko
+/lib/modules/2.6.32-573.12.1.el6.centos.plus.x86_64/weak-updates/nvidia-304xx
+/lib/modules/2.6.32-573.12.1.el6.centos.plus.x86_64/weak-updates/nvidia-304xx/nvidia.ko
+/lib/modules/2.6.32-573.12.1.el6.centos.plus.x86_64/kernel/drivers/video/nvidia
+/lib/modules/2.6.32-573.12.1.el6.centos.plus.x86_64/kernel/drivers/video/nvidia/nvidiafb.ko
+/lib/modules/2.6.32-573.12.1.el6.centos.plus.x86_64/kernel/drivers/video/backlight/mbp_nvidia_bl.ko
+/lib/modules/2.6.32-358.11.1.el6.x86_64/kernel/drivers/video/nvidia
+/lib/modules/2.6.32-358.11.1.el6.x86_64/kernel/drivers/video/nvidia/nvidiafb.ko
+/lib/modules/2.6.32-358.11.1.el6.x86_64/kernel/drivers/video/backlight/mbp_nvidia_bl.ko
+
+
+[root@www X11]# nvidia-smi
+Tue Dec 29 18:34:43 2015
++------------------------------------------------------+
+| NVIDIA-SMI 4.304...   Driver Version: 304.131        |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name                     | Bus-Id        Disp.  | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap| Memory-Usage         | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  GeForce 6150SE nForce... | 0000:00:0D.0     N/A |                  N/A |
+| N/A   N/A  N/A     N/A /  N/A |   0%    0MB /  254MB |     N/A          N/A |
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+| Compute processes:                                               GPU Memory |
+|  GPU       PID  Process name                                     Usage      |
+|=============================================================================|
+|    0            Not Supported                                               |
++-----------------------------------------------------------------------------+
+
+  971  pwd
+  972  ls -ltr
+  973  cd /etc/X11
+  974  ls -ltr   >> /home/gliang/work/prima/linux/centos.howto
+  975  mv xconf xconf.old_kernel
+  976  mv xorg.conf xorg.conf.old_kernel
+  977  service X restart
+  978  service X11 restart
+  979  hiso
+  980  history|tail -n 30   >> /home/gliang/work/prima/linux/centos.howto
+  981  reboot
+  982  exit
+  983  cd /etc/X11/
+  984  ls -ltr
+  985  diff xorg.conf.old_kernel xorg.conf.new 
+  986  ls -ltr
+  987  \
+  988  xinit
+  989  ls  -ltr
+  990  mv xorg.conf.new xorg.conf.new.backup
+  991  reboot
+  992  ls -ltr
+  993  demsg
+  994  dmesg
+  995  cd /etc/X11
+  996  ls -ltr
+  997  vi /etc/inittab
+  998  reboot; exit
+  999  nvidia-bug-report.sh 
+ 1000  nvidia-smi 
+ 1001  cd /etc/X11/
+ 1002  ls -ltr
+ 1003  yum --enablerepo elrepo install nvidia-detect
+ 1004  vi /home/gliang/work/prima/linux/centos.howto 
+ 1005  nvidia-smi 
+ 1006  nvidia-detect
+ 1007  vi /home/gliang/work/prima/linux/centos.howto 
+ 1008  yum --enablerepo elrepo install kmod-nvidia-304xx
+ 1009  vi /home/gliang/work/prima/linux/centos.howto 
+ 1010  ls -ltr
+ 1011  nvidia-detect
+ 1012  ls -ltr
+ 1013  find /lib/modules/ -name "*nvidia*"
+ 1014  vi /home/gliang/work/prima/linux/centos.howto 
+ 1015  nvidia-detect
+ 1016  nvidia-smi 
+ 1017  vi /home/gliang/work/prima/linux/centos.howto 
+ 1018  nvidia-bug-report.sh 
+ 1019  history
+ 1020  history |tail -n 50 >>/home/gliang/work/prima/linux/centos.howto 
+  950  cd /etc/X11
+  951  ls -ltr
+  952  vi /etc/inittab
+  953  reboot; exit
+  954  nvidia-bug-report.sh 
+  955  nvidia-smi 
+  956  cd /etc/X11/
+  957  ls -ltr
+  958  yum --enablerepo elrepo install nvidia-detect
+  959  vi /home/gliang/work/prima/linux/centos.howto 
+  960  nvidia-smi 
+  961  nvidia-detect
+  962  vi /home/gliang/work/prima/linux/centos.howto 
+  963  yum --enablerepo elrepo install kmod-nvidia-304xx
+  964  vi /home/gliang/work/prima/linux/centos.howto 
+  965  ls -ltr
+  966  nvidia-detect
+  967  ls -ltr
+  968  find /lib/modules/ -name "*nvidia*"
+  969  vi /home/gliang/work/prima/linux/centos.howto 
+  970  nvidia-detect
+  971  nvidia-smi 
+  972  vi /home/gliang/work/prima/linux/centos.howto 
+  973  nvidia-bug-report.sh 
+  974  history
+  975  history |tail -n 50 >>/home/gliang/work/prima/linux/centos.howto 
+  976  reboot ; exit
+  977  init 5 &
+  978  dmesg
+  979  ls -ltr /etc/X11
+  980  Xorg 
+  981  ls -ltr
+  982  ls -ltr /etc/X11/
+  983  ls -ltr
+  984  vi /etc/inittab 
+  985  reboot;exit
+  986  Xorg --config &
+  987  X --config &
+  988  Xorg --configure &
+  989  Xorg --help
+  990  Xorg -help
+
+# this is the one what actually create the xorg.conf.new in /root
+# should do this earlier
+  991  Xorg -configure &
+  992  vi /root/xorg.conf.new 
+  993  mv /root/xorg.conf.new /etc/X11/
+  994  cd /etc/X11/
+  995  ls -ltr
+  996  mv xorg.conf.new xorg.conf
+  997  ls -ltr
+  998  reboot
+  999  history |tail -n 50 >>/home/gliang/work/prima/linux/centos.howto 
