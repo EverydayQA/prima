@@ -1,0 +1,22 @@
+
+Converted to git from mercurial recently, I love them both
+Due to 1 git feature, I have to apply the following changes
+before I start to write a script for existing hg repo.
+Here is the brainstorming, should I add or delete sth?
+
+    A .gitignore sample file to do this
+    
+    # sub directories to be ignored in any level
+    __pycache__
+    build
+    
+    # files to be ignored
+    *.pyc
+    *.rpm
+    
+    B a script to
+    # find all sub directories and add .gitkeep 
+    # exclude 
+    .git(not to add .gitkeep)    
+    .hg
+    
