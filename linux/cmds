@@ -11,3 +11,7 @@ cat file|tr -d "[:space:]"
 # delte all horizontal space
 cat file|tr -d "[:blank:]"
 
+ 1271  for file in `find . -type f -name "*.py"`; do dir=$(dirname $file);bdir=$(basename $dir);bname=$(basename $file);  new=$bdir.bname; echo  $file  $dir/$new ;done
+ 1272  history |tail -n 2 >> ../linux/cmds
+ 1283  for file in `find . -type f -name "*.py"`; do dir=$(dirname $file);bdir=$(basename $dir);bname=$(basename $file);  new=$bdir.$bname; newname=${new//\.\./}; echo mv -u $file  $dir/$newname ;done
+ 1284  history |tail -n 2 >> ../linux/cmds
