@@ -12,11 +12,10 @@ from lib import Derived
 # 
 class TestB(unittest.TestCase):
     # mock Base.__init__ which should not?!
-    @mock.patch("Base.__init__")
+    @mock.patch("lib.Derived.Derived.__init__")
     def test_calls_init_routine_of_base(mock_super_init):
-        Derived.Derived(1)
+        #Derived(1)
         assert (mock_super_init.called)
-
 
 
 if __name__ == '__main__':
