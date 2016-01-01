@@ -22,13 +22,17 @@ class variable(object):
 class MyClass(object):
     x = variable()
 
-m = MyClass()
-m.x=10
-print m.x
+# should we throw an excepthion and continue or just exit?!
+# how do we test an exception, or mock/patch?
+def main():
+    m = MyClass()
+    m.x=10
+    print m.x
 
-m.x=-33
-print m.x
+    m.x=-33
+    print m.x
 
-m.x=99
-print m.x
-
+    m.x=99
+    print m.x
+if __name__ == '__main__':
+    main()

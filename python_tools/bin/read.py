@@ -2,7 +2,7 @@
 def readFile():
     print ("readFile")
     try:
-        fileName = open("haha.txt",'r')
+        fileName = open("./src/haha.txt",'r')
         data = fileName.read().split()
         data.sort(key=int)
         print(data)

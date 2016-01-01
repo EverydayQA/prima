@@ -15,21 +15,26 @@ class MyClass(object):
     def unmocked(self):
         return 'unmocked'
 
+# patch.multiple and mock.Mock
+# not sure what is the purpose of mock bar() return the same value?
 patcher = mock.patch.multiple(
     '__main__.MyClass',
     foo=mock.Mock(return_value='mocked foo!'),
     bar=mock.Mock(return_value='bar')
 )
 
-mocked_method = patcher.start()
-mocked_method.return_value = 'mocked foo!'
+patcher.start()
+# mocked_method - all return the same value with patch.multiple?!
 my_instance = MyClass()
 
 # method foo is mocked
 assert my_instance.foo() == 'mocked foo!', my_instance.foo()
 
-# those methomd not mocked
+# bar() is mocked, but return value stay the same
 assert my_instance.bar() == 'bar', my_instance.bar()
+
+
+# those methomd not mocked
 assert my_instance.unmocked() == 'unmocked', my_instance.unmocked()
 assert my_instance.prop == 'prop', my_instance.prop
 

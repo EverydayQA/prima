@@ -1,19 +1,19 @@
 #!/usr/bin/python
 import unittest
 import sys,os
-    pwd = os.path.dirname(os.path.realpath(__file__))
-    basedir = os.path.join(pwd,'..')
-    print basedir
-    sys.path.append(basedir)
+pwd = os.path.dirname(os.path.realpath(__file__))
+basedir = os.path.join(pwd,'..')
+print basedir
+sys.path.append(basedir)
 
-    from lib import Restaurant
+from lib import Restaurant
 
 class RestaurantNameTests(unittest.TestCase):
 
     def setUp(self):
         self.non_string_name = 123
         self.valid_name = 'Italian rest '
-        self.non_alpha_name = 'valid ** n'
+        self.non_alpha_name = 'valid **\n'
 
     def tearDown(self):
         # this is useless - do not know why
