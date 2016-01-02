@@ -25,3 +25,7 @@ sed -e 's/[^[:alpha:]#][[:alpha:]]*/ /g' \
     -e 's/^[^#]*//' \
     -e 's/  */ /g'
 
+ 1164  tr -cd A <mock_sleep.stk 
+ 1165  tr -cd a <mock_sleep.stk 
+ 1166  tr -cd a <mock_sleep.stk |wc -c
+ 1167  history |tail -n 4  >>~/work/prima/linux/cmds 

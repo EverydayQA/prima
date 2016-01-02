@@ -1,4 +1,3 @@
-# TestMyWorker.py
 #!/usr/bin/python
 import unittest
 import mock
@@ -18,13 +17,29 @@ class TestWorker(unittest.TestCase):
         worker.run()
         self.assertFalse(mock_sleep.sleep.called,"Fail - sleep really called!")
 
-     # mock class object
+    # autospec - run() actually being called as well as sleep - but test passed?why???
+    # 
+    def test_worker_with_autospec(self):
+        mock_run = mock.create_autospec(MyWorker)
+        mock_run.return_value = False
+        worker = MyWorker()
+        worker.run()
+        self.assertFalse(mock_run.run.called,"Fail - autospec run really called!")
 
-     # with patch
+    # mock class object - cannot access sleep, can only access method run()
+    @mock.patch.object(MyWorker,'run')
+    def test_worker_obj(self, mock_run):
+        mock_run.return_value = False
+        worker = MyWorker()
+        worker.run()
+        self.assertFalse(mock_run.run.called,"Fail - run really called!")
+        
 
-     # mock.Mock
+    # with patch
+    
+    # mock.Mock
 
-     # mock.MagicMock
+    # mock.MagicMock
 
 
 
