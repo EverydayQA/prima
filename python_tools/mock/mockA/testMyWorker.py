@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import unittest
 import mock
+from mock import MagicMock
 
 # myWorker.py MyWorker(class)
 from myWorker import MyWorker
@@ -38,6 +39,13 @@ class TestWorker(unittest.TestCase):
     # with patch
     
     # mock.Mock
+    def test_worker_magicMock(self):
+
+        real_worker = MyWorker()
+        real_worker.run = MagicMock(name='run')
+        real_worker.return_value = False
+        real_worker.run()
+        self.assertFalse(real_worker.run.called,"Fail - run really called!")
 
     # mock.MagicMock
 
