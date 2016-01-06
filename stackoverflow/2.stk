@@ -1,0 +1,10 @@
+
+Why not use module and sub?
+
+    use module;
+    my @listofLists = init_2d_array();
+
+    #module.pm 
+    sub init_2d_array{
+        ... your code
+    }

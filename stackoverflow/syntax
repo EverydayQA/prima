@@ -52,3 +52,9 @@ ALLOWED html syntax
 
 
 
+
+*italic* _italic_
+**bold** __bold__
+`code`
+\*not italic\*
+[link text](http://example.com "link title")

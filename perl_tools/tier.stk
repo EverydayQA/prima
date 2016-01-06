@@ -1,0 +1,53 @@
+
+
+In a situation where strings came from different sources with one goal.
+
+to send to the proper level of support.tier, The following perl script
+
+simulate the situation where I can only find 2 instead of 4 expected.
+
+How can I modify this perl regex here? thanks
+
+
+
+    #!/usr/bin/perl
+    use strict;
+    use warnings;
+    
+    my $str;
+    my @tiers;
+    $str = "support.tier.1";
+    push(@tiers, $str);
+    $str = "support.tier.2";
+    push(@tiers, $str);
+    $str = qw("support\.tier\.1");
+    push(@tiers, $str);
+    $str = "support\.tier\.2";
+    push(@tiers, $str);
+    $str = quotemeta("support.tier.1\@example.com");
+    push(@tiers, $str);
+    $str = "support.tier.2\@example.com";
+    push(@tiers, $str);
+    $str = "support\.tier\.1\@example\.com";
+    push(@tiers, $str);
+    $str = "support\.tier\.2\@example\.com";
+    push(@tiers, $str);
+    $str = "sales\@example\.com";
+    push(@tiers, $str);
+    
+    my $count = 0;
+    foreach my $tier(@tiers){
+        if($tier =~ m/support.tier.1/){
+            print "$count: $tier\n";
+        }
+        $count++;
+    }
+
+
+I only get 2 matches while the expected is 4:
+
+
+
+
+    0: support.tier.1
+    6: support.tier.1@example.com

@@ -1,0 +1,9 @@
+Use single quotes to specify a literal string.
+Use double quotes when you want to interpolate a variable or escape sequence.
+Use generic quotes when you want to avoid ecaping literal quote characters.
+Use generic quotes to add clarity in some cases.
+Use any delimiter in generic quotes... but don't go crazy.
+It's usually best to stick with () [] {} <> // || ** and avoid confusing letter or digit delimiters.
+Use qw// to build lists of quoted strings.
+Use qr// to pre-compose regex patterns.
+Use qx// to avoid tricky backtick quoting issues.

@@ -1,0 +1,10 @@
+
+I have similar situation by adopting a list(file,db) to hold the info
+
+Pros: Do not have to move files around
+
+Cons: efforts has to be made to make sure the file has the correct entries
+ 
+
+    file, processingState, processingCount, datetime, etc
+    
