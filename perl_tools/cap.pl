@@ -40,3 +40,18 @@ print "$str\n";
 
 print qw("$$$$$$$$$$$$$$$$$$$$$$$$$\n")."\n";
 print '$$$$$$$$$$$$$\n';
+print "\n";
+my $count = 9;
+
+my @listOfLists = map [], split(//, 1 x $count) ;
+
+foreach my $ele(@listOfLists){
+    print "ele<$ele>\n";
+}
+
+my @lists = map [], 0 .. $count;
+foreach my $ele(@lists){
+    print "Ele<$ele>\n";
+}
+
+

@@ -1,15 +1,9 @@
 paragraph - newline or returns - multiple
-
 line breaks - add 2 spaces at end
-
 _italic_
-
 **bold***
-
 code - indent 4 spaces
-
 backticks escape  => `sth backgroup grey` - highlight
-
 quote - no line break, 2 spaces at end of a line
 >
 >
@@ -49,7 +43,6 @@ ALLOWED html syntax
 <br>             - line break.
 <hr>             - defines a thematic change in the content, usually via a 
                    horizontal line.
-
 
 
 
