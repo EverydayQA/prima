@@ -1,0 +1,16 @@
+
+
+Not sure this is what you wanted, use python unittest to wrap up the blackbox testing 
+
+
+    
+    import unittest # install and import 
+    # wrap your test in TestCase
+    class ScriptTest(unittest.TestCase):
+        def test_script(self):
+            output=runScript('test.py --a 5 --b 3')
+            self.assertEqual(output, '8') 
+    # add TestCase to unittest
+    if __name__ == '__main__':
+        suite = unittest.TestLoader().loadTestsFromTestCase(ScriptTest)
+        unittest.TextTestRunner(verbosity=2).run(suite)

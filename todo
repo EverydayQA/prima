@@ -1,0 +1,17 @@
+
+# to find all perl tests and execute
+# able to find any .pl .t with Test::More, logging summary, coverage
+# prove -lvr .
+
+cd prima
+./tests.pl
+
+# pyprove - new package
+# anything .py with unitest unittest2 minimum - logging failed and summary, covery
+nosetests -v -w .
+
+python -m unittest discover -s .
+
+http://stackoverflow.com/questions/1732438/how-to-run-all-python-unit-tests-in-a-directory
+http://stackoverflow.com/questions/16176101/python-equivalent-to-perls-prove
+

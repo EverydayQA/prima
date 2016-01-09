@@ -39,6 +39,7 @@ sub to_sys{
     }
 }
 sub main{
+    print "main()\n";
     #simulate real life situation - user A
     my $file = "/shared/shared/colourbar.nii.gz";
     my $dirname = dirname($file);
@@ -76,5 +77,5 @@ sub main{
     ok($inode_gzip==$inode,"$file -- inode <$inode_gzip>\n");
 
     # solution, or verified no solution to be decided
-
+    done_testing(7);
 }

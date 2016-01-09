@@ -13,6 +13,6 @@ BEGIN {use_ok('Test::Foo') };
 # test sub inside permission.pl
 # at 1 level up 
 # you have to execute it first
-require "${Bin}/../permission.pl";
+require "${Bin}/../permission3.pl";
 
 

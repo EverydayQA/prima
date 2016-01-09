@@ -1,23 +1,26 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-
 use File::Basename;
 
-my $dir = "/shared";
-my $w;
-
-my @dirs = `find $dir -maxdepth 1 -mindepth 1 -type d`;
 
 
-foreach my $tmp(@dirs){
-    chomp($tmp);
-    my $w = is_writable($tmp);
-    if($w){
-        print "*******************<$tmp> writable\n";
-    }else{
-        print "___________________<$tmp> not writable\n";
-    } 
+sub main{
+    my $dir = "/shared";
+    my $w;
+
+    my @dirs = `find $dir -maxdepth 1 -mindepth 1 -type d`;
+
+
+    foreach my $tmp(@dirs){
+        chomp($tmp);
+        my $w = is_writable($tmp);
+        if($w){
+            print "*******************<$tmp> writable\n";
+        }else{
+            print "___________________<$tmp> not writable\n";
+        } 
+    }
 }
 
 sub is_writable{
