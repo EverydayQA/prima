@@ -26,6 +26,17 @@ foreach my $dir(@testdirs){
     }
 }
 
+my @testdirs_nose = (
+    "${Bin}/udacity_python",
+    "${Bin}/foundation/python_e2",
+    "${Bin}/foundation/python_test1",
+    "${Bin}/python_tools"
+
+);
+
 # python tests
-my $cmd = "nosetests -v -w $Bin";
-system($cmd);
+foreach my $dir(@testdirs_nose){
+    chdir($dir);
+    my $cmd = "nosetests -v -w .";
+    system($cmd);
+}

@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='pythonEx',
+setup(name='python_tools',
     version='0.1',
     description='python tools',
     url='https://github.com/EverydayQA',
