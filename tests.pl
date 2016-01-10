@@ -25,3 +25,7 @@ foreach my $dir(@testdirs){
         print "\n==> <$dir> does not exist\n";
     }
 }
+
+# python tests
+my $cmd = "nosetests -v -w $Bin";
+system($cmd);

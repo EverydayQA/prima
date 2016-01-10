@@ -1,0 +1,21 @@
+
+    
+I Expect to find files with 2 underscores after file_root like this:
+
+<code>
+    file_root_stringA_stringB.txt
+</code>
+where both stringA and stringB are in alnum class
+
+<code>
+    find /tmp -maxdepth 2 -type f -name "file_root_*_*.txt"
+</code>
+
+but I stuck with:
+<code>
+    file_root_aaa_bbb.txt # expected 
+    file_root_aaa_bbb_c12.txt # not expecting 
+</code>
+
+How can I get this in bash? thanks
+

@@ -1,5 +1,5 @@
 from pkgutil import extend_path
 __path__ = extend_path(__path__,__name__)
 __all__ = ['mqueue']
-from lib.mqueue import MQueue
+from mqueue import MQueue
 

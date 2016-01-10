@@ -1,78 +1,60 @@
 
 
-Which is a better place to place use lib?<br>
-or does it make a difference at all?<br>
+
+How to isolate from installed libraries in hg repo for testing
+
+How can I use local hg repo libraries for testing isolating from already installed libs?
+
+Installed production perl package and local hg repo has the same structure
 
 
-    #module.pm
-    use A;
-    use B;
-    use C;
+        +-- lib
+            |-- modA.pm
+            |-- modB.pm
+        +-- bin
+            |-- example.pl
+        +-- t
+            |-- modA.t
+            |-- modB.t
 
-    #example.pl
-    use A;
-    use B;
-    use C;
-
-<p>
-but if you have multiple libs, depending on each other<br>
-if you want to test a B-devel.pm, you do not know your specific B.subx is from B.pm or B-devel.pm.
+libraries installed at and the path is added to @PERL5
 
 
-    The in-house production lib is added to @PERL5
-    
-    # perl scripts
-    /nfs_share/perl/bin
-
-    # perl libs
-    /nfs_share/perl/lib
-    with modA.pm, modB.pm, modC.pm
-
-    #modB.pm
-    use modA,modC;
-
-    #modA.pm
-    use modB,modC;
-
-    #modC.pm
-    use modA,modB;
-
- Now you have hg local repo
-
-    # /hg_local_repo/bin/example.pl
-    use lib "/hg_local_repo/lib/";
-    use modA, modB, modC;
-
-    my $result = modB_compare(x,y);
-
-
-since on modA/B/C, they use each other, modB_compare() could
-either came from hg_local_repo or /nfs_shared/perl/lib.
-Is any suggestion to this problem?
-
-so is there a way to untangle this without a virtual machine?
-    
-
-about how subs can be accessed:
-
-    plain simple - add the path to env PERL5 
-    # the subs are accessible by env 
+    /nfs_share/perl/
     env|grep -i perl
-    PERL5:/usr/local/perl:/nfs_share/lib/
+    PERL5:/usr/local/perl:/nfs_share/perl
+
+
+local hg repo at:
+
+
+    /data/user/hg/perl
+
 
     modB.pm
     #!/usr/bin/perl
-    
-    =start
-    # package modB -- NO
-    # use Exporter; -- NO
-    =cut
-
+    use modA;
     sub modB_compare{
         my (x,y) = @_;
         # .....   
         return x-y;
     }
+
+
+    # bin/example.pl
+    use FindBin qw($Bin);
+    use lib "${Bin}/lib/";
+    use modA, modB;
+    # if this call is from local lib
+    my $result = modB_compare(x,y);
+    # if sub being called from production or local hg?
+    my $result2 = modA_method();
+    # from local hg repo or from production lib?!
+
+
+If I were to modify and test in local hg repo, there is no gurantee that the lib I called is from local repo, not from the production libs.
+
+What is the potential solutions for isolation the libraries for testing in a local hg repo?
 
 
 
