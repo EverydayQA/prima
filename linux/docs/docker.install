@@ -1,0 +1,18 @@
+ 1014  sudo yum install docker-io
+ 1015  sudo yum remove docker
+ 1016  sudo yum install docker-io
+ 1017  sudo service docker start
+ 1018  sudo chkconfig docker on
+ 1019  docker pull centos
+ 1020  sudo docker pull centos
+ 1021  docker --help
+ 1022  docker run hello-world
+ 1023  sudo docker run hello-world
+
+# cannot run docker run hello-world
+# cannot docker pull centos
+
+# fsl-v5.0
+https://github.com/vistalab/docker
+https://hub.docker.com/r/simexp/minc-toolkit/
+

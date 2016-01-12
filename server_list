@@ -1,0 +1,6 @@
+--2015-12-31 13:40:03--  http://ifs=,/
+Resolving ifs=,... failed: Temporary failure in name resolution.
+wget: unable to resolve host address “ifs=,”
+--2015-12-31 13:40:14--  http://read/
+Resolving read... failed: Temporary failure in name resolution.
+wget: unable to resolve host address “read”

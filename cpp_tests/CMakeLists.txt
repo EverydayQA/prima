@@ -19,6 +19,7 @@ DemoTest.h
 TestMain.cpp
 )
 add_executable(cppunit_test ${test_SRCS} )
+add_executable(tmpexe tmp.cc )
 
 target_link_libraries(cppunit_test cppunit)
 
