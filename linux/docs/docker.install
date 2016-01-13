@@ -15,4 +15,31 @@
 # fsl-v5.0
 https://github.com/vistalab/docker
 https://hub.docker.com/r/simexp/minc-toolkit/
+Cannot connect to the Docker daemon. Is 'docker -d' running on this host?
+[root@www prima]# service docker restart
+Stopping docker:                                           [FAILED]
+Starting docker:                                           [  OK  ]
+[root@www prima]# docker pull centos
+Cannot connect to the Docker daemon. Is 'docker -d' running on this host?
+[root@www prima]# service docker restart
+Stopping docker:                                           [FAILED]
+Starting docker:                                           [  OK  ]
+[root@www prima]# service docker restart
+Stopping docker:                                           [FAILED]
+Starting docker:                                           [  OK  ]
+[root@www prima]# service docker stop
+[root@www prima]# service docker start
+Starting docker:                                           [  OK  ]
+[root@www prima]# docker pull centos
+Cannot connect to the Docker daemon. Is 'docker -d' running on this host?
+[root@www prima]# docker -d
+WARN[0000] You are running linux kernel version 2.6.32-573.12.1.el6.centos.plus.                                          x86_64, which might be unstable running docker. Please upgrade your kernel to 3.                                          10.0.
+INFO[0000] Listening for HTTP on unix (/var/run/docker.sock)
+docker: relocation error: docker: symbol dm_task_get_info_with_deferred_remove,                                           version Base not defined in file libdevmapper.so.1.02 with link time reference
+
+https://github.com/docker/docker/issues/9310
+
+http://stackoverflow.com/questions/27216473/docker-1-3-fails-to-start-on-rhel6-5
+
+http://www.boycottdocker.org/
 

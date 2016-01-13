@@ -4,3 +4,7 @@
  1113  ls -ltr
  1114  perlcritic --brutal --verbose 9 env_get.pl 
  1115  history|tail -n 4 >>howto 
+
+# run all tests
+prove -lvr .
+

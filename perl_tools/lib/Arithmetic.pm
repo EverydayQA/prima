@@ -13,10 +13,10 @@ use Exporter;
 
 sub add
 {
-my ($no1,$no2) = @_;
-my $result;
-$result = $no1+$no2;
-return $result;
+    my ($no1,$no2) = @_;
+    my $result;
+    $result = $no1 + $no2;
+    return $result;
 }
 
 sub subtract
