@@ -38,6 +38,14 @@ sub to_sys{
         system($cmd);
     }
 }
+sub mock_txt_tmp{
+    my $file = $_[0];
+    # dir,dir,file,ext
+    my $dir = dirname($file);
+    my $base = filepase($file);
+    
+}
+
 sub main{
     print "main()\n";
     #simulate real life situation - user A

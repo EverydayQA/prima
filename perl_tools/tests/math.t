@@ -13,6 +13,16 @@ main() if $0 eq __FILE__;
 
 sub main{
     print "$Bin\n";
+    my $date = `date`;
+    chomp($date);
+    $date =~ s/ /_/g;
+    $date =~ s/:/_/g;
+
+    my $log = "${Bin}/test_${date}.log";
+    my $err = "${Bin}/err_${date}.log";
+    Test::More->builder->output($log);
+    Test::More->builder->failure_output($err);
+
     use_ok('Arithmetic');
     my $file = "${Bin}/math_add.txt";
     ok(-e $file,"$file Found\n");
