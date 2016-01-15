@@ -5,6 +5,9 @@
 
 cd prima
 ./tests.pl
+# logging using Test::More 
+# email 
+# coverage - not done
 
 # pyprove - new package
 # anything .py with unitest unittest2 minimum - logging failed and summary, covery

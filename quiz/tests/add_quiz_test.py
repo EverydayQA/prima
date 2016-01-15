@@ -9,12 +9,12 @@ base_dir = os.path.join(pwd,'..')
 # add to sys.path
 sys.path.append(base_dir)
 
-from quiz import add_quiz
+from lib import add_quiz
 
 class add_quizTest(unittest.TestCase):
     def test1(self):
         question = add_quiz.add_question()
-        self.assertEqual(question,4)
+        self.assertEqual(question,8)
 
     def test2(self):
         question = add_quiz.add_question()
@@ -22,6 +22,5 @@ class add_quizTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
-
-
+    suite = unittest.TestLoader().loadTestsFromTestCase(add_quizTest)
+    unittest.TextTestRunner(verbosity=2).run(suite)

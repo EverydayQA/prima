@@ -30,7 +30,8 @@ my @testdirs_nose = (
     "${Bin}/udacity_python",
     "${Bin}/foundation/python_e2",
     "${Bin}/foundation/python_test1",
-    "${Bin}/python_tools"
+    "${Bin}/python_tools",
+    "${Bin}/quiz"
 
 );
 
