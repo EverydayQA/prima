@@ -1,0 +1,62 @@
+
+
+
+First, my wordpress version
+
+
+    Name        : wordpress                    Relocations: (not relocatable)
+    Version     : 4.4                               Vendor: Fedora Project
+    Release     : 1.el6                         Build Date: Wed 09 Dec 2015 11:40:49 AM EST
+
+plugins on my centos6.4 would be installed at this location:
+
+
+    /usr/share/wordpress/wp-content/plugins
+
+Please pay attention that this function(on my system) not always return a user, WP_Error as well
+
+
+    /**
+     * Authenticate the user using the username and password.
+     *
+     * @since 2.8.0
+     *
+     * @param WP_User|WP_Error|null $user     WP_User or WP_Error object from a previous callback. Default null.
+     * @param string                $username Username for authentication.
+     * @param string                $password Password for authentication.
+     * @return WP_User|WP_Error WP_User on success, WP_Error on failure.
+     */
+    function wp_authenticate_username_password($user, $username, $password) {
+
+    
+
+The wp-email-login I found might fit for you:
+
+
+    wget http://plugins.svn.wordpress.org/wp-email-login/trunk/email-login.php
+    
+
+The code Digest:
+
+
+    function dr_email_login_authenticate( $user, $username, $password ) {
+    	if ( is_a( $user, 'WP_User' ) )
+    		return $user;
+    
+    	if ( !empty( $username ) ) {
+    		$username = str_replace( '&', '&amp;', stripslashes( $username ) );
+    		$user = get_user_by( 'email', $username );
+    		if ( isset( $user, $user->user_login, $user->user_status ) && 0 == (int) $user->user_status )
+    			$username = $user->user_login;
+    	}
+    
+    	return wp_authenticate_username_password( null, $username, $password );
+    }
+    
+
+Reason of this recommendation despite no specific TestData -- This line could make a huge difference:
+
+
+    		$username = str_replace( '&', '&amp;', stripslashes( $username ) );
+    
+    

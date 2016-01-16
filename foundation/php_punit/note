@@ -7,8 +7,7 @@ extention=module.so
 to
 extension=mcrypt.so
 
- 1042  vi ArrayTest.php 
  1043  phpunit --verbose ArrayTest.php 
- 1045  vi ArrayTest.php 
- 1046  vi note
- 1050  history|tail -n 9 >> note 
+        
+
+phpunit -v --debug ArrayTest.php

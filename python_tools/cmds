@@ -8,3 +8,6 @@
  1046  yum search python3
  1047  sudo yum install python35u-*
  1048  history |tail -n 10 >>cmds
+
+# python 2.6 has not discover?
+ 1089  python3.5 -m unittest discover -s tests/ -p '*.py'
