@@ -36,9 +36,7 @@ class TestWorker(unittest.TestCase):
         self.assertFalse(mock_run.run.called,"Fail - run really called!")
         
 
-    # with patch
-    
-    # mock.Mock
+    # mock.MagicMock
     def test_worker_magicMock(self):
 
         real_worker = MyWorker()
@@ -47,7 +45,9 @@ class TestWorker(unittest.TestCase):
         real_worker.run()
         self.assertFalse(real_worker.run.called,"Fail - run really called!")
 
-    # mock.MagicMock
+    # with patch
+
+    # mock.Mock
 
 
 
