@@ -3,6 +3,8 @@ import codecs
 import sys
 import gzip
 import unittest
+import io
+
 class ReadUTF(object):
     def __init__(self):
         pass
@@ -37,7 +39,7 @@ class TestReadUTF(unittest.TestCase):
 
     def test_Yurik_read(self):
         reader = ReadUTF()
-        contents = reader.Jochen_read(self.testdata)
+        contents = reader.Yurik_read(self.testdata)
         expected = reader.Jochen_read(self.testdata)
         #reader.show_contents(expected)
         #reader.show_contents(contents)
@@ -58,6 +60,5 @@ if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestReadUTF)
     unittest.TextTestRunner(verbosity=2).run(suite)
         
-
 
 
