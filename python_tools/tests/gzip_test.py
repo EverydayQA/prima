@@ -4,20 +4,24 @@ import sys
 import gzip
 import unittest
 import io
-
 class ReadUTF(object):
     def __init__(self):
         pass
     def Jochen_read(self, testdata):
         f = gzip.open(testdata,'rb')
         reader = codecs.getreader('utf-8')
-        contents = reader(f)
+        contents = list(f)
         return contents
     def Yurik_read(self, testdata):
-        f = gzip.open(testdata)
-        reader = io.BufferedReader(f)
+        f = gzip.open(testdata,'rb')
+        reader = io.BufferedReader()
         contents = io.TextIOWrapper(reader, encoding='utf8', errors='ignore')
         return contents
+    def Gang_read(self, testdata):
+        f = gzip.open(testdata,'r')
+        contents = list(f)
+        return contents
+
     def comp(self,list1, list2):
 
         a = list1.pop()
@@ -37,24 +41,23 @@ class TestReadUTF(unittest.TestCase):
         reader = ReadUTF()
         contents = reader.Jochen_read(self.testdata)
 
-    def test_Yurik_read(self):
+    def test_Gang_read(self):
         reader = ReadUTF()
-        contents = reader.Yurik_read(self.testdata)
+        contents = reader.Gang_read(self.testdata)
         expected = reader.Jochen_read(self.testdata)
-        #reader.show_contents(expected)
-        #reader.show_contents(contents)
-        len_expected = len(expected)
-        len_contents = len(contents)
-        self.assertTrue(len_expected == len_contents)
-
-        result = reader.comp(contents, contents)
-        #self.assertTrue(result is True)
-
-
-
+        size = len(contents)
+        size_expected = len(expected)
+        self.assertEqual(size ,size_expected)
 
     def tearDown(self):
         pass
+
+'''
+    def test_Yurik_read(self):
+        reader = ReadUTF()
+        contents = reader.Yurik_read(self.testdata)
+        reader.show_contents(contents)
+'''
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestReadUTF)
