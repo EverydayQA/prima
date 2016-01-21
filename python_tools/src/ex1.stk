@@ -1,0 +1,55 @@
+
+
+I misunderstood you in the first answer, I ended up writing 3 levels of mocking
+
+mocking the input, input_list and the return value of the function
+
+
+    import mock
+    import unittest
+    def check_input_list(list):
+        return_value = list
+        if not return_value:
+            return False
+        return return_value
+    
+    def check_method_return(input):
+        return_value = input.ops.list()
+        if not return_value:
+            return False
+        return return_value
+    
+    def check_method_len(input):
+        return_value = input.ops.list()
+        if len(return_value) < 1:
+            return False
+        return return_value
+    
+    class TestMockReturnValue(unittest.TestCase):
+        def test_mock_input_list(self):
+            fake_list = mock.MagicMock(name='input.ops.list')
+            # set mock list to be empty
+            fake_list = []
+            result = check_input_list(fake_list)
+            self.assertEqual(result, False)
+    
+        def test_mock_return(self):
+            fake_input = mock.MagicMock(name='input')
+            # set mock input to ''
+            fake_input = ''
+            result = check_input_list(fake_input)
+            self.assertEqual(result, False)
+    
+    
+        def test_mock_len(self):
+            fake_input = mock.MagicMock()
+            fake_input().ops.list.return_value = []
+    
+            result = check_method_len(fake_input)
+            self.assertFalse(result)
+    
+    
+    if __name__ == '__main__':
+        suite = unittest.TestLoader().loadTestsFromTestCase(TestMockReturnValue)
+        unittest.TextTestRunner(verbosity=2).run(suite)
+    
