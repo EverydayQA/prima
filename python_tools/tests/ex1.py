@@ -16,8 +16,11 @@ def check_method_len(input):
 
 class TestMockReturnValue(unittest.TestCase):
     def test_mock_input(self):
+        # mock input
         fake_input = mock.MagicMock(name='input')
+        # set mock_input.ops.list.return_value to empty
         fake_input.ops.list.return_value = []
+        # use mock_input as parameter
         result = check_method_return(fake_input)
         self.assertFalse(result)
 

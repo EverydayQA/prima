@@ -1,0 +1,22 @@
+
+
+Exit codes are logged separated by comma
+
+The last 2 fields are exit code of 2 versions
+
+    /opt/a/b/c,parameter,a b c,3,1
+    /opt/a/d/e,parameter,a b c,1,1
+    /opt/a/b/d,parameter,0,0
+    /opt/a/e/c,parameter,0,1
+
+The exit code range from 0 to 20
+How do I extract lines with different exit codes?
+
+I am tired of doing:
+
+    
+    
+    cat log|grep -v ,0,0|grpe -v ,1,1|grep -v ,2,2
+
+Thanks
+
