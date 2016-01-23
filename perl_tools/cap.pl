@@ -57,3 +57,31 @@ foreach my $ele(@lists){
 }
 print "\n";
 
+
+#A
+my @eles = (
+    "abc",
+    "bbc"
+);
+
+#B
+@eles = ("abc","bbc");
+
+#C
+@eles = qw(abc,bbc);
+
+#D
+@eles = qw(
+abc
+bbc
+);
+
+#E
+@eles = qw{
+abc
+bbc
+};
+
+#F
+@eles = qw(abc bbc);
+

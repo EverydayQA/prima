@@ -1,0 +1,8 @@
+
+goal: tool to add attachment doc/pdf to redmine
+
+#api?
+https://www.redmine.org/projects/redmine/wiki/Rest_api
+
+# php attachment
+http://stackoverflow.com/questions/7609331/redmine-post-attachments-using-api-or-not

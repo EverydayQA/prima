@@ -1,0 +1,35 @@
+
+To show the difference between 2 ways to set mock_input return value
+This could help  to understand better
+
+
+    [gliang@www ~]$ ipython
+    Python 2.6.6 (r266:84292, Jul 23 2015, 15:22:56)
+    IPython 0.13.2 -- An enhanced Interactive Python.
+    
+    In [1]: import unittest
+    
+    In [2]: import mock
+    
+    In [3]: fake_input mock.Mag
+    mock.MagicMixin  mock.MagicMock   mock.MagicProxy
+    
+    In [4]: fake_input = mock.MagicMock()
+    
+    In [5]: fake_input().ops.list.return_value= []
+    
+    In [6]: print fake_input().ops.list.return_value
+    []
+    
+    In [7]: print fake_input.ops.list.return_value
+    <MagicMock name='mock.ops.list()' id='15160848'>
+    
+    In [8]: fake_input2 = mock.MagicMock()
+    
+    In [9]: fake_input2.ops.list.return_value = []
+    
+    In [10]: print fake_input2.ops.list.return_value
+    []
+    
+    In [11]: quit()
+    

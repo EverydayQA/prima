@@ -18,3 +18,14 @@ but I stuck with:
 
 How can I get this in bash? thanks
 
+
+
+    
+    each _[^_]* section represent 1 underscore match
+    
+
+    sudo find /tmp -type f -regextype posix-egrep -regex "^.*err_[^_]*_[^_]*_[^_]*_[^_]*_[^_]*_[^_]*_[^_]*_[^_]*\.log"
+    /tmp/err_Wed_Jan_13_19_09_18_EST_2016.log
+    /tmp/err_Wed_Jan_13_19_00_37_EST_2016.log
+
+

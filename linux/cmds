@@ -28,4 +28,7 @@ sed -e 's/[^[:alpha:]#][[:alpha:]]*/ /g' \
  1164  tr -cd A <mock_sleep.stk 
  1165  tr -cd a <mock_sleep.stk 
  1166  tr -cd a <mock_sleep.stk |wc -c
- 1167  history |tail -n 4  >>~/work/prima/linux/cmds 
+
+    
+ 1068  sudo find /tmp -type f -regextype posix-egrep -regex "^.*err_[^_]*_[^_]*_[^_]*_[^_]*_[^_]*_[^_]*_[^_]*_[^_]*\.log"
+awk -F , $NF != $(NF-1) exit.log
