@@ -65,10 +65,10 @@ my @eles = (
 );
 
 #B
-@eles = ("abc","bbc");
+@eles = ("abc", "bbc");
 
 #C
-@eles = qw(abc,bbc);
+@eles = qw(abc, bbc);
 
 #D
 @eles = qw(

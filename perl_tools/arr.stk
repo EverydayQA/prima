@@ -1,0 +1,33 @@
+    
+
+Is the any difference in the following ways to define array in perl?
+Which is the preferred way? Thanks
+    
+    
+    #A
+    my @eles = (
+        "abc",
+        "bbc"
+    );
+    
+    #B
+    @eles = ("abc", "bbc");
+    
+    #C
+    @eles = qw(abc, bbc);
+    
+    #D
+    @eles = qw(
+    abc
+    bbc
+    );
+    
+    #E
+    @eles = qw{
+    abc
+    bbc
+    };
+    
+    #F
+    @eles = qw(abc bbc);
+    

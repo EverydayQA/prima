@@ -5,7 +5,7 @@ use Net::SMTP;
 use Test::More;
 
 
-my $smtp = Net::SMTP->new('smtp.gmail.com',
+my $smtp = Net::SMTP->new('192.168.2.10',
                            Hello => 'my.mail.domain',
                            Timeout => 10,
                            Debug   => 1,
