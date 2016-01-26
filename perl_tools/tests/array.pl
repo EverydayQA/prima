@@ -15,6 +15,9 @@ array_or_string($str_comma);
 array_or_string($str_comma_space);
 
 array_or_string(qw(c c c));
+
+my $cnt = "abc123:xxx7;5\n" =~ tr/[0-9]//;
+print "count<$cnt>\n";
 sub array_or_string{
 
     my @parameters = @_;
