@@ -1,24 +1,33 @@
-    
-    
 
-    ok 1 - mock today, expect: 32, got: 32
-    # 
-    not ok 2 - today for real expect:<=31, got: 32
-    # 
-    1..2
-    
+It seems that in python, mock.patch can patch an input        
+
+Is it possible to mock a input parameter in perl? and how?
+        
+    not ok 1 - expect: 59, got: 1
+
+
+
+The code I had so far:
+
     #!/usr/bin/perl
-    use Date::Calc;
-    use Test::MockModule;
     use Test::More;
+    use Test::MockObject;
+    use Date::Calc;
     
-    my ($big_day, $mock_today, $today);
+    # scope of mocked Date::Calc
+    {
+        my $import;
+        my $mock = Test::MockObject->new();
+        $mock->fake_module('Date::Calc', import => sub { $import = caller} );
+        $mock->fake_new('Date::Calc');
+        $mock->mock('Days_in_Year', sub {print "how to mock parameter - month to be 2\n"});
+        # is it possible to mock a parameter? how if possible?
+        my $days_mock = $mock->Days_in_Year(2015,6);
+        ok($days_mock == 59, "expect: 59, got: $days_mock\n");
+    }
     
-    $big_day = 32;
-    my $module = Test::MockModule->new('Date::Calc');
-    $module->mock('Today', sub {return $big_day});
-    $mock_today = Date::Calc::Today();
-    $today = Date::Calc::Today();
-    ok($mock_today == $big_day, "mock today, expect: $big_day, got: $mock_today\n");
-    ok($today<=31, "today for real expect:<=31, got: $today\n");
+    # unmocked module and methods
+    my $days_in_year = Date::Calc::Days_in_Year(2015,6);
+    ok($days_in_year == 181, "expect: 181, got: $days_in_year\n");
     done_testing(2);
+

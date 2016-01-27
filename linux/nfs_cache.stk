@@ -1,0 +1,24 @@
+
+
+perl - howto force refresh NFS cache when checking newly created file?
+
+When a file is created on a Linux NFS shared mount, the client is either Linux or mac machine. The existence or absence of a file is the key for what to do next, but the checking is not always return the right resut:
+
+e.g I am doing this in perl, this still not working well, esp mac machines
+
+
+    system("touch $file");  # write file
+    if( -e $file){
+    
+    }else{
+        sleep(5);   # wait 5 seconds
+        system("ls -ltr"); # force to cache?
+        if(-e $file){
+        
+        }else{
+            print "$file missing, exit\n";
+            exit(1);
+        }
+    }
+
+Do we have better ways to force refresh nfs cache? thanks.

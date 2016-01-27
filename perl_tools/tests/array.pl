@@ -24,3 +24,23 @@ sub array_or_string{
     my $size = scalar(@parameters);
     print "<@parameters> size<$size>\n";
 }
+
+my @nums = (
+    '-0',
+    '-0.0',
+    "-0.000",
+    qw(-0.000),
+    '-0.000',
+    -0.000,
+);
+
+foreach my $num(@nums){
+    my $number = $num;
+    my $abs = abs($number);
+    print "<$num> abs <$abs>\n";
+}
+
+foreach my $num(@nums){
+    my $abs_abs = abs(abs($num));
+    print "<$num> abs_abs <$abs_abs>\n";
+}
