@@ -1,44 +1,35 @@
 #!/usr/bin/perl
+use Test::More;
+use Test::MockObject;
 use strict;
 use warnings;
-use Test::More;
-
 use FindBin qw($Bin);
-use lib "${Bin}/../lib/";
+use lib "$Bin/../lib";
+# Arithmetic declared to be package
 use Arithmetic;
 
-return 1  unless $0 eq __FILE__;
+# scope of mocked Arithmetic
+{
+    my $import;
+    my $mock = Test::MockObject->new();
+    $mock->fake_module('Arithmetic', import => sub { $import = caller} );
+    $mock->fake_new('Arithmetric');
+    $mock->mock('add', 
+        sub {
+            print "This example only mock a return value\n"; 
+            return 45;
+        }
+    );
 
-main() if $0 eq __FILE__;
+    my $addition_mock = $mock->add(2015,6);
+    ok($addition_mock == 45, "expect: 45, got: $addition_mock\n");
 
-sub main{
-    print "$Bin\n";
-    my $date = `date`;
-    chomp($date);
-    $date =~ s/ /_/g;
-    $date =~ s/:/_/g;
-
-=start
-does not work well with prove
-    my $log = "/tmp/test_${date}.log";
-    my $err = "/tmp/err_${date}.log";
-    Test::More->builder->output($log);
-    Test::More->builder->failure_output($err);
-=cut
-
-    use_ok('Arithmetic');
-    my $file = "${Bin}/math_add.txt";
-    ok(-e $file,"$file Found\n");
-    my @lines = `cat $file`;
-    ok(scalar(@lines)>0,"array not empty\n");
-    foreach my $line(@lines){
-        chomp($line);
-        my @splits = split(/,/,$line);
-        my $expected = pop(@splits);
-        my $result = add($splits[0], $splits[1]);
-        print "\n";
-        cmp_ok($result, 'eq', $expected, "add @splits, got: <$result>, expecting: <$expected>\n");
-
-    }
-    done_testing(8);
+    # if mock multiply has no definition, return null
+    my $mul_mock = $mock->multiply(3,33);
+    ok($mul_mock eq '', "expect: '', got: <$mul_mock>\n");
 }
+
+# unmocked module and methods
+my $addition = add(2015,6);
+ok($addition == 2021, "expect: 2021, got: $addition\n");
+done_testing();

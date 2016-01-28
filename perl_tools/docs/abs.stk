@@ -1,0 +1,59 @@
+
+It is not uncommon that a parameter is passed a few times.
+
+Here is an interesting example of losing the quote can actually helps.
+
+The first abs() return a variable without quote, making the second abs return
+the correct value.
+
+My question is: 
+
+Does perl have an internal function to unquote a variable so that I do not have to code this way?
+
+
+    #!/usr/bin/perl -w
+    use strict;
+    my @nums = (
+        '-0',
+        '-0.0',
+        "-0.000",
+        qw(-0.000),
+        sprintf("%.4f", "-0.0"),
+    );
+    
+    print "***use single abs()\n";
+    foreach my $num(@nums){
+        my $number = $num;
+        my $abs = abs($number);
+        print "<$num> abs <$abs>\n";
+    }
+    
+    print "\n***use abs(abs())\n";
+    foreach my $num(@nums){
+        my $abs_abs = abs(abs($num));
+        print "<$num> double abs <$abs_abs>\n";
+    }
+    
+ System information:
+
+
+    uname -r
+    2.6.32-573.12.1.el6.centos.plus.x86_64
+    This is perl, v5.10.1 (*) built for x86_64-linux-thread-multi
+
+ The screen output:
+
+
+    ***use single abs()
+    <-0> abs <0>
+    <-0.0> abs <-0>
+    <-0.000> abs <-0>
+    <-0.000> abs <-0>
+    <-0.0000> abs <-0>
+    
+    ***use abs(abs())
+    <-0> double abs <0>
+    <-0.0> double abs <0>
+    <-0.000> double abs <0>
+    <-0.000> double abs <0>
+    <-0.0000> double abs <0>

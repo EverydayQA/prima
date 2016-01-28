@@ -21,26 +21,35 @@ sub add
 
 sub subtract
 {
-my ($no1,$no2) = @_;
-my $result;
-$result = $no1-$no2;
-return $result;
-
+    my ($no1,$no2) = @_;
+    my $result;
+    $result = $no1-$no2;
+    return $result;
 }
 
 sub multiply
 {
-my ($no1,$no2) = @_;
-my $result;
-$result = $no1*$no2;
-return $result;
+    my ($no1,$no2) = @_;
+    my $result;
+    $result = $no1*$no2;
+    return $result;
 }
 
 sub divide
 {
-my ($no1,$no2) = @_;
-my $result;
-$result = $no1/$no2;
-return $result;
+    my ($no1,$no2) = @_;
+    my $result;
+    $result = $no1/$no2;
+    return $result;
+}
+
+sub insert{
+
+}
+
+sub email{
+
+}
+sub log{
 
 }
