@@ -13,7 +13,7 @@ my @nums = (
 print "***use single abs()\n";
 foreach my $num(@nums){
     my $number = $num;
-    my $abs = abs($number);
+    my $abs = abs($number+0);
     print "<$num> abs <$abs>\n";
 }
 

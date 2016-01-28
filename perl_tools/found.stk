@@ -1,0 +1,51 @@
+    
+    foreach my $class_record (@records)
+    {
+        chomp $class_record;
+        $record_count = 0;
+        $count = 0;
+
+        # add found - modification A
+        my $found = 0;
+
+        foreach my $name_record ( @records2 )
+        {
+            # nice to be here - for the else statement
+            $record_count++;
+            if ($csv->parse($name_record))
+            {
+                my @master_fields = $csv->fields();
+                #$record_count++;
+                $first_name[$record_count] = $master_fields[0];
+                $gender[$record_count]     = $master_fields[1];
+                $number[$record_count]     = $master_fields[2];
+    
+                if($class_record eq $first_name[$record_count])
+                {
+                    if($gender[$record_count] eq 'F')
+                    {
+                        print("$first_name[$record_count] ($record_count)\n");
+                    }
+                    if($gender[$record_count] eq 'M')
+                    {
+                        my $offset = $count - 2224;
+                        print("$first_name[$record_count] ($offset)\n");
+                    }
+                    # modification B - set found =1
+                    $found = 1;
+                    last;    # no need to keep looping
+                } 
+    
+            } else {
+                warn "Line/record could not be parsed: $records[$record_count]\n";
+            }
+            $count++;
+        }
+
+        # modification C - 
+        if($found){
+        }else{
+            print "${class_record}(0)\n";
+        }
+    }
+    
