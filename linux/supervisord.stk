@@ -1,0 +1,85 @@
+
+
+    
+    chkconfig:    345 83 04
+
+    In this case, what reason could the authors have to want it to be active on runlevel 4, which is "not used" ?
+    Since runlevel 4 is not used, so it does not matter you set it on or off. 345 is easier to write, lazy approach.
+    and you can always change it later by
+    
+    chkconfig --list supervisord
+
+    chkconfig --level 4 supervisord off
+
+    chkconfig --level 3 supervisord on
+
+
+The nginx init.d script that I installed contains this line:
+
+
+    chkconfig:   - 86 16
+
+What does the - mean for the runlevel here?
+it means you have to replace the dash with the levels
+    
+
+    chkconfig:   345 86 16
+
+Why does this line not contain a deactivate priority?
+    345 run level
+    86  activate priority
+    16  deactivate priority
+            
+
+How does one decide upon the priority levels for a process controller like supervisor? 
+The scripts above chose 83 and 04, whereas the tldp tutorial chose 95 and 05.
+Those are examples, not really the real thing, they are set differently.
+ 
+The priority normally does not matter, because you do not power up or power down your machines regularly, I am not familiar with your apps, I would recommend this one.
+
+This url contains a different priority
+[https://rayed.com/wordpress/?p=1496](https://rayed.com/wordpress/?p=1496)
+
+
+        chkconfig: 345 64 36
+
+
+I checked my answer on my system centOS, new recommendation:
+
+use yum to install supervisord, keep the default priority as it is being tested by many others
+
+    urname -r
+    2.6.32-573.12.1.el6.centos.plus.x86_64
+
+Install supervisord:
+
+    
+    sudo yum install supervisor
+    supervisor.noarch 0:2.1-9.el6
+
+The default priority for this version of supervisord is:
+
+
+    cat /etc/init.d/supervisord |grep chkconfig
+    #chkconfig:	- 95 04
+
+
+    [gliang@www prima]$ chkconfig --list supervisord
+    supervisord     0:off   1:off   2:off   3:off   4:off   5:off   6:off
+    [gliang@www prima]$ sudo chkconfig --level 3 supervisord on
+    [gliang@www prima]$ sudo chkconfig --level 4 supervisord off
+
+The S95 on level 3 has almost lowest priority, start late, shutdown first
+
+
+    [gliang@www prima]$ ls -ltr /etc/rc3.d/|grep supervisor
+    lrwxrwxrwx. 1 root root 21 Jan 29 08:02 S95supervisord -> ../init.d/supervisord
+    [gliang@www prima]$ ls -ltr /etc/rc4.d/|grep supervisor
+    lrwxrwxrwx. 1 root root 21 Jan 29 08:02 K04supervisord -> ../init.d/supervisord
+
+use this to list and to see the priority on this level
+
+
+    ls -ltr /etc/rc3.d/
+    
+    
