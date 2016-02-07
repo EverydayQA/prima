@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 use UNIVERSAL 'isa';
+use ref;
 
 my @array = (1,2,3);
 my $aref = \@aref;

@@ -1,0 +1,10 @@
+
+What is the difference between the following two? when to use which in perl?
+    
+
+    if( $variable ) { };
+
+
+    if( defined( $variable ) ) { };
+
+
