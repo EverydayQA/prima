@@ -25,9 +25,11 @@ public:
 
     void checkValue(){
         mystring s;
-        s.setbuffer("hello world!\n");
-        CPPUNIT_ASSERT_EQUAL_MESSAGE("Corrupt String Data",s[0],'h');
+        //char * ss = "hello world!\n";
+        char ss[] = "hello world!\n";
 
+        s.setbuffer(ss);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE("Corrupt String Data",s[0],'h');
     }
     CPPUNIT_TEST_SUITE(mystringTest);
     CPPUNIT_TEST(checkLength);

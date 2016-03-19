@@ -15,7 +15,7 @@ set(CMAKE_CXX_COMPILER g++)
 
 set(test_SRCS
     ${CMAKE_SOURCE_DIR}/mystring.h
-mystringTest.cpp
+    mystringTest.cpp
 #TestMain.cpp
 
 )

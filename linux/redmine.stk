@@ -8,10 +8,11 @@ https://www.redmine.org/projects/redmine/wiki/Rest_api
 http://stackoverflow.com/questions/7609331/redmine-post-attachments-using-api-or-not
 
 # curl to attach files
-curl --data-binary "@example.pdf" -H "Content-Type: application/octet-stream" -X POST -u login:password http://redmine/upload.xml
+curl -v --data-binary "@example.pdf" -H "Content-Type: application/octet-stream" -X POST -u login:password http://redmine/upload.xml
 
 # 201 response
 <upload>
     <token>7167.xxxxxxxxxxxxxx</token>
 </upload>
+
 
