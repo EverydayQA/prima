@@ -1,6 +1,6 @@
 #include <cppunit/TestCase.h>
 #include <cppunit/ui/text/TextTestRunner.h>
-//#include <cppunit/ui/text/TestRunner.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include "mystring.h"
 class mystringTest : public CppUnit::TestCase{
@@ -17,7 +17,6 @@ public:
 int main(){
     mystringTest test;
     CppUnit::TextTestRunner runner;
-    //CppUnit::TextUi::TestRunner runner;
     runner.addTest(&test);
     runner.run();
     return 0;
