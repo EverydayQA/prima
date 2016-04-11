@@ -37,25 +37,48 @@ class SandwichTestNew(unittest.TestCase):
         word = 'catcowcat'
         result = subSandwich_new(word, 'cat')
         self.assertEqual(result, 9)
+        alex = sub_alex(word, 'cat')
+        self.assertEqual(result, alex)
 
     def test_subSandwich_new2(self):
         word = 'catcowcat'
         result = subSandwich_new(word, 'cow')
         self.assertEqual(result, 3)
+        alex = sub_alex(word, 'cow')
+        self.assertEqual(result, alex)
 
     def test_subSandwich_new3(self):
         result = subSandwich_new('ccatcowcatxx', 'cat')
         self.assertEqual(result, 9)
+        alex = sub_alex('ccatcowcatxx', 'cat')
+        self.assertEqual(result, alex)
 
     def test_subSandwich_new4(self):
         result = subSandwich_new('cat', 'cat')
         self.assertEqual(result, 3)
+        alex = sub_alex('cat', 'cat')
+        self.assertEqual(result, alex)
 
     def test_subSandwich_new5(self):
         result = subSandwich_new('cat', 'cow')
         self.assertEqual(result, 0)
+        alex = sub_alex('cat', 'cow')
+        self.assertEqual(result, alex)
+
+# code from alexwlchan
+def sub_alex(text, sub):
+    if not text:
+        return 0
+    if text.startswith(sub) and text.endswith(sub):
+        return len(text)
+    elif text.startswith(sub):
+        return sub_alex(text[:-1], sub)
+    else:
+        return sub_alex(text[1:], sub)
 
 
+
+# the original author's code
 def subSandwich(word, char, pos, start, end):
     if pos == len(word) -1:
         if end == 0:
