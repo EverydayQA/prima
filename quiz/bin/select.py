@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os
 import sys
+
 # similar to findBin in Perl
 pwd = os.path.dirname(os.path.realpath(__file__))
 # 1 level up
@@ -11,6 +12,11 @@ sys.path.append(base_dir)
 from lib import menu
 
 def main():
+
+    menu.print_format_table()
+
+    print "done"
+
     the_list = ['a','b','c','d']
     selections = menu.select_from_list(the_list)
     print selections

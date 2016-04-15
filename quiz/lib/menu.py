@@ -1,10 +1,12 @@
 import re
 import string
+#from termcolor import colored
+#from colorama import *
 
 def select_from_menu(the_list):
     index = 0
     for item in the_list:
-        print str(index) + " " + item
+        print (str(index) + " " + item)
         index = index + 1
 
     selections = []
@@ -13,6 +15,16 @@ def select_from_menu(the_list):
         index = int(sel)
         selections.append(the_list[index])
     return selections
+
+def print_format_table():
+    for style in xrange(8):
+        for fg in xrange(30, 38):
+            s1 = ''
+            for bg in xrange(40, 48):
+                format = ';'.join([str(style), str(fg), str(bg)])
+                s1 += '\x1b[%sm %s \x1b[0m' % (format, format)
+            print s1
+        print '\n'
 
 
 def select_from_list(the_list):
