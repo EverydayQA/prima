@@ -36,23 +36,27 @@ def select_from_list(the_list):
 
     
     input_str = raw_input("Please select one or more from the list: ")
-    print input_str
     # could be comma or space separated integers
     selections = []
     sels = parse_input_string(input_str)
     for sel in sels:
-        index = int(sel)
-        selections.append(the_list[index])
+        try:
+            sel = int(sel)
+            index = sel
+            selections.append(the_list[index])
+        except:
+            pass
     return selections
 
 def parse_input_string(s):
     selections = []
-
     try:
         float(s)
         selections.append(s)
         return selections
     except ValueError:
+        pass
+    else:
         pass
 
     s = s.rstrip()

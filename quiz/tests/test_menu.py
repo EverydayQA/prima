@@ -10,6 +10,7 @@ base_dir = os.path.join(pwd,'..')
 sys.path.append(base_dir)
 
 from lib import menu
+from lib import color_print
 
 class MenuTest(unittest.TestCase):
     def test1(self):
@@ -18,6 +19,10 @@ class MenuTest(unittest.TestCase):
 
     def test2(self):
         sels = menu.parse_input_string("1 2 3 4")
+        cp = color_print.ColorPrint()
+
+        for sel in sels:
+            cp.printout(sel + '\n', cp.GREEN)
         self.assertEqual(len(sels),4)
 
 

@@ -13,15 +13,16 @@ from lib import menu
 
 def main():
 
-    menu.print_format_table()
-
-    print "done"
+    #menu.print_format_table()
+    
+    # get_quiz(category)
 
     the_list = ['a','b','c','d']
     selections = menu.select_from_list(the_list)
     print selections
-    selections = menu.select_from_menu(the_list)
-    print selections
+    # option to redo
+    # compare to answer
+    # insert the result
 
 if __name__ == '__main__':
     main()
