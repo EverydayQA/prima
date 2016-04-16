@@ -33,3 +33,12 @@ print("in green")
 printout("[debug] ", BLUE)
 print("in green")
 
+path = '/shared/xx/yy/zz/aa/bb/cc/'
+items = path.split('/')
+print items
+path_back = '/'.join(items)
+print path_back
+
+items = path.strip('/').split('/')
+print items
+
