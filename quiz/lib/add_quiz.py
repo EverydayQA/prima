@@ -1,12 +1,13 @@
 #!/usr/bin/python
 import json
 import simplejson
+import sys
+
+# args 
 
 class AddQuiz(object):
-    def __init__(self, category, txt_file, json_file):
+    def __init__(self, category):
         self.category = category
-        self.txt_file = txt_file
-        slef.json_file = json_file
 
     def add(self):
         # add question to category
@@ -14,34 +15,46 @@ class AddQuiz(object):
         # multiple choices format using either XML or Jason
         # png/jpg/gif
         return;
-    def write_json(self):
-        with open(self.json_file, 'r') as f:
-            data = json.load(f)
+    def write_json(self, file_json):
+        with open(file_json, 'r') as f:
+            json.load(f)
 
-    def read_json(self):
-        with opn(self.json_file, 'w') as f:
-            json.dump(data, f)
+    def read_json(self, data_dict, file_json):
+        d = {"name":"interpolator", \
+             "children":[{'name':key,"size":value} \
+             for key,value in data_dict.items()]}
 
-    def put(self):
+        with open(file_json, 'w') as f:
+            j = json.dumps(d, indent=4)
+            print >> f, j
+            f.close()
+
+
+    def put(self, data, filename):
         try:
-            jsondata = simplejson.dumps(self.data, indent=4,skipkeys=True, sort_keys=True)
+            jsondata = simplejson.dumps(data, indent=4,skipkeys=True, sort_keys=True)
             fd = open(filename,'w')
             fd.wirte(jsondata)
             fd.close()
         except:
             print "Error writing ", filename
 
-    def get(self):
+    def get(self, filename):
         returndata = {}
         try:
             fd = open(filename,'r')
             text = fd.read()
             fd.close()
-            returndata = json.read(txt)
+            returndata = json.read(text)
         except:
-            print "Could not load " + filename
+            print "Could not load <" + filename + ">"
+
 if __name__ == '__main__':
     add_quiz = AddQuiz('QC')
-    o = get(sys.argv[1])
-    if o:
-        add_quiz.put(o, sys.argv[1])
+    sample_dict = {'aaa':1, 'ccc':3}
+    add_quiz.read_json(sample_dict, 'menu.json')
+
+    # error in writting
+    #add_quiz.put(sample_dict, 'menu2.json')
+    sys.exit()
+
