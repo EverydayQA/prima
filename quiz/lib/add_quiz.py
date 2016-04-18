@@ -15,11 +15,11 @@ class AddQuiz(object):
         # multiple choices format using either XML or Jason
         # png/jpg/gif
         return;
-    def write_json(self, file_json):
+    def read_json(self, file_json):
         with open(file_json, 'r') as f:
             json.load(f)
 
-    def read_json(self, data_dict, file_json):
+    def write_dict_to_json(self, data_dict, file_json):
         d = {"name":"interpolator", \
              "children":[{'name':key,"size":value} \
              for key,value in data_dict.items()]}
@@ -41,20 +41,23 @@ class AddQuiz(object):
 
     def get(self, filename):
         returndata = {}
+        text = ''
         try:
             fd = open(filename,'r')
             text = fd.read()
+            print text
             fd.close()
+            # this did not work
             returndata = json.read(text)
+
         except:
             print "Could not load <" + filename + ">"
 
 if __name__ == '__main__':
     add_quiz = AddQuiz('QC')
     sample_dict = {'aaa':1, 'ccc':3}
-    add_quiz.read_json(sample_dict, 'menu.json')
+    add_quiz.write_dict_to_json(sample_dict, 'menu.json')
 
-    # error in writting
-    #add_quiz.put(sample_dict, 'menu2.json')
+    add_quiz.get('menu.json')
     sys.exit()
 

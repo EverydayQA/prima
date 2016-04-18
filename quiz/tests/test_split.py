@@ -27,6 +27,22 @@ class TestSplit(unittest.TestCase):
         path_back = '/'.join(items)
         print path_back
         self.assertEqual(path, path_back)
+    def test_split_append(self):
+        path = '/shared/xx/yy/zz/aa/bb/cc/'
+        items = path.strip('/').split('/')
+        self.assertEqual(len(items), 7)
+        print items
+        print 'append empty to list'
+        items.append('')
+        items.insert(1,'level2')
+        items.insert(0,'')
+        print items
+        path_back = '/'.join(items)
+        print path_back
+        items=[]
+        items.append('')
+        items.insert(0,'')
+        print items
 
     def test_split2(self):
         path = '/shared/xx/yy/zz/aa/bb/cc/'
