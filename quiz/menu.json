@@ -1,0 +1,13 @@
+{
+    "children": [
+        {
+            "name": "aaa", 
+            "size": 1
+        }, 
+        {
+            "name": "ccc", 
+            "size": 3
+        }
+    ], 
+    "name": "interpolator"
+}

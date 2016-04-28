@@ -11,8 +11,8 @@ sys.path.append(base_dir)
 
 from lib import menu
 
-def main():
-
+def main(argv):
+    # args
     #menu.print_format_table()
     
     # get_quiz(category)
@@ -25,4 +25,4 @@ def main():
     # insert the result
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
