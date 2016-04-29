@@ -26,7 +26,7 @@ class MenuTest(unittest.TestCase):
             cp.printout(sel + '\n', cp.GREEN)
         self.assertEqual(len(sels),4)
 
-    # menu.py has no class
+    # menu.py - mock builtin function in other function
     @mock.patch('__builtin__.raw_input')
     def test_select_from_list(self, mock_raw_input):
         mock_raw_input.return_value = '1,2'
@@ -34,6 +34,15 @@ class MenuTest(unittest.TestCase):
         sels = menu.select_from_list(alist)
         print sels
         self.assertEqual(sels,['bbb','ccc'])
+
+    @mock.patch('lib.menu.get_input')
+    def test_select_from_list2(self, mock_get_input):
+        mock_get_input.return_value = '1 2'
+        alist=['aaa','bbb','ccc', 'ddd']
+        sels = menu.select_from_list(alist)
+        print sels
+        self.assertEqual(sels,['bbb','ccc'])
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(MenuTest)

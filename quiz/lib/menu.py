@@ -25,20 +25,26 @@ def print_format_table():
                 s1 += '\x1b[%sm %s \x1b[0m' % (format, format)
             print s1
         print '\n'
+def get_input():
+    input_str = raw_input("Please select one or more from the list: ")
+    return input_str
 
-
-def select_from_list(the_list):
-    # multiple select
+def print_menu(the_list):    
     index = 0
     for item in the_list:
         print str(index) + " " + item
         index = index + 1
 
-    
-    input_str = raw_input("Please select one or more from the list: ")
-    # could be comma or space separated integers
-    selections = []
+def select_from_list(the_list):
+    # multiple select
+    print_menu(the_list)
+    input_str = get_input() 
     sels = parse_input_string(input_str)
+    selections = selections_in_list(sels, the_list)
+    return selections
+    
+def selections_in_list(sels, the_list):
+    selections = []
     for sel in sels:
         try:
             sel = int(sel)
