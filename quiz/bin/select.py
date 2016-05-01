@@ -15,16 +15,23 @@ def main(argv):
     # args
     # menu.print_format_table()
 
-    # read 1 json file, 1 quiz from take_quiz()
-    the_list = ['a','b','c','d']
+    ### read 1 json file, 1 quiz from take_quiz()
+    the_list = ['aaa','bbb','ccc','ddd']
     selections = menu.select_from_list(the_list)
     print selections
 
     # option to redo
 
-    # compare to answer
+    # user
+    # time
+    # category
+    # number of questions
+    # 
 
-    # insert the result
+    ## compare to answer
+
+    ### insert the result
+    # take_quiz
 
 if __name__ == '__main__':
     main(sys.argv[1:])

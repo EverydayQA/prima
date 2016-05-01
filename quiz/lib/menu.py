@@ -32,7 +32,7 @@ def get_input():
 def print_menu(the_list):    
     index = 0
     for item in the_list:
-        print str(index) + " " + item
+        print str(index) + " ## " + item
         index = index + 1
 
 def select_from_list(the_list):

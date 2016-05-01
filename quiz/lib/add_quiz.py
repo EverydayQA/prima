@@ -9,9 +9,8 @@ class AddQuiz(object):
     def __init__(self, category):
         self.category = category
 
-
     def add_question(self):
-        file_add = new_file_name()    
+        file_add = file_to_write()    
         sample_dict = {'aaa':1, 'ccc':3}
         
         # add question to data/self.category/file_name.json
@@ -22,7 +21,7 @@ class AddQuiz(object):
 
         # png/jpg/gif
         return 8;
-    def new_file_name(self):
+    def file_to_write(self):
         file_base = '333.json'
         file_new = os.path.join(data_dir, self.category, file_base)
         return file_new
@@ -44,13 +43,27 @@ class AddQuiz(object):
             print >> f, j
             f.close()
 
-if __name__ == '__main__':
-    add_quiz = AddQuiz('QC')
-    sample_dict = {'aaa':1, 'ccc':3}
-    add_quiz.write_dict_to_json(sample_dict, 'menu.json')
+def main():    
+    # choose category
+    categories = ['QC', 'python']
+    category = select_from_list(categories, 'Please choose a category')
 
-    data_list = add_quiz.read_json('menu.json')
-    print "\n\n"
+    add_quiz = AddQuiz(category)
+    json2write = add_quiz.file_to_write(category)
+
+    # ways to add
+    # from existing files with different format --> converted to json
+    # from input -> convert to dict
+    # from dict ()
+    sample_dict = {'aaa':1, 'ccc':3}
+
+    add_quiz.write_dict_to_json(sample_dict, json2write)
+
+    # read a json file
+    data_list = add_quiz.read_json(json2write)
     print data_list
-    sys.exit()
+
+if __name__ == '__main__':
+    main()
+
 
