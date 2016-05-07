@@ -1,9 +1,13 @@
 #!/usr/bin/python
+import os
 import json
 import simplejson
 import sys
 from pprint import pprint
-# args 
+import logging
+import menu
+# this example will demo
+# add logging
 
 class AddQuiz(object):
     def __init__(self, category):
@@ -23,7 +27,8 @@ class AddQuiz(object):
         return 8;
     def file_to_write(self):
         file_base = '333.json'
-        file_new = os.path.join(data_dir, self.category, file_base)
+        data_dir = '/tmp'
+        file_new = os.path.join(data_dir, file_base)
         return file_new
 
     def read_json(self, file_json):
@@ -46,10 +51,10 @@ class AddQuiz(object):
 def main():    
     # choose category
     categories = ['QC', 'python']
-    category = select_from_list(categories, 'Please choose a category')
+    category = menu.select_from_list(categories)
 
     add_quiz = AddQuiz(category)
-    json2write = add_quiz.file_to_write(category)
+    json2write = add_quiz.file_to_write()
 
     # ways to add
     # from existing files with different format --> converted to json
@@ -65,5 +70,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
