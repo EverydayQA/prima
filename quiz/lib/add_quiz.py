@@ -49,6 +49,16 @@ class AddQuiz(object):
             f.close()
 
 def main():    
+
+    logger = logging.getLogger('foo')
+    logger.addHandler(logging.StreamHandler() )
+    logger.setLevel(logging.DEBUG)
+    print logging.INFO
+    print logging.DEBUG
+    logger.info('1 - info')
+    logger.debug('2 - debug should not haapen as level is info')
+
+    
     # choose category
     categories = ['QC', 'python']
     category = menu.select_from_list(categories)
@@ -66,8 +76,8 @@ def main():
 
     # read a json file
     data_list = add_quiz.read_json(json2write)
-    print data_list
 
+    logger.info(data_list)
 if __name__ == '__main__':
     main()
 
