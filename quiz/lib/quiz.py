@@ -10,15 +10,22 @@ import menu
 # Quiz base class/subclass
 # add *args, **kwargs - all unittest for common usae
 
+# logger for the module
+logger = logging.getLogger('quiz')
+
 class Quiz(object):
     # could use *args
     def __init__(self, category):
         self.category = category
-        print "QuizBase"
+        # logger for the class
+        self.logger = logging.getLogger('quiz.Quiz')
+        self.logger.info('creating an instance of Quiz')
     def square(self, x):
+        self.logger.info('square')
         return x*x
 
     def print_args(self, x):
+        self.logger.info('print_args')
         print x
 
 class QuizQA(Quiz):
@@ -26,8 +33,14 @@ class QuizQA(Quiz):
     # or (category, **kwargs)
     def __init__(self, category, *args, **kwargs):
         super(QuizQA, self).__init__(category)
+        # logger for the class - logging level from kwargs?
+        self.logger = logging.getLogger('quiz.QuizQA')
+        self.logger.info('creating an instance of QuizQA')
+
         self.args = args
         self.kwargs = kwargs
+        self.logger.info(args)
+        self.logger.info(kwargs)
 
     # or use to init class directly
     def init_args_quiz_inside_class():    
@@ -39,18 +52,17 @@ class QuizQA(Quiz):
         parser.add_argument("-logging", '--logging', type=int, default=20, dest='logging', help='logging level 0 10 20')
         parser.add_argument('-files', nargs='*')
         args = parser.parse_args()
+        self.logger.info(args)
         return args
 
     # arguments from self or (*args, **kwargs)
     def print_args(self,x, *args, **kwargs):
-        # 
         super(QuizQA, self).print_args(x)
-        print self.args
-        print self.kwargs
+        self.logger.info(args)
+        self.logger.info(kwargs)
 
-        for arg in args:
-            print arg
-        print kwargs
+
+
 
 def init_args_quiz_outside_class():    
 
@@ -69,11 +81,15 @@ def main():
     # choose category
     categories = ['QC', 'python']
     category = menu.select_from_list(categories)
-    logger = logging.getLogger('quiz')
-    logger.addHandler(logging.StreamHandler() )
+
     logger.setLevel(logging.DEBUG)
-    print logging.INFO
-    print logging.DEBUG
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+
     logger.info('1 - info')
     logger.debug('2 - debug should not haapen as level is info')
     
