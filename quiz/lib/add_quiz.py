@@ -6,12 +6,20 @@ import sys
 from pprint import pprint
 import logging
 import menu
+import argparse
+
 # this example will demo
-# add logging
+# logging
+# argparse - extra args
+# args and kwargs
 
 class AddQuiz(object):
-    def __init__(self, category):
-        self.category = category
+    def __init__(self, *args, **kwargs):
+        if kwargs.get('category'):
+            self.category = kwargs['category']
+        else:
+            self.cagegory = 'QC'
+        self.args = args
 
     def add_question(self):
         file_add = file_to_write()    
@@ -48,22 +56,25 @@ class AddQuiz(object):
             print >> f, j
             f.close()
 
-def main():    
+def init_args_add_quiz():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--foo')
+    args, args_extra = parser.parse_known_args(sys.argv[1:] )
+    return args, args_extra
 
-    logger = logging.getLogger('foo')
+def main():    
+    args, args_extra = init_args_add_quiz()
+
+    logger = logging.getLogger(__name__)
     logger.addHandler(logging.StreamHandler() )
     logger.setLevel(logging.DEBUG)
-    print logging.INFO
-    print logging.DEBUG
-    logger.info('1 - info')
-    logger.debug('2 - debug should not haapen as level is info')
-
+    logger.info(args)
+    logger.info(args_extra)
     
     # choose category
     categories = ['QC', 'python']
-    category = menu.select_from_list(categories)
-
-    add_quiz = AddQuiz(category)
+    #category = menu.select_from_list(categories)
+    add_quiz = AddQuiz(args_extra, category='QC')
     json2write = add_quiz.file_to_write()
 
     # ways to add
@@ -77,7 +88,10 @@ def main():
     # read a json file
     data_list = add_quiz.read_json(json2write)
 
+
     logger.info(data_list)
+    logger.info(add_quiz.args)
+
 if __name__ == '__main__':
     main()
 
