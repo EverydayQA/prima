@@ -9,6 +9,7 @@ import menu
 import argparse
 from quiz_logger import QuizLogger
 from quiz import Quiz
+from color_print import ColorPrint
 # this example will demo
 # logging
 # argparse - extra args
@@ -71,6 +72,9 @@ def main():
     log.logger.info(args)
     log.logger.info(args_extra)
     
+    cp = ColorPrint()
+    color_string = cp.color_string('logging color string', cp.RED)
+    log.logger.error(color_string)
     add_quiz = AddQuiz(args_extra, category='QC', logging=10)
     json2write = add_quiz.file_to_write()
 

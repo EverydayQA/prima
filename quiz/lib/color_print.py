@@ -26,6 +26,12 @@ class ColorPrint(object):
             return curses.tigetnum("colors") >2
         except:
             return False
+    def color_string(self, text, colour):
+        if self.has_colours:
+            seq = "\x1b[1;%dm" % (30+colour) + text + "\x1b[0m"
+            return seq
+        else:
+            return text
 
     def printout(self, text, colour):
         if self.has_colours:
