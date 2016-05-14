@@ -7,12 +7,14 @@ from pprint import pprint
 import logging
 import menu
 import argparse
-
+from quiz_logger import QuizLogger
+from quiz import Quiz
 # this example will demo
 # logging
 # argparse - extra args
 # args and kwargs
 
+# must be (cls,cls) not(object, cls)
 class AddQuiz(object):
     def __init__(self, *args, **kwargs):
         if kwargs.get('category'):
@@ -20,12 +22,12 @@ class AddQuiz(object):
         else:
             self.cagegory = 'QC'
         self.args = args
-
+        self.logger = QuizLogger(name=self.__class__.__name__, level=logging.INFO).logger
+        self.logger.info('__init__()')
     def add_question(self):
         file_add = file_to_write()    
         sample_dict = {'aaa':1, 'ccc':3}
-        
-        # add question to data/self.category/file_name.json
+        self.logger.info('add_question')
         # self.category
         # file_name - to be decided later on by a function
         # multiple choices format using either XML or Jason
@@ -65,16 +67,11 @@ def init_args_add_quiz():
 def main():    
     args, args_extra = init_args_add_quiz()
 
-    logger = logging.getLogger(__name__)
-    logger.addHandler(logging.StreamHandler() )
-    logger.setLevel(logging.DEBUG)
-    logger.info(args)
-    logger.info(args_extra)
+    log = QuizLogger(name=__file__,level=logging.INFO)
+    log.logger.info(args)
+    log.logger.info(args_extra)
     
-    # choose category
-    categories = ['QC', 'python']
-    #category = menu.select_from_list(categories)
-    add_quiz = AddQuiz(args_extra, category='QC')
+    add_quiz = AddQuiz(args_extra, category='QC', logging=10)
     json2write = add_quiz.file_to_write()
 
     # ways to add
@@ -89,8 +86,8 @@ def main():
     data_list = add_quiz.read_json(json2write)
 
 
-    logger.info(data_list)
-    logger.info(add_quiz.args)
+    log.logger.info(data_list)
+    log.logger.info(add_quiz.args)
 
 if __name__ == '__main__':
     main()
