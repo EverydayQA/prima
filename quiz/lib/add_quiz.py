@@ -10,21 +10,24 @@ import argparse
 from quiz_logger import QuizLogger
 from quiz import Quiz
 from color_print import ColorPrint
-# this example will demo
-# logging
-# argparse - extra args
-# args and kwargs
 
-# must be (cls,cls) not(object, cls)
 class AddQuiz(object):
     def __init__(self, *args, **kwargs):
         if kwargs.get('category'):
             self.category = kwargs['category']
         else:
             self.cagegory = 'QC'
+        if kwargs.get('level'):
+            self.level = kwargs['level']
+        else:
+            self.level = 20
         self.args = args
-        self.logger = QuizLogger(name=self.__class__.__name__, level=logging.INFO).logger
+        self.kwargs = kwargs
+        self.logger = QuizLogger(name=self.__class__.__name__, level=self.level).logger
         self.logger.info('__init__()')
+        self.logger.info(self.args)
+        self.logger.info(kwargs)
+
     def add_question(self):
         file_add = file_to_write()    
         sample_dict = {'aaa':1, 'ccc':3}
@@ -61,7 +64,9 @@ class AddQuiz(object):
 
 def init_args_add_quiz():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--foo')
+    parser.add_argument('--logging', type=int, default=20, help='logging level')
+    parser.add_argument('--category', type=str, default='QC', help='Category')
+
     args, args_extra = parser.parse_known_args(sys.argv[1:] )
     return args, args_extra
 
@@ -75,17 +80,19 @@ def main():
     cp = ColorPrint()
     color_string = cp.color_string('logging color string', cp.RED)
     log.logger.error(color_string)
-    add_quiz = AddQuiz(args_extra, category='QC', logging=10)
+
+    kwargs = vars(args)
+    log.logger.info(kwargs)
+    #add_quiz = AddQuiz(args_extra, category='QC', logging=20)
+    add_quiz = AddQuiz(args_extra, **vars(args))
+
+    log.logger.info('add question -- txt/jason/dict/db')
+
     json2write = add_quiz.file_to_write()
-
-    # ways to add
-    # from existing files with different format --> converted to json
-    # from input -> convert to dict
-    # from dict ()
     sample_dict = {'aaa':1, 'ccc':3}
-
     add_quiz.write_dict_to_json(sample_dict, json2write)
 
+    log.logger.info('read question')
     # read a json file
     data_list = add_quiz.read_json(json2write)
 

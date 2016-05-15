@@ -1,5 +1,32 @@
+Scope of each class
 
-1) sys.color print explore
-2) select from lists
-3) add 1 questions to file with format? undecided
+Quiz 
+    -- base class
+    -- append_item()
+    -- remove_item()
+    -- modify_item()  
+QuizQA 
+    -- subclass of Quiz
 
+Answer
+    -- base class
+AnswerQA
+    -- subclass of Answer
+
+QuizList 
+    -- list of Quiz obj
+    
+TakeQuiz 
+    -- category userid level?
+    -- get_quiz_list()
+    -- take_quiz(quiz_obj) 
+
+AddQuiz 
+    -- input to dict
+    -- or read from file
+    -- or from dict
+    -- dict to Quiz obj
+    -- Quiz obj to file/db based on category
+AddAnwer
+    -- add ans obj to AnsList
+ 
