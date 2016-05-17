@@ -73,7 +73,7 @@ def init_args_add_quiz():
 def main():    
     args, args_extra = init_args_add_quiz()
 
-    log = QuizLogger(name=__file__,level=logging.INFO)
+    log = QuizLogger(name=__file__,level=logging.INFO, logname='/tmp/test2.log')
     log.logger.info(args)
     log.logger.info(args_extra)
     
@@ -83,11 +83,11 @@ def main():
 
     kwargs = vars(args)
     log.logger.info(kwargs)
+
     #add_quiz = AddQuiz(args_extra, category='QC', logging=20)
     add_quiz = AddQuiz(args_extra, **vars(args))
 
     log.logger.info('add question -- txt/jason/dict/db')
-
     json2write = add_quiz.file_to_write()
     sample_dict = {'aaa':1, 'ccc':3}
     add_quiz.write_dict_to_json(sample_dict, json2write)

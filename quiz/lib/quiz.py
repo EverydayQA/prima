@@ -2,6 +2,7 @@
 import json
 import simplejson
 import sys
+import os
 from pprint import pprint
 import logging
 import menu
@@ -77,6 +78,15 @@ def init_args_quiz_outside_class():
     args = parser.parse_args()
     return args
 
+def full_name_class(cls):
+    return cls.__module__ + "." + cls.__class__.__name__
+
+def full_name_func():
+    file_name = os.path.basename(__file__)
+    func_name = full_name_func.__name__
+    print file_name
+    print func_name
+
 def main():    
     # choose category
     categories = ['QC', 'python']
@@ -94,6 +104,9 @@ def main():
     logger.debug('2 - debug should not haapen as level is info')
     
     qz = Quiz(category)
+    name_cls = full_name_class(qz)
+    print name_cls
+
     qz.print_args('ok')
 
     args = ['a','b','c']
@@ -102,6 +115,7 @@ def main():
     qza = QuizQA(category, 1, *args, **sample_dict)
     qza.print_args('xxxx','aa','abbb',val='va',bbb='xxx')
 
+    full_name_func()
 if __name__ == '__main__':
     main()
 

@@ -2,31 +2,37 @@ Scope of each class
 
 Quiz 
     -- base class
-    -- append_item()
-    -- remove_item()
-    -- modify_item()  
+    -- with property/class var/class_method/
+ 
 QuizQA 
     -- subclass of Quiz
 
+
+
 Answer
     -- base class
+    -- property - correct answer
+
 AnswerQA
     -- subclass of Answer
+    -- 
 
 QuizList 
     -- list of Quiz obj
-    
-TakeQuiz 
-    -- category userid level?
-    -- get_quiz_list()
-    -- take_quiz(quiz_obj) 
+    -- append_item()
+    -- remove_item()
+    -- modify_item()
 
-AddQuiz 
+AddQuiz -- should be inside Quiz - file/jason/dict to Quiz 
     -- input to dict
     -- or read from file
     -- or from dict
     -- dict to Quiz obj
     -- Quiz obj to file/db based on category
-AddAnwer
-    -- add ans obj to AnsList
+
+TakeQuiz 
+    -- category userid level?
+    -- get_quiz_list(userid, cateogry, level)
+    -- take_quiz(quiz_obj) 
+
  
