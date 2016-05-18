@@ -7,27 +7,43 @@ from pprint import pprint
 import logging
 import menu
 
-# time allocated - 2 hours
 # Quiz base class/subclass
 # add *args, **kwargs - all unittest for common usae
-
 # logger for the module
 logger = logging.getLogger('quiz')
 
 class Quiz(object):
     # could use *args
-    def __init__(self, category):
-        self.category = category
+    def __init__(self, args, kwargs):
+        if kwargs.get['category']:
+            self.category = kwargs['category']
+        else:
+            self.category = 'QA'
         # logger for the class
         self.logger = logging.getLogger('quiz.Quiz')
         self.logger.info('creating an instance of Quiz')
-    def square(self, x):
-        self.logger.info('square')
-        return x*x
 
-    def print_args(self, x):
-        self.logger.info('print_args')
-        print x
+    @property
+    def questions(self, qdict):
+        self.questions = qdict
+        return self.questions
+
+    @property
+    def answers(self, adict):
+        self.answers = adict
+        return self.answers
+
+    def print_args(self):
+        self.logger.info(self.args)
+        
+    def jason_2_dict(self):
+        pass
+    def txt_2_dict(self):
+        pass
+    def dict_2_jason(self):
+        pass
+    def dict_2_txt(self):
+        pass
 
 class QuizQA(Quiz):
     # could use (*args, **kwargs)
@@ -63,7 +79,18 @@ class QuizQA(Quiz):
         self.logger.info(kwargs)
 
 
-
+class QuizList(object):
+    def __init__(self, args, kwargs):
+       self.args = args
+       self.kwargs = kwargs
+    def add_item(self, item):
+        pass
+    def remove_item(self, item):
+        pass
+    def modify_item(self, item):
+        pass
+    def display_list(self):
+        pass
 
 def init_args_quiz_outside_class():    
 
@@ -88,7 +115,6 @@ def full_name_func():
     print func_name
 
 def main():    
-    # choose category
     categories = ['QC', 'python']
     category = menu.select_from_list(categories)
 
@@ -99,13 +125,10 @@ def main():
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
-
-    logger.info('1 - info')
-    logger.debug('2 - debug should not haapen as level is info')
     
     qz = Quiz(category)
     name_cls = full_name_class(qz)
-    print name_cls
+    logger.info(name_cls)
 
     qz.print_args('ok')
 

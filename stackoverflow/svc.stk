@@ -1,0 +1,54 @@
+The following code is written with text editor without running, not gurantee to work, but you got the idea, I might be wrong
+
+Your trainset is properly contains invalid data, replace
+
+
+    word_svm.fit(trainset, tags)
+
+
+with this:
+
+
+    trainset_good, trainset_bad = trainset_check(trainset, tags)
+    print 'Bad data\n'
+    print trainset_bad
+
+    # use good data
+    word_svm.fit(trainset_good, tags)
+
+Add this function to the code 
+
+
+    def trainset_check(trainset, tags):
+        trainset_good = []
+        trainset_bad = []
+        if not trainset:
+            print 'Err trainset is empty'
+            return
+        if not tags:
+            print 'Err - tags empty'
+            return
+        if len(trainset)==0:
+            print 'Err trainset is empty'
+            return
+        if len(tags)==0:
+            print 'Err tags empty'
+            return
+        for item in trainset:
+            if len(item) != len(tags):
+                print 'Error - trainset item is not the same length as tags'
+                print item
+                trainset_bad.append(item)
+                # skip to next
+                continue
+            # filter out None type
+            item_new = filter(None, item)
+            if len(item_new) != len(tags):
+                print 'Error - trainset item is not the same length as tags'
+                # bad trainset data, skip to next
+                print item
+                trainset_bad.append(item)
+                continue
+             trainset_good.append(item)
+        return trainset_good, trainset_bad
+
