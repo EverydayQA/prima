@@ -6,6 +6,7 @@ import os
 from pprint import pprint
 import logging
 import menu
+import inspect
 
 # Quiz base class/subclass
 # add *args, **kwargs - all unittest for common usae
@@ -13,16 +14,12 @@ import menu
 logger = logging.getLogger('quiz')
 
 class Quiz(object):
-    # could use *args
-    def __init__(self, args, kwargs):
-        if kwargs.get['category']:
-            self.category = kwargs['category']
-        else:
-            self.category = 'QA'
-        # logger for the class
-        self.logger = logging.getLogger('quiz.Quiz')
+    def __init__(self, *args, **kwargs):
+        name = __name__ + '.' + self.__class__.__name__
+        self.logger = logging.getLogger(name)
         self.logger.info('creating an instance of Quiz')
-
+        self.args = args
+        self.kwargs = kwargs
     @property
     def questions(self, qdict):
         self.questions = qdict
@@ -35,6 +32,7 @@ class Quiz(object):
 
     def print_args(self):
         self.logger.info(self.args)
+        self.logger.info(self.kwargs)
         
     def jason_2_dict(self):
         pass
@@ -46,12 +44,11 @@ class Quiz(object):
         pass
 
 class QuizQA(Quiz):
-    # could use (*args, **kwargs)
-    # or (category, **kwargs)
-    def __init__(self, category, *args, **kwargs):
-        super(QuizQA, self).__init__(category)
-        # logger for the class - logging level from kwargs?
-        self.logger = logging.getLogger('quiz.QuizQA')
+    def __init__(self, *args, **kwargs):
+        self.category = kwargs.get('category','QA')
+        super(QuizQA, self).__init__(args, kwargs)
+        name = __name__ + '.' + self.__class__.__name__
+        self.logger = logging.getLogger(name)
         self.logger.info('creating an instance of QuizQA')
 
         self.args = args
@@ -72,15 +69,15 @@ class QuizQA(Quiz):
         self.logger.info(args)
         return args
 
-    # arguments from self or (*args, **kwargs)
-    def print_args(self,x, *args, **kwargs):
-        super(QuizQA, self).print_args(x)
-        self.logger.info(args)
-        self.logger.info(kwargs)
+    def print_args(self, x):
+        super(QuizQA, self).print_args()
+        print x
+        self.logger.info(self.args)
+        self.logger.info(self.kwargs)
 
 
 class QuizList(object):
-    def __init__(self, args, kwargs):
+    def __init__(self, *args, **kwargs):
        self.args = args
        self.kwargs = kwargs
     def add_item(self, item):
@@ -93,7 +90,6 @@ class QuizList(object):
         pass
 
 def init_args_quiz_outside_class():    
-
     # argument may vary
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("-?", '--help', action="help",help='xxx')
@@ -105,14 +101,15 @@ def init_args_quiz_outside_class():
     args = parser.parse_args()
     return args
 
-def full_name_class(cls):
+def get_full_class_name(cls):
     return cls.__module__ + "." + cls.__class__.__name__
 
-def full_name_func():
+def get_full_func_name():
     file_name = os.path.basename(__file__)
-    func_name = full_name_func.__name__
-    print file_name
-    print func_name
+    func_name = get_full_func_name.__name__
+    func_name = inspect.stack()[0][3]
+    logger.info( func_name )
+    return func_name
 
 def main():    
     categories = ['QC', 'python']
@@ -122,23 +119,25 @@ def main():
     ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(logging.DEBUG)
 
+    # std_formatter
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
     
-    qz = Quiz(category)
-    name_cls = full_name_class(qz)
-    logger.info(name_cls)
+    qz = Quiz()
+    cls_name = get_full_class_name(qz)
+    logger.info('class_name: {0}'.format(cls_name) )
 
-    qz.print_args('ok')
+    qz.print_args()
 
     args = ['a','b','c']
     sample_dict = {'aaa':1, 'ccc':3}
 
-    qza = QuizQA(category, 1, *args, **sample_dict)
-    qza.print_args('xxxx','aa','abbb',val='va',bbb='xxx')
+    qza = QuizQA()
+    qza.print_args('xxx')
 
-    full_name_func()
+    func = get_full_func_name()
+    logger.info(func)
 if __name__ == '__main__':
     main()
 

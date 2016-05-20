@@ -13,30 +13,25 @@ from color_print import ColorPrint
 
 class AddQuiz(object):
     def __init__(self, *args, **kwargs):
-        if kwargs.get('category'):
-            self.category = kwargs['category']
-        else:
-            self.cagegory = 'QC'
-        if kwargs.get('level'):
-            self.level = kwargs['level']
-        else:
-            self.level = 20
+        self.category = kwargs.get('category', 'QC')
+        # default level is 20 in case not defined
+        self.level = kwargs.get('level', 20)
         self.args = args
         self.kwargs = kwargs
-
-        self.logger = QuizLogger(name=self.__class__.__name__, level=self.level).logger
+        name = __name__ + "." + self.__class__.__name__
+        self.logger = QuizLogger(name=name, level=self.level).logger
         self.logger.info('__init__()')
         self.logger.info(self.args)
         self.logger.info(kwargs)
 
     def add_question(self):
-        file_add = file_to_write()    
+        file_add = self.file_to_write()    
         sample_dict = {'aaa':1, 'ccc':3}
         self.logger.info('add_question')
         # self.category
         # file_name - to be decided later on by a function
         # multiple choices format using either XML or Jason
-        write_dict_to_json(sample_dict, file_add)
+        self.write_dict_to_json(sample_dict, file_add)
 
         # png/jpg/gif
         return 8;

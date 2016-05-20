@@ -13,12 +13,12 @@ from lib import add_quiz
 
 class add_quizTest(unittest.TestCase):
     def test1(self):
-        add = add_quiz.AddQuiz('QC')
+        add = add_quiz.AddQuiz(category='QA')
         question = add.add_question()
         self.assertEqual(question,8)
 
     def test2(self):
-        add = add_quiz.AddQuiz('QC')
+        add = add_quiz.AddQuiz(category='QC')
         question = add.add_question()
         self.assertEqual(question,8)
 
