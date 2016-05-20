@@ -50,7 +50,7 @@ def init_args_unittest():
 if __name__ == '__main__':
     args = init_args_unittest()
     print args
-
+    print type(args)
     test_suite = unittest.TestSuite()
     test_suite.addTest(make_suite(QuizTest, args))
     test_suite.addTest(make_suite(QuizQATest, args))
