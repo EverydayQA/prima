@@ -10,18 +10,21 @@ import inspect
 import argparse
 # Quiz base class/subclass
 # add *args, **kwargs - all unittest for common usae
-# logger for the module
+# logger for this module __name__
 logger = logging.getLogger(__name__)
 
 class Quiz(object):
     def __init__(self, *args, **kwargs):
-        self.logger = logging.getLogger(__name__ + "." + self.__class__.__name__)
-        self.logger.propagate = False    
+        # logger name has to be this way to alow propagate EffetiveLeve
+        name = __name__ + "." + self.__class__.__name__
+        self.logger = logging.getLogger(name)
+        # this is necessary to pass logger handler to subclass?
+        self.logger.propagate = True    
         el  = self.logger.getEffectiveLevel()
         print '\nlogger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(self.logger.level, self.__class__.__name__, el)
-
         self.args = args
         self.kwargs = kwargs
+
     @property
     def questions(self, qdict):
         self.questions = qdict
@@ -33,8 +36,8 @@ class Quiz(object):
         return self.answers
 
     def print_args(self):
-        self.logger.info(self.args)
-        self.logger.info(self.kwargs)
+        self.logger.info('args: '.format(self.args) )
+        self.logger.info('kwargs: '.format(self.kwargs) )
         
     def jason_2_dict(self):
         pass
@@ -49,15 +52,15 @@ class QuizQA(Quiz):
     def __init__(self, *args, **kwargs):
         self.category = kwargs.get('category','QA')
         super(QuizQA, self).__init__(args, kwargs)
-        self.logger = logging.getLogger(__name__ + "." + self.__class__.__name__)
-        self.logger.propagate = False    
+        name = __name__ + "." + self.__class__.__name__
+        self.logger.info('self.logger alreay defined in base class {0}'.format(name) )
+        #self.logger = logging.getLogger(name)
+
         el  = self.logger.getEffectiveLevel()
-        print '\nlogger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(self.logger.level, self.__class__.__name__, el)
+        print '\nlogger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(self.logger.level, name, el)
 
         self.args = args
         self.kwargs = kwargs
-        self.logger.info(args)
-        self.logger.info(kwargs)
 
     # or use to init class directly
     def init_args_quiz_inside_class():    
@@ -76,8 +79,6 @@ class QuizQA(Quiz):
         super(QuizQA, self).print_args()
         print x
         self.logger.debug(x)
-        self.logger.info(self.args)
-        self.logger.info(self.kwargs)
 
 
 class QuizList(object):
@@ -131,20 +132,21 @@ def main():
     # prevent duplicate logging
     logger.propagate = True  
 
+    # cls take args/kwargs
     qz = Quiz()
     cls_name = get_full_class_name(qz)
     logger.info('class_name: {0}'.format(cls_name) )
-
     qz.print_args()
+
+    qza = QuizQA()
+    cls_name = get_full_class_name(qza)
+    logger.info('class_name: {0}'.format(cls_name) )
+    qza.print_args('xxx')
 
     args = ['a','b','c']
     sample_dict = {'aaa':1, 'ccc':3}
 
-    qza = QuizQA()
-    qza.print_args('xxx')
 
-    func = get_full_func_name()
-    logger.info(func)
 if __name__ == '__main__':
     main()
 
