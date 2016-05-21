@@ -7,17 +7,19 @@ from pprint import pprint
 import logging
 import menu
 import inspect
-
+import argparse
 # Quiz base class/subclass
 # add *args, **kwargs - all unittest for common usae
 # logger for the module
-logger = logging.getLogger('quiz')
+logger = logging.getLogger(__name__)
 
 class Quiz(object):
     def __init__(self, *args, **kwargs):
-        name = __name__ + '.' + self.__class__.__name__
-        self.logger = logging.getLogger(name)
-        self.logger.info('creating an instance of Quiz')
+        self.logger = logging.getLogger(__name__ + "." + self.__class__.__name__)
+        self.logger.propagate = False    
+        el  = self.logger.getEffectiveLevel()
+        print '\nlogger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(self.logger.level, self.__class__.__name__, el)
+
         self.args = args
         self.kwargs = kwargs
     @property
@@ -47,9 +49,10 @@ class QuizQA(Quiz):
     def __init__(self, *args, **kwargs):
         self.category = kwargs.get('category','QA')
         super(QuizQA, self).__init__(args, kwargs)
-        name = __name__ + '.' + self.__class__.__name__
-        self.logger = logging.getLogger(name)
-        self.logger.info('creating an instance of QuizQA')
+        self.logger = logging.getLogger(__name__ + "." + self.__class__.__name__)
+        self.logger.propagate = False    
+        el  = self.logger.getEffectiveLevel()
+        print '\nlogger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(self.logger.level, self.__class__.__name__, el)
 
         self.args = args
         self.kwargs = kwargs
@@ -72,6 +75,7 @@ class QuizQA(Quiz):
     def print_args(self, x):
         super(QuizQA, self).print_args()
         print x
+        self.logger.debug(x)
         self.logger.info(self.args)
         self.logger.info(self.kwargs)
 
@@ -96,7 +100,7 @@ def init_args_quiz_outside_class():
     parser.add_argument("-category", '--category', type=str, default=None, dest='category', help='category')
 
     parser.add_argument("-run", '--run', action='store_true', dest='run', help='run')
-    parser.add_argument("-logging", '--logging', type=int, default=20, dest='logging', help='logging level 0 10 20')
+    parser.add_argument("-logging", '--logging', type=int, default=30, dest='logging', help='logging level 0 10 20')
     parser.add_argument('-files', nargs='*')
     args = parser.parse_args()
     return args
@@ -108,22 +112,25 @@ def get_full_func_name():
     file_name = os.path.basename(__file__)
     func_name = get_full_func_name.__name__
     func_name = inspect.stack()[0][3]
-    logger.info( func_name )
     return func_name
 
 def main():    
+    args = init_args_quiz_outside_class()
     categories = ['QC', 'python']
     category = menu.select_from_list(categories)
 
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(args.logging)
     ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(logging.DEBUG)
-
+    ch.setLevel(args.logging)
+    el  = logger.getEffectiveLevel()
+    print '\nlogger level is: {0} args logging {1} EffectiveLevel {2}\n'.format(logger.level, args.logging, el)
     # std_formatter
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
-    
+    # prevent duplicate logging
+    logger.propagate = True  
+
     qz = Quiz()
     cls_name = get_full_class_name(qz)
     logger.info('class_name: {0}'.format(cls_name) )
