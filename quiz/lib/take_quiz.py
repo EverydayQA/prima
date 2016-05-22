@@ -2,9 +2,10 @@
 import logging
 import menu
 import quiz
-# args - debugging level 
-# logging inside class
 
+
+# take from QuizList() - Quiz
+# write back to AnswerList-- Answer()?
 
 class TakeQuiz(object):
     def __init__(self, category):

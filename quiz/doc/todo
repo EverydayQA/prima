@@ -3,11 +3,11 @@ Scope of each class
 Quiz 
     -- base class
     -- with property/class var/class_method/
- 
+    -- file2dict
+    -- dict2class variables/property
+    -- txt2dict?
 QuizQA 
     -- subclass of Quiz
-
-
 
 Answer
     -- base class
@@ -18,12 +18,16 @@ AnswerQA
     -- 
 
 QuizList 
-    -- list of Quiz obj
+    -- list of Quiz/answer obj
     -- append_item()
     -- remove_item()
     -- modify_item()
+    -- list2question_file()
+    -- list2anwer_file()
 
-AddQuiz -- should be inside Quiz - file/jason/dict to Quiz 
+AddQuiz 
+    -- Quiz() obj from files
+    -- should be inside Quiz - file/jason/dict to Quiz 
     -- input to dict
     -- or read from file
     -- or from dict
@@ -31,8 +35,8 @@ AddQuiz -- should be inside Quiz - file/jason/dict to Quiz
     -- Quiz obj to file/db based on category
 
 TakeQuiz 
-    -- category userid level?
-    -- get_quiz_list(userid, cateogry, level)
-    -- take_quiz(quiz_obj) 
-
- 
+    -- get QuizList() based on userid/category/level
+    -- for each quiz obj, Quiz.select_from_list()
+    -- hold answer to Answer() 
+    -- add Answer to AnswerList()
+    -- write AnswerList2file

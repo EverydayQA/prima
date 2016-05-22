@@ -2,9 +2,8 @@
 import json
 import simplejson
 import sys
-from pprint import pprint
-# args 
 
+# Jason -> dict -->  Quiz 
 class ParseJson(object):
     def __init__(self, category):
         self.category = category
@@ -15,6 +14,8 @@ class ParseJson(object):
         # multiple choices format using either XML or Jason
         # png/jpg/gif
         return;
+
+    # recursive?
     def read_json(self, file_json):
         data_list = []
         with open(file_json, 'r') as f:
@@ -32,6 +33,7 @@ class ParseJson(object):
                         
         return data_list    
 
+    # dict
     def write_dict_to_json(self, data_dict, file_json):
         d = {"name":"interpolator", \
              "children":[{'name':key,"size":value} \
