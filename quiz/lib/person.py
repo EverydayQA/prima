@@ -3,15 +3,14 @@ import json
 import simplejson
 import sys
 import os
-from pprint import pprint
 import logging
 import menu
 import inspect
 import argparse
-# Quiz base class/subclass
+# Person base class/subclass
 # add *args, **kwargs - all unittest for common usae
 # logger propagate example
-class Quiz(object):
+class Person(object):
     def __init__(self, *args, **kwargs):
         # logger name has to be this way to alow propagate EffetiveLeve
         name = __name__ + "." + self.__class__.__name__
@@ -24,57 +23,31 @@ class Quiz(object):
         self.args = args
         self.kwargs = kwargs
         
+    @property
+    def login(self):
+        alogin = self.kwargs.get('login', 'invalid')
+        return alogin
 
     @property
-    def questions(self):
-        quesitons = self.kwargs.get('questions')
-        return questions
+    def password(self):
+        apw = self.kwargs.get('password', 'invalid')
+        return apw
 
     @property
-    def answers(self):
-        answers = self.kwargs.get('answers')
-        answers  = map(int, answers)
-        return answers
-
-    def print_args(self):
-        self.logger.info(self.args )
-        self.logger.info(self.kwargs)
+    def email(self):
+        mail = self.kwargs.get('email', 'invalid')
+        return mail
 
     @property
-    def quizid(self):
-        qid = self.kwargs.get('quizid')
-        return qid
-
-    @property
-    def weight(self):
-        weight = self.kwargs.get('weight', 1)
-        return weight
+    def userid(self):
+        uid = self.kwargs.get('userid', 'invalid')
+        return uid
         
-    @property
-    def description(self):
-        description = self.kwargs.get('description')
-        return description
 
-    def multiple_choices(self):
-        sels = menu.Menu().select_from_menu(self.kwargs.get('questions'), "Select the one(s) you think is correct")
-        return sels
-
-    def quiz_result(self, sels):
-        result = False
-        self.logger.info(sels)
-        self.logger.info(self.answers)
-        if sels == self.answers:
-            print "u r right"
-            result = True
-        else:
-            print 'ur answers is not right'
-            result = False
-        return result
-
-class QuizQA(Quiz):
+class Taker(Person):
     def __init__(self, *args, **kwargs):
         self.category = kwargs.get('category','QA')
-        super(QuizQA, self).__init__(args, kwargs)
+        super(Taker, self).__init__(args, kwargs)
         name = __name__ + "." + self.__class__.__name__
         self.logger.info('self.logger alreay defined in base class {0}'.format(name) )
         #self.logger = logging.getLogger(name)
@@ -84,27 +57,14 @@ class QuizQA(Quiz):
         self.args = args
         self.kwargs = kwargs
 
-    def print_args(self, x):
-        super(QuizQA, self).print_args()
-        print x
-        self.logger.debug(x)
-
 
 def init_args():    
-    # argument may vary
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("-?", '--help', action="help",help='xxx')
     parser.add_argument("-category", '--category', type=str, default=None, dest='category', help='category')
-    parser.add_argument("-quizid", '--quizid', type=str, default=None, dest='quizid', help='quizid')
-    parser.add_argument("-weight", '--weight', type=float, default=1, dest='weight', help='weight from 0 to 1')
 
     parser.add_argument("-run", '--run', action='store_true', dest='run', help='run')
     parser.add_argument("-logging", '--logging', type=int, default=30, dest='logging', help='logging level 0 10 20')
-    parser.add_argument('-files', nargs='*')
-    parser.add_argument("-description", '--description', type=str, default='descp', dest='description', help='quiz description')
-    parser.add_argument("-questions", '--questions', nargs='*', default='question', dest='questions', help='quiz questions')
-    parser.add_argument("-answers", '--answers', nargs='*', default='answers', dest='answers', help='quiz answers')
-
     args, args_extra = parser.parse_known_args()
     return args, args_extra
 
@@ -138,17 +98,16 @@ def main():
     logger.info(args)
     logger.info(args_extra)
 
-    qz = Quiz(*args_extra, **vars(args) )
-    sels = qz.multiple_choices()
-    logger.info(sels)
-    result = qz.quiz_result(sels)
-    logger.info(result)
+    logger.info('This is only for development!')
 
-    # add result to dict quizID 
-    quiz_alist = {}
-    quizid = qz.quizid
-    quiz_alist[quizid] = result
-    logger.info(quiz_alist)
+    aper = Person(*args_extra, **vars(args) )
+    cls_name = get_full_class_name(aper)
+    logger.info('class_name: {0}'.format(cls_name) )
+
+    taker = Taker(*args_extra, **vars(args) )
+    cls_name = get_full_class_name(taker)
+    logger.info('class_name: {0}'.format(cls_name) )
+
 
 
 if __name__ == '__main__':

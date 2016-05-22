@@ -40,3 +40,20 @@ TakeQuiz
     -- hold answer to Answer() 
     -- add Answer to AnswerList()
     -- write AnswerList2file
+
+Person
+    -- userid
+    -- login
+    -- passwd
+    -- subscription category/level
+    -- result
+
+Taker(Person) 
+    -- Person who take quiz
+
+Adder(Person)
+    -- Person who can add quiz/answer
+
+Admin(Person)
+Facility()
+

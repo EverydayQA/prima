@@ -1,20 +1,28 @@
 import re
 import string
 #from termcolor import colored
-#from colorama import *
+#no rpm avail/ colorPrint()
 
-def select_from_menu(the_list):
-    index = 0
-    for item in the_list:
-        print (str(index) + " " + item)
-        index = index + 1
+class Menu:
 
-    selections = []
-    sels = map(int, raw_input("space separated: ").split())
-    for sel in sels:
-        index = int(sel)
-        selections.append(the_list[index])
-    return selections
+    def __init__(self, *args, **kwargs):
+        self.kwargs = kwargs
+        self.args = args
+
+    def select_from_menu(self, the_list, prompt):
+        index = 0
+        for item in the_list:
+            print (str(index) + " " + item)
+            index = index + 1
+
+        print prompt
+
+        selections = []
+        sels = map(int, raw_input("space separated: ").split())
+        for sel in sels:
+            index = int(sel)
+            selections.append(index)
+        return selections
 
 def print_format_table():
     for style in xrange(8):
