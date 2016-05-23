@@ -143,13 +143,13 @@ def main():
     logger.info(sels)
     result = qz.quiz_result(sels)
     logger.info(result)
-
+'''
     # add result to dict quizID 
     quiz_alist = {}
     quizid = qz.quizid
     quiz_alist[quizid] = result
     logger.info(quiz_alist)
-
+'''
 
 if __name__ == '__main__':
     main()
