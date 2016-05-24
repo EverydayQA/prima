@@ -10,9 +10,9 @@ class Menu:
         self.args = args
 
     def select_from_menu(self, the_list, prompt):
-        index = 0
+        index = 1
         for item in the_list:
-            print (str(index) + " " + item)
+            print (str(index) + " ## " + item)
             index = index + 1
 
         print prompt

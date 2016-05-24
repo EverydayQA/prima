@@ -1,6 +1,7 @@
 {
     "category": "Geo",
-    "id": 111,
+    "level": 2,
+    "quizid": 111,
     "description": "Which of the following is the capital of Canada?",
     "questions":[
         "St. John, Nova Scotia",
@@ -9,6 +10,8 @@
         "Ottawa, Ontario"
     ],
     "answers": [4],
-    "weight": 1
+    "weight": 1,
+    "userid": 222,
+    "quality": 50
 }
 

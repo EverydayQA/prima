@@ -6,7 +6,7 @@ import logging
 pwd = os.path.dirname(os.path.realpath(__file__))
 base_dir = os.path.join(pwd,'../data/')
 base_dir  = os.path.abspath(base_dir)
-employee_json = os.path.join(base_dir, 'qz_111.json')
+quiz_111_json = os.path.join(base_dir, 'qz_111.json')
 import quiz
 # Jason -> dict -->  Quiz 
 class ParseJson(object):
@@ -41,20 +41,20 @@ class ParseJson(object):
             for key, value in data_list.iteritems():
                 quiz_dict[key] = value
         return quiz_dict   
+
     def dict2quiz(self, quiz_dict):
-        qz = quiz.Quiz(description=quiz_dict.get('description'), questions=quiz_dict.get('questions'))
+        qz = quiz.Quiz(quizid=quiz_dict.get('quizid'), description=quiz_dict.get('description'), questions=quiz_dict.get('questions'), answers=quiz_dict.get('answers'), category=quiz_dict.get('category'), weight=quiz_dict.get('weight'))
         return qz
 
-    # dict
-    def write_dict_to_json(self, data_dict, file_json):
-        d = {"name":"interpolator", \
-             "children":[{'name':key,"size":value} \
-             for key,value in data_dict.items()]}
-
+    # dict2json
+    def dict2json(self, data_dict, file_json):
         with open(file_json, 'w') as f:
-            j = json.dumps(d, indent=4, sort_keys=True)
+            j = json.dumps(data_dict, indent=4, sort_keys=True)
             print >> f, j
             f.close()
+    @property
+    def data_dir(self):
+        return base_dir
 def main():
     FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(format=FORMAT)
@@ -71,27 +71,36 @@ def main():
     logger.debug(line)
 
     logger.info(__name__)
-    pjson = ParseJson('QC')
-    sample_dict = {'aaa':1, 'ccc':3}
-    pjson.write_dict_to_json(sample_dict, 'menu.json')
+    pjson = ParseJson()
 
-    quiz_dict = pjson.read_json('menu.json')
-    logger.info(quiz_dict)
 
-    logger.info(employee_json)
-    quiz_dict = pjson.json2dict(employee_json)
+
+    logger.info(quiz_111_json)
+    quiz_dict = pjson.json2dict(quiz_111_json)
     logger.info( quiz_dict )
+
     qz = pjson.dict2quiz(quiz_dict)
     sels = qz.multiple_choices()
     logger.info(sels)
+
+    ans = qz.answers
+    logger.info(ans)
+
     result = qz.quiz_result(sels)
     logger.info(result)
 
     # add result to dict quizID 
     quiz_alist = {}
     quizid = qz.quizid
+    logger.info(quizid)
     quiz_alist[quizid] = result
     logger.info(quiz_alist)
+
+    # dict2json
+    file_to_write  = os.path.join("/tmp", 'menu.json')
+    pjson.dict2json(quiz_dict, file_to_write)
+    quiz_dict = pjson.read_json(file_to_write)
+    logger.info(quiz_dict)
 
 if __name__ == '__main__':
     main()

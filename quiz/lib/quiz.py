@@ -102,8 +102,8 @@ def init_args():
     parser.add_argument("-logging", '--logging', type=int, default=30, dest='logging', help='logging level 0 10 20')
     parser.add_argument('-files', nargs='*')
     parser.add_argument("-description", '--description', type=str, default='descp', dest='description', help='quiz description')
-    parser.add_argument("-questions", '--questions', nargs='*', default='question', dest='questions', help='quiz questions')
-    parser.add_argument("-answers", '--answers', nargs='*', default='answers', dest='answers', help='quiz answers')
+    parser.add_argument("-questions", '--questions', nargs='*',  dest='questions', help='quiz questions')
+    parser.add_argument("-answers", '--answers', nargs='*', dest='answers', help='quiz answers')
 
     args, args_extra = parser.parse_known_args()
     return args, args_extra
@@ -143,6 +143,7 @@ def main():
     logger.info(sels)
     result = qz.quiz_result(sels)
     logger.info(result)
+
 '''
     # add result to dict quizID 
     quiz_alist = {}
