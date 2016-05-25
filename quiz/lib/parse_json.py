@@ -13,7 +13,7 @@ class ParseJson(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-        name = __name__ + '.' + self.__class__.__name__
+        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
         self.logger = logging.getLogger(name)
 
     # return an instance of Quiz()
@@ -58,7 +58,8 @@ class ParseJson(object):
 def main():
     FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(format=FORMAT)
-    logger = logging.getLogger(__name__)
+    name = os.path.splitext(os.path.basename(__file__))[0]
+    logger = logging.getLogger(name)
     logger.propagate = True  
     logger.setLevel(10)
     el  = logger.getEffectiveLevel()

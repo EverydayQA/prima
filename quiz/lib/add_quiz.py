@@ -17,11 +17,8 @@ class AddQuiz(object):
         # default level is 20 in case not defined
         self.args = args
         self.kwargs = kwargs
-        name = __name__ + "." + self.__class__.__name__
+        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__ 
         self.logger = QuizLogger(name=name, level=10).logger
-        self.logger.info('__init__()')
-        self.logger.info(self.args)
-        self.logger.info(kwargs)
         self.quizid = self.kwargs.get('quizid')
 
     def set_category(self):
@@ -66,9 +63,12 @@ class AddQuiz(object):
         return questions
 
     def prompt(self, str):
-        print str
-        input = raw_input()
-        return input
+        input_str = None
+        while not input_str:
+            print str
+            input_str = raw_input()
+            
+        return input_str
     def set_quiz_dict(self):
         quiz_dict = {}
 
@@ -91,8 +91,8 @@ def init_args_add_quiz():
 
 def main():    
     args, args_extra = init_args_add_quiz()
-
-    log = QuizLogger(name=__file__,level=logging.INFO, logname='/tmp/test2.log')
+    name = os.path.splitext(os.path.basename(__file__))[0] 
+    log = QuizLogger(name=name,level=logging.INFO, logname='/tmp/test2.log')
     
     cp = ColorPrint()
     cstr = cp.cstr('logging color string', cp.RED)
@@ -105,7 +105,8 @@ def main():
 
     quizid = add_quiz.quizid
     level  = add_quiz.set_level()
-    file_to_write = add_quiz.category + '_' + level + '_' + str(quizid) + '.json'
+
+    file_to_write = add_quiz.category + '_' + str(level) + '_' + str(quizid) + '.json'
     # write to data base - filename?
     pjson = ParseJson()
     data_dir = pjson.data_dir

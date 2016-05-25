@@ -14,7 +14,7 @@ import argparse
 class Quiz(object):
     def __init__(self, *args, **kwargs):
         # logger name has to be this way to alow propagate EffetiveLeve
-        name = __name__ + "." + self.__class__.__name__
+        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
         self.logger = logging.getLogger(name)
         # this is necessary to pass logger handler to subclass?
         self.logger.propagate = True    
@@ -61,8 +61,6 @@ class Quiz(object):
 
     def quiz_result(self, sels):
         result = False
-        self.logger.info(sels)
-        self.logger.info(self.answers)
         if sels == self.answers:
             print "u r right"
             result = True
@@ -75,7 +73,8 @@ class QuizQA(Quiz):
     def __init__(self, *args, **kwargs):
         self.category = kwargs.get('category','QA')
         super(QuizQA, self).__init__(args, kwargs)
-        name = __name__ + "." + self.__class__.__name__
+        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
+
         self.logger.info('self.logger alreay defined in base class {0}'.format(name) )
         #self.logger = logging.getLogger(name)
         el  = self.logger.getEffectiveLevel()
@@ -100,7 +99,7 @@ def init_args():
 
     parser.add_argument("-run", '--run', action='store_true', dest='run', help='run')
     parser.add_argument("-logging", '--logging', type=int, default=30, dest='logging', help='logging level 0 10 20')
-    parser.add_argument('-files', nargs='*')
+    parser.add_argument('-files', "--files", nargs='*')
     parser.add_argument("-description", '--description', type=str, default='descp', dest='description', help='quiz description')
     parser.add_argument("-questions", '--questions', nargs='*',  dest='questions', help='quiz questions')
     parser.add_argument("-answers", '--answers', nargs='*', dest='answers', help='quiz answers')
@@ -120,7 +119,8 @@ def get_full_func_name():
 def main():    
 
     args, args_extra = init_args()
-    logger = logging.getLogger(__name__)
+    name = os.path.splitext(os.path.basename(__file__))[0]
+    logger = logging.getLogger(name)
 
     logger.setLevel(args.logging)
     ch = logging.StreamHandler(sys.stdout)
