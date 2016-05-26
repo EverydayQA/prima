@@ -4,9 +4,20 @@ import menu
 import quiz
 
 
+class Taken(object):
+    def __init__(self, *args, **args):
+        self.args =args
+        self.kwargs = kwargs
+    @property
+    def taken_pass_count(self):
+        pass
+    @property
+    def taken_fail_count(self):
+        pass
+
 # take from QuizList() - Quiz
 # write back to AnswerList-- Answer()?
-
+# QuizTaken() class/ same as answerList?
 class TakeQuiz(object):
     def __init__(self, category):
         self.category = category

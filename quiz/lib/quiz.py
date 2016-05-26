@@ -44,6 +44,10 @@ class Quiz(object):
     def quizid(self):
         qid = self.kwargs.get('quizid')
         return qid
+    @property
+    def vote(self):
+        vote = self.kwargs.get('vote', 0)
+        return vote
 
     @property
     def weight(self):

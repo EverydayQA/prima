@@ -18,7 +18,8 @@ class AddQuiz(object):
         self.args = args
         self.kwargs = kwargs
         name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__ 
-        self.logger = QuizLogger(name=name, level=10).logger
+        self.logger = logging.getLogger(name)
+
         self.quizid = self.kwargs.get('quizid')
 
     def set_category(self):
@@ -91,36 +92,47 @@ def init_args_add_quiz():
 
 def main():    
     args, args_extra = init_args_add_quiz()
-    name = os.path.splitext(os.path.basename(__file__))[0] 
-    log = QuizLogger(name=name,level=logging.INFO, logname='/tmp/test2.log')
-    
+    name = os.path.splitext(os.path.basename(__file__))[0]
+    logger = logging.getLogger(name)
+    logger.setLevel(args.logging)
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(args.logging)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+    logger.propagate = True  
+     
     cp = ColorPrint()
     cstr = cp.cstr('logging color string', cp.RED)
-    log.logger.info(cstr)
+    logger.info(cstr)
     kwargs = vars(args)
     # extra args as args, while args serves as kwargs for class AddQuiz
     add_quiz = AddQuiz(args_extra, **vars(args))
     quiz_dict = add_quiz.set_quiz_dict()
-    log.logger.info(quiz_dict)
+    logger.info(quiz_dict)
 
     quizid = add_quiz.quizid
     level  = add_quiz.set_level()
 
     file_to_write = add_quiz.category + '_' + str(level) + '_' + str(quizid) + '.json'
-    # write to data base - filename?
+
+    # write to file/not sql
     pjson = ParseJson()
     data_dir = pjson.data_dir
     file_to_write  = os.path.join(data_dir, file_to_write)
     pjson.dict2json(quiz_dict, file_to_write)
     qz = pjson.dict2quiz(quiz_dict)
+
+
+
     sels = qz.multiple_choices()
-    log.logger.info(sels)
+    logger.info(sels)
 
     ans = qz.answers
-    log.logger.info(ans)
+    logger.info(ans)
 
     result = qz.quiz_result(sels)
-    log.logger.info(result)
+    logger.info(result)
 
 if __name__ == '__main__':
     main()

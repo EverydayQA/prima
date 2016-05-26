@@ -42,7 +42,7 @@ class Person(object):
     def userid(self):
         uid = self.kwargs.get('userid', 'invalid')
         return uid
-        
+               
 
 class Taker(Person):
     def __init__(self, *args, **kwargs):
