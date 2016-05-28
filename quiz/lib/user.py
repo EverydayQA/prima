@@ -7,10 +7,10 @@ import logging
 import menu
 import inspect
 import argparse
-# Person base class/subclass
+# User base class/subclass
 # add *args, **kwargs - all unittest for common usae
 # logger propagate example
-class Person(object):
+class User(object):
     def __init__(self, *args, **kwargs):
         # logger name has to be this way to alow propagate EffetiveLeve
         name = __name__ + "." + self.__class__.__name__
@@ -44,7 +44,7 @@ class Person(object):
         return uid
                
 
-class Taker(Person):
+class Taker(User):
     def __init__(self, *args, **kwargs):
         self.category = kwargs.get('category','QA')
         super(Taker, self).__init__(args, kwargs)
@@ -100,7 +100,7 @@ def main():
 
     logger.info('This is only for development!')
 
-    aper = Person(*args_extra, **vars(args) )
+    aper = User(*args_extra, **vars(args) )
     cls_name = get_full_class_name(aper)
     logger.info('class_name: {0}'.format(cls_name) )
 

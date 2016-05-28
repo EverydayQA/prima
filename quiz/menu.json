@@ -1,5 +1,4 @@
 {
-    "name": "interpolator", 
     "children": [
         {
             "name": "aaa", 
@@ -9,5 +8,6 @@
             "name": "ccc", 
             "size": 3
         }
-    ]
+    ], 
+    "name": "interpolator"
 }

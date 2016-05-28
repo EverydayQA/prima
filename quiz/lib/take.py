@@ -19,14 +19,17 @@ class Taken(object):
         self.kwargs = kwargs
 
     @property
-    def sessionid(self):
-        
-        sessionid = self.kwargs.get('sessionid')
-        return sessionid
+    def session_id(self):
+        session_id = self.kwargs.get('session_id')
+        return session_id
     @property
-    def quizid(self):
-        quizid = self.kwargs.get('quizid')
-        return quizid
+    def quiz_id(self):
+        quiz_id = self.kwargs.get('quiz_id')
+        return quiz_id
+    @property
+    def file_name(self):
+        file_name = self.kwargs.get('file_name')
+        return file_name
 
     @property
     def pass_count(self):
@@ -36,9 +39,11 @@ class Taken(object):
     def fail_count(self):
         pass
 
-    # extra for Quiz() userid/time/sessionid/score/
-
-    #Quiz() group - pass(no need to do this cat) fail(more on this group)
+    # file_name/quiz_id/session_id(same)/ans/result/datetime/userid
+    # Users() - with login/password/email/phone/
+    # Sessions() - session_id/user/datetime/score
+    # Taken() quiz_id/session_id/extra - fail_count/pass_count/result/ans
+    # Quiz() quiz_id/description/questions/answers/group_id(o)
     # modify/delete/quality request
 
 class Take(object):
@@ -129,6 +134,9 @@ def main():
     # select Quiz()
     files = menu.select_from_list(jsons)
     print files
+
+    taken_dict = {}
+    # file_name/quiz_id/session_id(same)/ans/result/datetime/userid
 
     for json in files:
         quiz_dict = pjson.read_json(json)
