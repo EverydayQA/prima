@@ -8,6 +8,8 @@ import logging
 import menu
 import inspect
 import argparse
+logger = logging.getLogger(__name__)
+
 # Quiz base class/subclass
 # add *args, **kwargs - all unittest for common usae
 # logger propagate example
@@ -15,12 +17,11 @@ class Quiz(object):
     def __init__(self, *args, **kwargs):
         # logger name has to be this way to alow propagate EffetiveLeve
         name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
-        self.logger = logging.getLogger(name)
         # this is necessary to pass logger handler to subclass?
-        self.logger.propagate = True    
-        el  = self.logger.getEffectiveLevel()
-        line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(self.logger.level, name, el)
-        self.logger.debug(line)
+        logger.propagate = True    
+        el  = logger.getEffectiveLevel()
+        line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(logger.level, name, el)
+        logger.debug(line)
         self.args = args
         self.kwargs = kwargs
         
@@ -37,8 +38,8 @@ class Quiz(object):
         return answers
 
     def print_args(self):
-        self.logger.info(self.args )
-        self.logger.info(self.kwargs)
+        logger.info(self.args )
+        logger.info(self.kwargs)
 
     @property
     def quizid(self):
@@ -79,18 +80,18 @@ class QuizQA(Quiz):
         super(QuizQA, self).__init__(args, kwargs)
         name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
 
-        self.logger.info('self.logger alreay defined in base class {0}'.format(name) )
-        #self.logger = logging.getLogger(name)
-        el  = self.logger.getEffectiveLevel()
-        line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(self.logger.level, name, el)
-        self.logger.debug(line)
+        logger.info('logger alreay defined in base class {0}'.format(name) )
+        #logger = logging.getLogger(name)
+        el  = logger.getEffectiveLevel()
+        line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(logger.level, name, el)
+        logger.debug(line)
         self.args = args
         self.kwargs = kwargs
 
     def print_args(self, x):
         super(QuizQA, self).print_args()
         print x
-        self.logger.debug(x)
+        logger.debug(x)
 
 
 def init_args():    
@@ -124,7 +125,6 @@ def main():
 
     args, args_extra = init_args()
     name = os.path.splitext(os.path.basename(__file__))[0]
-    logger = logging.getLogger(name)
 
     logger.setLevel(args.logging)
     ch = logging.StreamHandler(sys.stdout)
@@ -148,13 +148,6 @@ def main():
     result = qz.quiz_result(sels)
     logger.info(result)
 
-'''
-    # add result to dict quizID 
-    quiz_alist = {}
-    quizid = qz.quizid
-    quiz_alist[quizid] = result
-    logger.info(quiz_alist)
-'''
 
 if __name__ == '__main__':
     main()

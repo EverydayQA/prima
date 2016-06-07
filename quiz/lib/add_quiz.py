@@ -17,10 +17,18 @@ class AddQuiz(object):
         # default level is 20 in case not defined
         self.args = args
         self.kwargs = kwargs
-        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__ 
-        self.logger = logging.getLogger(name)
 
         self.quizid = self.kwargs.get('quizid')
+    @property
+    def logger(self):
+        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__ 
+        logger = logging.getLogger(name)
+        log_level = self.kwargs.get('log_level', 30)
+        logger.setLevel(log_level)
+        el  = logger.getEffectiveLevel()
+        line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(logger.level, name, el)
+        logger.debug(line)
+        return logger 
 
     def set_category(self):
         self.category = self.kwargs.get('category')
@@ -94,13 +102,14 @@ def main():
     args, args_extra = init_args_add_quiz()
     name = os.path.splitext(os.path.basename(__file__))[0]
     logger = logging.getLogger(name)
+
     logger.setLevel(args.logging)
     ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(args.logging)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
-    logger.propagate = True  
+    logger.propagate = False
      
     cp = ColorPrint()
     cstr = cp.cstr('logging color string', cp.RED)
@@ -122,8 +131,6 @@ def main():
     file_to_write  = os.path.join(data_dir, file_to_write)
     pjson.dict2json(quiz_dict, file_to_write)
     qz = pjson.dict2quiz(quiz_dict)
-
-
 
     sels = qz.multiple_choices()
     logger.info(sels)

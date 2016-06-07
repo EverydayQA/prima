@@ -10,8 +10,6 @@ import parse_json
 import quiz
 from collections import OrderedDict
 import uuid
-name = os.path.splitext(os.path.basename(__file__))[0]
-logger = logging.getLogger(name)
 
 class Taken(object):
     def __init__(self, *args, **kwargs):
@@ -96,13 +94,16 @@ class Score(object):
     
 
 def main():
+    name = os.path.splitext(os.path.basename(__file__))[0]
+    logger = logging.getLogger(name)
+
     logger.setLevel(10)
     ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(10)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
-    logger.propagate = True  
+    logger.propagate = False 
 
     # now - a comprised way to get quiz.json first
     take = Take()
@@ -114,7 +115,6 @@ def main():
     list_dict = {}
     # choose a List()/Apply same session_id
     logger.info('put Quiz()s in Dict')
-
     pjson = parse_json.ParseJson()
     logger.info('test sorting list of class obj')
     for json in jsons:

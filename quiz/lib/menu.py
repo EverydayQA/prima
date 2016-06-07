@@ -2,6 +2,8 @@ import re
 import string
 #from termcolor import colored
 #no rpm avail/ colorPrint()
+import logging
+logger  = logging.getLogger(__name__)
 
 class Menu:
 
@@ -10,6 +12,7 @@ class Menu:
         self.args = args
 
     def select_from_menu(self, the_list, prompt):
+        logger.debug('select_from_menu')
         index = 1
         for item in the_list:
             print (str(index) + " ## " + item)
@@ -45,6 +48,7 @@ def print_menu(the_list):
 
 def select_from_list(the_list):
     # multiple select
+    logger.info('select_from_list')
     print_menu(the_list)
     input_str = get_input() 
     sels = parse_input_string(input_str)
