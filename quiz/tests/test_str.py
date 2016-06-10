@@ -1,7 +1,7 @@
 #!/usr/bnin/python
 import unittest
 import os
-
+import re
 
 class TestSplit(unittest.TestCase):
 
@@ -16,6 +16,13 @@ class TestSplit(unittest.TestCase):
         items = path2.strip('/').split('/')
         print items
         self.assertEqual(len(items), 7)
+    def test_compare_number(self):
+        str1 = 'aaa.2016-06-07.12:22:34:34.abc'
+        str2 = 'aaae.2016-06-08.11:22:34:34.abcd'
+        str1_num = re.sub('\D','',str1)
+        str2_num = re.sub('\D','',str2)
+        self.assertTrue(str1_num<str2_num)
+        self.assertTrue(int(str1_num)<int(str2_num))
 
     # test str keep alnumeric
     # test and get familiar with string manipulation
