@@ -20,17 +20,17 @@ class MimeSend(object):
         msg['Subject'] = self.subject
         msg['From'] = self.froms
         msg['To'] = self.tos
-        part1 = MIMEText(self.text), 'plain')
-        part2 = MIMEText(self.html, 'html')
+        part1 = MIMEText(self.text_str, 'plain')
+        part2 = MIMEText(self.html_str, 'html')
         msg.attach(part1)
         msg.attach(part2)
         return msg
 
-    # to be re-defined
+    @property
     def text_str(self):
         text = 'are you texter'
         return text
-
+    @property
     def html_str(self):
         html = """\
         <html>
