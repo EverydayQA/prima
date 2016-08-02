@@ -1,0 +1,14 @@
+{
+    "answers": [
+        "2"
+    ], 
+    "category": "QC", 
+    "description": "which of the following is true?", 
+    "questions": [
+        "a python logger.getLogger with __name__ in module level is preferred", 
+        "a logger per class", 
+        "a handler per class", 
+        "1 handler per module"
+    ], 
+    "quizid": 436
+}
