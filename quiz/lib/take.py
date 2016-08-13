@@ -111,7 +111,7 @@ def main():
 
     # available Quiz()
     logger.info('find available Quiz()s -- with quiz_id etc')
-
+    
     list_dict = {}
     # choose a List()/Apply same session_id
     logger.info('put Quiz()s in Dict')
@@ -149,7 +149,6 @@ def main():
 
         ans = qz.answers
         logger.info(ans)
-
         result = qz.quiz_result(sels)
         logger.info(result)
 
