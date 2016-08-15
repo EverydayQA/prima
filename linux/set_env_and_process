@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+echo "TEST_VAR before export is: <$TEST_VAR>"
+
+export TEST_VAR=/opt/loca/netcdf
+echo "TEST_VAR after export is: <$TEST_VAR>"
+eval /sbin/ifconfig| awk '/inet addr/{print substr($2,6)}'
+
+# execute command string without losing format
+if [ $# -eq 0 ]; then
+    echo "No command to execute"
+else
+    echo "Execute commands: $@"
+    eval $@
+fi
+
+# usage ./env_set_and_process ./env_set_and_process
+# useful for ssh/cron etc to set env and execute script defined in parameters
+
