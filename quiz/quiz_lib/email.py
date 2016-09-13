@@ -1,11 +1,12 @@
-#!/usr/bin/python
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+#!/usr/bin/env python
+import email
 import argparse
+import smtplib
+import logging
+
 
 class MimeSend(object):
-    def __init__(self, *args, **kwargs)
+    def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
 
@@ -51,12 +52,12 @@ class MimeSend(object):
         return self.kwargs.get('send', None)
 
     def mime_msg_wrapper(self):
-        msg = MIMEMultipart('alternative')
+        msg = email.mime.multipart.MIMEMultipart('alternative')
         msg['Subject'] = self.subject
         msg['From'] = self.email_from
         msg['To'] = self.email_to
-        part1 = MIMEText(self.text_str, 'plain')
-        part2 = MIMEText(self.html_str, 'html')
+        part1 = email.mime.text.MIMEText(self.text_str, 'plain')
+        part2 = email.mime.text.MIMEText(self.html_str, 'html')
         msg.attach(part1)
         msg.attach(part2)
         return msg
@@ -109,7 +110,7 @@ def main():
     logger.propagate = False
 
     # sys.args[0] as text attachment
-    mime_send = MimeSend(sys.argv[0], to="joe", from='joe', subject='test subject')
+    mime_send = MimeSend(sys.argv[0], to=args.email_to, email_from=args.email_from, subject='test subject')
     mime_send.send_smtp()
 
 # argspase - for command line

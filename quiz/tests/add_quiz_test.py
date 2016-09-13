@@ -7,7 +7,7 @@ pwd = os.path.dirname(os.path.realpath(__file__))
 # 1 level up
 base_dir = os.path.join(pwd,'..')
 # add to sys.path
-sys.path.append(base_dir)
+# sys.path.append(base_dir)
 
 from lib import add_quiz
 

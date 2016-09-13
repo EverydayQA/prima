@@ -7,7 +7,7 @@ import argparse
 
 pwd = os.path.dirname(os.path.realpath(__file__))
 base_dir = os.path.join(pwd,'..')
-sys.path.append(base_dir)
+#sys.path.append(base_dir)
 
 # demo usage of args in unittest
 

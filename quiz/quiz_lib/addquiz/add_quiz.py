@@ -4,13 +4,19 @@ import json
 import simplejson
 import sys
 import logging
-import menu
 import argparse
-from quiz_logger import QuizLogger
-from quiz import Quiz
-from color_print import ColorPrint
 from random import randint
-from parse_json import ParseJson
+
+
+from quiz_lib import menu
+from quiz_lib.quiz_logger import QuizLogger
+from quiz_lib.color_print import ColorPrint
+from quiz_lib.parse_json import ParseJson
+
+class Quiz(object):
+    def get(self):
+	return 'get from quiz on add_quiz'
+
 
 class AddQuiz(object):
     def __init__(self, *args, **kwargs):
@@ -141,6 +147,4 @@ def main():
     result = qz.quiz_result(sels)
     logger.info(result)
 
-if __name__ == '__main__':
-    main()
 

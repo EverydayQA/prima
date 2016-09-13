@@ -10,6 +10,8 @@ import inspect
 import argparse
 logger = logging.getLogger(__name__)
 
+from quiz_lib.addquiz import add_quiz
+
 # Quiz base class/subclass
 # add *args, **kwargs - all unittest for common usae
 # logger propagate example
@@ -30,6 +32,11 @@ class Quiz(object):
     def questions(self):
         quesitons = self.kwargs.get('questions')
         return questions
+
+    def get(self):
+	result = add_quiz.Quiz().get()
+	result = 'from quiz.Quiz {0}'.format(result)
+	return result
 
     @property
     def answers(self):
@@ -149,6 +156,4 @@ def main():
     logger.info(result)
 
 
-if __name__ == '__main__':
-    main()
 

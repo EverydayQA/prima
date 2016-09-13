@@ -1,13 +1,16 @@
 from blessings import Terminal
 import time
-term  = Terminal()
-with term.location():
-    print (term.move(0,(term.width/2)-7) + term.bold_green("Test"))
-    print (term.move(5,(term.width/2)-7) + term.bold_red("Test"))
 
-time.sleep(5)
-term.clear
-term.exit_fullscreen
+from quiz_lib.addquiz import add_quiz
+from quiz_lib import quiz as qz
+from quiz_lib import addquiz
 
 
+result = add_quiz.Quiz().get()
+print result
 
+result = qz.Quiz().get()
+print result
+
+result = addquiz.add_test.AddTest().get()
+print result
