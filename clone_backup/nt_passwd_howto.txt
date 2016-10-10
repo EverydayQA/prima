@@ -1,0 +1,24 @@
+
+# final goal - fix sluggish win7 laptop and clone image/disk to SSD
+# recover a win7 administrator passwd
+
+This procedure is mainly for myself, in case I have to do it again
+
+reboot to safeMode did not work
+it is extremely slow to mess around in windows
+not familiar with windows in general
+cannot prepare for cloning with admin passwd
+no repair disk
+
+step 1: a linux machine(fedora 24 ready)
+step 2: fedora24 have ntfs supported
+step 3: fedora24 have chntpasswd installed by dnf
+step 4: usb dock ready
+step 5: take out SDD from lenovo machine
+step 6: insert into usb dock connected to fedora24
+step 7: fedora24 make sure the SSD is mounted
+    mount -t ntfs /dev/sdd3 /media/leveno_sdd
+    find . -name SAM
+    cd sth/System32/config/
+    chntpasswd 
+    details will be filled later 

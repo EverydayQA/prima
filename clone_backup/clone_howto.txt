@@ -1,0 +1,28 @@
+clone current sdd with win7 to SSD
+date: 2016-10-xx
+source: SDD 1000G 2.5 inch in lenovo ideapad y510d with about 600G usage
+target: ssd 500G PNY 2.5inch sata 480G CS1311
+
+# choose a cloning tool for a first timer
+PNY ssd came with a acronis true image 1 pc license which you have to be careful which machine to install
+clonzilla fans really recommend this one
+Plan A: acronis clone 2014
+    manufacturer bundled sofeware, must be the first choice
+    seems to be very straight forward
+    nice interface, less intimidate
+
+Plan B: clonezilla 2.4.7 i686
+    free, can be used on any machine
+    familiar with linux more than windows myself
+    
+summary:
+    I should not use acronis clone inside win7, it has to be boot from DVD
+    I tried once to clone inside win7 and boot from acronis bootable disk, and ended up clone a win7 starting with Acronis clone
+    it ended up with a good clone partition to SSD
+    
+    clonezilla throws some warnings, actually does not matter
+    it ended up with a good clone too
+    future usage - both tools are fine, really depends on situations
+details will be attached later on
+
+    
