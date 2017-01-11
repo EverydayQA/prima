@@ -50,6 +50,12 @@ class Take(object):
         self.kwargs = kwargs
 
     @property
+    def logger(self):
+        logger = logging.getLogger(__name__)
+        logger.setLevel(10)
+        return logger
+
+    @property
     def data_dir(self):    
         dirname = os.path.dirname(__file__)
         data_dir = os.path.join(dirname, '../data')
@@ -75,7 +81,7 @@ class Take(object):
         sorted_dict_desc = OrderedDict(sorted(list_dict.items(),  key=lambda t: t[1].description) )
         for key in sorted_dict_desc:
             item = sorted_dict_desc[key]
-            logger.debug( str(key) + "-----" + str(item.description) )
+            self.logger.debug( str(key) + "-----" + str(item.description) )
 
         return sorted_dict_desc
     def sort_quiz_dict_by_key(self, list_dict):
@@ -84,7 +90,7 @@ class Take(object):
         list_dict = OrderedDict(sorted(list_dict.items(),  key=lambda t:t[0]) )
         for key in list_dict:
             item = list_dict[key]
-            logger.debug( str(key) + "-----" + str(item.description) )
+            self.logger.debug( str(key) + "-----" + str(item.description) )
         return list_dict
 
 class Score(object):
