@@ -10,7 +10,7 @@ import inspect
 import argparse
 logger = logging.getLogger(__name__)
 
-from quiz_lib.addquiz import add_quiz
+from add import add_quiz
 
 # Quiz base class/subclass
 # add *args, **kwargs - all unittest for common usae

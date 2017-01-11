@@ -1,13 +1,12 @@
 #!/usr/bin/python
 import logging
-import menu
 import quiz
 import glob
 import os
 import sys
-import menu
-import parse_json
-import quiz
+from quiz import menu
+from quiz import parse_json
+from quiz import quiz
 from collections import OrderedDict
 import uuid
 

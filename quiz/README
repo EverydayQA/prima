@@ -4,11 +4,16 @@ quiz
 |--README
 +--quiz
 |  |-- __init__.py
-|  |-- add_quiz.py
-|  |-- take_quiz.py
+|  |-- quiz.py
 |
 |--setup.py
++--take
+|  |-- take.py
+|  |-- take_quiz.py
 |
++--add
+|  |-- add.py
+|  |-- add_quiz.py
 +--test
 +--docs
 
