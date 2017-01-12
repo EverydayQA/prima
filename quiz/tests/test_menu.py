@@ -3,8 +3,8 @@ import unittest
 import os
 import sys
 import mock
-from ..quiz import menu
-from ..quiz import color_print
+from ..lib import menu
+from ..lib import color_print
 
 class MenuTest(unittest.TestCase):
     def test1(self):
@@ -28,7 +28,7 @@ class MenuTest(unittest.TestCase):
         print sels
         self.assertEqual(sels,['bbb','ccc'])
 
-    @mock.patch('quiz.quiz.menu.get_input')
+    @mock.patch('quiz.lib.menu.get_input')
     def test_select_from_list2(self, mock_get_input):
         mock_get_input.return_value = '1 2'
         alist=['aaa','bbb','ccc', 'ddd']

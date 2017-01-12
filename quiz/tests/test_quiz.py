@@ -5,8 +5,8 @@ import sys
 import mock
 import argparse
 
-from quiz.quiz import menu
-from quiz.quiz import color_print
+from quiz.lib import menu
+from quiz.lib import color_print
 
 class QuizTest(unittest.TestCase):
     def __init__(self, methodName='runTest', args=None):

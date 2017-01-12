@@ -7,14 +7,9 @@ import logging
 import argparse
 from random import randint
 
-from quiz.quiz import quiz_logger
-from quiz.quiz.color_print import ColorPrint
-from quiz.quiz import parse_json
-
-class Quiz(object):
-    def get(self):
-	    return 'get from quiz on add_quiz'
-
+from quiz.lib import quiz_logger
+from quiz.lib.color_print import ColorPrint
+from quiz.lib import parse_json
 
 class AddQuiz(object):
     def __init__(self, *args, **kwargs):

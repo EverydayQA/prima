@@ -4,14 +4,8 @@ import os
 import sys
 import mock
 import argparse
-pwd = os.path.dirname(os.path.realpath(__file__))
-base_dir = os.path.join(pwd,'..')
-sys.path.append(base_dir)
-
-# demo usage of args in unittest
-# demo of setupclass
-from ..quiz import menu
-from ..quiz import color_print
+from ..lib import menu
+from ..lib import color_print
 
 def setUpModule():
     pass
