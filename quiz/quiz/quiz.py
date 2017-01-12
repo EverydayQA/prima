@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import json
 import simplejson
 import sys
@@ -10,7 +9,7 @@ import inspect
 import argparse
 logger = logging.getLogger(__name__)
 
-from add import add_quiz
+from quiz.add import add_quiz
 
 # Quiz base class/subclass
 # add *args, **kwargs - all unittest for common usae

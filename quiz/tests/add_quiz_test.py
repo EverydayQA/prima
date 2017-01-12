@@ -2,7 +2,7 @@
 import unittest
 import os
 import sys
-from ..add import add_quiz
+from quiz.add import add_quiz
 
 class add_quizTest(unittest.TestCase):
     def test1(self):

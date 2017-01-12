@@ -3,7 +3,7 @@ import json
 import sys
 import os
 import logging
-from quiz import quiz
+from quiz.quiz import quiz
 # Jason -> dict -->  Quiz 
 class ParseJson(object):
     def __init__(self, *args, **kwargs):

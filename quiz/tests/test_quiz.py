@@ -5,8 +5,8 @@ import sys
 import mock
 import argparse
 
-from ..quiz import menu
-from ..quiz import color_print
+from quiz.quiz import menu
+from quiz.quiz import color_print
 
 class QuizTest(unittest.TestCase):
     def __init__(self, methodName='runTest', args=None):
@@ -15,6 +15,9 @@ class QuizTest(unittest.TestCase):
 
 class QuizQATest(QuizTest):
     def test_if_verbose(self):
+        if not self.args:
+            self.assertEquals(self.args, None)
+            return
         if self.args.verbose:
             self.assertTrue(self.args.verbose, True)
         else:
@@ -22,6 +25,10 @@ class QuizQATest(QuizTest):
 
 class QuizPythonTest(QuizTest):
     def test_pass_anything(self):
+        if not self.args:
+            self.assertEquals(self.args, None)
+            return
+
         self.assertTrue(self.args.verbose)
     
 
