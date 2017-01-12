@@ -5,7 +5,7 @@ import sys
 import os
 from pprint import pprint
 import logging
-import menu
+from . import menu
 import inspect
 import argparse
 logger = logging.getLogger(__name__)

@@ -3,15 +3,8 @@ import unittest
 import os
 import sys
 import mock
-# similar to findBin in Perl
-pwd = os.path.dirname(os.path.realpath(__file__))
-# 1 level up
-base_dir = os.path.join(pwd,'..')
-# add to sys.path
-sys.path.append(base_dir)
-
-from lib import menu
-from lib import color_print
+from ..quiz import menu
+from ..quiz import color_print
 
 class MenuTest(unittest.TestCase):
     def test1(self):
@@ -23,7 +16,7 @@ class MenuTest(unittest.TestCase):
         cp = color_print.ColorPrint()
 
         for sel in sels:
-            cp.printout(sel + '\n', cp.GREEN)
+            cp.cprint(sel + '\n', cp.GREEN)
         self.assertEqual(len(sels),4)
 
     # menu.py - mock builtin function in other function
@@ -35,7 +28,7 @@ class MenuTest(unittest.TestCase):
         print sels
         self.assertEqual(sels,['bbb','ccc'])
 
-    @mock.patch('lib.menu.get_input')
+    @mock.patch('quiz.quiz.menu.get_input')
     def test_select_from_list2(self, mock_get_input):
         mock_get_input.return_value = '1 2'
         alist=['aaa','bbb','ccc', 'ddd']

@@ -3,11 +3,7 @@ import json
 import sys
 import os
 import logging
-pwd = os.path.dirname(os.path.realpath(__file__))
-base_dir = os.path.join(pwd,'../data/')
-base_dir  = os.path.abspath(base_dir)
-quiz_111_json = os.path.join(base_dir, 'qz_111.json')
-import quiz
+from quiz import quiz
 # Jason -> dict -->  Quiz 
 class ParseJson(object):
     def __init__(self, *args, **kwargs):

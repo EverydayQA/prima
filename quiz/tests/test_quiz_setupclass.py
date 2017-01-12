@@ -10,8 +10,8 @@ sys.path.append(base_dir)
 
 # demo usage of args in unittest
 # demo of setupclass
-from lib import menu
-from lib import color_print
+from ..quiz import menu
+from ..quiz import color_print
 
 def setUpModule():
     pass

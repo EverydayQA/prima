@@ -7,7 +7,10 @@ import logging
 
 class TestEnv(unittest.TestCase):
     def test_cmds(self):
-        cmds = ['./tests/test.pl', re.escape('TEST VAR'),  'EXIT CODE', 'DEBUG']
+        afile = __file__
+        dirname = os.path.dirname(afile)
+        cmd = os.path.join(dirname, 'test.pl')
+        cmds = [cmd, re.escape('TEST VAR'),  'EXIT CODE', 'DEBUG']
         cmds = filter(None, cmds)
         cmds_new = []
         for cmd in cmds:
@@ -16,6 +19,7 @@ class TestEnv(unittest.TestCase):
         exit_code = subprocess.call(cmds_new)
         line = 'exit_code {0}'.format(exit_code)
         print line
+
     def test_env(self):
         d = dict(os.environ)
         d['TEST_VAR'] = str(1234)
@@ -25,7 +29,10 @@ class TestEnv(unittest.TestCase):
         print line
 
     def test_check_out(self):
-        cmds = ['./tests/test.pl', re.escape('TEST VAR'),  'EXIT CODE', 'DEBUG']
+        dirname = os.path.dirname(__file__)
+        cmd = os.path.join(dirname, 'test.pl')
+
+        cmds = [cmd, re.escape('TEST VAR'),  'EXIT CODE', 'DEBUG']
         cmds = filter(None, cmds)
         cmds_new = []
         for cmd in cmds:

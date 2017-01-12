@@ -2,14 +2,7 @@
 import unittest
 import os
 import sys
-# similar to findBin in Perl
-pwd = os.path.dirname(os.path.realpath(__file__))
-# 1 level up
-base_dir = os.path.join(pwd,'..')
-# add to sys.path
-# sys.path.append(base_dir)
-
-from lib import add_quiz
+from ..add import add_quiz
 
 class add_quizTest(unittest.TestCase):
     def test1(self):

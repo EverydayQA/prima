@@ -7,11 +7,9 @@ import logging
 import argparse
 from random import randint
 
-
-from quiz import menu
-from quiz.quiz_logger import QuizLogger
-from quiz.color_print import ColorPrint
-from quiz.parse_json import ParseJson
+from quiz.quiz import quiz_logger
+from quiz.quiz.color_print import ColorPrint
+from quiz.quiz import parse_json
 
 class Quiz(object):
     def get(self):

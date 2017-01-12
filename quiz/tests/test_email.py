@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import unittest
-from lib import email
+from ..quiz import email
 
 class MimeSendTest(object):
     def __init__(self):
