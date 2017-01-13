@@ -35,6 +35,18 @@ class MenuTest(unittest.TestCase):
         sels = menu.select_from_list(alist)
         print sels
         self.assertEqual(sels,['bbb','ccc'])
+        
+    def test_select_from_list_using_mock(self):
+        mocked = mock.Mock()
+        mocked.menu = menu
+
+        mocked.menu.get_input.return_value = '1 2'
+        alist=['aaa','bbb','ccc', 'ddd']
+
+        sels = mocked.menu.select_from_list(alist)
+        print sels
+        self.assertEqual(sels,['bbb','ccc'])
+
     @mock.patch('__builtin__.raw_input')
     def test_get_input(self, mock_raw_input):
         mock_raw_input.return_value='1,3'
