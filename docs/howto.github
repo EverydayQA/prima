@@ -1,0 +1,28 @@
+# procedure to setup ssh push to github
+
+# Step1 - skip if ssh key already exist
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+ssh-add -l
+ssh -vT git@github.com
+# copy and paste pulbic key to github
+cat id_rsa.pub 
+ssh -vT git@github.com
+
+# step2 - git config
+# modify git config to able to push back to github using ssh
+cat .git/config 
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = ssh://git@github.com/ur_account_name/prima.git
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+
+
