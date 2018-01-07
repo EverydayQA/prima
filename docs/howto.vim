@@ -1,10 +1,17 @@
 vim 
 
-plugin managers:
 
-Vundle -- chosen
-pathogen
+Vundle howto
+# clone to home directory
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-plugins:
-auto-complete: jedi 
-syntax check:  pep8?
+# copy example section to ~/.vimrc
+vim -o2 ~/.vim/bundle/Vundle.vim/README.md ~/.vimrc
+
+# add extra plugins
+.vimrc
+" pep8 plugin
+Plugin 'andviro/flake8-vim'
+" jedi complete
+Plugin 'davidhalter/jedi-vim'
+
