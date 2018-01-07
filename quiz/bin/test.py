@@ -1,5 +1,3 @@
-from blessings import Terminal
-import time
 
 from quiz_lib.addquiz import add_quiz
 from quiz_lib import quiz as qz

@@ -1,11 +1,9 @@
-import re
-import string
-#from termcolor import colored
-#no rpm avail/ colorPrint()
 import logging
-logger  = logging.getLogger(__name__)
+import re
+logger = logging.getLogger(__name__)
 
-class Menu:
+
+class Menu(object):
 
     def __init__(self, *args, **kwargs):
         self.kwargs = kwargs
@@ -27,6 +25,7 @@ class Menu:
             selections.append(index)
         return selections
 
+
 def print_format_table():
     for style in xrange(8):
         for fg in xrange(30, 38):
@@ -36,25 +35,30 @@ def print_format_table():
                 s1 += '\x1b[%sm %s \x1b[0m' % (format, format)
             print s1
         print '\n'
+
+
 def get_input():
     input_str = raw_input("Please select one or more from the list: ")
     return input_str
 
-def print_menu(the_list):    
+
+def print_menu(the_list):
     index = 0
     for item in the_list:
         print str(index) + " ## " + item
         index = index + 1
 
+
 def select_from_list(the_list):
     # multiple select
     logger.info('select_from_list')
     print_menu(the_list)
-    input_str = get_input() 
+    input_str = get_input()
     sels = parse_input_string(input_str)
     selections = selections_in_list(sels, the_list)
     return selections
-    
+
+
 def selections_in_list(sels, the_list):
     selections = []
     for sel in sels:
@@ -62,9 +66,10 @@ def selections_in_list(sels, the_list):
             sel = int(sel)
             index = sel
             selections.append(the_list[index])
-        except:
-            pass
+        except Exception as e:
+            print e
     return selections
+
 
 def parse_input_string(s):
     selections = []
@@ -78,12 +83,12 @@ def parse_input_string(s):
         pass
 
     s = s.rstrip()
-    count_comma =  s.count(",")
+    count_comma = s.count(",")
     count_space = s.count(" ")
-    if count_comma ==0 and count_space ==0:
+    if count_comma == 0 and count_space == 0:
         selections.append(s)
-    elif count_space >0:
+    elif count_space > 0:
         selections = re.split(' ', s)
-    elif count_comma >0:
+    elif count_comma > 0:
         selections = re.split(',', s)
     return selections

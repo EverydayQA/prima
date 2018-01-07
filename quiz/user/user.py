@@ -107,14 +107,12 @@ def main():
 
     aper = User(*args_extra, **vars(args))
     cls_name = get_full_class_name(aper)
-    logger.info('class_name: {0}'.format(cls_name) )
+    logger.info('class_name: {0}'.format(cls_name))
 
-    taker = Taker(*args_extra, **vars(args) )
+    taker = Taker(*args_extra, **vars(args))
     cls_name = get_full_class_name(taker)
-    logger.info('class_name: {0}'.format(cls_name) )
-
+    logger.info('class_name: {0}'.format(cls_name))
 
 
 if __name__ == '__main__':
     main()
-

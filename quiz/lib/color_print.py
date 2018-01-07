@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import sys
+import curses
+
 
 class ColorPrint(object):
     def __init__(self):
@@ -13,29 +15,28 @@ class ColorPrint(object):
         self.GYAN = CYAN
         self.WHITE = WHITE
 
-
     def has_colours(self, stream):
-        if not hasattr(stream , "isatty"):
+        if not hasattr(stream, "isatty"):
             return False
         if not stream.isatty():
             return False
-
-        try: 
-            import curses
+        try:
             curses.setupterm()
-            return curses.tigetnum("colors") >2
-        except:
+            return curses.tigetnum("colors") > 2
+        except Exception as e:
+            print e
             return False
+
     def cstr(self, text, colour):
         if self.has_colours:
-            seq = "\x1b[1;%dm" % (30+colour) + text + "\x1b[0m"
+            seq = "\x1b[1;%dm" % (30 + colour) + text + "\x1b[0m"
             return seq
         else:
             return text
 
     def cprint(self, text, colour):
         if self.has_colours:
-            seq = "\x1b[1;%dm" % (30+colour) + text + "\x1b[0m"
+            seq = "\x1b[1;%dm" % (30 + colour) + text + "\x1b[0m"
             sys.stdout.write(seq)
         else:
             sys.stdout.write(text)
@@ -43,8 +44,8 @@ class ColorPrint(object):
 
 def main():
     cp = ColorPrint()
-    cp.cprint("xxxx" , cp.GREEN)
+    cp.cprint("xxxx", cp.GREEN)
+
 
 if __name__ == '__main__':
     main()
-
