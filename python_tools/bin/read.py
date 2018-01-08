@@ -2,7 +2,7 @@
 def readFile():
     print ("readFile")
     try:
-        fileName = open("./src/haha.txt",'r')
+        fileName = open("./src/haha.txt", 'r')
         data = fileName.read().split()
         data.sort(key=int)
         print(data)
@@ -11,7 +11,10 @@ def readFile():
         print("Error: File do not exist")
         return
 
+
 def main():
     readFile()
+
+
 if __name__ == '__main__':
     main()

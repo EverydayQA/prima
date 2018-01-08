@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import os
-import sys
 
 
 for item in os.environ:

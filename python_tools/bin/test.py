@@ -8,4 +8,4 @@ str2 = ptime.strftime(format)
 print (str)
 print (str2)
 
-#get_ipython().magic(u'save test 1-31 test.py')
+# get_ipython().magic(u'save test 1-31 test.py')
