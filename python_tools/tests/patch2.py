@@ -1,8 +1,10 @@
 #!/usr/bin/python
-
+import unittest
 from mock import patch
 
+
 class MyClass(object):
+
     def __init__(self):
         self.prop = 'prop'
 
@@ -12,20 +14,21 @@ class MyClass(object):
     def bar(self):
         return 'bar'
 
-# good example from stackover flow
-# not to change structure
 
-# patch.object - not __main__.MyClass
-patcher = patch.object(MyClass,"foo",return_value='mocked foo!')
-MockedClass = patcher.start()
-my_instance = MyClass()
+class TestMyClass(unittest.TestCase):
+    # good example from stackover flow
+    # not to change structure
+    # patch.object - not __main__.MyClass
 
-# foo() return value is hihacked or mocked away
-assert my_instance.foo() == 'mocked foo!', my_instance.foo()
+    def test_foo(self):
+        patcher = patch.object(MyClass, "foo", return_value='mocked foo!')
+        patcher.start()
+        my_instance = MyClass()
 
-# all other method return value stay the same
-assert my_instance.bar() == 'bar', my_instance.bar()
-assert my_instance.prop == 'prop', my_instance.prop
+        # foo() return value is hijacked or mocked away
+        self.assertEqual(my_instance.foo(), 'mocked foo!')
 
-patcher.stop()
-
+        # all other method return value stay the same
+        self.assertEqual(my_instance.bar(), 'bar')
+        self.assertEqual(my_instance.prop, 'prop')
+        patcher.stop()

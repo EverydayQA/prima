@@ -4,9 +4,8 @@ import unittest
 import sys
 import os
 pwd = os.path.dirname(os.path.realpath(__file__))
-basedir = os.path.join(pwd,'..')
+basedir = os.path.join(pwd, '..')
 sys.path.append(basedir)
-
 from lib import utils
 
 
@@ -15,23 +14,34 @@ class utilsTest(unittest.TestCase):
     def setUp(self):
         pass
 
+    @unittest.skip('patch scope is all, disable for example')
     def test_method_a(self):
         # the following 2 lines demo only - mock method_a for no pratical use here
         # does not affect anything else
         self.patchA = mock.patch('lib.utils.method_b', return_value=None).start()
+        # scope is everywhere? the stop is not working
         self.patchA.stop()
 
         actual_result = utils.method_a()
-        # Assertion code
-        self.assertTrue(actual_result is True)
-        
+        self.assertTrue(actual_result)
+        self.assertIsNone(utils.method_b())
+
+    def test_mock_scope(self):
+        """
+        mock scope is within the 'with' statement
+        """
+        with mock.patch('lib.utils.method_b') as mock_method_a:
+            mock_method_a.return_value = None
+            # method_a is not mocked
+            actual_result = utils.method_a()
+            self.assertTrue(actual_result)
+            # method_b mocked to None
+            self.assertIsNone(utils.method_b())
+        # outside the scope
+        self.assertTrue(utils.method_a())
+        # method_b not mocked in this scope
+        self.assertTrue(utils.method_b())
+
     def test_method_b(self):
-        actual_result = utils.method_b()
-        # to fail it, set to None
-        self.assertTrue(actual_result is None)
-
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(utilsTest)
-    unittest.TextTestRunner(verbosity=2).run(suite)
-    
+        # no mock in this scope
+        self.assertTrue(utils.method_b())
