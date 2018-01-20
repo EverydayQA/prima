@@ -4,8 +4,8 @@ import sys
 import logging
 import argparse
 import add_quiz
-from quiz.color_print import ColorPrint
-from quiz.parse_json import ParseJson
+from quiz.lib.color_print import ColorPrint
+from quiz.lib.parse_json import ParseJson
 
 
 def init_args_addquiz():
