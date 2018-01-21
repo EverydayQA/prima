@@ -2,7 +2,6 @@ import argparse
 import sys
 import os
 from pprint import pprint
-import pkgutil
 import inspect
 import importlib
 
@@ -34,8 +33,8 @@ class ModuleFunc(object):
         funcs = []
         for name in obj.__dict__:
             item = getattr(obj, name)
-            if inspect.ismethod(item):
-                self.skip_func(item, True)
+            if inspect.ismethod(item) or inspect.isfunction(item) or inspect.isroutine(item):
+                # self.skip_func(item, True)
                 funcs.append(name)
         return funcs
 
@@ -47,8 +46,10 @@ class ModuleFunc(object):
         funcs = []
         for name in obj.__dict__:
             item = getattr(obj, name)
-            if inspect.ismethod(item):
-                self.skip_func(item, True)
+            if inspect.ismethod(item) or inspect.isroutine(item) or inspect.ismethod(item):
+                # self.skip_func(item, True)
+                funcs.append(name)
+            if inspect.isdatadescriptor(item):
                 funcs.append(name)
         return funcs
 
@@ -72,79 +73,6 @@ class ModuleFunc(object):
         print('(No members)')
 
 
-class ModuleInfo(object):
-
-    def __init__(self, module_name, pkg_name):
-        self.module_name = module_name
-        self.pkg_name = pkg_name
-        self.dsc = ModuleFunc()
-
-    def cls_funcs(self, module_name):
-        # module = __import__(module_name, fromlist=[self.pkg_name])
-        module = importlib.import_module(module_name, package=self.pkg_name)
-
-        for element_name in dir(module):
-            element = getattr(module, element_name)
-            print("other {} {}".format(element_name, dir(element)))
-
-    def element_cls_dir(self, module_name):
-        # module = __import__(module_name, fromlist=['quiz'])
-        module = importlib.import_module(module_name)
-
-        items = []
-        for element_name in dir(module):
-            element = getattr(module, element_name)
-            if inspect.isclass(element):
-                print("class {} {}".format(element_name, module))
-                items.append(element)
-                qname = '{0}.{1}'.format(module_name, element_name)
-                # self.dsc.describe(module)
-
-        return items
-
-    def explore_package(self, module_name):
-        self.element_cls_dir(module_name)
-        loader = pkgutil.get_loader(module_name)
-        all_packages = pkgutil.walk_packages([loader.filename])
-        for sub_module in all_packages:
-            _, sub_module_name, _ = sub_module
-            qname = module_name + "." + sub_module_name
-            print(qname)
-            # self.element_cls_dir(qname)
-            self.dsc.describe(sub_module)
-            self.explore_package(qname)
-
-    def inspect_package(self, package_name):
-        module = __import__(package_name, fromlist=['quiz'])
-        # importlib.import_module('.c', 'a.b')
-        # importlib.import_module('a.b.c')
-        for element_name in dir(module):
-            element = getattr(module, element_name)
-            if inspect.isclass(element):
-                print("class %s" % element_name)
-            elif inspect.ismodule(element):
-                pass
-            elif hasattr(element, '__call__'):
-                if inspect.isbuiltin(element):
-                    sys.stdout.write("builtin_function %s" % element_name)
-                    print("")
-                else:
-                    try:
-                        data = inspect.getargspec(element)
-                        sys.stdout.write("function %s" % element_name)
-                        for a in data.args:
-                            sys.stdout.write(" ")
-                            sys.stdout.write(a)
-                        if data.varargs:
-                            sys.stdout.write(" *")
-                            sys.stdout.write(data.varargs)
-                            print("")
-                    except Exception:
-                        pass
-                    else:
-                        print("value %s" % element_name)
-
-
 class FileInfo(object):
     """
     Get import/Class/func and calling functions held in dict
@@ -158,17 +86,17 @@ class FileInfo(object):
     def dirname(self):
         return os.path.dirname(self.pfile)
 
-    def get_module_name_short(self):
+    def get_module_name(self):
         module_name = os.path.basename(self.pfile)
         module_name = module_name.replace('.py', '')
         return module_name
 
     @property
     def module_name(self):
-        return self.get_module_name_short()
+        return self.get_module_name()
 
     def get_module_name_long(self):
-        module_name = self.get_module_name_short()
+        module_name = self.get_module_name()
         items = self.dirname.split('/')
         index = items.index(self.pkg_name)
         eles = items[index:]
@@ -184,8 +112,6 @@ class FileInfo(object):
         module = importlib.import_module(self.get_module_name_long(), package=self.pkg_name)
         mf = ModuleFunc()
         dm[self.module_name] = mf.module_funcs(module)
-        dm['module_name'] = module.__name__
-        dm['m_name'] = self.module_name
 
         # import module
         # get class functions
@@ -215,6 +141,8 @@ class FileInfo(object):
         if not os.path.isfile(self.pfile):
             return
         d['dirname'] = self.dirname
+        d['module_name'] = self.module_name
+        d['module_name_long'] = self.get_module_name_long()
         print self.pfile
         with open(self.pfile, 'r') as fd:
             for line in fd:
@@ -256,6 +184,11 @@ class FileInfo(object):
             if line not in l_import:
                 l_import.append(line)
                 d['import'] = l_import
+            import_name = self.import_name(line)
+            if import_name:
+                l_import_name = d.get('import_name', [])
+                l_import_name.append(import_name)
+                d['import_name'] = l_import_name
             return d
 
         cls_now = d.get('cls_now', None)
@@ -310,9 +243,12 @@ class FileInfo(object):
             return False
         return line
 
-    def module_name_import(self, import_line):
-        if self.pkg_name in import_line:
-            pass
+    def import_name(self, import_line):
+        # assume it is not this pkg
+        if import_line.startswith('import'):
+            return None
+        items = import_line.split(' ')
+        return items.pop()
 
 
 class MatchMaking(object):
@@ -362,21 +298,77 @@ class MatchMaking(object):
         for item in self.extra:
             if item.endswith('.py'):
                 items.append(item)
+
         return items
 
     def match(self):
-        if not self.get_files():
+        items = self.get_files()
+
+        if not items:
             return
-        for item in self.get_files():
-            fi = FileInfo(item, self.pkg_name)
-            df = fi.df_info()
-            pprint(df)
-            module_name = fi.get_module_name_long()
-            module_name_short = fi.get_module_name_short()
-            print module_name
-            print module_name_short
-            dm = fi.dm_info()
-            pprint(dm)
+        if len(items) == 2:
+            pass
+        else:
+            line = '1 test and 1 being tested python file required'
+            print line
+            return
+        test_file = items[0]
+        being_tested = items[1]
+
+        fi_test = FileInfo(test_file, self.pkg_name)
+        df_test = fi_test.df_info()
+        pprint(df_test)
+        dm_test = fi_test.dm_info()
+        pprint(dm_test)
+
+        fi = FileInfo(being_tested, self.pkg_name)
+        df = fi.df_info()
+        pprint(df)
+        dm = fi.dm_info()
+        pprint(dm)
+
+        test_classes = df_test.get('classes', [])
+        for test_cls in test_classes:
+            self.match_test_cls(test_cls, df_test, dm, df)
+
+    def match_test_cls(self, test_cls, df_test, dm, df):
+        print test_cls
+        test_funcs = df_test.get(test_cls, [])
+        d_func_code = df_test.get(test_cls, {})
+        import_name = df_test.get('import_name', [])
+        module = df.get('module_name', None)
+        # module or class name held in dm
+        keys = dm.keys()
+        # import not always works if import *
+        print 'Source Module {0} imported by {1}'.format(keys, import_name)
+        d_matched = {}
+        d_missing = {}
+        for key in keys:
+            # key could be module/class
+            module_functions = dm.get(key, [])
+            for func in module_functions:
+                match = False
+                for test_func in test_funcs:
+                    l_func_code = d_func_code.get(test_func, [])
+                    for line_code in l_func_code:
+                        if '.{0}'.format(func) in line_code:
+                            value = [key, func]
+                            if key not in import_name:
+                                value = [module, key, func]
+
+                            d_matched[test_func] = value
+                            match = True
+                if not match:
+                    d_missing[func] = key
+
+        print "\n\n*** Not tested"
+        pprint(d_missing)
+        print "\n\n*** Test Match"
+        keys = d_matched.keys()
+        for key in keys:
+            value = '.'.join(d_matched.get(key, []))
+            line = '        \'{}\': {}'.format(key, value)
+            print line
 
 
 def main(argv):

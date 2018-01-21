@@ -63,7 +63,7 @@ class MenuTest(unittest.TestCase):
         selections = menu.selections_in_list(sels, alist)
         self.assertEqual(selections, ['bbb', 'ddd'])
 
+    def test_fake(self):
+        mn = Menu()
+        self.assertEqual(mn.fake, 'fake')
 
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(MenuTest)
-    unittest.TextTestRunner(verbosity=2).run(suite)
