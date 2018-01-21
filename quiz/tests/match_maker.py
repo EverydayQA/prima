@@ -150,6 +150,10 @@ class FileInfo(object):
         module_name = module_name.replace('.py', '')
         return module_name
 
+    @property
+    def module_name(self):
+        return self.get_module_name_short()
+
     def get_module_name_long(self):
         module_name = self.get_module_name_short()
         items = self.dirname.split('/')
@@ -157,6 +161,14 @@ class FileInfo(object):
         eles = items[index:]
         eles.append(module_name)
         return '.'.join(eles)
+
+    def d_minfo(self):
+        """
+        Module/Class Information by importing the module
+        """
+        d = {}
+
+        return d
 
     def d_finfo(self):
         """
@@ -174,53 +186,75 @@ class FileInfo(object):
         d = {}
         if not os.path.isfile(self.pfile):
             return
-        module_name = self.get_module_name_short()
         d['dirname'] = self.dirname
-        l_cls = []
-        l_import = []
-        l_module_func = []
         print self.pfile
-        cls_name = None
-        func = None
-        d_func_code = {}
         with open(self.pfile, 'r') as fd:
             for line in fd:
-                if self.is_cls(line):
-                    cls_name = self.is_cls(line)
-                    d_func_code = {}
-                    if cls_name not in l_cls:
-                        l_cls.append(cls_name)
-                elif self.is_module_func(line):
-                    l_module_func.append(self.is_module_func(line))
-                elif self.is_func(line):
-                    func_code = []
-                    func = self.is_func(line)
-                elif self.is_import(line):
-                    line = line.replace('\n', '')
-                    if line not in l_import:
-                        l_import.append(line)
-                else:
-                    if not cls_name:
-                        continue
-                    if not func:
-                        continue
-                    line = line.replace(' ', '')
-                    if len(line) < 3:
-                        continue
-
-                    func_code = d_func_code.get(func, [])
-                    line = line.replace('\n', '')
-                    func_code.append(line)
-                    d_func_code[func] = func_code
-                    d[cls_name] = d_func_code
-
-        d['import'] = l_import
-        d['classes'] = l_cls
-        d[module_name] = l_module_func
+                d = self.line_handling(line, d)
 
         # minfo = ModuleInfo('add_quiz', 'quiz')
         # minfo.inspect_package('quiz.add.add_quiz')
         # minfo.explore_package('quiz.add.add_quiz')
+        return d
+
+    def line_handling(self, line, d):
+        """
+        Update dict from one line
+        """
+        if not line:
+            return d
+        line.rstrip()
+        cls_name = self.is_cls(line)
+        if cls_name:
+            # d_func_code = {}
+            d[cls_name] = {}
+            l_cls = d.get('classes', [])
+            l_cls.append(cls_name)
+            d['classes'] = l_cls
+            d['cls_now'] = cls_name
+            return d
+
+        module_func = self.is_module_func(line)
+        if module_func:
+            l_module_func = d.get(self.moduel_name, [])
+            l_module_func.append(module_func)
+            d[self.module_name] = l_module_func
+            return d
+
+        func = self.is_func(line)
+        if func:
+            d['func_now'] = func
+            return d
+
+        imp = self.is_import(line)
+        if imp:
+            l_import = d.get('import', [])
+            if line not in l_import:
+                l_import.append(line)
+                d['import'] = l_import
+            return d
+
+        cls_now = d.get('cls_now', None)
+        func_now = d.get('func_now', None)
+
+        if not cls_now:
+            return d
+
+        if not func_now:
+            return d
+
+        line = line.replace(' ', '')
+        if len(line) < 3:
+            return d
+
+        if '@' in line:
+            return d
+
+        d_func_code = d.get(cls_now, {})
+        l_func_code = d_func_code.get(func_now, [])
+        l_func_code.append(line)
+        d_func_code[func_now] = l_func_code
+        d[cls_now] = d_func_code
         return d
 
     def is_cls(self, line):
