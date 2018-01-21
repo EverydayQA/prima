@@ -7,17 +7,17 @@ import inspect
 import importlib
 
 
-class Describe(object):
+class ModuleFunc(object):
 
     def __init__(self):
         pass
 
-    def describe_builtin(self, obj):
-        """ Describe a builtin function """
+    def skip_builtin(self, obj):
+        """ ModuleFunc a builtin function """
         print('+Built-in Function: %s' % obj.__name__)
 
-    def describe_func(self, obj, method=False):
-        """ Describe the function object passed as argument.
+    def skip_func(self, obj, method=False):
+        """ ModuleFunc the function object passed as argument.
         If this is a method object, the second argument will
         be passed as True """
 
@@ -26,21 +26,34 @@ class Describe(object):
         else:
             print('+Function: %s' % obj.__name__)
 
-    def describe_klass(self, obj):
-        """ Describe the class object passed as argument,
-        including its methods """
-
-        print('+Class: %s' % obj.__name__)
-
+    def module_funcs(self, obj):
+        """
+        functions of a modulue
+        """
+        print('+Module: %s' % obj.__name__)
+        funcs = []
         for name in obj.__dict__:
             item = getattr(obj, name)
             if inspect.ismethod(item):
-                self.describe_func(item, True)
+                self.skip_func(item, True)
+                funcs.append(name)
+        return funcs
 
-        print
+    def class_funcs(self, obj):
+        """ ModuleFunc the class object passed as argument,
+        including its methods """
+
+        print('+Class: %s' % obj.__name__)
+        funcs = []
+        for name in obj.__dict__:
+            item = getattr(obj, name)
+            if inspect.ismethod(item):
+                self.skip_func(item, True)
+                funcs.append(name)
+        return funcs
 
     def describe(self, module):
-        """ Describe the module object passed as argument
+        """ ModuleFunc the module object passed as argument
         including its classes and functions """
 
         print('[Module: %s]\n' % module.__name__)
@@ -48,11 +61,11 @@ class Describe(object):
         for name in dir(module):
             obj = getattr(module, name)
             if inspect.isclass(obj):
-                self.describe_klass(obj)
+                self.class_funcs(obj)
             elif (inspect.ismethod(obj) or inspect.isfunction(obj)):
-                self.describe_func(obj)
+                self.skip_func(obj)
             elif inspect.isbuiltin(obj):
-                self.describe_builtin(obj)
+                self.skip_builtin(obj)
             else:
                 print name
 
@@ -64,7 +77,7 @@ class ModuleInfo(object):
     def __init__(self, module_name, pkg_name):
         self.module_name = module_name
         self.pkg_name = pkg_name
-        self.dsc = Describe()
+        self.dsc = ModuleFunc()
 
     def cls_funcs(self, module_name):
         # module = __import__(module_name, fromlist=[self.pkg_name])
@@ -162,15 +175,30 @@ class FileInfo(object):
         eles.append(module_name)
         return '.'.join(eles)
 
-    def d_minfo(self):
+    def dm_info(self):
         """
         Module/Class Information by importing the module
         """
-        d = {}
+        dm = {}
+        # module name to module
+        module = importlib.import_module(self.get_module_name_long(), package=self.pkg_name)
+        mf = ModuleFunc()
+        dm[self.module_name] = mf.module_funcs(module)
+        dm['module_name'] = module.__name__
+        dm['m_name'] = self.module_name
 
-        return d
+        # import module
+        # get class functions
+        df = self.df_info()
+        classes = df.get('classes', [])
+        for cls_name in classes:
+            obj = getattr(module, cls_name)
 
-    def d_finfo(self):
+            dm[cls_name] = mf.class_funcs(obj)
+
+        return dm
+
+    def df_info(self):
         """
         To get some basic information by reading file
         import -- to figure out module/class name of the corresponding module if it is test module
@@ -191,10 +219,6 @@ class FileInfo(object):
         with open(self.pfile, 'r') as fd:
             for line in fd:
                 d = self.line_handling(line, d)
-
-        # minfo = ModuleInfo('add_quiz', 'quiz')
-        # minfo.inspect_package('quiz.add.add_quiz')
-        # minfo.explore_package('quiz.add.add_quiz')
         return d
 
     def line_handling(self, line, d):
@@ -203,7 +227,7 @@ class FileInfo(object):
         """
         if not line:
             return d
-        line.rstrip()
+        line = line.rstrip()
         cls_name = self.is_cls(line)
         if cls_name:
             # d_func_code = {}
@@ -216,7 +240,7 @@ class FileInfo(object):
 
         module_func = self.is_module_func(line)
         if module_func:
-            l_module_func = d.get(self.moduel_name, [])
+            l_module_func = d.get(self.module_name, [])
             l_module_func.append(module_func)
             d[self.module_name] = l_module_func
             return d
@@ -243,7 +267,7 @@ class FileInfo(object):
         if not func_now:
             return d
 
-        line = line.replace(' ', '')
+        line = line.lstrip()
         if len(line) < 3:
             return d
 
@@ -284,8 +308,7 @@ class FileInfo(object):
     def is_import(self, line):
         if 'import ' not in line:
             return False
-        imp = line.strip('\n')
-        return imp
+        return line
 
     def module_name_import(self, import_line):
         if self.pkg_name in import_line:
@@ -346,12 +369,14 @@ class MatchMaking(object):
             return
         for item in self.get_files():
             fi = FileInfo(item, self.pkg_name)
-            d = fi.d_finfo()
-            pprint(d)
+            df = fi.df_info()
+            pprint(df)
             module_name = fi.get_module_name_long()
             module_name_short = fi.get_module_name_short()
             print module_name
             print module_name_short
+            dm = fi.dm_info()
+            pprint(dm)
 
 
 def main(argv):

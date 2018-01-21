@@ -9,6 +9,10 @@ class Menu(object):
         self.kwargs = kwargs
         self.args = args
 
+    @property
+    def fake(self):
+        return 'fake'
+
     def select_from_menu(self, the_list, prompt):
         logger.debug('select_from_menu')
         index = 1
