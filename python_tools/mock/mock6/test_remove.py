@@ -1,6 +1,12 @@
 import unittest
+import sys
 import mock
 import os
+
+
+def show_error_message(error_message):
+    print(error_message)
+    sys.exit()
 
 
 def local_remove(self):
@@ -69,3 +75,14 @@ class TestRemove(unittest.TestCase):
         Using side_effect instead of return_value
         """
         self.assertEqual(os.remove(self.tmp1), 'haha')
+
+    def test_sys_exit_exception(self):
+        with self.assertRaises(SystemExit) as e:
+            sys.exit(3)
+        self.assertEqual(e.exception.code, 3)
+
+    def test_show_error_msg_exception(self):
+        # Test the exception type
+        with self.assertRaises(SystemExit) as e:
+            show_error_message('test but not mock exit')
+        self.assertTrue(isinstance(e.exception, SystemExit))

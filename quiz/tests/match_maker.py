@@ -263,7 +263,6 @@ class MatchMaking(object):
         parser = argparse.ArgumentParser()
         parser.add_argument('--run', type=bool, default=False, help='do not do anything for now')
         parser.add_argument('--pkg_name', type=str, default='quiz', help='Package Name')
-
         args, extra = parser.parse_known_args(self.argv)
         return args, extra
 
