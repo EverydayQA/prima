@@ -78,11 +78,16 @@ class TestRemove(unittest.TestCase):
 
     def test_sys_exit_exception(self):
         with self.assertRaises(SystemExit) as e:
-            sys.exit(3)
-        self.assertEqual(e.exception.code, 3)
+            sys.exit('exit_with_err')
+        self.assertEqual(e.exception.code, 'exit_with_err')
+        self.assertEqual(e.exception.message, 'exit_with_err')
+        self.assertEqual(e.exception.args, ('exit_with_err',))
 
     def test_show_error_msg_exception(self):
         # Test the exception type
         with self.assertRaises(SystemExit) as e:
             show_error_message('test but not mock exit')
         self.assertTrue(isinstance(e.exception, SystemExit))
+        self.assertEqual(e.exception.message, '')
+        self.assertEqual(e.exception.args, ())
+        self.assertEqual(e.exception.code, None)
