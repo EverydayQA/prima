@@ -124,18 +124,22 @@ class ParseDump(object):
                 subkeys = d_nexts.get('subkeys', [])
                 value = d_nexts.get('value', None)
                 if subkeys:
-                    df, key_f = self.recursive_update_d(d, {}, None, subkeys, value)
+                    dd = self.get_dict_with_keys_3(subkeys, value)
+                    # previous entries in d for the key
                     d_prev = d.get(key, {})
-                    d_prev.update(df)
+
+                    # to include df in the dict
+                    d_prev.update(dd)
                     d[key] = d_prev
-                    # cannot update propery
-                    # d = self.update(d, df)
             else:
                 # key
                 key = self.normalize_key(line)
         return d
 
     def update(self, d, u):
+        """
+        Not working as expected, as this code is copied from ...
+        """
         for k, v in u.iteritems():
             if isinstance(v, collections.Mapping):
                 d[k] = self.update(d.get(k, {}), v)
@@ -143,7 +147,68 @@ class ParseDump(object):
                 d[k] = v
         return d
 
+    def get_dict_with_keys_3(self, keys, value):
+        """
+        For all subkeys, get dict with 1 entry for all subkeys
+        """
+        d = {}
+        d_prev = {}
+        for key in reversed(keys):
+            dn = {}
+            if key == keys[-1]:
+                dn[key] = value
+            else:
+                dn = d.get(key, {})
+                dn[key] = d_prev
+
+            if key == keys[0]:
+                return dn
+            d_prev = dn
+        return d
+
+    def get_dict_with_keys_2(self, keys, value):
+        """
+        For all subkeys, get dict with 1 entry for all subkeys
+        """
+        d_prev = {}
+        for key in reversed(keys):
+            dn = {}
+            if key == keys[-1]:
+                dn[key] = value
+            else:
+                dn[key] = d_prev
+
+            if key == keys[0]:
+                return dn
+            d_prev = dn
+        return {}
+
+    def get_dict_with_keys(self, keys, value):
+        """
+        For all subkeys, get dict with 1 entry for all subkeys
+        """
+        print 'keys<{}> value<{}>'.format(keys, value)
+        d = {}
+        if len(keys) == 2:
+            d2 = {}
+            d2[keys[1]] = value
+            d = {}
+            d[keys[0]] = d2
+            return d
+        elif len(keys) == 1:
+            d2 = {}
+            d2[keys[0]] = value
+            return d2
+
+        return d
+
     def recursive_update_d(self, d, d_prev, key_prev, subkeys, value):
+        """
+        Disabled as it is too complicated
+        For all subkeys, get dict with 1 entry for all subkeys
+        This is not ideal with many parameters
+        To be modified as different name, this sub will be kept for review
+        """
         if not subkeys:
             return d_prev, key_prev
 
@@ -163,7 +228,7 @@ class ParseDump(object):
 
     def parse(self):
         d = self.d_file()
-        pprint(d)
+        return d
 
 
 def main():
