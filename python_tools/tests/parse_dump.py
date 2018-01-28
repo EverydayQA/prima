@@ -1,4 +1,6 @@
 from pprint import pprint
+import collections
+import re
 import os
 from termcolor import cprint
 
@@ -16,6 +18,49 @@ class ParseDump(object):
             lines = f.readlines()
             return lines
         return []
+
+    def normalize_key(self, key):
+        if not key:
+            return key
+        key = key.strip()
+        key = key.lstrip('/')
+        key = key.strip()
+        key = key.strip(':')
+        key = key.strip()
+        key = key.lstrip('_')
+        key = key.replace(' ', '_')
+        return key
+
+    def normalize_value(self, value):
+        if not value:
+            return value
+        # rermove <;>
+        value = value.strip(';')
+
+        # remove leading and trailing tab space
+        value = value.strip()
+        # remove <\\n>
+        value = value.replace('\\n', '')
+        # replace <\\> with <\>
+        value = value.replace('\\\\', '\\')
+        # find all instances of ""
+        matches = re.findall(r'\"(.+?)\"', value)
+        if not matches:
+            return value
+
+        items = []
+        for match in matches:
+            match = match.strip()
+            # multiple spaces into one
+            match = ' '.join(match.split())
+            match = match.rstrip('_')
+            if match:
+                items.append(match)
+        if not items:
+            return ''
+        if len(items) == 1:
+            return items[0]
+        return items
 
     def lines_normalize(self, lines):
         items = []
@@ -39,43 +84,77 @@ class ParseDump(object):
             items.append(line)
         return items
 
+    def get_subkeys(self, line):
+        d = {}
+        items = line.split('=')
+        if not items:
+            return d
+        value = items.pop()
+        value = self.normalize_value(value)
+        d['value'] = value
+        if not items:
+            return d
+        subkey = items.pop(0)
+        subkey = self.normalize_key(subkey)
+        keys = subkey.split(':')
+        subkeys = []
+        for key in keys:
+            key = self.normalize_key(key)
+            subkeys.append(key)
+        d['subkeys'] = subkeys
+        return d
+
     def d_file(self):
+        """
+        To be modified to use recursive
+        """
         d = {}
         lines = self.lines_file()
         lines = self.lines_normalize(lines)
-        items = []
         key = None
         for line in lines:
             if len(line) < 3:
                 continue
             line = line.rstrip('\n')
             if line.startswith('\t') or line.startswith(' '):
-                # subkey
-                items = line.split('=')
-                if key:
-                    if len(items) == 2:
-                        value = items[1]
-                        value = value.strip()
-                        key2 = items[0]
-                        key2 = key2.strip()
-                        eles = key2.split(':')
-                        eles = filter(None, eles)
-                        if len(eles) == 2:
-                            key2 = eles[0]
-                            key3 = eles[1]
-                            d2 = d.get(key, {})
-                            d3 = d2.get(key2, {})
-                            d3[key3] = value
-                            d2[key2] = d3
-                            d[key] = d2
-                        else:
-                            ds = d.get(key, {})
-                            ds[key2] = value
-                            d[key] = ds
+                if not key:
+                    cprint(line, 'red')
+                    continue
+                d_nexts = self.get_subkeys(line)
+                subkeys = d_nexts.get('subkeys', [])
+                value = d_nexts.get('value', None)
+                if subkeys:
+                    df, key_f = self.recursive_update_d(d, {}, None, subkeys, value)
+                    d_prev = d.get(key, {})
+                    d_prev.update(df)
+                    d[key] = d_prev
+                    # cannot update propery
+                    # d = self.update(d, df)
             else:
                 # key
-                key = line
+                key = self.normalize_key(line)
         return d
+
+    def update(self, d, u):
+        for k, v in u.iteritems():
+            if isinstance(v, collections.Mapping):
+                d[k] = self.update(d.get(k, {}), v)
+            else:
+                d[k] = v
+        return d
+
+    def recursive_update_d(self, d, d_prev, key_prev, subkeys, value):
+        if not subkeys:
+            return d_prev, key_prev
+
+        subkey = subkeys.pop()
+        d_now = d.get(subkey, {})
+
+        if not key_prev:
+            d_now[subkey] = value
+        else:
+            d_now[subkey] = d_prev
+        return self.recursive_update_d(d, d_now, subkey, subkeys, value)
 
     def count_leading_space(self, a):
         for i, c in enumerate(a):
