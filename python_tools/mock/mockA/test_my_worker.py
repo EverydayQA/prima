@@ -27,51 +27,54 @@ class TestWorker(unittest.TestCase):
         # mock away the sleep()
         mock_sleep.return_value = False
         worker = MyWorker()
-        # should run witout calling sleep()
-        worker.run()
+        # should nap witout calling sleep()
+        worker.nap(5)
         self.assertFalse(mock_sleep.sleep.called, "Fail - sleep really called!")
 
     def test_worker_with_autospec_2(self):
-        # no sleep, the mock_run.run.called?
-        mock_run = mock.create_autospec(MyWorker)
-        mock_run.return_value = False
+        # no sleep, the mock_nap.nap.called?
+        mock_nap = mock.create_autospec(MyWorker)
+        mock_nap.return_value = False
         worker = MyWorker()
-        worker.run = mock_run
-        worker.run()
-        self.assertFalse(mock_run.run.called, "Fail - autospec run really called!")
+        worker.nap = mock_nap
+        worker.nap(5)
+        self.assertFalse(mock_nap.nap.called, "Fail - autospec nap really called!")
 
     def test_worker_with_autospec(self):
-        # autospec - run() actually being called as well as sleep - but test passed?why???
-        # not working
-        mock_run = mock.create_autospec(MyWorker)
-        mock_run.return_value = False
+        mock_worker = mock.create_autospec(MyWorker)
+        mock_worker.return_value = False
+        mock_worker.nap.return_value = 8
         worker = MyWorker()
-        worker.run()
-        self.assertFalse(mock_run.run.called, "Fail - autospec run really called!")
+        worker.nap = mock_worker.nap
+        # test the nap is mock away
+        self.assertEqual(worker.nap(5), 8)
+        # mock away nap() -- no need to sleep() and test working()
+        # sleep n * 4 jogging n * 3, working = sleep + jogging
+        # nap 8 (mocked) + jogging n * 3 = 23
+        self.assertEqual(worker.working(5), 23)
 
-    # mock class object - cannot access sleep, can only access method run()
-    @mock.patch.object(MyWorker, 'run')
-    def test_worker_obj(self, mock_run):
-        mock_run.return_value = False
+    # mock class object - cannot access sleep, can only access method.nap(5)
+    @mock.patch.object(MyWorker, 'nap')
+    def test_worker_obj(self, mock_nap):
+        mock_nap.return_value = False
         worker = MyWorker()
-        worker.run()
-        self.assertFalse(mock_run.run.called, "Fail - run really called!")
+        worker.nap(5)
+        self.assertFalse(mock_nap.nap.called, "Fail - nap really called!")
 
     def test_worker_magicMock(self):
         # using mock.MagicMock
-        # not working
-        real_worker = MyWorker()
-        real_worker.run = MagicMock(name='run')
-        real_worker.run()
-        self.assertFalse(real_worker.run.called, "Fail - run really called!")
+        # mock sleep inside.nap(5)
+        worker = MyWorker()
+        worker.nap = MagicMock(name='nap')
+        worker.nap.return_value = 100
+        self.assertTrue(worker.nap(5), 100)
 
     def test_using_with_patch(self):
-        # not working
-        with mock.patch('MyWorker') as mock_worker:
-            mock_worker.run = False
+        # not a proper usage
+        with mock.patch('my_worker.MyWorker.nap') as mock_nap:
+            mock_nap.return_value = 1000
             worker = MyWorker()
-            worker.run()
-            self.assertFalse(worker.run.called, 'F called')
+            self.assertEqual(worker.nap(300), 1000)
 
     # mock.Mock
 
@@ -86,8 +89,3 @@ class TestWorker(unittest.TestCase):
         self.assertEqual(a, 'mocking_va')
         result = abcd_foo(a, 'b', 'c', 'd')
         self.assertEqual(result, 'mocking_another')
-
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestWorker)
-    unittest.TextTestRunner(verbosity=2).run(suite)

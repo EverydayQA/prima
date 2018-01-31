@@ -4,14 +4,26 @@ from gevent import sleep
 
 class MyWorker(object):
 
-    def run(self):
-        for _ in range(10):
+    def nap(self, n):
+        for _ in range(n):
             print ("sleep")
-            sleep(1)
+            sleep(5)
+        return n * 5
 
-    def jogging(self):
-        print "jogging"
-        return "jogging"
+    def jogging(self, n):
+        for i in range(n):
+            print "jogging"
+        return n * 3
+
+    def working(self, n):
+        """
+        working n hours
+        """
+        # nap n minutes
+        a = self.nap(n)
+        # jogging n minutes
+        b = self.jogging(n)
+        return a + b
 
 
 def main():
