@@ -124,7 +124,7 @@ class ParseDump(object):
                 subkeys = d_nexts.get('subkeys', [])
                 value = d_nexts.get('value', None)
                 if subkeys:
-                    dd = self.get_dict_with_keys_3(subkeys, value)
+                    dd = self.get_dict_with_keys_2(subkeys, value)
                     # previous entries in d for the key
                     d_prev = d.get(key, {})
 
@@ -145,25 +145,6 @@ class ParseDump(object):
                 d[k] = self.update(d.get(k, {}), v)
             else:
                 d[k] = v
-        return d
-
-    def get_dict_with_keys_3(self, keys, value):
-        """
-        For all subkeys, get dict with 1 entry for all subkeys
-        """
-        d = {}
-        d_prev = {}
-        for key in reversed(keys):
-            dn = {}
-            if key == keys[-1]:
-                dn[key] = value
-            else:
-                dn = d.get(key, {})
-                dn[key] = d_prev
-
-            if key == keys[0]:
-                return dn
-            d_prev = dn
         return d
 
     def get_dict_with_keys_2(self, keys, value):
@@ -230,6 +211,9 @@ class ParseDump(object):
         d = self.d_file()
         return d
 
+    def deep_get(self, dictionary, keys, default=None):
+        return reduce(lambda d, key: d.get(key, default) if isinstance(d, dict) else default, keys.split("."), dictionary)
+
 
 def main():
     path = os.path.dirname(__file__)
@@ -237,6 +221,9 @@ def main():
     pd = ParseDump(afile)
     d = pd.parse()
     pprint(d)
+    v = pd.deep_get(d, 'variables.acquisition.window_widthx', 1000)
+    print v
+
 
 
 if __name__ == '__main__':

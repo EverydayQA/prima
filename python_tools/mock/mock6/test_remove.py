@@ -4,6 +4,21 @@ import mock
 import os
 
 
+class DoesNotExist(Exception):
+    """does not exist"""
+
+
+class MyObject(object):
+
+    def get(self, id=4):
+        if id == 6:
+            return self.does_not_exist()
+        return id
+
+    def does_not_exist(self):
+        raise DoesNotExist('nonono')
+
+
 def show_error_message(error_message):
     print(error_message)
     sys.exit()
@@ -75,6 +90,11 @@ class TestRemove(unittest.TestCase):
         Using side_effect instead of return_value
         """
         self.assertEqual(os.remove(self.tmp1), 'haha')
+
+    def test_get_exception(self):
+        with self.assertRaises(MyObject.DoesNotExist):
+            obj = MyObject()
+            obj.get(id=6)
 
     def test_sys_exit_exception(self):
         with self.assertRaises(SystemExit) as e:
