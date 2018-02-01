@@ -70,13 +70,24 @@ class TestWorker(unittest.TestCase):
         self.assertTrue(worker.nap(5), 100)
 
     def test_using_with_patch(self):
-        # not a proper usage
         with mock.patch('my_worker.MyWorker.nap') as mock_nap:
             mock_nap.return_value = 1000
             worker = MyWorker()
             self.assertEqual(worker.nap(300), 1000)
 
-    # mock.Mock
+    def test_using_with_patch_sleep(self):
+        # mock away sleep in the module, not the class
+        with mock.patch('my_worker.sleep') as mock_sleep:
+            mock_sleep.return_value = False
+            worker = MyWorker()
+            self.assertEqual(worker.nap(10), 10 * 5)
+
+    def test_using_with_patch_gevent_sleep(self):
+        # mock away gevent.sleep, not working
+        with mock.patch('my_worker.sleep') as mock_sleep:
+            mock_sleep.return_value = False
+            worker = MyWorker()
+            self.assertEqual(worker.nap(10), 10 * 5)
 
     @mock.patch('test_my_worker.value_a', return_value='mocking_va')
     @mock.patch('test_my_worker.another_method', return_value='mocking_another')
