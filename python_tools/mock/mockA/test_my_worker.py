@@ -83,11 +83,21 @@ class TestWorker(unittest.TestCase):
             self.assertEqual(worker.nap(10), 10 * 5)
 
     def test_using_with_patch_gevent_sleep(self):
-        # mock away gevent.sleep, not working
+        # mock away module.sleep(since from gevent import sleep)
         with mock.patch('my_worker.sleep') as mock_sleep:
             mock_sleep.return_value = False
             worker = MyWorker()
             self.assertEqual(worker.nap(10), 10 * 5)
+
+    def test_using_with_patch_gevent_nap(self):
+        # mock away gevent.sleep
+        with mock.patch('gevent.sleep') as mock_sleep:
+            # true/false does not matter, it will bypass the sleep
+            mock_sleep.return_value = True
+            worker = MyWorker()
+            # sleep or not, the value stay the same, this is not the right way to evaluate
+            self.assertEqual(worker.gevent_nap(10), 10 * 5)
+            mock_sleep.assert_called_with(5)
 
     @mock.patch('test_my_worker.value_a', return_value='mocking_va')
     @mock.patch('test_my_worker.another_method', return_value='mocking_another')

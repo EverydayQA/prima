@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from gevent import sleep
+import gevent
 
 
 class MyWorker(object):
@@ -8,6 +9,12 @@ class MyWorker(object):
         for _ in range(n):
             print ("sleep")
             sleep(5)
+        return n * 5
+
+    def gevent_nap(self, n):
+        for _ in range(n):
+            print ("sleep")
+            gevent.sleep(5)
         return n * 5
 
     def jogging(self, n):

@@ -6,19 +6,22 @@ import unittest
 class FooBar(object):
 
     def method_one(self, a, b):
-        return [a, b]
+        for i in range(a, b):
+            yield i * i
 
     def bar(self):
         return 'bar'
 
 
 def mock_generator(a, b):
-    return [a.upper(), b.upper()]
+    for i in range(a, b):
+        yield (i + 1) * i
 
 
 class TestFooBar(unittest.TestCase):
 
     def test_method_one(self):
+        # set default to a list
         mock_method_one = mock.Mock(return_value=['aaa', 'ccc'])
         # this is how I access the class
         patcher = mock.patch.multiple(
@@ -28,15 +31,20 @@ class TestFooBar(unittest.TestCase):
         )
 
         patcher.start()
-        # will generate based on parameters ['CCC', 'DDD']
-        mock_method_one.return_value = mock_generator('ccc', 'ddd')
+        # method_one return generator only supposed to be read once
+        # convert generator to list for testing, crazy?! not sure
+        # [6, 12] after converting to list
+        mock_method_one.return_value = list(mock_generator(2, 4))
         fb = FooBar()
+
         # no change
-        self.assertEqual(fb.method_one('a', 'b'), ['CCC', 'DDD'])
+        self.assertEqual(fb.method_one(200, 500), [6, 12])
+
         # no change
-        for item in fb.method_one('xxx', 'yyy'):
-            self.assertTrue(item, ['CCC', 'DDD'])
+        for item in fb.method_one(2, 5):
+            self.assertTrue(item, [6, 12])
+
         # no change
-        self.assertEqual(fb.method_one('a', 'b'), ['CCC', 'DDD'])
+        self.assertEqual(fb.method_one(1, 6), [6, 12])
 
         patcher.stop()
