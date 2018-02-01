@@ -1,7 +1,19 @@
 #!/usr/bin/python
-import sys
-import logging
 import argparse
+from pprint import pprint
+
+"""
+            class FooBar def __init__(self, args, kwargs):
+
+            # define a dict
+            d = {}
+            d['foo'] = 111
+            d['bar'] = ['a', 'b']
+
+            # pass dict as kwargs
+            fb = FooBar(**d)
+
+"""
 
 
 class User(object):
@@ -9,23 +21,12 @@ class User(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-        self.print_args_kwargs()
-
-    @property
-    def logger(self):
-        name = __name__ + "." + self.__class__.__name__
-        logger = logging.getLogger(name)
-        logger.propagate = True
-        el = logger.getEffectiveLevel()
-        print el
-        return logger
+        pprint(args)
+        pprint(kwargs)
 
     def set_exam(self):
         exam = Exam(*self.args, **self.kwargs)
         return exam
-
-    def print_args_kwargs(self):
-        self.logger.info('User {0} {1} {2} {3}'.format(type(self.args), type(self.kwargs), self.args, self.kwargs))
 
 
 class Exam(object):
@@ -33,19 +34,8 @@ class Exam(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-        self.print_args_kwargs()
-
-    @property
-    def logger(self):
-        name = __name__ + "." + self.__class__.__name__
-        logger = logging.getLogger(name)
-        logger.propagate = True
-        el = logger.getEffectiveLevel()
-        print el
-        return logger
-
-    def print_args_kwargs(self):
-        self.logger.info('Exam {0} {1} args: {2} kwargs: {3}'.format(type(self.args), type(self.kwargs), self.args, self.kwargs))
+        pprint(args)
+        pprint(kwargs)
 
 
 def init_args():
@@ -59,26 +49,9 @@ def init_args():
 
 
 def main():
-
     args, args_extra = init_args()
-    logger = logging.getLogger(__name__)
-    logger.setLevel(args.logging)
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(args.logging)
-    el = logger.getEffectiveLevel()
-    line = 'logger level is: {0} args logging {1} EffectiveLevel {2}\n'.format(logger.level, args.logging, el)
-    logger.debug(line)
-    # std_formatter
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
-    # prevent duplicate logging
-    logger.propagate = True
-
-    logger.info('main() {0} {1} {2} {3}'.format(type(args), type(args_extra), args, args_extra))
-
-    aper = User(*args_extra, **vars(args))
-    aper.set_exam()
+    u = User(*args_extra, **vars(args))
+    u.set_exam()
 
 
 if __name__ == '__main__':
