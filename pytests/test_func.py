@@ -1,6 +1,5 @@
-#!/usr/bin/python
-import mock
 import unittest
+import mock
 from functools import wraps
 
 
@@ -24,7 +23,7 @@ class Example(object):
         self.method_1(arg)
 
 
-class ExampleTest(unittest.TestCase):
+class TestExample(unittest.TestCase):
 
     def test_example(self):
         m = mock.create_autospec(Example)

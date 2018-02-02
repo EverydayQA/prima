@@ -1,14 +1,9 @@
 #!/usr/bin/python
 import unittest
-import sys,os
-pwd = os.path.dirname(os.path.realpath(__file__))
-basedir = os.path.join(pwd,'..')
-print basedir
-sys.path.append(basedir)
+from pytools.lib import Restaurant
 
-from lib import Restaurant
 
-class RestaurantNameTests(unittest.TestCase):
+class TestRestaurantName(unittest.TestCase):
 
     def setUp(self):
         self.non_string_name = 123
@@ -22,15 +17,10 @@ class RestaurantNameTests(unittest.TestCase):
         self.non_alpha_name = None
 
     def test_non_string_name(self):
-        self.assertRaises(TypeError,Restaurant.RestaurantName, self.non_string_name)
+        self.assertRaises(TypeError, Restaurant.RestaurantName, self.non_string_name)
 
     def test_valid_name(self):
         self.assertEqual(Restaurant.RestaurantName(self.valid_name).__str__(), 'Italian rest')
 
     def test_non_alpha_name(self):
         self.assertRaises(ValueError, Restaurant.RestaurantName, self.non_alpha_name)
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(RestaurantNameTests)
-    unittest.TextTestRunner(verbosity=2).run(suite)
-

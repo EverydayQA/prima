@@ -91,11 +91,6 @@ class TestRemove(unittest.TestCase):
         """
         self.assertEqual(os.remove(self.tmp1), 'haha')
 
-    def test_get_exception(self):
-        with self.assertRaises(MyObject.DoesNotExist):
-            obj = MyObject()
-            obj.get(id=6)
-
     def test_sys_exit_exception(self):
         with self.assertRaises(SystemExit) as e:
             sys.exit('exit_with_err')
