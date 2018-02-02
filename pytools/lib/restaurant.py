@@ -11,10 +11,10 @@ class RestaurantName():
         self.name = self.normalize_name(input_contents)
 
     def __repr__(self):
-        return 'RestaurantName(%s)' % self.name.strip()
+        return 'RestaurantName(%s)' % self.name
 
     def __str__(self):
-        return self.name.strip()
+        return self.name
 
     def normalize_name(self, name):
         """
@@ -28,9 +28,9 @@ class RestaurantName():
             no_space_name = name.replace(' ', '')
             if str.isalpha(no_space_name):
                 return no_space_name
-            raise ValueError('There are non alphabetic characters that I can not recognize!')
+            raise ValueError('There are non alphabetic characters that I can not recognize! <{}>'.format(name))
 
         else:
-            raise TypeError('Not String! The input is supposed to be a string type!')
+            raise TypeError('Not String! The input is supposed to be a string type! <{}>'.format(name))
 
         return name

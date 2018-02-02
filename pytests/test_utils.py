@@ -1,13 +1,9 @@
-#!/usr/bin/python
-import mock
 import unittest
+import mock
 from pytools.lib import utils
 
 
-class utilsTest(unittest.TestCase):
-
-    def setUp(self):
-        pass
+class TestUtils(unittest.TestCase):
 
     @unittest.skip('patch scope is all, disable for example')
     def test_method_a(self):
@@ -21,7 +17,7 @@ class utilsTest(unittest.TestCase):
         self.assertTrue(actual_result)
         self.assertIsNone(utils.method_b())
 
-    def test_mock_scope(self):
+    def test_method_b2(self):
         """
         mock scope is within the 'with' statement
         """

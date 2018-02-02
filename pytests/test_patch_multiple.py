@@ -1,6 +1,5 @@
-#!/usr/bin/python
-import mock
 import unittest
+import mock
 
 
 class FooBar(object):

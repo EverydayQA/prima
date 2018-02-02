@@ -1,13 +1,13 @@
 #!/usr/bin/python
 import unittest
-from pytools.lib import Restaurant
+from pytools.lib.restaurant import RestaurantName
 
 
 class TestRestaurantName(unittest.TestCase):
 
     def setUp(self):
         self.non_string_name = 123
-        self.valid_name = 'Italian rest '
+        self.valid_name = 'Italianrest123'
         self.non_alpha_name = 'valid **\n'
 
     def tearDown(self):
@@ -17,10 +17,13 @@ class TestRestaurantName(unittest.TestCase):
         self.non_alpha_name = None
 
     def test_non_string_name(self):
-        self.assertRaises(TypeError, Restaurant.RestaurantName, self.non_string_name)
+        with self.assertRaises(TypeError):
+            RestaurantName(self.non_string_name)
 
     def test_valid_name(self):
-        self.assertEqual(Restaurant.RestaurantName(self.valid_name).__str__(), 'Italian rest')
+        with self.assertRaises(ValueError):
+            RestaurantName(self.valid_name)
 
     def test_non_alpha_name(self):
-        self.assertRaises(ValueError, Restaurant.RestaurantName, self.non_alpha_name)
+        with self.assertRaises(TypeError):
+            RestaurantName(self.non_alpha_name)
