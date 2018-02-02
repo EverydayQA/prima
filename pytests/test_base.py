@@ -1,13 +1,8 @@
 #!/usr/bin/python
 import mock
 import unittest
-import sys
-import os
-from mock import patch
-pwd = os.path.dirname(os.path.realpath(__file__))
-basedir = os.path.join(pwd,'..')
-sys.path.append(basedir)
-from lib import base
+from pytests.lib import base
+
 
 class TestB(unittest.TestCase):
 
@@ -20,8 +15,8 @@ class TestB(unittest.TestCase):
 
     # inappropriate call here for the structure
     # Base is a Class - cannot use this way
-    # mock.path(file.method)
-    @mock.patch('lib.base.Dase.method')
+    # mock.path(file_name.class_name.method_name)
+    @mock.patch('pytests.lib.base.Base.method')
     def test_super_method(self, mock_super):
         b = base.Base()
         b.method()
@@ -31,11 +26,8 @@ class TestB(unittest.TestCase):
     # base.py
     # Base Class
     # method in Class Base in file base.py in dir lib
-    @mock.patch("lib.base.Base.method")
-    def test_super_method(self, mock_super):
+
+    @mock.patch("pytests.lib.base.Base.method")
+    def test_super_method2(self, mock_super):
         base.Dase(False).method()
         self.assertFalse(mock_super.called)
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestB)
-    unittest.TextTestRunner(verbosity=2).run(suite)
