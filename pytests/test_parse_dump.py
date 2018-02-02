@@ -217,13 +217,12 @@ class ParseDump(object):
 
 def main():
     path = os.path.dirname(__file__)
-    afile = os.path.join(path, 'dump.txt')
+    afile = os.path.join(path, 'data/dump.txt')
     pd = ParseDump(afile)
     d = pd.parse()
     pprint(d)
     v = pd.deep_get(d, 'variables.acquisition.window_widthx', 1000)
     print v
-
 
 
 if __name__ == '__main__':

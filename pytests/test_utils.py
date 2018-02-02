@@ -1,12 +1,7 @@
 #!/usr/bin/python
 import mock
 import unittest
-import sys
-import os
-pwd = os.path.dirname(os.path.realpath(__file__))
-basedir = os.path.join(pwd, '..')
-sys.path.append(basedir)
-from lib import utils
+from pytools.lib import utils
 
 
 class utilsTest(unittest.TestCase):
@@ -30,7 +25,7 @@ class utilsTest(unittest.TestCase):
         """
         mock scope is within the 'with' statement
         """
-        with mock.patch('lib.utils.method_b') as mock_method_a:
+        with mock.patch('pytools.lib.utils.method_b') as mock_method_a:
             mock_method_a.return_value = None
             # method_a is not mocked
             actual_result = utils.method_a()

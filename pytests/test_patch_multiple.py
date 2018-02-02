@@ -28,7 +28,7 @@ class TestFooBar(unittest.TestCase):
         mock_method_one = mock.Mock(return_value=['aaa', 'ccc'])
         # this is how I access the class
         patcher = mock.patch.multiple(
-            "python_tools.tests.patch_multiple.FooBar",
+            FooBar,
             method_one=mock_method_one,
 
             bar=mock.Mock(return_value='bar')
@@ -58,7 +58,7 @@ class TestFooBar(unittest.TestCase):
         mock_method_one = mock.Mock(return_value=['aaa', 'ccc'])
         # this is how I access the class
         patcher = mock.patch.multiple(
-            "python_tools.tests.patch_multiple.FooBar",
+            FooBar,
             method_one=mock_method_one,
             bar=mock.Mock(return_value='bar')
         )
