@@ -1,10 +1,9 @@
-#/usr/bin/env pthon
 import unittest
 import mock
-from mock import MagicMock
 
 
 class Mongo(object):
+
     def __init__(self, *args, **kwargs):
         # doing nothing for demo
         pass
@@ -18,6 +17,7 @@ class Mongo(object):
         collection_b = self.get_collection(input_b)
         return collection_a + collection_b
 
+
 class TestMongo(unittest.TestCase):
 
     def setUp(self):
@@ -27,9 +27,12 @@ class TestMongo(unittest.TestCase):
     def tearDown(self):
         pass
 
-    # in the format of file_name.class_name.method_name
-    @mock.patch('test_mongo.Mongo.get_collection')
+    @mock.patch("pytests.test_mongo.Mongo.get_collection")
     def test_using_mock_patch(self, mock_get_collection):
+        """
+        the patch is in the format of file_name.class_name.method_name
+        If the class being patched is the in same file, without quote?!
+        """
         mock_get_collection.return_value = self.mock_value
         mongo = Mongo()
         mongo.get_collection = mock_get_collection
@@ -38,7 +41,7 @@ class TestMongo(unittest.TestCase):
 
     # mock.MagicMock
     def test_mongo_get_collection_using_magicMock(self):
-        mock_mongo = MagicMock(name='get_collection')
+        mock_mongo = mock.MagicMock(name='get_collection')
         mock_mongo.get_collection.return_value = self.mock_value
         mongo = Mongo()
         mongo.get_collection = mock_mongo.get_collection
@@ -53,8 +56,3 @@ class TestMongo(unittest.TestCase):
         mongo.get_collection = mock_mongo.get_collection
         result = mongo.from_report('any', 'where')
         self.assertEquals(result, self.expected)
-
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestMongo)
-    unittest.TextTestRunner(verbosity=2).run(suite)

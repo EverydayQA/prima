@@ -15,10 +15,6 @@ class TestB(unittest.TestCase):
 
     @mock.patch("pytests.lib.derived.Derived.__init__")
     def test_calls_init_routine_of_base(self, mock_init):
+        mock_init.return_value = None
         derived.Derived(1)
         self.assertTrue(mock_init.called)
-
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestB)
-    unittest.TextTestRunner(verbosity=2).run(suite)
