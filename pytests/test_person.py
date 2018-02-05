@@ -14,7 +14,6 @@ class TestPerson(unittest.TestCase):
     @mock.patch('pytests.lib.person.get_name')
     """
 
-
     @mock.patch('pytests.lib.person.get_name')
     def test_name(self, mock_get_name):
         # set a return value for our mock object
@@ -23,19 +22,15 @@ class TestPerson(unittest.TestCase):
         name = ps.name()
         self.assertEqual(name, "Bob")
 
+    @mock.patch('pytests.lib.person.Pet')
+    def test_dog_noise(self, mock_pet):
+        # mock_pet.noise.return_value= "Meoow"
+        mock_pet.return_value.noise.return_value = "Meoow"
 
-@mock.patch('pytests.lib.person.Pet')
-def test_dog_noise(mock_pet):
-    # mock_pet.noise.return_value= "Meoow"
-    mock_pet.return_value.noise.return_value = "Meoow"
+        ps = person.Person()
+        self.assertEqual(ps.pet.noise, "Meoow")
 
-    ps = person.Person()
-    # forgot the return_value - which is what the example is for
-    # assert person.pet.noise == "Meoow"
-    assert ps.pet.noise.return_value == "Meoow"
-
-
-@mock.patch('pytests.lib.person.noise_logger', lambda x: x)
-def test_decorator():
-    ps = person.Person()
-    assert ps.pet.noise() == 'Woof'
+    @mock.patch('pytests.lib.person.noise_logger', lambda x: x)
+    def test_decorator(self):
+        ps = person.Person()
+        self.assertEqual(ps.pet.noise, 'Woof')
