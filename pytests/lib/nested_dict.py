@@ -21,6 +21,7 @@ class NestedDict(object):
                 source[key] = returned
             else:
                 source[key] = overrides[key]
+        pprint(source)
         return source
 
     def d_deep_get(self, d_original, keys, default=None):
@@ -59,17 +60,17 @@ class NestedDict(object):
         last_key = items.pop()
         d = self.deep_get(sourceDict, items)
         d[last_key] = value
-        df = self.deep_update(sourceDict, d)
-        return df
+        return sourceDict
 
 
 class TestNestedDict(unittest.TestCase):
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         path = os.path.dirname(__file__)
-        self.afile = os.path.join(path, 'data/dump.txt')
-        self.nd = NestedDict()
-        self.d = {'a': {'b': {'c': 'C'}}}
+        cls.afile = os.path.join(path, 'data/dump.txt')
+        cls.nd = NestedDict()
+        cls.d = {'a': {'b': {'c': 'C'}}}
 
     def test_deep_get(self):
         d = self.nd.deep_get(self.d, ['a', 'b', 'c'])
@@ -77,14 +78,13 @@ class TestNestedDict(unittest.TestCase):
         d = self.nd.deep_get_reduce(self.d, ['a', 'b', 'c'], default='NA')
         self.assertEqual(d, 'C')
 
-
     def test_d_deep_get(self):
         v = self.nd.d_deep_get(self.d, ['a', 'b', 'c'], default='NA')
         self.assertEqual(v, 'C')
-        dc = copy.deepcopy(self.d) 
+        dc = copy.deepcopy(self.d)
         d = self.nd.deep_set(dc, 'E', ['a', 'b', 'e'])
-        pprint(d)
-        self.assertEqual(d, dc)
+        v = self.nd.d_deep_get(d, ['a', 'b', 'e'], default='NA')
+        self.assertEqual(v, 'E')
 
     def test_deep_update(self):
         source = {'hello1': 1}
