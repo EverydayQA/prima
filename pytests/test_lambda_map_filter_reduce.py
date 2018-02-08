@@ -29,6 +29,9 @@ class TestLambdaFilterMapReduce(unittest.TestCase):
         self.assertEqual(v, 7)
 
     def test_map_add(self):
+        """
+        map(func, seq)
+        """
         lv = self.lamb.map_add()
         self.assertEqual(lv, [0.0, 1.0, 1.4142135623730951, 1.7320508075688772, 2.0])
         lv = map(lambda x, y: x + y, range(0, 5), range(0, 5))
@@ -37,3 +40,19 @@ class TestLambdaFilterMapReduce(unittest.TestCase):
         self.assertEqual(lv, [0.0, 1.0, 1.4142135623730951, 1.7320508075688772, 2.0])
         lv = map(math.sqrt, range(0, 5))
         self.assertEqual(lv, [0.0, 1.0, 1.4142135623730951, 1.7320508075688772, 2.0])
+
+    def test_filter(self):
+        """
+        filter(func, list)
+        """
+        lv = filter(None, [None, '', "", ' ', 'A'])
+        self.assertEqual(lv, [' ', 'A'])
+        lv = filter(lambda x: isinstance(x, dict), [[], 'a', 1, None, {}])
+        self.assertEqual(lv, [{}])
+
+    def test_reduce(self):
+        """
+        reduce(func, seq)
+        """
+        lv = reduce(lambda x, y: x + y, range(0, 10))
+        self.assertEqual(lv, 45)
