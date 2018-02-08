@@ -43,8 +43,31 @@ class TestMatch(unittest.TestCase):
         self.assertEquals(matches, ['test', 'mm', 'ff', 'ss'])
 
         regex = r"(.+?)_+"
+        #
         line = 'test_m_m_ff_ss__mmm.txt'
         matches = re.findall(regex, line)
         self.assertEquals(matches, ['test', 'm', 'm', 'ff', 'ss'])
+
+        # split should be enough
+        # items.pop(0)
+        # items[0] or 0 1 match mm, then pop(0 or 01)
+        # ff items[0] pop(0)
+        # ss items[0]
         matches = re.split('_+', line)
         self.assertEquals(matches, ['test', 'm', 'm', 'ff', 'ss', 'mmm.txt'])
+        s = "2**3 + 2*3"
+        items = re.findall(r'[+*-/()]+|\d+', s)
+        self.assertEqual(items, ['2', '**', '3', '+', '2', '*', '3'])
+        string = 'blah blah 12234 (12) (23) (34)'
+        items = re.findall(r'\((\d+)+\)', string)
+        self.assertEqual(items, ['12', '23', '34'])
+        # Use a postive lookbehind and look-ahead in your regex,
+        items = re.findall(r'(?<=\()\d+(?=\))', string)
+        self.assertEqual(items, ['12', '23', '34'])
+        string = '<dirtfields name="one" value="stuff">\n<gibberish name="two"\nwewt>'
+        items = re.findall(r'name="([^"]*)"', string, re.IGNORECASE)
+        self.assertEqual(items, ['one', 'two'])
+        items = re.findall(r'(?<=name=")[^"]*', string, re.IGNORECASE)
+        self.assertEqual(items, ['one', 'two'])
+        items = re.findall(r'(?<=name=")[^"]*(?=")', string, re.IGNORECASE)
+        self.assertEqual(items, ['one', 'two'])
