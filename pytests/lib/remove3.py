@@ -23,3 +23,10 @@ class UploadService(object):
 
     def upload_complete(self, filename):
         self.removal_service.rm(filename)
+
+    def glob_files_basename(self, adir, keyword):
+        files = self.removal_service.glob_files(adir, keyword)
+        items = []
+        for afile in files:
+            items.append(os.path.basename(afile))
+        return items

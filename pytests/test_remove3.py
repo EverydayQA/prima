@@ -95,20 +95,18 @@ class TestRemoval3(unittest.TestCase):
 
 class TestUploadService3(unittest.TestCase):
 
-    # @mock.patch.object(RemovalService,'rm')
-    # replaced with autospec
-    # def test_upload_complete(self, mock_rm):
     def test_upload_complete(self):
-
         # dependencies
-        mock_removal_service = mock.create_autospec(RemovalService)
-        reference = UploadService(mock_removal_service)
+        mock_rs = mock.create_autospec(RemovalService, spec_set=False)
+        mock_rs.glob_files.return_value = []
+        us = UploadService(mock_rs)
 
         # call upload_complete--> rm()
-        reference.upload_complete("my upload file")
-
+        us.upload_complete("my upload file")
+        self.assertEqual(us.removal_service.glob_files('/tmp', '-'), [])
+        self.assertEqual(us.glob_files_basename('/tmp', '-'), [])
         # check that it called the rm()
         # mock_rm.assert_called_with("my upload file")
 
         # check rm() called
-        mock_removal_service.rm.assert_called_with("my upload file")
+        mock_rs.rm.assert_called_with("my upload file")
