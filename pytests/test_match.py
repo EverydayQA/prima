@@ -55,6 +55,10 @@ class TestMatch(unittest.TestCase):
         # ss items[0]
         matches = re.split('_+', line)
         self.assertEquals(matches, ['test', 'm', 'm', 'ff', 'ss', 'mmm.txt'])
+
+        line = 'abc="abc";\n"bbb\\n",\n"ccc\\n",\n"ddd";\neee="eee";\n'
+        items = re.split(';\n', line)
+        self.assertEqual(items, [])
         s = "2**3 + 2*3"
         items = re.findall(r'[+*-/()]+|\d+', s)
         self.assertEqual(items, ['2', '**', '3', '+', '2', '*', '3'])

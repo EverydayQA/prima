@@ -15,11 +15,15 @@ class DPaseFile(object):
         self.nm = NormalizeMincinfo()
         self.df = self.d_file(afile)
 
-    def lines_file(self, afile):
+    def txt_from_file(self, afile):
         with open(afile, mode='r') as f:
-            lines = f.readlines()
-            return lines
-        return []
+            return f.read()
+        return ''
+
+    def lines_file(self, afile):
+        txt = self.txt_from_file(afile)
+        lines = re.split(';\n', txt)
+        return lines
 
     def d_file(self, afile):
         """
@@ -27,7 +31,6 @@ class DPaseFile(object):
         """
         d = {}
         lines = self.lines_file(afile)
-        lines = self.lines_normalize(lines)
         key = None
         for line in lines:
             if len(line) < 3:
