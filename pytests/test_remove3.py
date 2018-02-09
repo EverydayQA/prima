@@ -1,27 +1,20 @@
 #!/usr/bin/python
-# from remove.py
 from pytests.lib.remove3 import RemovalService
 from pytests.lib.remove3 import UploadService
 import mock
 import unittest
 
-'''
-The example is insane to test sys.remove and sys.path
-but give a lot of ideas on testing mine
-email
-fail
-remove
-submit
-lock
-etc
-'''
+
+def local_glob(adir, keyword):
+
+    return []
 
 
 class TestRemovalService(unittest.TestCase):
 
     # patch 2 sub
-    @mock.patch('remove.os.path')
-    @mock.patch('remove.os')
+    @mock.patch('pytests.lib.remove3.os.path')
+    @mock.patch('pytests.lib.remove3.os')
     def test_rm(self, mock_os, mock_path):
         reference = RemovalService()
 
@@ -35,6 +28,19 @@ class TestRemovalService(unittest.TestCase):
         mock_path.isfile.return_value = True
         reference.rm("any path")
         mock_os.remove.assert_called_with("any path")
+
+    def test_glob_files(self):
+        # a real glob before mock started
+        rs = RemovalService()
+        self.assertTrue(len(rs.glob_files('/tmp', '-')) > 0)
+
+        # mock with patch
+        mock_glob = mock.MagicMock(side_effect=local_glob)
+        patcher = mock.patch.multiple(RemovalService, glob_files=mock_glob)
+        patcher.start()
+        rs = RemovalService()
+        self.assertEquals(rs.glob_files('/tmp', '-'), [])
+        patcher.stop()
 
 
 class TestUploadService(unittest.TestCase):
@@ -58,8 +64,8 @@ class TestUploadService(unittest.TestCase):
 class TestRemoval3(unittest.TestCase):
 
     # patch 2 sub *** attention *** the order is very important - reversed
-    @mock.patch('remove.os.path')
-    @mock.patch('remove.os')
+    @mock.patch('pytests.lib.remove3.os.path')
+    @mock.patch('pytests.lib.remove3.os')
     def test_rm(self, mock_os, mock_path):
         reference = RemovalService()
 

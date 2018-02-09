@@ -71,3 +71,4 @@ class TestMatch(unittest.TestCase):
         self.assertEqual(items, ['one', 'two'])
         items = re.findall(r'(?<=name=")[^"]*(?=")', string, re.IGNORECASE)
         self.assertEqual(items, ['one', 'two'])
+        # [m.groupdict() for m in regex.finditer(search_string)]
