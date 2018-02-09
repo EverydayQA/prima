@@ -42,6 +42,18 @@ class TestRemovalService(unittest.TestCase):
         self.assertEquals(rs.glob_files('/tmp', '-'), [])
         patcher.stop()
 
+    @mock.patch.object(RemovalService, 'glob_files')
+    def test_glob_files_2(self, mock_glob_files):
+        mock_glob_files.return_value = ['/tmp/mock.txt']
+        rs = RemovalService()
+        self.assertEquals(rs.glob_files('/tmp', '-'), ['/tmp/mock.txt'])
+
+    @mock.patch('pytests.lib.remove3.glob')
+    def test_glob_files_3(self, mock_glob):
+        mock_glob.glob.return_value = ['/tmp/mock.txt']
+        rs = RemovalService()
+        self.assertEquals(rs.glob_files('/tmp', '-'), ['/tmp/mock.txt'])
+
 
 class TestUploadService(unittest.TestCase):
 
