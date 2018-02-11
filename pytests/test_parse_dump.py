@@ -3,6 +3,7 @@ import collections
 import re
 import os
 from termcolor import cprint
+import json
 import unittest
 
 
@@ -160,6 +161,25 @@ class TestDPaseFile(unittest.TestCase):
         overrides = {'hello': {'value': 2}}
         self.pd.deep_update(source, overrides)
         self.assertEqual(source, {'hello': {'value': 2, 'no_change': 1}})
+
+    def test_dict_to_json(self):
+        """
+        """
+        self.assertTrue(isinstance(self.d, dict))
+        # json.dumps() converts a dictionary to str object,
+        json_file = json.dumps(self.d)
+        self.assertTrue(isinstance(json_file, basestring))
+        # Output str
+        print type(json_file)
+
+        # so you have to load your str into a dict to use it by using json.loads() method
+        json_obj = json.loads(json_file)
+        # equal to initial dict
+        self.assertEqual(json_obj, self.d)
+        pprint(json_obj)
+
+        self.assertTrue(isinstance(json_obj, dict))
+        self.assertTrue('listName' in json_obj)
 
 
 class DParseLine(object):
