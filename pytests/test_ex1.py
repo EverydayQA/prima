@@ -35,5 +35,5 @@ class TestMockReturnValue(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestMockReturnValue)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    runner = unittest.TextTestRunner(verbosity=2, resultclass=TestMockReturnValue)
+    unittest.main(testRunner=runner)
