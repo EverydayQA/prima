@@ -34,6 +34,59 @@ class TestMockReturnValue(unittest.TestCase):
         self.assertFalse(result)
 
 
+class MyResult(unittest.runner.TextTestResult):
+    items = ['xxx']
+
+    def __init__(self, *args, **kwargs):
+        super(MyResult, self).__init__(*args, **kwargs)
+
+    def addError(self, test, err):
+        self.call_web_api(test, err)
+        return super(MyResult, self).addError(test, err)
+
+    def addFailure(self, test, err):
+        self.call_web_api(test, err)
+        return super(MyResult, self).addFailure(test, err)
+
+    def call_web_api(self, test, err):
+        print('***', test, err)
+
+    def addSuccess(self, test):
+        super(MyResult, self).addSuccess(test)
+        self.items.append(test)
+
+
+class MyOwnResultClass:
+    foo = None
+
+    def __init__(self, foo):
+        self.foo = foo
+
+    def __iter__(self):
+        yield "Result: {f}".format(f=self.foo)
+
+    def MyOwnResult(self, foo):
+        yield "Result: {f}".format(f=foo)
+
+
 if __name__ == '__main__':
-    runner = unittest.TextTestRunner(verbosity=2, resultclass=TestMockReturnValue)
-    unittest.main(testRunner=runner)
+    """
+    None of the resultclass works!?
+    """
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestMockReturnValue))
+    runner = unittest.TextTestRunner()
+    runner.resultclass = MyOwnResultClass
+    runner.verbosity = 2
+    testResult = runner.run(suite)
+    for t in testResult.failures:
+        print t[0].id()
+        print t[1]
+    print
+    for t in testResult.errors:
+        print t[0].id()
+        print t[1]
+    print
+    for t in testResult.items:
+        print t.id()
+    print
