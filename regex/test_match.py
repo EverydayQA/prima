@@ -90,10 +90,15 @@ class TestMatch(unittest.TestCase):
         self.assertEqual(items, ['192.168.0.2', '199.243.255.34'])
 
     def test_typho_chars(self):
+        """
+        Not sure
+        """
         regex = '[^~\x22]+'
         line = '~sth~.txt'
         match = re.findall(regex, line)
-        self.assertEqual(match, [])
+        self.assertEqual(match, ['sth', '.txt'], msg='findall')
+        match = re.search(regex, line)
+        self.assertEqual(match.group(), [])
 
     def test_split(self):
         regex = '(.*?) # .*'
@@ -110,22 +115,23 @@ class TestMatch(unittest.TestCase):
     def test_numbers(self):
         reg = '^(-?\d+)(\.\d+)?'
         items = re.findall(reg, '1.23')
-        self.assertEqual(items, [])
+        self.assertEqual(items, ['1', '.23'])
 
+    def test_numbers_2(self):
         reg = '^[0-9]*$'
         line = '1234'
         items = re.findall(reg, line)
-        self.assertEquals(items, [1234])
+        self.assertEquals(items, ['1234'])
         # n digits number
         reg = '^\d{4}$'
         line = '12345'
         items = re.findall(reg, line)
-        self.assertEquals(items, [1234])
+        self.assertEquals(items, [])
         # at least n digits
         reg = '^\d{4,}$'
         line = '12345'
         items = re.findall(reg, line)
-        self.assertEquals(items, [12345])
+        self.assertEquals(items, ['12345'])
         # number with m to n digits
         reg = '^\d{4,5}$'
         line = '12345'
