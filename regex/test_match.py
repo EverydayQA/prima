@@ -169,23 +169,26 @@ class TestMatch(unittest.TestCase):
         reg = '^((-\d+(\.\d+)?)|(0+(\.0+)?))'
         reg = '(-([1-9]\d*\.\d*|0\.\d*[1-9]\d*))|0?\.0+|0'
         # positive float
-        reg = '^[1-9]\d*\.\d*|0\.\d*[1-9]\d*或(([0−9]+\.[0−9]∗[1−9][0−9]∗)|([0−9]∗[1−9][0−9]∗\.[0−9]+)|([0−9]∗[1−9][0−9]∗))'
+        reg = '^[1-9]\d*\.\d*|0\.\d*[1-9]\d*'
+        reg = '(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))'
         # negative float
-        reg = '^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)或(−(([0−9]+\.[0−9]∗[1−9][0−9]∗)|([0−9]∗[1−9][0−9]∗\.[0−9]+)|([0−9]∗[1−9][0−9]∗)))'
+        reg = '^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)'
+        reg = '(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))'
 
     def test_float(self):
         # float
         reg = '^(-?\d+)(\.\d+)?'
-        reg = '−?([1−9]\d∗\.\d∗|0\.\d∗[1−9]\d∗|0?\.0+|0)'
+        reg = '-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)'
         self.assertTrue(reg)
 
     def test_ascii(self):
         # chinese char
         reg = '^[\u4e00-\u9fa5]{0,}$'
         # words
-        reg = '^[A-Za-z0-9]+或[A−Za−z0−9]4,40'
+        reg = '^[A-Za-z0-9]+'
+        reg = '[A-Za-z0-9]4,40'
 
-        # 长度为3-20的所有字符：
+        # len 3-20
         reg = '^.{3,20}$'
 
         # alpha string
@@ -197,11 +200,13 @@ class TestMatch(unittest.TestCase):
         # alpha and number
         reg = '^[A-Za-z0-9]+$'
         # number/alpha, _,
-        reg = '^\w+或\w3,20'
+        reg = '^\w+'
+        reg = '\w3,20'
         # chinese/alpah/number/_
         reg = '^[\u4E00-\u9FA5A-Za-z0-9_]+$'
         # chinese/alpah/digit but withou _
-        reg = '^[\u4E00-\u9FA5A-Za-z0-9]+或[\u4E00−\u9FA5A−Za−z0−9]2,20'
+        reg = '^[\u4E00-\u9FA5A-Za-z0-9]+'
+        reg = '[\u4E00-\u9FA5A-Za-z0-9]2,20'
 
         # input contains ^%&',;=?$\"
         reg = '[^%&\',;=?$\x22]+'
@@ -221,9 +226,11 @@ class TestMatch(unittest.TestCase):
         # cell number China
         reg = '^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$'
         # phone
-        reg = '("XXX-XXXXXXX"、"XXXX-XXXXXXXX"、"XXX-XXXXXXX"、"XXX-XXXXXXXX"、"XXXXXXX"和"XXXXXXXX)：^(\(\d{3,4}-)|\d{3.4}-)?\d{7,8}$'
+        # "XXX-XXXXXXX, "XXXX-XXXXXXXX", "XXX-XXXXXXX, "XXX-XXXXXXXX", "XXXXXXX" and "XXXXXXXX
+        reg = '^(\(\d{3,4}-)|\d{3.4}-)?\d{7,8}$'
         # China phone
-        reg = '(0511-4405222、021-87888822)：\d{3}-\d{8}|\d{4}-\d{7}'
+        # (0511-4405222, 021-87888822)
+        reg = '\d{3}-\d{8}|\d{4}-\d{7}'
 
         # phone - cell/ 3,4 digits area code, 7,8 digits direct dial, 1-4 extension
         reg = '((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)'
@@ -270,28 +277,20 @@ class TestMatch(unittest.TestCase):
         # allow ,
         reg = '^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(.[0-9]{1,2})?$'
 
-        # xml文件：
+        # xml
         reg = '^([a-zA-Z]+-?)+[a-zA-Z0-9]+\\.[x|X][m|M][l|L]$'
-        # 中文字符的正则表达式：
+        # Chinese chars
         reg = '[\u4e00-\u9fa5]'
-        # 双字节字符：
-        reg = '[^\x00-\xff]'
-        # (包括汉字在内，可以用来计算字符串的长度(一个双字节字符长度计2，ASCII字符计1))
-        # 空白行的正则表达式：
+        # empty line
         reg = '\n\s*\r'
-        # (可以用来删除空白行)
-        # HTML标记的正则表达式：
+        # html
         reg = '<(\S*?)[^>]*>.*?|<.*? />'
-        # ( 首尾空白字符的正则表达式：
+        # trailing and leading space
         reg = '^\s*|\s*'
-        reg = '(\s∗)|(\s∗)'
-        # (可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式)
+        reg = '(\s*)|(\s*)'
 
         # telcent QQ number from 10000
         reg = '[1-9][0-9]{4,}'
         # china post code
         reg = '[1-9]\d{5}(?!\d)'
-
-        # ip：
-        reg = '((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d))'
         self.assertTrue(reg)
