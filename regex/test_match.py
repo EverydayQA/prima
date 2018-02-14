@@ -126,35 +126,60 @@ class TestMatch(unittest.TestCase):
         line = '12345'
         items = re.findall(reg, line)
         self.assertEquals(items, [12345])
-        # m-n位的数字：
+        # number with m to n digits
         reg = '^\d{4,5}$'
         line = '12345'
         items = re.findall(reg, line)
         self.assertEquals(items, [12345])
 
+        # startwith zero or not number
+        reg = '^(0|[1-9][0-9]*)$'
 
-"""
-    零和非零开头的数字：^(0|[1-9][0-9]*)$
-    非零开头的最多带两位小数的数字：^([1-9][0-9]*)+(.[0-9]{1,2})?$
-    带1-2位小数的正数或负数：^(\-)?\d+(\.\d{1,2})?$
-    正数、负数、和小数：^(\-|\+)?\d+(\.\d+)?$
-    有两位小数的正实数：^[0-9]+(\.[0-9]{2})?$
-    有1~3位小数的正实数：^[0-9]+(\.[0-9]{1,3})?$
-    非零的正整数：^[1-9]\d*或([1−9][0−9]∗)1,3
+        # startswith non zero with 2 decimals
+        reg = '^([1-9][0-9]*)+(.[0-9]{1,2})?$'
+        # plus/minus with 2 decimals
+        reg = '^(\-)?\d+(\.\d{1,2})?$'
+        # plus/minus and decimals
+        reg = '^(\-|\+)?\d+(\.\d+)?$'
+        # plus real number with 2 decimals
+        reg = '^[0-9]+(\.[0-9]{2})?$'
+        # real number with 1-3 decimals
+        reg = '^[0-9]+(\.[0-9]{1,3})?$'
+        # non-zero positive integer
+        reg = '^[1-9]\d*'
+        reg = '^\+?[1-9][0-9]*$'
+        # non-zero negative integer
+        # reg = '([1-9][0-9]*)1,3'
 
-或 ^\+?[1-9][0-9]*$
-非零的负整数：^\-[1-9][]0-9"*或−[1−9]\d∗
-非负整数：^\d+或[1−9]\d∗|0
-非正整数：^-[1-9]\d*|0或((−\d+)|(0+))
-非负浮点数：^\d+(\.\d+)?或[1−9]\d∗\.\d∗|0\.\d∗[1−9]\d∗|0?\.0+|0
-非正浮点数：^((-\d+(\.\d+)?)|(0+(\.0+)?))或(−([1−9]\d∗\.\d∗|0\.\d∗[1−9]\d∗))|0?\.0+|0
-正浮点数：^[1-9]\d*\.\d*|0\.\d*[1-9]\d*或(([0−9]+\.[0−9]∗[1−9][0−9]∗)|([0−9]∗[1−9][0−9]∗\.[0−9]+)|([0−9]∗[1−9][0−9]∗))
-负浮点数：^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)或(−(([0−9]+\.[0−9]∗[1−9][0−9]∗)|([0−9]∗[1−9][0−9]∗\.[0−9]+)|([0−9]∗[1−9][0−9]∗)))
-浮点数：^(-?\d+)(\.\d+)?或−?([1−9]\d∗\.\d∗|0\.\d∗[1−9]\d∗|0?\.0+|0)
-"""
+        reg = '^\-[1-9][]0-9"*'
+        reg = '-[1-9]\d*'
+        # non-negative integer
+        reg = '^\d+'
+        reg = '[1-9]\d*|0'
+
+        # non-positive integer
+        reg = '^-[1-9]\d*|0'
+        reg = '((-\d+)|(0+))'
+
+        # non-negative float
+        reg = '^\d+(\.\d+)?'
+        reg = '[1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0'
+
+        # non-positive float
+        reg = '^((-\d+(\.\d+)?)|(0+(\.0+)?))'
+        reg = '(-([1-9]\d*\.\d*|0\.\d*[1-9]\d*))|0?\.0+|0'
+        # positive float
+        reg = '^[1-9]\d*\.\d*|0\.\d*[1-9]\d*或(([0−9]+\.[0−9]∗[1−9][0−9]∗)|([0−9]∗[1−9][0−9]∗\.[0−9]+)|([0−9]∗[1−9][0−9]∗))'
+        # negative float
+        reg = '^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)或(−(([0−9]+\.[0−9]∗[1−9][0−9]∗)|([0−9]∗[1−9][0−9]∗\.[0−9]+)|([0−9]∗[1−9][0−9]∗)))'
+
+    def test_float(self):
+        # float
+        reg = '^(-?\d+)(\.\d+)?'
+        reg = '−?([1−9]\d∗\.\d∗|0\.\d∗[1−9]\d∗|0?\.0+|0)'
+        self.assertTrue(reg)
 
     def test_ascii(self):
-        """
         # chinese char
         reg = '^[\u4e00-\u9fa5]{0,}$'
         # words
@@ -163,41 +188,63 @@ class TestMatch(unittest.TestCase):
         # 长度为3-20的所有字符：
         reg = '^.{3,20}$'
 
-由26个英文字母组成的字符串：^[A-Za-z]+$
-由26个大写英文字母组成的字符串：^[A-Z]+$
-由26个小写英文字母组成的字符串：^[a-z]+$
-由数字和26个英文字母组成的字符串：^[A-Za-z0-9]+$
-由数字、26个英文字母或者下划线组成的字符串：^\w+或\w3,20
-中文、英文、数字包括下划线：^[\u4E00-\u9FA5A-Za-z0-9_]+$
-中文、英文、数字但不包括下划线等符号：^[\u4E00-\u9FA5A-Za-z0-9]+或[\u4E00−\u9FA5A−Za−z0−9]2,20
+        # alpha string
+        reg = '^[A-Za-z]+$'
+        # alpha string in upper case
+        reg = '^[A-Z]+$'
+        # alpha lower case
+        reg = '^[a-z]+$'
+        # alpha and number
+        reg = '^[A-Za-z0-9]+$'
+        # number/alpha, _,
+        reg = '^\w+或\w3,20'
+        # chinese/alpah/number/_
+        reg = '^[\u4E00-\u9FA5A-Za-z0-9_]+$'
+        # chinese/alpah/digit but withou _
+        reg = '^[\u4E00-\u9FA5A-Za-z0-9]+或[\u4E00−\u9FA5A−Za−z0−9]2,20'
 
-    可以输入含有^%&',;=?$\"等字符：[^%&',;=?$\x22]+
-    禁止输入含有~的字符：[^~\x22]+
-        """
+        # input contains ^%&',;=?$\"
+        reg = '[^%&\',;=?$\x22]+'
+        # forbidden ~
+        reg = '[^~\x22]+'
+        self.assertTrue(reg)
 
     def test_special_needs(self):
-        """
         # email
         reg = '^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$'
 
         # domain
         reg = '[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(/.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/.?'
+        # url
+        reg = '[a-zA-z]+://[^\s]*'
+        reg = '^http://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$'
+        # cell number China
+        reg = '^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$'
+        # phone
+        reg = '("XXX-XXXXXXX"、"XXXX-XXXXXXXX"、"XXX-XXXXXXX"、"XXX-XXXXXXXX"、"XXXXXXX"和"XXXXXXXX)：^(\(\d{3,4}-)|\d{3.4}-)?\d{7,8}$'
+        # China phone
+        reg = '(0511-4405222、021-87888822)：\d{3}-\d{8}|\d{4}-\d{7}'
 
-        InternetURL：[a-zA-z]+://[^\s]* 或 ^http://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$
-        手机号码：^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$
-        电话号码("XXX-XXXXXXX"、"XXXX-XXXXXXXX"、"XXX-XXXXXXX"、"XXX-XXXXXXXX"、"XXXXXXX"和"XXXXXXXX)：^(\(\d{3,4}-)|\d{3.4}-)?\d{7,8}$
-        国内电话号码(0511-4405222、021-87888822)：\d{3}-\d{8}|\d{4}-\d{7}
-        电话号码正则表达式（支持手机号码，3-4位区号，7-8位直播号码，1－4位分机号）: ((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)
-        身份证号(15位、18位数字)，最后一位是校验位，可能为数字或字符X：(^\d{15})|(\d18
+        # phone - cell/ 3,4 digits area code, 7,8 digits direct dial, 1-4 extension
+        reg = '((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)'
+        # China ID - 15, 18 digits, last char might be digit or X
+        reg = '(^\d{15})|(\d18)|(^\d{17}(\d|X|x)$)'
 
-)|(^\d{17}(\d|X|x)$)
-帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$
-密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)：^[a-zA-Z]\w{5,17}$
-强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间)：^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$
-日期格式：^\d{4}-\d{1,2}-\d{1,2}
-一年的12个月(01～09和1～12)：^(0?[1-9]|1[0-2])$
-一个月的31天(01～09和1～31)：^((0?[1-9])|((1|2)[0-9])|30|31)$
-"""
+        # account number startswith alpha/5-16 length, allow _
+        reg = '^[a-zA-Z][a-zA-Z0-9_]{4,15}$'
+        # passwd startwith alpha, 6-18 len, alpha digit _
+        reg = '^[a-zA-Z]\w{5,17}$'
+
+        # passwd - 8-10 len, alpha digit, no special chars
+        reg = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$'
+        # date
+        reg = '^\d{4}-\d{1,2}-\d{1,2}'
+        # months in a year
+        reg = '^(0?[1-9]|1[0-2])$'
+
+        # days in a month
+        reg = '^((0?[1-9])|((1|2)[0-9])|30|31)$'
+        self.assertTrue(reg)
 
     def test_money(self):
         """
@@ -247,3 +294,4 @@ class TestMatch(unittest.TestCase):
 
         # ip：
         reg = '((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d))'
+        self.assertTrue(reg)
