@@ -31,3 +31,6 @@ class TestB(unittest.TestCase):
     def test_super_method2(self, mock_super):
         base.Dase(False).method()
         self.assertFalse(mock_super.called)
+        base.Dase(True).method()
+        self.assertFalse(mock_super.called)
+

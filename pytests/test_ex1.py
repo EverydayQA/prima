@@ -1,4 +1,5 @@
 import mock
+import sys
 import unittest
 
 
@@ -56,7 +57,7 @@ class MyResult(unittest.runner.TextTestResult):
         self.items.append(test)
 
 
-class MyOwnResultClass:
+class MyOwnResultClass(unittest.runner.TextTestResult):
     foo = None
 
     def __init__(self, foo):
@@ -76,7 +77,7 @@ if __name__ == '__main__':
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestMockReturnValue))
     runner = unittest.TextTestRunner()
-    runner.resultclass = MyOwnResultClass
+    runner.resultclass = MyResult
     runner.verbosity = 2
     testResult = runner.run(suite)
     for t in testResult.failures:
@@ -88,5 +89,6 @@ if __name__ == '__main__':
         print t[1]
     print
     for t in testResult.items:
-        print t.id()
+        print t
     print
+    sys.exit(0)
