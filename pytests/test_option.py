@@ -14,10 +14,13 @@ option.pack()
 def choice():
     chosen = ex1.get()
     print 'chosen {}'.format(chosen)
+    ex1.set(chosen)
     root.quit()
-    return chosen
 
 
-button = Button(root, text="Please choose", command=choice)
+button = Button(root, text="OK", command=choice)
+
 button.pack()
 mainloop()
+
+print 'The final chosen value {}'.format(ex1.get())

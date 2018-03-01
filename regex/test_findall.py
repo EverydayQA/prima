@@ -38,3 +38,14 @@ class TestReFindAll(unittest.TestCase):
         # could be match/search/findall etc
         items = compiled_rule.findall(s)
         self.assertEqual(items, ['111', '222'])
+
+    def test_split44(self):
+        import subprocess
+        import os
+        dirname = os.path.dirname(__file__)
+        cmds = ['cat', "{}/1.txt".format(dirname)]
+        txt = subprocess.check_output(cmds)
+        items = re.findall(r"[\r\n]+(?!;500)", txt)
+        self.assertEqual(items, [])
+        for item in items:
+            self.assertEqual(item, ' ')
