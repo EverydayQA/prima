@@ -6,8 +6,7 @@ import unittest
 
 
 def local_glob(adir, keyword):
-
-    return []
+    return ['anything', 'not_this_file']
 
 
 class TestRemovalService(unittest.TestCase):
@@ -39,14 +38,15 @@ class TestRemovalService(unittest.TestCase):
         patcher = mock.patch.multiple(RemovalService, glob_files=mock_glob)
         patcher.start()
         rs = RemovalService()
-        self.assertEquals(rs.glob_files('/tmp', '-'), [])
+        self.assertEquals(rs.glob_files('/tmp', '-'), ['anything', 'not_this_file'])
         patcher.stop()
 
     @mock.patch.object(RemovalService, 'glob_files')
     def test_glob_files_2(self, mock_glob_files):
-        mock_glob_files.return_value = ['/tmp/mock.txt']
+        # mock_glob_files.return_value = ['/tmp/mock.txt']
+        mock_glob_files.side_effect = local_glob
         rs = RemovalService()
-        self.assertEquals(rs.glob_files('/tmp', '-'), ['/tmp/mock.txt'])
+        self.assertEquals(rs.glob_files('/tmp', '-'), ['anything', 'not_this_file'])
 
     @mock.patch('pytests.lib.remove3.glob')
     def test_glob_files_3(self, mock_glob):
