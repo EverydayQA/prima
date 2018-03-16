@@ -94,7 +94,7 @@ class Take(object):
 
         print '\n\n*sorted BY KEY {0}\n'.format(len(list_dict))
 
-        list_dict = OrderedDict(sorted(list_dict.items(), key=lambda t:t[0]))
+        list_dict = OrderedDict(sorted(list_dict.items(), key=lambda t: t[0]))
         for key in list_dict:
             item = list_dict[key]
             self.logger.debug(str(key) + "-----" + str(item.description))
