@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import os
-import codecs
 import gzip
 import unittest
 import io
@@ -13,12 +12,10 @@ class ReadUTF(object):
 
     def Jochen_read(self, testdata):
         f = gzip.open(testdata, 'rb')
-        reader = codecs.getreader('utf-8')
         contents = list(f)
         return contents
 
     def Yurik_read(self, testdata):
-        f = gzip.open(testdata, 'rb')
         reader = io.BufferedReader()
         contents = io.TextIOWrapper(reader, encoding='utf8', errors='ignore')
         return contents
@@ -45,10 +42,9 @@ class TestReadUTF(unittest.TestCase):
         self.testdata = os.path.join(path, "./data/empty.txt")
 
     def test_Jochen_read(self):
-        reader = ReadUTF()
-        contents = reader.Jochen_read(self.testdata)
+        pass
 
-    def test_Gang_read(self):
+    def test_user_read(self):
         reader = ReadUTF()
         contents = reader.Gang_read(self.testdata)
         expected = reader.Jochen_read(self.testdata)
