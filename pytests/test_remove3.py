@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from pytests.lib.remove3 import RemovalService
 from pytests.lib.remove3 import UploadService
+from pytests.lib.read import Foo
 import mock
 import unittest
 
@@ -110,3 +111,39 @@ class TestUploadService3(unittest.TestCase):
 
         # check rm() called
         mock_rs.rm.assert_called_with("my upload file")
+
+
+TEST_DATA = "foo\nbar\nxyzzy\n"
+
+
+class TestMockOpen(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.expected = ['foo\n', 'bar\n', 'xyzzy\n']
+        cls.input = '/tmp/mock.txt'
+
+    def test_mock_open(self):
+        with mock.patch("pytests.lib.read.open",  mock.mock_open(read_data=TEST_DATA), create=True):
+            f = Foo(self.input)
+            self.assertEqual(f.data, self.expected)
+
+    def test_mock_open_class(self):
+        with mock.patch("pytests.lib.read.Foo.open",  mock.mock_open(read_data=TEST_DATA), create=True):
+            f = Foo(self.input)
+            self.assertEqual(f.data, self.expected)
+
+    def test_mock_open2(self):
+        m = mock.mock_open(read_data=TEST_DATA)
+        with mock.patch('{}.open'.format(__name__), m, create=True):
+            f = Foo(self.input)
+            self.assertEqual(f.data, self.expected)
+
+    @mock.patch("__builtin__.open", new_callable=mock.mock_open, read_data=TEST_DATA)
+    def test_open3(self, mock_open):
+        f = Foo(self.input)
+        self.assertEqual(f.data, self.expected, msg=f.data)
+
+    def test_data(self):
+        f = Foo(self.input)
+        self.assertEqual(f.data, ['1\n', '2\n', 'aaa\n'])
