@@ -1,0 +1,4 @@
+{
+  "pyt.py::test_hello1": true, 
+  "test_hello.py::TestHello::test_my_function": true
+}

@@ -26,3 +26,9 @@ class TestFixedPaymentMortgage(unittest.TestCase):
         self.assertEqual(int(a), 477)
         a = mt.pay_per_month(25 * 12)
         self.assertEqual(int(a), 527)
+
+    def test_dict_qual(self):
+        x = {'type': 'example', 'color': 'blue', 'entries_dict':{'clock':'c', 'id': 1}}
+        y = {'color': 'blue', 'entries_dict':{'id': 1, 'clock':'c'}, 'type': 'example'}
+        self.assertDictEqual(x, y)
+        self.assertEqual(x, y)

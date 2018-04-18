@@ -106,3 +106,8 @@ class TestRemove(unittest.TestCase):
         self.assertEqual(e.exception.message, '')
         self.assertEqual(e.exception.args, ())
         self.assertEqual(e.exception.code, None)
+
+    def test_not_raise(self):
+        with self.assertRaises(Exception):
+            1 + '1'
+        1 + 1

@@ -2,6 +2,7 @@
 from pytests.lib.remove3 import RemovalService
 from pytests.lib.remove3 import UploadService
 from pytests.lib.read import Foo
+from pytests.lib import remove3
 import mock
 import unittest
 
@@ -13,7 +14,7 @@ def local_glob(adir, keyword):
 class TestRemovalService(unittest.TestCase):
 
     # patch 2 sub
-    @mock.patch('pytests.lib.remove3.os.path')
+    @mock.patch('remove3.os.path')
     @mock.patch('pytests.lib.remove3.os')
     def test_rm(self, mock_os, mock_path):
         reference = RemovalService()
@@ -122,6 +123,8 @@ class TestMockOpen(unittest.TestCase):
     def setUpClass(cls):
         cls.expected = ['foo\n', 'bar\n', 'xyzzy\n']
         cls.input = '/tmp/mock.txt'
+        import subprocess
+        subprocess.call(['touch', cls.input])
 
     def test_mock_open(self):
         with mock.patch("pytests.lib.read.open",  mock.mock_open(read_data=TEST_DATA), create=True):
