@@ -16,12 +16,12 @@ def my_function():
 
 class TestHello(unittest.TestCase):
 
-    @mock.patch('pytests.test_hello.hello')
+    @mock.patch('python2_pytests.test_hello.hello')
     def test_hello(self, mocked_hello):
         mocked_hello.side_effect = bonjour
         self.assertEqual(mocked_hello('Sam'), 'bonjour Sam')
 
-    @mock.patch('pytests.test_hello.hello')
+    @mock.patch('python2_pytests.test_hello.hello')
     def test_my_function(self, mocked_hello):
         mocked_hello.side_effect = bonjour
         self.assertEqual(my_function(), 'bonjour Sam')

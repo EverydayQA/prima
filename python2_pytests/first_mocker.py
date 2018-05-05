@@ -1,4 +1,4 @@
-from pytests import test_hello
+from python2_pytests import test_hello
 
 
 def bonjour(name):
@@ -14,14 +14,14 @@ def my_function():
 
 
 def test_hellow(mocker):
-    mocked_hello = mocker.patch('pytests.test_hello.hello')
+    mocked_hello = mocker.patch('python2_pytests.test_hello.hello')
     mocked_hello.side_effect = test_hello.bonjour
     assert mocked_hello('Sam') == 'bonjour Sam'
     mocked_hello.assert_called_with('Sam')
 
 
 def test_my_function(mocker):
-    with mocker.patch('pytests.test_hello.hello', side_effect=test_hello.bonjour) as mocked_hello:
+    with mocker.patch('python2_pytests.test_hello.hello', side_effect=test_hello.bonjour) as mocked_hello:
         mocked_hello.side_effect = test_hello.bonjour
         assert mocked_hello('Sam') == 'bonjour Sam'
         assert test_hello.hello('Sam') == 'bonjour Sam'
@@ -30,7 +30,7 @@ def test_my_function(mocker):
 
 
 def test_my_function2(mocker):
-    mocked_hello = mocker.patch('pytests.test_hello.hello', side_effect=test_hello.bonjour)
+    mocked_hello = mocker.patch('python2_pytests.test_hello.hello', side_effect=test_hello.bonjour)
     assert mocked_hello('Sam') == 'bonjour Sam'
     assert test_hello.hello('Sam') == 'bonjour Sam'
     mf = test_hello.my_function()
@@ -38,7 +38,7 @@ def test_my_function2(mocker):
 
 
 def test_my_function3(mocker):
-    mocker.patch('pytests.pyt.hello', side_effect=bonjour)
+    mocker.patch('python2_pytests.first_mocker.hello', side_effect=bonjour)
     mf = my_function()
     hello.assert_called_with('Sam')
     assert mf == 'bonjour Sam'
