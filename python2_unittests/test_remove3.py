@@ -1,8 +1,8 @@
 #!/usr/bin/python
-from pytests.lib.remove3 import RemovalService
-from pytests.lib.remove3 import UploadService
-from pytests.lib.read import Foo
-from pytests.lib import remove3
+from python2_unittests.lib.remove3 import RemovalService
+from python2_unittests.lib.remove3 import UploadService
+from python2_unittests.lib.read import Foo
+from python2_unittests.lib import remove3
 import mock
 import unittest
 
@@ -15,7 +15,7 @@ class TestRemovalService(unittest.TestCase):
 
     # patch 2 sub
     @mock.patch('remove3.os.path')
-    @mock.patch('pytests.lib.remove3.os')
+    @mock.patch('python2_unittests.lib.remove3.os')
     def test_rm(self, mock_os, mock_path):
         reference = RemovalService()
 
@@ -50,7 +50,7 @@ class TestRemovalService(unittest.TestCase):
         rs = RemovalService()
         self.assertEquals(rs.glob_files('/tmp', '-'), ['anything', 'not_this_file'])
 
-    @mock.patch('pytests.lib.remove3.glob')
+    @mock.patch('python2_unittests.lib.remove3.glob')
     def test_glob_files_3(self, mock_glob):
         mock_glob.glob.return_value = ['/tmp/mock.txt']
         rs = RemovalService()
@@ -78,8 +78,8 @@ class TestUploadService(unittest.TestCase):
 class TestRemoval3(unittest.TestCase):
 
     # patch 2 sub *** attention *** the order is very important - reversed
-    @mock.patch('pytests.lib.remove3.os.path')
-    @mock.patch('pytests.lib.remove3.os')
+    @mock.patch('python2_unittests.lib.remove3.os.path')
+    @mock.patch('python2_unittests.lib.remove3.os')
     def test_rm(self, mock_os, mock_path):
         reference = RemovalService()
 
@@ -127,12 +127,12 @@ class TestMockOpen(unittest.TestCase):
         subprocess.call(['touch', cls.input])
 
     def test_mock_open(self):
-        with mock.patch("pytests.lib.read.open",  mock.mock_open(read_data=TEST_DATA), create=True):
+        with mock.patch("python2_unittests.lib.read.open",  mock.mock_open(read_data=TEST_DATA), create=True):
             f = Foo(self.input)
             self.assertEqual(f.data, self.expected)
 
     def test_mock_open_class(self):
-        with mock.patch("pytests.lib.read.Foo.open",  mock.mock_open(read_data=TEST_DATA), create=True):
+        with mock.patch("python2_unittests.lib.read.Foo.open",  mock.mock_open(read_data=TEST_DATA), create=True):
             f = Foo(self.input)
             self.assertEqual(f.data, self.expected)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # from remove.py rm()
-from pytests.lib.remove import rm
+from python2_unittests.lib.remove import rm
 import mock
 import unittest
 import os

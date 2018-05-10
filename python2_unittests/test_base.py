@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import mock
 import unittest
-from pytests.lib import base
+from python2_unittests.lib import base
 
 
 class TestB(unittest.TestCase):
@@ -16,7 +16,7 @@ class TestB(unittest.TestCase):
     # inappropriate call here for the structure
     # Base is a Class - cannot use this way
     # mock.path(file_name.class_name.method_name)
-    @mock.patch('pytests.lib.base.Base.method')
+    @mock.patch('python2_unittests.lib.base.Base.method')
     def test_super_method(self, mock_super):
         b = base.Base()
         b.method()
@@ -27,7 +27,7 @@ class TestB(unittest.TestCase):
     # Base Class
     # method in Class Base in file base.py in dir lib
 
-    @mock.patch("pytests.lib.base.Base.method")
+    @mock.patch("python2_unittests.lib.base.Base.method")
     def test_super_method2(self, mock_super):
         base.Dase(False).method()
         self.assertFalse(mock_super.called)

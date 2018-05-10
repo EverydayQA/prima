@@ -1,4 +1,4 @@
-from pytests.lib import pop_item
+from python2_unittests.lib import pop_item
 import mock
 import unittest
 
