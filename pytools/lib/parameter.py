@@ -2,6 +2,7 @@
 import argparse
 from pprint import pprint
 import sys
+import os
 
 
 def get_parser():
@@ -78,4 +79,9 @@ def main():
 if __name__ == '__main__':
     parser = get_parser()
     args = parser.parse_args(sys.argv[1:])
+    cli_base = os.path.basename(sys.argv[0])
+    args.cli = cli_base
+    args.file = __file__
+    args.name = __name__
     pprint(args)
+    print(sys.argv)

@@ -1,3 +1,4 @@
+OTHER_VAR = 'other_var'
 
 
 class Base(object):

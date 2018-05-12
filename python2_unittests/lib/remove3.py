@@ -2,6 +2,7 @@
 import os.path
 import os
 import glob
+DO_IMPORT = False
 
 
 class RemovalService(object):
