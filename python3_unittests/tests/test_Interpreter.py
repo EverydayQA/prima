@@ -2,15 +2,13 @@
 import unittest
 import unittest.mock
 import sys
-import os
-pwd = os.path.dirname(os.path.realpath(__file__))
-basedir = os.path.join(pwd,'..')
-sys.path.append(basedir)
-from lib import Interpreter
+from python3_unittests.lib import Interpreter
 from unittest.mock import patch
 from io import StringIO
 
+
 class CmdUiTest(unittest.TestCase):
+
     def setUp(self):
         self.mock_stdin = unittest.mock.create_autospec(sys.stdin)
         self.mock_stdout = unittest.mock.create_autospec(sys.stdout)
@@ -30,11 +28,9 @@ class CmdUiTest(unittest.TestCase):
         # Interpreter obj - mock
         cli = self.create()
         with patch('sys.stdout', new=StringIO()) as fakeOutput:
-            #print ('hello world')
             self.assertFalse(cli.onecmd('show'))
         self.assertEqual('Hello World!', fakeOutput.getvalue().strip())
 
 
 if __name__ == '__main__':
     unittest.main()
-

@@ -1,0 +1,12 @@
+cli pass Namespace to mc/shared_kwargs.py SharedKwargs()
+
+kwargs.mc.shared_kwargs.SharedKwargs()
+
+kwargs.mc.languages.Courses()
+English/French
+
+kwargs.ms.languages.Languages
+French/English
+
+kwargs.cli.dispatch.py
+

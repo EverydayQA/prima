@@ -10,7 +10,6 @@ class AddQuiz(object):
         # default level is 20 in case not defined
         self.args = args
         self.kwargs = kwargs
-
         self.quizid = self.kwargs.get('quizid')
 
     @property
@@ -77,6 +76,18 @@ class AddQuiz(object):
             input_str = raw_input()
 
         return input_str
+
+    @property
+    def shared_kwargs(self):
+        return self.update_dict()
+
+    def update_dict(self):
+        d = {}
+        d['d_cli'] = self.kwargs
+        d['ali'] = 1
+        d['foo'] = '--foo'
+        d['boo'] = '--boo'
+        return d
 
     def set_quiz_dict(self):
         quiz_dict = {}

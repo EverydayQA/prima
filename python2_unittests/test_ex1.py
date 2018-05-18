@@ -1,6 +1,13 @@
 import mock
 import sys
 import unittest
+from python2_unittests.lib.input_cls import GameDisplay
+from StringIO import StringIO
+
+
+def get_input():
+    a = input('please type:')
+    return a
 
 
 def check_method_return(input):
@@ -18,6 +25,39 @@ def check_method_len(input):
 
 
 class TestMockReturnValue(unittest.TestCase):
+
+    @mock.patch('__builtin__.input')
+    def test_get_input(self, mock_input):
+        mock_input.return_value = 'mocked_input'
+        a = get_input()
+        self.assertEqual(a, 'mocked_input')
+
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    @mock.patch('__builtin__.raw_input', lambda _: 'a')
+    def test_prompt_output4(self, mock_stdout):
+        p = GameDisplay.prompt2('Choose 0: ')
+        self.assertEqual(p, 'a')
+        self.assertEqual(mock_stdout.getvalue(), 'Choose 0: \n')
+
+    @mock.patch('__builtin__.input', return_value='0')
+    def test_prompt_output3(self, mock_input):
+        p = GameDisplay.prompt('Choose 0: ')
+        self.assertEqual(p, '0')
+        self.assertEqual(sys.stdout.getvalue(), 'Choose 0: \n')
+
+    @mock.patch('__builtin__.input', return_value='0')
+    def test_prompt_output(self, mock_input):
+        with mock.patch('sys.stdout', new=StringIO()) as mock_stdout:
+            p = GameDisplay.prompt('Choose 0: ')
+            self.assertEqual(p, '0')
+            self.assertEqual(mock_stdout.getvalue(), 'Choose 0: \n')
+
+    @mock.patch('python2_unittests.lib.input_cls.GameDisplay.prompt', return_value='0')
+    def test_prompt_output2(self, mock_prompt):
+        with mock.patch('sys.stdout', new=StringIO("xxx")) as mock_stdout:
+            p = GameDisplay.prompt('Choose 0: ')
+            self.assertEqual(p, '0')
+            self.assertEqual(mock_stdout.getvalue(), 'Choose 0: ')
 
     def test_mock_input(self):
         # mock input
