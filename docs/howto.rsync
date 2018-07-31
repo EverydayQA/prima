@@ -1,0 +1,115 @@
+# ways speed up rsync
+
+# general
+parallel rsync 
+http://arjon.es/2017/05/11/which-is-the-best-tool-for-copying-a-large-directory-tree-locally/
+
+-info=progress2 argument will give you progress on the entire transfer, including speed of the entire transfer
+
+https://gist.github.com/KartikTalwar/4393116
+rsync (Everyone seems to like -z, but it is much slower for me)
+
+    a: archive mode - rescursive, preserves owner, preserves permissions, preserves modification times, preserves group, copies symlinks as symlinks, preserves device files.
+    H: preserves hard-links
+    A: preserves ACLs
+    X: preserves extended attributes
+    x: don't cross file-system boundaries
+    v: increase verbosity
+    --numeric-ds: don't map uid/gid values by user/group name
+    --delete: delete extraneous files from dest dirs (differential clean-up during sync)
+    --progress: show progress during transfer
+
+ssh
+
+    T: turn off pseudo-tty to decrease cpu load on destination.
+    c arcfour: use the weakest but fastest SSH encryption. Must specify "Ciphers arcfour" in sshd_config on destination.
+    o Compression=no: Turn off SSH compression.
+    x: turn off X forwarding if it is on by default.
+
+How to speedup Rsync over SSH
+
+    Change the SSH encryption type to native supported by the CPU or switch to a SSH encryption algorithm that uses less CPU. Switch to faster ssh encryption, arcfour, aes rsync -e 'ssh -c arcfour'
+    Copy whole files -W file, reason the rsync algorithm takes time to compute the delta changes inside the files you copy. With the -W flag you skip that.
+    Switch to a SSH variant that does not use flow control which is latency sensitive. HPN SSH HPN-SSH 
+https://psc.edu/index.php/hpn-ssh
+
+
+
+    Using rsync+SSH with a less costly encryption algorithm (e.g. -e "ssh -c arcfour")
+    Eliminating encryption entirely over the SSH transport with something like HPN-SSH.
+    Block-based transfers. Snapshots, dd, ZFS snapshot send/receive, etc.
+
+https://www.banaspati.net/centos/how-to-speed-up-rsync-over-ssh-in-linux.html
+rsync parameter details
+
+    a: archive mode – rescursive, preserves owner, preserves permissions, preserves modification times, preserves group, copies symlinks as symlinks, preserves device files.
+    H: preserves hard-links
+    A: preserves ACLs
+    X: preserves extended attributes
+    x: don’t cross file-system boundaries
+    v: increase verbosity
+    –numeric-ds: don’t map uid/gid values by user/group name
+    –delete: delete extraneous files from dest dirs (differential clean-up during sync)
+    –progress: show progress during transfer
+
+ssh parameter details
+
+    T: turn off pseudo-tty to decrease cpu load on destination.
+    c arcfour: use the weakest but fastest SSH encryption. Must specify “Ciphers arcfour” in sshd_config on destination.
+    o Compression=no: Turn off SSH compression.
+    x: turn off X forwarding if it is on by default.
+
+
+https://galaxysd.github.io/20160302/Fastest-Way-Rsync
+rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -c arcfour -o Compression=no -x" user@<source>:<source_dir> <dest_dir>
+
+This creates an archive that does the following:
+
+rsync (Everyone seems to like -z, but it is much slower for me)
+
+    a: archive mode - rescursive, preserves owner, preserves permissions, preserves modification times, preserves group, copies symlinks as symlinks, preserves device files.
+    H: preserves hard-links
+    A: preserves ACLs
+    X: preserves extended attributes
+    x: don’t cross file-system boundaries
+    v: increase verbosity
+    –numeric-ds: don’t map uid/gid values by user/group name
+    –delete: delete extraneous files from dest dirs (differential clean-up during sync)
+    –progress: show progress during transfer
+
+ssh
+
+    T: turn off pseudo-tty to decrease cpu load on destination.
+    c arcfour: use the weakest but fastest SSH encryption. Must specify “Ciphers arcfour” in sshd_config on destination.
+    o Compression=no: Turn off SSH compression.
+    x: turn off X forwarding if it is on by default.
+
+
+--inplace because it only copies the changed part of the files
+This option is useful for transferring large files
+
+
+# same machine
+sync two local paths, it will default to using "--whole-file", and not delta-transfer
+
+
+# over ssh
+--whole-file (or -W) to force rsync to transmit the entire file.
+
+Since -c arcfour is considered obsolete, using -c aes128-gcm@openssh.com is probably fastest.
+
+https://famzah.files.wordpress.com/2015/06/openssh-ciphers-performance-2015-chart.jpg
+rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -c arcfour -o Compression=no -x" user@<source>:<source_dir> <dest_dir>
+rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -c aes128-gcm@openssh.com -o Compression=no -x" [source_directory] user@hostname:[target_directory]/
+
+https://pythonhosted.org/parallel_sync/pages/examples.html
+https://github.com/kouroshparsa/parallel_sync
+ls /srv/mail | parallel -v -j8 rsync -raz --progress {} myserver.com:/srv/mail/{}
+run_rsync() {
+    # e.g. copies /main/files/blah to /main/filesTest/blah
+    rsync -av "$1" "/main/filesTest/${1#/main/files/}"
+}
+export -f run_rsync
+parallel -j5 run_rsync ::: /main/files/*
+
+$threads=24; $src=/src/; $dest=/dest/ rsync -aL -f"+ */" -f"- *" $src $dest && (cd $src && find . -type f | xargs -n1 -P$threads -I% rsync -az % $dest/% )

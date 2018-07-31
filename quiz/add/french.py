@@ -10,7 +10,10 @@ class French(add_quiz.AddQuiz):
     """
 
     def check_course(self):
+        print('\n\n*** quiz.add.french.French.check_course')
         fr = fre.French(**self.shared_kwargs)
         d = fr.add_course()
         pprint(d)
+        print('\n\n*** quiz.add.french.French.check_course')
+
         return d

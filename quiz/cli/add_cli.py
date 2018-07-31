@@ -18,10 +18,11 @@ def main():
     args, args_extra = init_args_addquiz()
     kwargs = vars(args)
     pprint(kwargs)
-
+    print('\n\n*** add_cli.main()')
     aw = AddWrapper(args_extra, **vars(args))
     # dispatch handover to AddQuiz?
     aw.dispatch()
+    print('\n\n*** add_cli.main()')
 
 
 if __name__ == '__main__':

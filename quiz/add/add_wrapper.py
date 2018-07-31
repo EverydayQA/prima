@@ -25,6 +25,7 @@ class AddWrapper(object):
         addquiz = AddQuiz(self.args, **self.kwargs)
         pprint(addquiz.shared_kwargs)
         """
+        print('\n\n*** AddWrapper.dispatch')
         cls_name = self.match_d_cli_with_class()
         print cls_name
 
@@ -33,6 +34,8 @@ class AddWrapper(object):
         d = cls_obj.check_course()
         print 'variable cls name with check_course()'
         pprint(d)
+        print('\n\n*** AddWrapper.dispatch')
+
         # to do
         #
         # from quiz.subjects import french

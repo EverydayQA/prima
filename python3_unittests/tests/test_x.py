@@ -28,4 +28,3 @@ class TestX(unittest.TestCase):
         x = X()
         v = x.func_x()
         self.assertEqual(v, 33)
-

@@ -29,6 +29,7 @@ class French(Course):
         return '211'
 
     def add_course(self):
+        print('\n\n*** quiz.subjects.french.French.add_course()')
         d = {}
         d['add_course'] = 'french'
         return d
