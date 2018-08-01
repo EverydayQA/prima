@@ -2,7 +2,5 @@
   "pyt.py::test_hello1": true, 
   "test_hello.py::TestHello::test_my_function": true, 
   "test_remove2.py::TestDoCmd::test_do_cmd": true, 
-  "test_remove2.py::TestDoCmd::test_do_cmd4": true, 
-  "test_remove2.py::Testcalc::test_calc": true, 
-  "test_remove2.py::Testcalc::test_calc3": true
+  "test_remove2.py::Testcalc::test_calc": true
 }

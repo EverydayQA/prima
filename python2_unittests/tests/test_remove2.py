@@ -9,22 +9,20 @@ import os.path
 
 class Testcalc(unittest.TestCase):
 
-    @mock.patch('remove_file.globalvar')
+    @mock.patch('python2_unittests.lib.remove_file.globalvar')
     def test_calc(self, mocked_globalvar):
+        # this will not work with mocked_globalvar
         keys = [1, 2, 3]
         values = [4, 5, 6]
-        mocked_globalvar = "calc"
-        self.assertEqual(mocked_globalvar, 'calc')
         self.assertEqual(remove_file.globalvar, 'calc')
         sum = remove_file.calc(keys, values)
         self.assertEqual(sum, 6)
 
-    @mock.patch('remove_file.globalvar', new_callable=mock.PropertyMock)
-    def test_calc3(self, mocked_globalvar):
+    @mock.patch('python2_unittests.lib.remove_file.globalvar', 'calc')
+    def test_calc3(self):
+        # there is no mocked_globalvar, no no no globalvar
         keys = [1, 2, 3]
         values = [4, 5, 6]
-        mocked_globalvar = "calc"
-        self.assertEqual(mocked_globalvar, 'calc')
         self.assertEqual(remove_file.globalvar, 'calc')
         sum = remove_file.calc(keys, values)
         self.assertEqual(sum, 6)
@@ -73,14 +71,14 @@ def mock_fc():
 
 class TestDoCmd(unittest.TestCase):
 
+    @mock.patch('python2_unittests.lib.remove_file.subprocess.Popen.returncode', 1)
     @mock.patch('python2_unittests.lib.remove_file.subprocess.Popen')
     def test_do_cmd(self, mockp):
         # Popen() __init__(self): self.returncode = None
-        # type(mockp).returncode = mock.PropertyMock(return_value=1)
         mockp.communicate = mock.Mock(return_value=[6, 7])
         file = '/tmp/none.txt'
-        out = remove_file.do_cmd('rm -f {}'.format(file))
-        self.assertEqual(out, None)
+        d = remove_file.do_cmd('rm -f {}'.format(file))
+        self.assertEqual(d, {})
 
     def test_do_cmd_2(self):
         with mock.patch.object(subprocess.Popen, 'communicate') as mockc:

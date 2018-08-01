@@ -1,4 +1,0 @@
-python2-nose-cov.noarch
-  315  sudo dnf install python2-gevent.x86_64
- 1040  sudo dnf install python2-mock.noarch
-
