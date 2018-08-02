@@ -2,12 +2,12 @@ from setuptools import setup
 
 
 setup(
-    name='sample_tests',
+    name='fsample',
     version='0.1',
-    description='unittest example for myself',
+    description='unittest examples for python27',
     url='https://github.com/EverydayQA',
     author='Gang Liang',
     author_email='gang.liang.2011@gmail.com',
     license='MIT',
-    packages=['sample_tests'],
+    packages=['whatever'],
     zip_safe=False)
