@@ -9,5 +9,5 @@ setup(
     author='Gang Liang',
     author_email='gang.liang.2011@gmail.com',
     license='MIT',
-    packages=['whatever'],
+    # packages=['whatever'],
     zip_safe=False)

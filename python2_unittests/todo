@@ -1,0 +1,23 @@
+package sample_tests
+version 0.1
+ven27
+setup.py
+requirements.txt
+pip install -r requirements.txt
+
+# how to write build script?
+
+# arrange tests
+
+# add wheel
+
+# packaging
+
+# install
+├── namespace
+│   └── mypackage
+│       ├── __init__.py
+│       └── mod1.py
+├── setup.py
+└── tests
+    └── test_mod1.py
