@@ -1,11 +1,14 @@
-package sample_tests
+package fsample
 version 0.1
 ven27
 setup.py
 requirements.txt
 pip install -r requirements.txt
 
-# how to write build script?
+# set_env.sh PYTHONPATH
+# build.sh
+# install.sh
+# test.sh
 
 # arrange tests
 
@@ -14,10 +17,8 @@ pip install -r requirements.txt
 # packaging
 
 # install
-├── namespace
-│   └── mypackage
-│       ├── __init__.py
-│       └── mod1.py
-├── setup.py
-└── tests
-    └── test_mod1.py
++---- fsample
+|
+----- setup.py
+|
++---- tests
