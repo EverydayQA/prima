@@ -13,8 +13,7 @@ class TestPnp(unittest.TestCase):
         mock_s.sendto = mock.Mock()
         mock_s.timepoint = mock.Mock()
         # instantiate our service and set it up
-        mock_s.recvfrom.return_value = [bytes(b'data\r\n'),
-                                              '192.168.10.200']
+        mock_s.recvfrom.return_value = [bytes(b'data\r\n'), '192.168.10.200']
         oSsdp = ssdpClass()
         oSsdp.msearch()
         patcher.stop()
@@ -28,8 +27,8 @@ class TestPnp(unittest.TestCase):
         mock_socket.sendto = mock.Mock()
         mock_socket.timepoint = mock.Mock()
         # instantiate our service and set it up
-        mock_socket.recvfrom.return_value = [bytes(b'data\r\n'),
-                                              '192.168.10.200']
+        mock_socket.recvfrom = mock.Mock()
+        mock_socket.recvfrom.return_value = [bytes(b'data\r\n'), '192.168.10.200']
         oSsdp = ssdpClass()
         oSsdp.msearch()
         patcher.stop()
