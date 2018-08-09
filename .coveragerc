@@ -28,4 +28,7 @@ exclude_lines =
 ignore_errors = True
 
 [html]
-directory = /tmp/coverage_html_report
+# export TMP=/tmp
+# directory = $TMP/coverage_html_report
+directory = coverage_html_report
+
