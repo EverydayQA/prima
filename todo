@@ -21,3 +21,8 @@ http://stackoverflow.com/questions/16176101/python-equivalent-to-perls-prove
 # nosetests/nose2 coverage configuration?
 # nose2 -s python3_unittests/ --with-coverage --plugin nose2.plugins.junitxml --junit-xml --coverage ~/prima/python3_unittests/
 nose2 --plugin nose2.plugins.junitxml --junit-xml -s python3_unittests/ --with-coverage
+
+# 9 Aug 2018
+bash parallel processing with subshells env testing
+add coverage
+
