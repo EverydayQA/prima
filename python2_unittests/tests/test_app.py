@@ -19,7 +19,6 @@ class TestApp(unittest.TestCase):
         """
         base = Base()
         app = App()
-
         mock_base = mock.MagicMock(name='Base', spec=Base)
         instance = mock_base.return_value
         instance.instance_var.return_value = 'mmm'
@@ -42,7 +41,6 @@ class TestApp(unittest.TestCase):
         mock_base = mock.MagicMock(name='Base', instance_var='mocked_iv', spec=Base)
         base = Base()
         app = App()
-
         self.assertEqual(base.instance_var, 'instance_var')
         self.assertEqual(base.cls_property, 'cls_property')
         # Base class is mocked with instance_var changed only, others did not change

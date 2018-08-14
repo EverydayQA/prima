@@ -1,10 +1,11 @@
 #!/usr/bin/python
-from fsample import remove_file
+
 import subprocess
-import mock
-import unittest
 import os
 import os.path
+import unittest
+import mock
+from fsample import remove_file
 
 
 class Testcalc(unittest.TestCase):
@@ -24,8 +25,8 @@ class Testcalc(unittest.TestCase):
         keys = [1, 2, 3]
         values = [4, 5, 6]
         self.assertEqual(remove_file.globalvar, 'calc')
-        sum = remove_file.calc(keys, values)
-        self.assertEqual(sum, 6)
+        lsum = remove_file.calc(keys, values)
+        self.assertEqual(lsum, 6)
 
 
 class TestcalcNoMock(unittest.TestCase):
@@ -34,13 +35,13 @@ class TestcalcNoMock(unittest.TestCase):
         keys = [1, 2, 3]
         values = [4, 5, 6]
         self.assertEqual(remove_file.globalvar, 'original')
-        sum = remove_file.calc(keys, values)
-        self.assertEqual(sum, 15)
+        lsum = remove_file.calc(keys, values)
+        self.assertEqual(lsum, 15)
 
         remove_file.globalvar = "calc"
-        sum = remove_file.calc(keys, values)
+        lsum = remove_file.calc(keys, values)
         self.assertEqual(remove_file.globalvar, 'calc')
-        self.assertEqual(sum, 6)
+        self.assertEqual(lsum, 6)
 
 
 @unittest.skip("classing skipping")
@@ -96,8 +97,8 @@ class TestDoCmd(unittest.TestCase):
 
     def test_do_cmd4(self):
         # Popen() __init__(self): self.returncode = None
-        mp = mock.Mock(spec=subprocess.Popen, returncode=5)
-        mp.communicate.return_value = [5, 6]
+        mock_popen = mock.Mock(spec=subprocess.Popen, returncode=5)
+        mock_popen.communicate.return_value = [5, 6]
         file = '/tmp/none.txt'
-        d = remove_file.do_cmd('rm -f {}'.format(file))
-        self.assertEqual(d, {'output': ('', None), 'returncode': 0})
+        d_rm = remove_file.do_cmd('rm -f {}'.format(file))
+        self.assertEqual(d_rm, {'output': ('', None), 'returncode': 0})

@@ -12,4 +12,4 @@ class Base(object):
 class Derived(Base):
 
     def __init__(self, a):
-        print (self.a)
+        print(a)
