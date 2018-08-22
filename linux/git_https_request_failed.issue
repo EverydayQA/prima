@@ -1,0 +1,62 @@
+
+-bash-4.1$ git clone --recursive 'https://github.com/davidhalter/jedi-vim.git' '/home/gliang/.vim/bundle/jedi-vim'
+Initialized empty Git repository in /home/gliang/.vim/bundle/jedi-vim/.git/
+* Couldn't find host github.com in the .netrc file; using defaults
+* About to connect() to github.com port 443 (#0)
+*   Trying 192.30.253.112... * Connected to github.com (192.30.253.112) port 443 (#0)
+* Initializing NSS with certpath: sql:/etc/pki/nssdb
+*   CAfile: /usr/lib/python2.6/site-packages/tornado/ca-certificates.crt
+  CApath: none
+* NSS error -12190
+* Error in TLS handshake, trying SSLv3...
+> GET /davidhalter/jedi-vim.git/info/refs?service=git-upload-pack HTTP/1.1
+User-Agent: git/1.7.1
+Host: github.com
+Accept: */*
+Pragma: no-cache
+
+* Connection died, retrying a fresh connect
+* Expire cleared
+* Closing connection #0
+* Issue another request to this URL: 'https://github.com/davidhalter/jedi-vim.git/info/refs?service=git-upload-pack'
+* Couldn't find host github.com in the .netrc file; using defaults
+* About to connect() to github.com port 443 (#0)
+*   Trying 192.30.253.112... * Connected to github.com (192.30.253.112) port 443 (#0)
+* TLS disabled due to previous handshake failure
+*   CAfile: /usr/lib/python2.6/site-packages/tornado/ca-certificates.crt
+  CApath: none
+* NSS error -12286
+* Expire cleared
+* Closing connection #0
+* Couldn't find host github.com in the .netrc file; using defaults
+* About to connect() to github.com port 443 (#0)
+*   Trying 192.30.253.112... * Connected to github.com (192.30.253.112) port 443 (#0)
+*   CAfile: /usr/lib/python2.6/site-packages/tornado/ca-certificates.crt
+  CApath: none
+* NSS error -12190
+* Error in TLS handshake, trying SSLv3...
+> GET /davidhalter/jedi-vim.git/info/refs HTTP/1.1
+User-Agent: git/1.7.1
+Host: github.com
+Accept: */*
+Pragma: no-cache
+
+* Connection died, retrying a fresh connect
+* Expire cleared
+* Closing connection #0
+* Issue another request to this URL: 'https://github.com/davidhalter/jedi-vim.git/info/refs'
+* Couldn't find host github.com in the .netrc file; using defaults
+* About to connect() to github.com port 443 (#0)
+*   Trying 192.30.253.112... * Connected to github.com (192.30.253.112) port 443 (#0)
+* TLS disabled due to previous handshake failure
+*   CAfile: /usr/lib/python2.6/site-packages/tornado/ca-certificates.crt
+  CApath: none
+* NSS error -12286
+* Expire cleared
+* Closing connection #0
+error:  while accessing https://github.com/davidhalter/jedi-vim.git/info/refs
+
+fatal: HTTP request failed
+
+# fix with libs too old
+yum update -y nss curl libcurl

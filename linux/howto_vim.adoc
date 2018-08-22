@@ -32,6 +32,58 @@ python2.7 configure_vim8.py
  1043  make install
  1044  /tmp/vim8/bin/vim
 
+1096  /tmp/vim8/bin/vim ~/.vimrc
+ 1097  vim ~/.gitconfig 
+ 1098  vim ~/.gconfd/saved_state 
+ 1099  vim ~/.gitconfig 
+ 1100  /tmp/vim8/bin/vim ~/.vimrc
+ 1101  ls -ltr ~/.vim
+ 1102* 
+ 1103  yum search  ca-certificates
+ 1104  su
+ 1105  find /etc -name ca-certificates.crt
+ 1106  su
+ 1107  git config --global http.sslVerify true
+ 1108  git config --global http.sslCAinfo /usr/lib/python2.6/site-packages/tornado/ca-certificates.crt
+ 1109  /tmp/vim8/bin/vim ~/.vimrc
+ 1110  git clone --recursive 'https://github.com/davidha|
+lter/jedi-vim.git' '/home/gliang/.vim/bundle/jedi-vim'
+ 1111  git clone --recursive 'https://github.com/davidhalter/jedi-vim.git' '/home/gliang/.vim/bundle/jedi-vim'
+ 1112  export GIT_CURL_VERBOSE=1
+ 1113  git clone --recursive 'https://github.com/davidhalter/jedi-vim.git' '/home/gliang/.vim/bundle/jedi-vim'
+ 1114  vim ~/.gitconfig 
+ 1115  git clone --recursive 'https://github.com/davidhalter/jedi-vim.git' '/home/gliang/.vim/bundle/jedi-vim'
+ 1116  vim ~/.gitconfig 
+ 1117  vim ~/.ssh/config
+ 1118  git clone --recursive 'https://github.com/davidhalter/jedi-vim.git' '/home/gliang/.vim/bundle/jedi-vim'
+ 1119  su
+ 1120  git clone --recursive 'https://github.com/davidhalter/jedi-vim.git' '/home/gliang/.vim/bundle/jedi-vim'
+ 1121  uname -r
+ 1122  history
+ 1123  whoami
+ 1124  /tmp/vim8/bin/vim ~/.vimrc
+ 1125  pwd
+ 1126  ls -ltr
+ 1127  /tmp/vim8/bin/vim quiz/add/add_quiz.py
+ 1128  history
+
+  981  yum update git.x86_64
+  982  git --version
+  983  yum update git.x86_64
+  984  exit
+  985  yum install ca-certificates.noarch
+  986  exit
+  987  find /etc/ -name ca-certificates.crt
+  988  find /etc/ -name "ca-certificates*"
+  989  find /usr -name "ca-certificates*"
+  990  ls -ltr /usr/lib/python2.6/site-packages/tornado/ca-certificates.crt
+  991  git config --global http.sslVerify true
+  992  git config --global http.sslCAinfo /usr/lib/python2.6/site-packages/tornado/ca-certificates.crt
+  993  whoami
+  994  exit
+# this fixed the issue
+  995  yum update -y nss curl libcurl
+
 =with possibility to make srpm and rpm with this for reference
 https://copr-be.cloud.fedoraproject.org/results/mcepl/vim8/epel-7-x86_64/00752800-vim/vim.spec
 
