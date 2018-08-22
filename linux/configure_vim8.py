@@ -1,3 +1,7 @@
+import sys
+import os
+import glob
+from pprint import pprint
 
 
 class CompileVim8(object):
@@ -20,8 +24,9 @@ class CompileVim8(object):
         This is the output of the following Python script:
         import sys; print sys.exec_prefix
         """
-        return None
+        return sys.exec_prefix
 
+    @property
     def vi_cv_var_python_pfx(self):
         return 'vi_cv_var_python_pfx'
 
@@ -32,8 +37,9 @@ class CompileVim8(object):
         This is the output of the following Python script:
         import sys; print sys.prefix
         """
-        return None
+        return sys.prefix
 
+    @property
     def vi_cv_var_python_version(self):
         return 'vi_cv_var_python_version'
 
@@ -44,19 +50,48 @@ class CompileVim8(object):
         This is the output of the following Python script:
         import sys; print sys.version[:3]
         """
-        return None
+        return sys.version[:3]
 
+    @property
     def vi_cv_path_python_conf(self):
         return 'vi_cv_path_python_conf'
 
-    def get_vi_cv_path_python_conf(self):
+    def get_vi_cv_path_python2_conf(self):
         """
         If Python support is enabled, set this variable to the path for
         Python's library implementation. This is a path like
         "/usr/lib/pythonX.Y/config" (the directory contains a file
         "config.c").
         """
-        return None
+        files = glob.glob('/usr/lib*/python2*/config*/config.c')
+        configs = []
+        for config in files:
+            if 'debug' in config:
+                continue
+            dirname = os.path.dirname(config)
+            configs.append(dirname)
+        # should choose from menu
+        pprint(configs)
+        return configs[0]
+
+    def get_vi_cv_path_python3_conf(self):
+        """
+        If Python support is enabled, set this variable to the path for
+        Python's library implementation. This is a path like
+        "/usr/lib/pythonX.Y/config" (the directory contains a file
+        "config.c").
+        """
+        files = glob.glob('/usr/lib*/python3*/config*/config.c')
+        # should choose from menu
+        configs = []
+        for config in files:
+            if 'debug' in config:
+                continue
+            dirname = os.path.dirname(config)
+            configs.append(dirname)
+        # should choose from menu
+        pprint(configs)
+        return configs[0]
 
     def cmds_yum_install(self):
         """
@@ -113,4 +148,33 @@ class CompileVim8(object):
         make install
         """
         cmds = []
+        cmds.append('{}={}'.format(self.vi_cv_path_python_conf, self.get_vi_cv_path_python2_conf()))
+        cmds.append('{}={}'.format(self.vi_cv_var_python_epfx, self.get_vi_cv_var_python_epfx()))
+        cmds.append('{}={}'.format(self.vi_cv_var_python_pfx, self.get_vi_cv_var_python_pfx()))
+        cmds.append('{}={}'.format(self.vi_cv_var_python_version, self.get_vi_cv_var_python_version()))
+        cmds.append('./configure')
+        cmds.append('--with-features=huge')
+        cmds.append('--enable-multibyte')
+        cmds.append('--enable-rubyinterp=yes')
+        cmds.append('--enable-pythoninterp=yes')
+        cmds.append('--with-python-config-dir={}'.format(self.get_vi_cv_path_python2_conf()))
+        cmds.append('--enable-python3interp=yes')
+        cmds.append('--with-python3-config-dir={}'.format(self.get_vi_cv_path_python3_conf()))
+        cmds.append('--enable-perlinterp=yes')
+        cmds.append('--enable-luainterp=yes')
+        cmds.append('--enable-gui=gtk2')
+        cmds.append('--enable-cscope')
+        cmds.append('--prefix=/tmp/vim8')
         return cmds
+
+
+def main():
+    conf = CompileVim8()
+    cmds = conf.configure()
+    print(cmds)
+    cmd = ' '.join(cmds)
+    print(cmd)
+
+
+if __name__ == '__main__':
+    main()
