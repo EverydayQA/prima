@@ -122,6 +122,15 @@ class TestApp(unittest.TestCase):
             self.assertEqual(app.ibase.cls_property, 'cls_property')
             self.assertEqual(app.ibase.cls_attr, 'cls_attr')
 
+    def test_cls_attr2(self):
+        """
+        """
+        with mock.patch('python2_unittests.fsample.app.Base') as mockb:
+            mockb.cls_attr.__get__ = mock.Mock(return_value='mocked_cls_attr')
+            # self.assertEqual(Base.cls_attr, 'mocked_cls_attr')
+            base = Base()
+            self.assertEqual(base.cls_attr, 'mocked_cls_attr')
+
     def test_mock_cls_attr(self):
         """
         """

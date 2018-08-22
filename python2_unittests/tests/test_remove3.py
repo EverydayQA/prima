@@ -147,7 +147,6 @@ class TestMockOpen(unittest.TestCase):
 
     @mock.patch("__builtin__.open", new_callable=mock.mock_open, read_data=TEST_DATA)
     def test_open3(self, mock_open):
-        mock_open.return_value = TEST_DATA
         fee = Foo(self.input)
         self.assertEqual(fee.data, self.expected, msg=fee.data)
 

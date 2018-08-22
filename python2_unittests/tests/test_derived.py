@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import mock
 import unittest
-from python2_unittests.lib import derived
+from python2_unittests.fsample import derived
 
 # this example has not been sorted out yet
 # do not use it !!! some concetps are wrong
@@ -13,7 +13,7 @@ class TestB(unittest.TestCase):
     # hold for now as I do not see any real usage of it
     #
 
-    @mock.patch("python2_unittests.lib.derived.Derived.__init__")
+    @mock.patch("python2_unittests.fsample.derived.Derived.__init__")
     def test_calls_init_routine_of_base(self, mock_init):
         mock_init.return_value = None
         derived.Derived(1)

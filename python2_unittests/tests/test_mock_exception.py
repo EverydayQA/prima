@@ -23,10 +23,10 @@ class TestMathOverFlow(unittest.TestCase):
     def test_cal_exp2(self):
         with self.assertRaises(OverflowError):
             mock_args = {'side_effect': OverflowError}
-            with mock.patch('python2_unittests.test_mock_exception.MathOverFlow.cal_exp', **mock_args):
+            with mock.patch('python2_unittests.tests.test_mock_exception.MathOverFlow.cal_exp', **mock_args):
                 MathOverFlow().cal_exp(2)
 
     def test_cal_exp3(self):
         mock_args = {'side_effect': OverflowError}
-        with mock.patch('python2_unittests.test_mock_exception.MathOverFlow.cal_exp', **mock_args):
+        with mock.patch('python2_unittests.tests.test_mock_exception.MathOverFlow.cal_exp', **mock_args):
             self.assertRaises(OverflowError, MathOverFlow().cal_exp, 2)

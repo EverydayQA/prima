@@ -1,7 +1,7 @@
 import mock
 import sys
 import unittest
-from python2_unittests.lib.input_cls import GameDisplay
+from python2_unittests.fsample.input_cls import GameDisplay
 from StringIO import StringIO
 
 
@@ -52,7 +52,7 @@ class TestMockReturnValue(unittest.TestCase):
             self.assertEqual(p, '0')
             self.assertEqual(mock_stdout.getvalue(), 'Choose 0: \n')
 
-    @mock.patch('python2_unittests.lib.input_cls.GameDisplay.prompt', return_value='0')
+    @mock.patch('python2_unittests.fsample.input_cls.GameDisplay.prompt', return_value='0')
     def test_prompt_output2(self, mock_prompt):
         with mock.patch('sys.stdout', new=StringIO("xxx")) as mock_stdout:
             p = GameDisplay.prompt('Choose 0: ')
@@ -108,27 +108,3 @@ class MyOwnResultClass(unittest.runner.TextTestResult):
 
     def MyOwnResult(self, foo):
         yield "Result: {f}".format(f=foo)
-
-
-if __name__ == '__main__':
-    """
-    None of the resultclass works!?
-    """
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestMockReturnValue))
-    runner = unittest.TextTestRunner()
-    runner.resultclass = MyResult
-    runner.verbosity = 2
-    testResult = runner.run(suite)
-    for t in testResult.failures:
-        print t[0].id()
-        print t[1]
-    print
-    for t in testResult.errors:
-        print t[0].id()
-        print t[1]
-    print
-    for t in testResult.items:
-        print t
-    print
-    sys.exit(0)

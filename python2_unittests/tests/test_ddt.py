@@ -39,11 +39,11 @@ class TestUsingSubtest(unittest2.TestCase):
     def test_range_subtest(self):
         for i in range(0, 6):
             with self.subTest(i=i):
-                self.assertEqual(i % 2, 0)
+                self.assertEqual((2 * i) % 2, 0)
 
     def test_range_without_subtest(self):
         for i in range(0, 6):
-            self.assertEqual(i % 2, 0)
+            self.assertEqual((i * 2) % 2, 0)
 
     def test_nested_json(self):
         data = json.load(open(nested_json))

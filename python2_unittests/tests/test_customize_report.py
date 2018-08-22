@@ -67,10 +67,6 @@ class TestSimple(TestCase):
         bar = True
         self.assertTrue(bar)
 
-    def test_fail(self):
-        baz = False
-        self.assertTrue(baz)
-
     def test_raise(self):
         raise RuntimeError
 

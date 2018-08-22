@@ -1,0 +1,30 @@
+=install vim8 on centos6 with mixed python 2.6, 2.7 and 3.4 compiled with 2.7
+
+without changing python2.6, /usr/bin/python and configuration
+with jedi-vim and youcompleteme ceased to support python2.6.6, compiling with 2.7
+with work a howto to compile vim8 at centos6
+
+centos is installed with python2.6 python2.7 and python3.4
+the default version is python2.6.6
+
+vim8 must be compiled using python2.7, not 2.6 as jedi-vim and youcompletedme will not function
+
+lrwxrwxrwx. 1 root root     6 Dec 28  2015 /usr/bin/python2 -> python
+lrwxrwxrwx. 1 root root    16 Dec 28  2015 /usr/bin/python-config -> python2.6-config
+lrwxrwxrwx. 1 root root    26 Dec 28  2015 /usr/bin/python3.5-config -> /usr/bin/python3.5m-config
+lrwxrwxrwx. 1 root root    20 Dec 28  2015 /usr/bin/python3.5-debug -> /usr/bin/python3.5dm
+
+[root@www fedora]# ls -tr /usr/bin/python*
+/usr/bin/python2.6-config          /usr/bin/python3.5dm       /usr/bin/python3.4               /usr/bin/python2.7-config
+/usr/bin/python2.6                 /usr/bin/python3.5         /usr/bin/python3                 /usr/bin/python2.7-pynche
+/usr/bin/python                    /usr/bin/python2           /usr/bin/python2.7-smtpd.py      /usr/bin/python2.7-pygettext.py
+/usr/bin/python3.5dm-config        /usr/bin/python-config     /usr/bin/python2.7-idle          /usr/bin/python2.7-msgfmt.py
+/usr/bin/python3.5m-x86_64-config  /usr/bin/python3.5-config  /usr/bin/python2.7-2to3          /usr/bin/python2.7-debug
+/usr/bin/python3.5m-config         /usr/bin/python3.5-debug   /usr/bin/python2.7-debug-config  /usr/bin/python2.7
+/usr/bin/python3.5m                /usr/bin/python3.4m        /usr/bin/python2.7-pydoc
+[root@www fedora]# uname -r
+2.6.32-573.12.1.el6.centos.plus.x86_64
+
+=with possibility to make srpm and rpm with this for reference
+https://copr-be.cloud.fedoraproject.org/results/mcepl/vim8/epel-7-x86_64/00752800-vim/vim.spec
+

@@ -1,5 +1,4 @@
-from python2_unittests.lib import pop_item
-import mock
+from python2_unittests.fsample import pop_item
 import unittest
 
 

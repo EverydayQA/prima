@@ -1,4 +1,4 @@
-from lib.file_converter import FileConverter
+from python2_unittests.fsample.file_converter import FileConverter
 import os
 import unittest
 import mock

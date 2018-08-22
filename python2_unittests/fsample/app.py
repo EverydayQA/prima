@@ -7,6 +7,7 @@ class Base(object):
     """
 
     cls_attr = 'cls_attr'
+    cls_att2 = 'cls_attr2'
 
     def __init__(self):
         # instance_member - hardest to patch or mock
