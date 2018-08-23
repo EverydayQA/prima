@@ -46,6 +46,9 @@ class TestUsingSubtest(unittest2.TestCase):
             self.assertEqual((i * 2) % 2, 0)
 
     def test_nested_json(self):
+        """
+        Example of subTest
+        """
         data = json.load(open(nested_json))
         pprint(data)
         self.assertEqual(type(data), list)
@@ -55,4 +58,4 @@ class TestUsingSubtest(unittest2.TestCase):
             with self.subTest(id=item.get('id', None)):
                 self.assertEqual(type(item), dict)
                 self.assertEqual(item.keys(), [u'topping', u'name', u'batters', u'ppu', u'type', u'id'])
-                self.assertEqual(item.get('id', None), u'0001')
+                self.assertTrue(item.get('id', None) in [u'0001', u'0002', u'0003'])

@@ -10,11 +10,11 @@ class PopItem(object):
         self.values_list = d.values()
 
     def popitem(self):
-        number = self.keys_list[random.randint(0, len(self.keys_list) - 1)]
-        print number
+        number = random.randint(0, len(self.keys_list))
+        print(number)
         i = 0
         while i < len(self.values_list):
-            print i
+            print(i)
             if i == number:
                 needed_key = self.keys_list[i]
                 needed_value = self.values_list[i]
@@ -22,3 +22,4 @@ class PopItem(object):
                 self.values_list.remove(needed_value)
                 return (needed_key, needed_value)
             i = i + 1
+        return i

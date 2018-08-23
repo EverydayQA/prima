@@ -4,6 +4,7 @@ from Tkinter import Tk
 from Tkinter import Button
 from Tkinter import mainloop
 
+exit(0);
 root = Tk()
 ex1 = StringVar(root)
 ex1.set("Pick Option")

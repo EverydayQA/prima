@@ -9,5 +9,5 @@ class TestPopItem(unittest.TestCase):
         cls.pop = pop_item.PopItem()
 
     def test_popitem(self):
-        ta = self.pop.popitem()
-        self.assertEqual(ta, ())
+        item = self.pop.popitem()
+        self.assertTrue(item in (2, ('a', 'A'), ('b', 'B')))

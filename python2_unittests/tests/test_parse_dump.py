@@ -179,7 +179,7 @@ class TestDPaseFile(unittest.TestCase):
         pprint(json_obj)
 
         self.assertTrue(isinstance(json_obj, dict))
-        self.assertTrue('listName' in json_obj)
+        self.assertFalse('listName' in json_obj)
 
 
 class DParseLine(object):

@@ -1,5 +1,5 @@
 import unittest
-from .lib import column_names
+from python2_unittests.fsample import column_names
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import HiveContext
 conf = SparkConf()

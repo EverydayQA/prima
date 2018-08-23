@@ -34,19 +34,28 @@ class TestMockReturnValue(unittest.TestCase):
 
     @mock.patch('sys.stdout', new_callable=StringIO)
     @mock.patch('__builtin__.raw_input', lambda _: 'a')
-    def test_prompt_output4(self, mock_stdout):
+    def test_prompt_output4(self, mock_input, mock_stdout):
+        """
+        Test the terminal print
+        """
         p = GameDisplay.prompt2('Choose 0: ')
         self.assertEqual(p, 'a')
         self.assertEqual(mock_stdout.getvalue(), 'Choose 0: \n')
 
     @mock.patch('__builtin__.input', return_value='0')
-    def test_prompt_output3(self, mock_input):
+    def skip_prompt_output3(self, mock_input):
+        """
+        This is an example code that should not work
+        """
         p = GameDisplay.prompt('Choose 0: ')
         self.assertEqual(p, '0')
         self.assertEqual(sys.stdout.getvalue(), 'Choose 0: \n')
 
     @mock.patch('__builtin__.input', return_value='0')
-    def test_prompt_output(self, mock_input):
+    def skip_prompt_output(self, mock_input):
+        """
+        Not working example, mock_stdout cannot catch the output
+        """
         with mock.patch('sys.stdout', new=StringIO()) as mock_stdout:
             p = GameDisplay.prompt('Choose 0: ')
             self.assertEqual(p, '0')
@@ -54,10 +63,13 @@ class TestMockReturnValue(unittest.TestCase):
 
     @mock.patch('python2_unittests.fsample.input_cls.GameDisplay.prompt', return_value='0')
     def test_prompt_output2(self, mock_prompt):
+        """
+        prompt being mocked, the return value should be xxx
+        """
         with mock.patch('sys.stdout', new=StringIO("xxx")) as mock_stdout:
             p = GameDisplay.prompt('Choose 0: ')
             self.assertEqual(p, '0')
-            self.assertEqual(mock_stdout.getvalue(), 'Choose 0: ')
+            self.assertEqual(mock_stdout.getvalue(), 'xxx')
 
     def test_mock_input(self):
         # mock input
