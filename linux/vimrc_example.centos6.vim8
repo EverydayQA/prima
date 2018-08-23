@@ -1,0 +1,74 @@
+-bash-4.1$ cat ~/.vimrc
+
+    set nocompatible              " be iMproved, required
+    filetype off                  " required
+
+    " set the runtime path to include Vundle and initialize
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+    " alternatively, pass a path where Vundle should install plugins
+    "call vundle#begin('~/some/path/here')
+
+    " let Vundle manage Vundle, required
+    Plugin 'VundleVim/Vundle.vim'
+
+""""" autocomplete
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'https://github.com/davidhalter/jedi-vim.git'
+
+"""" syntax and pep8
+Plugin 'vim-syntastic/syntastic'
+""" being liked more but too tolerant for pep8 violation
+Plugin 'nvie/vim-flake8'
+""picky and strict
+Plugin 'andviro/flake8-vim'
+
+
+    " The following are examples of different formats supported.
+    " Keep Plugin commands between vundle#begin/end.
+    " plugin on GitHub repo
+    " Plugin 'tpope/vim-fugitive'
+    " plugin from http://vim-scripts.org/vim/scripts.html
+    " Plugin 'L9'
+    " Git plugin not hosted on GitHub
+    Plugin 'git://git.wincent.com/command-t.git'
+    " git repos on your local machine (i.e. when working on your own plugin)
+    "Plugin 'file:///home/gmarik/path/to/plugin'
+    " The sparkup vim script is in a subdirectory of this repo called vim.
+    " Pass the path to set the runtimepath properly.
+    " Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+    " Avoid a name conflict with L9
+    " Plugin 'user/L9', {'name': 'newL9'}
+
+    " All of your Plugins must be added before the following line
+    call vundle#end()            " required
+    filetype plugin indent on    " required
+    " To ignore plugin indent changes, instead use:
+    "filetype plugin on
+    "
+    " Brief help
+    " :PluginList          - list configured plugins
+    " :PluginInstall(!)    - install (update) plugins
+    " :PluginSearch(!) foo - search (or refresh cache first) for foo
+    " :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+    "
+    " see :h vundle for more details or wiki for FAQ
+    " Put your non-Plugin stuff after this line
+"python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+let python_highlight_all=1
+set nu
+syntax on
+"""""" write quit with warings and errors
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 1
+" cannot backspace insert mode
+set backspace=2
+set encoding=utf-8
