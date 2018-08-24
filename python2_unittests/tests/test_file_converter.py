@@ -10,8 +10,7 @@ class TestFileConverter(unittest.TestCase):
     def setUpClass(cls):
         cls.input_dir = '/tmp/tmp_test2/'
         if not os.path.isdir(cls.input_dir):
-            # os.mkdir(cls.input_dir)
-            pass
+            os.mkdir(cls.input_dir)
 
     def test_convert_success(self):
         file_converter = FileConverter(self.input_dir)

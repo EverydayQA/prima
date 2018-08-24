@@ -27,11 +27,12 @@ class TestMongo(unittest.TestCase):
     def tearDown(self):
         pass
 
-    @mock.patch("python2_unittests.test_mongo.Mongo.get_collection")
+    @mock.patch("python2_unittests.tests.test_mongo.Mongo.get_collection")
     def test_using_mock_patch(self, mock_get_collection):
         """
         the patch is in the format of file_name.class_name.method_name
         If the class being patched is the in same file, without quote?!
+        patch.object with a class name without quote, a simple patch will always require quote
         """
         mock_get_collection.return_value = self.mock_value
         mongo = Mongo()

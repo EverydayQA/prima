@@ -68,10 +68,11 @@ class TestSimple(TestCase):
         self.assertTrue(bar)
 
     def test_raise(self):
-        raise RuntimeError
+        with self.assertRaises(RuntimeError):
+            raise RuntimeError
 
     @unittest.skip("Test skip")
-    def test_skip(self):
+    def test_sk_ip(self):
         raise NotImplementedError
 
 
