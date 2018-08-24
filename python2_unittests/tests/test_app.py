@@ -78,22 +78,23 @@ class TestApp(unittest.TestCase):
     @mock.patch('sys.stdout', new_callable=StringIO)
     def test_instance4(self, mock_stdout):
         """
+        The correct way to catch terminal output
+        When Base is mocked, The whole Base() is mocked
+        Base is not affected?!
         """
-        with mock.patch('python2_unittests.fsample.app.Base', autospec=True, instance_var='yyy', spec_set=None) as mock_base:
+        with mock.patch('python2_unittests.fsample.app.Base') as mock_base:
+            mock_base.instance_var = 'aaa'
+            self.assertEqual(mock_base.instance_var, 'aaa')
             # Base class not changed
             base = Base()
             self.assertEqual(base.instance_var, 'instance_var')
-            # base.instance_var = mock_base.instance_var
-            # base.instance_var = 'yyy'
-            # but App class completed mocked, not just instance_var, why?
-            app = App()
-            app.ibase = base
-            self.assertEqual(app.ibase.instance_var, 'yyy')
-            # func being patched was well
-            app.ibase.show()
+            base.instance_var = 'yyy'
+            ap = App()
+            ap.ibase = base
+            self.assertEqual(ap.ibase.instance_var, 'yyy')
+            ap.ibase.show()
+            # instance_var is not changed?!
             self.assertEqual(mock_stdout.getvalue(), 'yyy\n')
-            self.assertEqual(app.ibase.cls_property, 'cls_property')
-            self.assertEqual(app.ibase.cls_attr, 'cls_attr')
 
     @mock.patch('sys.stdout', new_callable=StringIO)
     def test_instance3(self, mock_stdout):
@@ -124,15 +125,18 @@ class TestApp(unittest.TestCase):
 
     def test_cls_attr2(self):
         """
+        Not working -- whenever class Base is patched this way, the class is not affected
+        Test passed but showing base class attribute still the same
         """
         with mock.patch('python2_unittests.fsample.app.Base') as mockb:
             mockb.cls_attr.__get__ = mock.Mock(return_value='mocked_cls_attr')
-            # self.assertEqual(Base.cls_attr, 'mocked_cls_attr')
+            self.assertEqual(Base.cls_attr, 'cls_attr')
             base = Base()
-            self.assertEqual(base.cls_attr, 'mocked_cls_attr')
+            self.assertEqual(base.cls_attr, 'cls_attr')
 
     def test_mock_cls_attr(self):
         """
+        Working example with cls_attr mocked
         """
         with mock.patch.object(Base, 'cls_attr') as mock_cls_attr:
             mock_cls_attr.__get__ = mock.Mock(return_value='mocked_cls_attr')
