@@ -128,13 +128,13 @@ class TestApp(unittest.TestCase):
         Not working -- whenever class Base is patched this way, the class is not affected
         Test passed but showing base class attribute still the same
         """
-        with mock.patch('python2_unittests.fsample.app.Base', autospec=True) as mock_Base:
-            mock_Base.cls_attr.__get__ = mock.Mock(return_value='mocked_cls_attr')
-            self.assertEqual(mock_Base.cls_attr, 'cls_attr')
-
+        with mock.patch('python2_unittests.fsample.app.Base', cls_attr='mocked', autospec=True) as mock_Base:
+            self.assertEqual(mock_Base.cls_attr, 'mocked')
+            # Base class is not affeced as at all
             self.assertEqual(Base.cls_attr, 'cls_attr')
             base = Base()
             self.assertEqual(base.cls_attr, 'cls_attr')
+            self.assertEqual(base.mult(2, 3), 5)
 
     def test_mock_cls_attr(self):
         """

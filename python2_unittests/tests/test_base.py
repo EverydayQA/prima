@@ -14,14 +14,15 @@ class TestB(unittest.TestCase):
         b.method()
         self.assertEquals('a', 'a')
 
-    # inappropriate call here for the structure
-    # Base is a Class - cannot use this way
-    # mock.path(file_name.class_name.method_name)
+    # mock.path(file_name_or_module_name.class_name.method_name)
     @mock.patch('python2_unittests.fsample.base.Base.method')
-    def test_super_method(self, mock_super):
+    def test_super_method(self, mock_method):
+        """
+        method being called at base class, not Dase()
+        """
         b = base.Base()
         b.method()
-        self.assertTrue(mock_super.called)
+        self.assertTrue(mock_method.called)
 
     # fsample dir
     # base.py
@@ -30,7 +31,10 @@ class TestB(unittest.TestCase):
 
     @mock.patch("python2_unittests.fsample.base.Base.method")
     def test_super_method2(self, mock_super):
-        base.Dase(False).method()
+        """
+        When Dase(True) -- the method() at Dase being called
+        """
+        base.Dase(test=False).method()
         self.assertFalse(mock_super.called)
-        base.Dase(True).method()
-        self.assertFalse(mock_super.called)
+        base.Dase(test=True).method()
+        self.assertTrue(mock_super.called)

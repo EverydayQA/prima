@@ -22,6 +22,9 @@ class Base(object):
         # mock print and assert_called_with?
         print(self.instance_var)
 
+    def mult(self, a, b):
+        return a + b
+
     @staticmethod
     def static_add(x):
         return x * x
