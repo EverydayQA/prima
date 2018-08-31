@@ -1,14 +1,16 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-source = /home/gliang/prima
+# source = ~/prima
 include = *
 # var did not work
 # data_file = $TMP/.coverage
 debug = notrace
 
 [paths]
-sources = /home/gliang/prima
+# sources = ~/prima
+
+# --cov-report=xml:coverage.xml
 
 [html]
 # export TMP=/tmp
