@@ -6,6 +6,7 @@ from StringIO import StringIO
 
 
 class TestApp(unittest.TestCase):
+
     """
     Probably the best way of solving the problem is to add class attributes as default values for instance members initialised in __init__().
     Note that if you are only setting default attributes in __init__() then providing them via class attributes (shared between instances of course) is faster too. e.g.

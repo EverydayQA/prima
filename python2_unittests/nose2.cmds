@@ -2,3 +2,8 @@ nose2 -s tests --plugin nose2.plugins.junitxml  -C --config nose2.cfg.2 --covera
 nose2-2.7 -s tests --plugin nose2.plugins.junitxml -C --config nose2.cfg.2 --coverage-config coveragerc_xml_TMP --verbose --junit-xml
 coverage report
 coverage report -m
+coverage erase
+set a new file name with the COVERAGE_FILE environment variable.
+You can specify the name of the output file with the -o switch. coverage.xml
+--rcfile=FILE
+coverage run /usr/bin/nose2-2.7 -s tests --plugin nose2.plugins.junitxml -C --config nose2.cfg.2 --verbose --junit-xml

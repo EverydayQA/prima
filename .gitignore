@@ -46,6 +46,7 @@ __pycache__
 /.build/
 _build/
 cover_db/
+coverage.xml
 inc/
 Build
 !Build/
