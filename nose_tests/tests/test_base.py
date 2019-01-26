@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import mock
 import unittest
-from python2_unittests.fsample import base
+from nose_tests.fsample import base
 
 
 class TestB(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestB(unittest.TestCase):
         self.assertEquals('a', 'a')
 
     # mock.path(file_name_or_module_name.class_name.method_name)
-    @mock.patch('python2_unittests.fsample.base.Base.method')
+    @mock.patch('nose_tests.fsample.base.Base.method')
     def test_super_method(self, mock_method):
         """
         method being called at base class, not Dase()
@@ -29,7 +29,7 @@ class TestB(unittest.TestCase):
     # Base Class
     # method in Class Base in file base.py in dir.fsample
 
-    @mock.patch("python2_unittests.fsample.base.Base.method")
+    @mock.patch("nose_tests.fsample.base.Base.method")
     def test_super_method2(self, mock_super):
         """
         When Dase(True) -- the method() at Dase being called

@@ -21,7 +21,7 @@ def exception_handler(err_msg, to_print=False):
 
 class Test_the_function(unittest.TestCase):
 
-        @mock.patch('python2_unittests.tests.test_called.exception_handler')
+        @mock.patch('nose_tests.tests.test_called.exception_handler')
         def test_the_function(self, mocked_handler):
             # no exception
             the_function([1])

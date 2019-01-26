@@ -1,6 +1,6 @@
 import mock
 import unittest
-from python3_unittests.lib.some_cls import SomeClass
+from nose_tests.lib.some_cls import SomeClass
 
 
 class TestSomeClass(unittest.TestCase):

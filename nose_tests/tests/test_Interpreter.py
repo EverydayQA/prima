@@ -1,7 +1,7 @@
 #!/usr/bin/python3.5
 import unittest
 import sys
-from python3_unittests.lib import Interpreter
+from nose_tests.lib import Interpreter
 import mock
 from io import StringIO
 

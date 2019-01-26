@@ -1,6 +1,6 @@
 import unittest
 import mock
-from python2_unittests.fsample.child import Child
+from nose_tests.fsample.child import Child
 from StringIO import StringIO
 
 

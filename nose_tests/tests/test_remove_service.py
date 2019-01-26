@@ -1,12 +1,12 @@
-from python2_unittests.fsample import remove_service
+from nose_tests.fsample import remove_service
 import mock
 import unittest
 
 
 class TestRemovalService(unittest.TestCase):
 
-    @mock.patch('python2_unittests.fsample.remove_service.os.path')
-    @mock.patch('python2_unittests.fsample.remove_service.os')
+    @mock.patch('nose_tests.fsample.remove_service.os.path')
+    @mock.patch('nose_tests.fsample.remove_service.os')
     def test_rm(self, mocked_os, mocked_ospath):
         # by patching 2 modules os and os.path inside remove_service.py
         reference = remove_service.RemovalService()
@@ -25,8 +25,8 @@ class TestRemovalService(unittest.TestCase):
         self.assertTrue(mocked_os.remove.called, "remove called isfile true")
 
     @mock.patch('__builtin__.hasattr')
-    @mock.patch('python2_unittests.fsample.remove_service.os.path')
-    @mock.patch('python2_unittests.fsample.remove_service.os')
+    @mock.patch('nose_tests.fsample.remove_service.os.path')
+    @mock.patch('nose_tests.fsample.remove_service.os')
     def skip_test_rm2(self, mocked_os, mocked_ospath, mocked_hasattr):
         # by patching 2 modules os and os.path inside remove_service.py
         reference = remove_service.RemovalService()
@@ -35,7 +35,7 @@ class TestRemovalService(unittest.TestCase):
         mocked_hasattr.return_value = True
         self.assertTrue(mocked_os.remove.called, "remove called isfile true")
 
-    @mock.patch('python2_unittests.fsample.remove_service.hasattr')
+    @mock.patch('nose_tests.fsample.remove_service.hasattr')
     def test_rm3(self, mocked_hasattr):
         # as long as it is set to False, it will trigger
         mocked_hasattr.return_value = False

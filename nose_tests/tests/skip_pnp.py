@@ -1,12 +1,12 @@
 import unittest
 import mock
-from python3_unittests.lib.pnp import ssdpClass
+from nose_tests.lib.pnp import ssdpClass
 
 
 class TestPnp(unittest.TestCase):
 
     def test_msearch(self):
-        patcher = mock.patch('python3_unittests.lib.pnp.socket')
+        patcher = mock.patch('nose_tests.lib.pnp.socket')
         mock_socket = patcher.start()
         mock_s = mock_socket.socket = mock.Mock()
         mock_s.settimeout = mock.Mock()
@@ -19,7 +19,7 @@ class TestPnp(unittest.TestCase):
         patcher.stop()
 
     def test_msearch2(self):
-        patcher = mock.patch('python3_unittests.lib.pnp.socket')
+        patcher = mock.patch('nose_tests.lib.pnp.socket')
         mock_socket = patcher.start()
 
         mock_socket.socket = mock.Mock()

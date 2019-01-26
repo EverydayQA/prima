@@ -1,4 +1,4 @@
-from python2_unittests.fsample.file_converter import FileConverter
+from nose_tests.fsample.file_converter import FileConverter
 import os
 import unittest
 import mock

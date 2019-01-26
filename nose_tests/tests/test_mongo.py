@@ -27,7 +27,7 @@ class TestMongo(unittest.TestCase):
     def tearDown(self):
         pass
 
-    @mock.patch("python2_unittests.tests.test_mongo.Mongo.get_collection")
+    @mock.patch("nose_tests.tests.test_mongo.Mongo.get_collection")
     def test_using_mock_patch(self, mock_get_collection):
         """
         the patch is in the format of file_name.class_name.method_name
