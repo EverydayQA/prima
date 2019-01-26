@@ -1,4 +1,0 @@
-
-Your Username is: see input
-
-Your Password is: see input
