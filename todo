@@ -26,3 +26,5 @@ nose2 --plugin nose2.plugins.junitxml --junit-xml -s python3_unittests/ --with-c
 bash parallel processing with subshells env testing
 add coverage
 
+# 25 Jan 2019
+transition to python3 and pytest

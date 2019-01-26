@@ -37,7 +37,7 @@ class Linkedlist:
     def insert_as_first_element(self, data):
         # head is not to be changed except head.next
         new_node = Node(data=data)
-        new_next = self.head.next
+        new_next = self.head.next;
         self.head.next = new_node
         new_node.next = new_next
 

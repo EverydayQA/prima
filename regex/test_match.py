@@ -77,6 +77,11 @@ class TestMatch(unittest.TestCase):
         self.assertEqual(items, ['one', 'two'])
         # [m.groupdict() for m in regex.finditer(search_string)]
 
+    def test_re_split_2(self):
+        line = '(?P<year>(?:19|20)\d\d)(?P<delimiter>[- /.])(?P<month>0[1-9]|1[012])\2(?P<day>0[1-9]|[12][0-9]|3[01])'
+        items = re.split('\)\(', line)
+        self.assertEqual(items, [])
+
     def test_date_time(self):
         line = 'Today is 2018-02-10.'
         regex = '(?P<year>(?:19|20)\d\d)(?P<delimiter>[- /.])(?P<month>0[1-9]|1[012])\2(?P<day>0[1-9]|[12][0-9]|3[01])'
