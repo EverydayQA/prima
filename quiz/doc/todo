@@ -57,3 +57,10 @@ Adder(Person)
 Admin(Person)
 Facility()
 
+# 26 Jan 2019
+# using conda env
+# python3 env
+# python3 code only
+# vim python3 syntax check
+# start to support pytest
+# move above to other doc

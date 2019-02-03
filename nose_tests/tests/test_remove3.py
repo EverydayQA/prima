@@ -128,12 +128,20 @@ class TestMockOpen(unittest.TestCase):
         subprocess.call(['touch', cls.input])
 
     def test_mock_open(self):
+        """
+        This actually works as expected, this should be the prefered way
+        better than mock with __builtin.open
+        """
         with mock.patch("nose_tests.fsample.read.open",
                         mock.mock_open(read_data=TEST_DATA), create=True):
             fee = Foo(self.input)
             self.assertEqual(fee.data, self.expected)
 
     def test_mock_open_class(self):
+        """
+        This is not the proper way to mock a builtin open()
+        mock patch open inside a class
+        """
         with mock.patch("nose_tests.fsample.read.Foo.open",
                         mock.mock_open(read_data=TEST_DATA), create=True):
             fee = Foo(self.input)
@@ -146,7 +154,12 @@ class TestMockOpen(unittest.TestCase):
             self.assertEqual(fee.data, self.expected)
 
     @mock.patch("__builtin__.open", new_callable=mock.mock_open, read_data=TEST_DATA)
-    def test_open3(self, mock_open):
+    def test_mock_builtin_open(self, mock_open):
+        """
+        This is the correct way to mock a builtin function, but it is too broad
+        builtin function has to be patched with the __builtin__.open in python2
+        It might slightly differnt in python3
+        """
         fee = Foo(self.input)
         self.assertEqual(fee.data, self.expected, msg=fee.data)
 

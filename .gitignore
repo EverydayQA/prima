@@ -40,7 +40,8 @@ Thumbs.db
 *.pyc
 build
 __pycache__
-
+.cache
+.noseids
 #perl
 /blib/
 /.build/

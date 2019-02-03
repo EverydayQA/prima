@@ -64,6 +64,5 @@ class MenuTest(unittest.TestCase):
         self.assertEqual(selections, ['bbb', 'ddd'])
 
     def test_fake(self):
-        mn = Menu()
+        mn = menu.Menu()
         self.assertEqual(mn.fake, 'fake')
-

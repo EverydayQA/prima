@@ -77,7 +77,7 @@ def get_full_class_name(cls):
 
 def get_full_func_name():
     file_name = os.path.basename(__file__)
-    print file_name
+    print(file_name)
     func_name = get_full_func_name.__name__
     func_name = inspect.stack()[0][3]
     return func_name
