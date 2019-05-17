@@ -49,3 +49,8 @@ class TestReFindAll(unittest.TestCase):
         self.assertEqual(items, [])
         for item in items:
             self.assertEqual(item, ' ')
+
+    def test_rm_bothends(self):
+        item = '!@#$abc-123-4;5.def)(*&^;\n'
+        item = re.sub('^\W+|\W+$', '', item)
+        self.assertEqual(item, 'abc-123-4;5.def')
