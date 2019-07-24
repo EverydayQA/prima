@@ -16,4 +16,3 @@ use app;
 foreach my $inc (@INC){
     print "${Bin}/app.pl INC=>$inc\n";
 }
-

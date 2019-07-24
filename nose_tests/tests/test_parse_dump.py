@@ -15,6 +15,8 @@ class DPaseFile(object):
     def __init__(self, afile):
         self.nm = NormalizeMincinfo()
         self.df = self.d_file(afile)
+        with open('/tmp/data.json', 'w') as f:
+            json.dump(self.df, f, ensure_ascii=False, indent=4)
 
     def txt_from_file(self, afile):
         with open(afile, mode='r') as f:
@@ -133,7 +135,7 @@ class TestDPaseFile(unittest.TestCase):
     def test_d_deep_get(self):
         pprint(self.d)
         v = self.pd.d_deep_get(self.d, 'variables.acquisition.window_widthx', 1000)
-        print v
+        print(v)
         self.assertEqual(v, 1000)
 
     def test_deep_update(self):
@@ -170,7 +172,7 @@ class TestDPaseFile(unittest.TestCase):
         json_file = json.dumps(self.d)
         self.assertTrue(isinstance(json_file, basestring))
         # Output str
-        print type(json_file)
+        print(type(json_file))
 
         # so you have to load your str into a dict to use it by using json.loads() method
         json_obj = json.loads(json_file)
@@ -214,7 +216,7 @@ class DParseLine(object):
         """
         For all subkeys, get dict with 1 entry for all subkeys
         """
-        print 'keys<{}> value<{}>'.format(keys, value)
+        print('keys<{}> value<{}>'.format(keys, value))
         d = {}
         if len(keys) == 2:
             d2 = {}
@@ -263,7 +265,7 @@ class DParseLine(object):
 
     def count_leading_space(self, a):
         for i, c in enumerate(a):
-            print '{} {}'.format(i, c)
+            print('{} {}'.format(i, c))
         return 0
 
     def d_keys_value(self, line):
@@ -340,7 +342,7 @@ class NormalizeMincinfo(object):
         return self.r_strip(line)
 
     def normalize_key(self, key):
-        print key
+        print(key)
         if not key:
             return key
         key = self.r_strip(key)
