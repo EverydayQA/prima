@@ -28,3 +28,5 @@ add coverage
 
 # 25 Jan 2019
 transition to python3 and pytest
+
+# individual test using pytest with coverage
