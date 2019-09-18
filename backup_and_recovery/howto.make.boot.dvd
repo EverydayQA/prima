@@ -1,0 +1,36 @@
+# this doc is based on fedora 30
+
+# tools
+Will use k3b, assume it was picked by fedora for a reason
+
+# installation
+  251  sudo dnf list k3b*
+  252  sudo dnf install k3b
+
+# warnings
+# Ignore these warnings unless you want to file bug report
+warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome. Use QT_QPA_PLATFORM=wayland to run on Wayland anyway.
+Invalid Context= "Legacy" line for icon theme:  "/usr/share/icons/Adwaita/8x8/legacy/"
+Invalid Context= "UI" line for icon theme:  "/usr/share/icons/Adwaita/16x16/ui/"
+kf5.kservice.services: KServiceTypeTrader: serviceType "ThumbCreator" not found
+QObject::connect: No such signal KLineEdit::lostFocus()
+kf5.kservice.services: KServiceTypeTrader: serviceType "ThumbCreator" not found
+QLayout: Attempting to add QLayout "" to QFrame "", which already has a layout
+Couldn't start kuiserver from org.kde.kuiserver.service: QDBusError("org.freedesktop.DBus.Error.ServiceUnknown", "The name is not activatable")
+QLayout: Attempting to add QLayout "" to K3b::EmptyDiscWaiter "", which already has a layout
+org.kde.knotifications: Audio notification requested, but sound file from notifyrc file was not found, aborting audio notification
+kf5.kservice.services: KServiceTypeTrader: serviceType "ThumbCreator" not found
+QObject::connect: No such signal KLineEdit::lostFocus()
+kf5.kservice.services: KServiceTypeTrader: serviceType "ThumbCreator" not found
+QLayout: Attempting to add QLayout "" to QFrame "", which already has a layout
+QLayout: Attempting to add QLayout "" to K3b::EmptyDiscWaiter "", which already has a layout
+org.kde.knotifications: Audio notification requested, but sound file from notifyrc file was not found, aborting audio notification
+
+# commment
+it is hard to make mistake, there is not many choices to choose from
+
+# try out
+2 isos, 1 to dvd, another to cdrom
+gparted_live_amd
+clonezilla-live_amd
+not yet
