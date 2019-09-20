@@ -30,7 +30,12 @@ org.kde.knotifications: Audio notification requested, but sound file from notify
 it is hard to make mistake, there is not many choices to choose from
 
 # try out
-2 isos, 1 to dvd, another to cdrom
+# k3b is fine
 gparted_live_amd
 clonezilla-live_amd
-not yet
+
+# other tools
+unetbootin
+sudo dnf install unetbootin.x86_64
+need root to run, why?
+sudo unetbootin, some errors, has to be login as root?
