@@ -39,3 +39,16 @@ unetbootin
 sudo dnf install unetbootin.x86_64
 need root to run, why?
 sudo unetbootin, some errors, has to be login as root?
+
+# issue of display
+sudo  /usr/bin/unetbootin
+No protocol specified
+unetbootin: cannot connect to X server :0
+
+# fix
+xhost local:root
+non-network local connections being added to access control list
+
+sudo QT_X11_NO_MITSHM=1 /usr/bin/unetbootin
+
+
