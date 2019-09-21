@@ -1,0 +1,19 @@
+# reference
+https://ubuverse.com/recover-deleted-files-using-the-free-open-source-tool-photorec/
+
+# goal:
+recovery files in home directory from 931G drive taken out from laptop
+
+# mistake
+lvreduce without resize first
+and extra
+run lvextend twice
+
+# looking back
+no need to take out disk from laptop
+
+# current
+West Digital sd in nexstar docking with logical volume with fedora 28
+fedora 30 with testdisk and qphotorec installed
+the original disk was copied using clonezilla, attempt has been focusing on the copied disk
+previously using testdisk alone seem too confusing
