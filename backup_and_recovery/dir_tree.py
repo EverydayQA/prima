@@ -7,7 +7,7 @@ from PIL import Image
 from PIL.ExifTags import TAGS
 
 
-class DirTree(object):
+class DPath(object):
     """
     Go through subdir to find proper files wanted with certain conditions
     files restored by photorec without proper file names
@@ -15,7 +15,7 @@ class DirTree(object):
 
     def __init__(self, path):
         self.path = path
-        self.dtree = self.d_walk(self.path)
+        self.dpath = self.d_walk(self.path)
 
     def d_walk(self, rootdir):
         df = {}
@@ -23,6 +23,27 @@ class DirTree(object):
             if files:
                 df[path] = list(set(files))
         return df
+
+
+class TreeInside(object):
+
+    def __init__(self, path, *args, **kwargs):
+        self.path = path
+        self.args = args
+        self.kwargs = kwargs
+        dp = DPath(path)
+        self.dpath = dp.dpath
+
+    def get_paths(self):
+        return list(self.dpath.keys())
+
+
+class TreeFromArgs(object):
+
+    def __init__(self, *args, **kwargs):
+        self.args = args
+        self.kwargs = kwargs
+        self.dpath = self.kwargs.get('dpath', {})
 
     @property
     def exts_remove(self):
@@ -66,11 +87,11 @@ class DirTree(object):
             '.html']
 
     def remove_exts(self):
-        for path in self.dtree.keys():
+        for path in self.dpath.keys():
             if 'ecup_dir' not in path:
                 continue
 
-            files = self.dtree.get(path)
+            files = self.dpath.get(path)
             if not files:
                 continue
             for afile in files:
@@ -146,7 +167,12 @@ def get_exif(fn):
 def main():
     path = os.getcwd()
     path = '/shared/backup/'
-    dt = DirTree(path)
+    dt = DPath(path)
+    d = {}
+    d['dpath'] = dt.dpath
+    d['path'] = path
+    d['dns'] = {}
+    tm = TreeManipulation(**d)
     dt.remove_exts()
 
 
