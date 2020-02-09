@@ -1,0 +1,8 @@
+conda-env list
+
+conda create -p py3env
+  728  conda-env list
+  733  conda activate ~/prima/docs/py3env
+  740  conda install pytest
+  745  conda search nose
+  746  conda install nose

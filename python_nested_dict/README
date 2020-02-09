@@ -1,0 +1,11 @@
+which is better to search
+list of dict or numpy or nested dict?
+
+add subdirs
+
+cli for executable
+arg 
+const
+
+PYTHONPATH=. python3 cli/merged.py 
+PYTHONPATH=. python3 cli/parsef.py
