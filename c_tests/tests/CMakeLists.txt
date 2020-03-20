@@ -7,6 +7,10 @@ include_directories(
 link_directories(
     ${CMAKE_BINARY_DIR}/src
 )
+cmake_minimum_required(VERSION 3.14)
+#CMAKE_MAKE_PROGRAM
+#CMAKE_C_COMPILER
+#CMAKE_CXX_COMPILER
 
 add_executable(check_money check_money.c)
 target_link_libraries(check_money money check)

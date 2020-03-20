@@ -3,6 +3,7 @@ import unittest
 import mock
 from ..lib import menu
 from ..lib import color_print
+import __builtin__
 
 
 class MenuTest(unittest.TestCase):
@@ -25,6 +26,7 @@ class MenuTest(unittest.TestCase):
         mock_raw_input.return_value = '1,2'
         alist = ['aaa', 'bbb', 'ccc', 'ddd']
         sels = menu.select_from_list(alist)
+        print sels
         self.assertEqual(sels, ['bbb', 'ccc'])
 
     @mock.patch('quiz.lib.menu.get_input')
@@ -62,6 +64,19 @@ class MenuTest(unittest.TestCase):
         alist = ['aaa', 'bbb', 'ccc', 'ddd']
         selections = menu.selections_in_list(sels, alist)
         self.assertEqual(selections, ['bbb', 'ddd'])
+
+    def test_select_from_menu(self):
+        # this is an alternative to mock.patch
+        __builtin__.raw_input =  lambda x: '1 3'
+        alist=['aaa','bbb','ccc', 'ddd']
+        menu_obj = menu.Menu()
+        selections = menu_obj.select_from_menu(alist, "anything")
+        self.assertEqual(selections,[1,3])
+
+
+if __name__ == '__main__':
+    suite = unittest.TestLoader().loadTestsFromTestCase(MenuTest)
+    unittest.TextTestRunner(verbosity=2).run(suite)
 
     def test_fake(self):
         mn = menu.Menu()

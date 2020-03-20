@@ -1,0 +1,12 @@
+conda-env list
+
+  740  conda install pytest
+  745  conda search nose
+  746  conda install nose
+
+ 1000  conda create -n mypython3 python=3
+ 1001  ls -ltr
+ 1002  conda activate mypython3
+ 1003  ls -ltra
+ 1004  ls -ltr ~/.conda/
+ 1005  ls -ltr ~/.conda/envs/

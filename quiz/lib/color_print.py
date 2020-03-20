@@ -3,6 +3,7 @@ import sys
 import curses
 
 
+
 class ColorPrint(object):
     def __init__(self):
         (BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE) = range(8)
@@ -40,7 +41,6 @@ class ColorPrint(object):
             sys.stdout.write(seq)
         else:
             sys.stdout.write(text)
-
 
 def main():
     cp = ColorPrint()
