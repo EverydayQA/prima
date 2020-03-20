@@ -25,5 +25,7 @@ class TestDparseLine(unittest.TestCase):
         a test file with expected results
         """
         d = self.dpl.d_keys_value(self.line1)
+        from ..src.nested_dict import NestedDict
+        nd = NestedDict()
         dd = self.dpl.d_deep_set_keys_value(d.get('subkeys', []), d.get('value', None))
         self.assertEqual(dd, {'dicom_0x0028': {'el_0x0030': '0.859375\\0.859375'}})

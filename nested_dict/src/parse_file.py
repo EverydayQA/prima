@@ -1,10 +1,10 @@
 
-import collections
 import re
 from termcolor import cprint
 import json
 from src.normalize_string import NormalizeString
 from src.parse_line import DParseLine
+from src.nested_dict import NestedDict
 
 
 class DPaseFile(object):
@@ -14,6 +14,7 @@ class DPaseFile(object):
 
     def __init__(self, afile):
         self.nm = NormalizeString()
+        self.nd = NestedDict()
         self.df = self.d_file(afile)
 
     def fout(self):
@@ -39,15 +40,23 @@ class DPaseFile(object):
     def d_file(self, afile):
         """
         To be modified to use recursive
+        stored in nested dict
         """
         d = {}
         lines = self.lines_file(afile)
         key = None
+        count = 0
         for line in lines:
             if len(line) < 3:
                 continue
+            count = count + 1
+            if count > 5:
+                break
             line = line.rstrip('\n')
             dpl = DParseLine(line)
+            print('line: <{}>'.format(line))
+            dl = dpl.d_keys_value(line)
+            print(dl)
             if line.startswith('\t') or line.startswith(' '):
                 if not key:
                     cprint(line, 'red')
@@ -70,12 +79,8 @@ class DPaseFile(object):
                 key = dpl.nm.normalize_key(line)
         return d
 
-    def python2_d_deep_get(self, dictionary, keys, default=None):
-        # import function_tools
-        # return function_tools.reduce(lambda d, key: d.get(key, default) if isinstance(d, dict) else default, keys.split("."), dictionary)
-        pass
-
     def d_deep_get(self, d, keys, default=None):
+        # return self.nd.d_deep_get(d, keys)
         dtmp = d
         for key in keys:
             if isinstance(dtmp, dict):
@@ -85,65 +90,13 @@ class DPaseFile(object):
         return dtmp
 
     def deepGet(self, d, *keys):
-        dtmp = d
-        for key in keys:
-            if isinstance(dtmp, dict):
-                dtmp = dtmp.get(key, None)
-            else:
-                return dtmp
-        return dtmp
+        return self.nd.deep_get(d, *keys)
 
     def deep_set(self, d, value, *keys):
-        # pop() the last item of the list, use your deepGet on it and set the popped off key on the resulting dict
-        last_key = keys.pop()
-        dnew = self.deepGet(d, *keys)
-        dnew[last_key] = value
-        return dnew
+        return self.nd.deep_set(d, value, *keys)
 
     def d_update(self, d, u):
         """
         u - dict with subkeys to be updated into d
         """
-        for k in u.keys():
-            v = u.det(k, None)
-            if isinstance(v, collections.Mapping):
-                d[k] = self.update(d.get(k, {}), v)
-            else:
-                d[k] = v
-        return d
-
-    def lines_normalize(self, lines):
-        items = []
-        hold = []
-        for line in lines:
-            line = line.rstrip()
-            if line == '':
-                continue
-            if line.endswith(','):
-                cprint(line, 'red')
-                if hold:
-                    line = line.strip()
-                hold.append(line)
-                continue
-            else:
-                if hold:
-                    line = line.strip()
-                    hold.append(line)
-                    line = ' '.join(hold)
-                hold = []
-            items.append(line)
-        return items
-
-    def deep_update(self, source, overrides):
-        """Update a nested dictionary or similar mapping.
-
-        Modify ``source`` in place.
-        """
-        for key in overrides.keys():
-            value = overrides.get(key, None)
-            if isinstance(value, collections.Mapping) and value:
-                returned = self.deep_update(source.get(key, {}), value)
-                source[key] = returned
-            else:
-                source[key] = overrides[key]
-        return source
+        return self.nd.deep_update(d, u)

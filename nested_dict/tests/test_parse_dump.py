@@ -2,7 +2,7 @@ import os
 import unittest
 from pprint import pprint
 import json
-from python_nested_dict.src.parse_file import DPaseFile
+from src.parse_file import DPaseFile
 
 
 class TestDPaseFile(unittest.TestCase):
@@ -23,27 +23,27 @@ class TestDPaseFile(unittest.TestCase):
     def test_deep_update(self):
         source = {'hello1': 1}
         overrides = {'hello2': 2}
-        self.pd.deep_update(source, overrides)
+        self.pd.d_update(source, overrides)
         self.assertEqual(source, {'hello1': 1, 'hello2': 2})
 
         source = {'hello': 'to_override'}
         overrides = {'hello': 'over'}
-        self.pd.deep_update(source, overrides)
+        self.pd.d_update(source, overrides)
         self.assertEqual(source, {'hello': 'over'})
 
         source = {'hello': {'value': 'to_override', 'no_change': 1}}
         overrides = {'hello': {'value': 'over'}}
-        self.pd.deep_update(source, overrides)
+        self.pd.d_update(source, overrides)
         self.assertEqual(source, {'hello': {'value': 'over', 'no_change': 1}})
 
         source = {'hello': {'value': 'to_override', 'no_change': 1}}
         overrides = {'hello': {'value': {}}}
-        self.pd.deep_update(source, overrides)
+        self.pd.d_update(source, overrides)
         self.assertEqual(source, {'hello': {'value': {}, 'no_change': 1}})
 
         source = {'hello': {'value': {}, 'no_change': 1}}
         overrides = {'hello': {'value': 2}}
-        self.pd.deep_update(source, overrides)
+        self.pd.d_update(source, overrides)
         self.assertEqual(source, {'hello': {'value': 2, 'no_change': 1}})
 
     def test_dict_to_json(self):

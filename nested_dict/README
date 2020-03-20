@@ -8,4 +8,4 @@ arg
 const
 
 PYTHONPATH=. python3 cli/merged.py 
-PYTHONPATH=. python3 cli/parsef.py
+PYTHONPATH=. python3 cli/parsef.py -f data/dump.txt

@@ -1,5 +1,4 @@
 from .normalize_string import NormalizeString
-import collections
 
 
 class DParseLine(object):
@@ -8,8 +7,8 @@ class DParseLine(object):
         """
         directory return d instead of holding a self.line
         """
-        self.nm = NormalizeString()
         self.line = line
+        self.nm = NormalizeString()
 
     def d_deep_set_keys_value(self, keys, value):
         """
@@ -34,7 +33,6 @@ class DParseLine(object):
         """
         For all subkeys, get dict with 1 entry for all subkeys
         """
-        print('keys<{}> value<{}>'.format(keys, value))
         d = {}
         if len(keys) == 2:
             d2 = {}
@@ -48,19 +46,6 @@ class DParseLine(object):
             return d2
 
         return d
-
-    def deep_update(self, source, overrides):
-        """Update a nested dictionary or similar mapping.
-
-        Modify ``source`` in place.
-        """
-        for key, value in overrides.iteritems():
-            if isinstance(value, collections.Mapping) and value:
-                returned = self.deep_update(source.get(key, {}), value)
-                source[key] = returned
-            else:
-                source[key] = overrides[key]
-        return source
 
     def recursive_update_d(self, d, d_prev, key_prev, subkeys, value):
         """

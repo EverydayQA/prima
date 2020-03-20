@@ -25,7 +25,6 @@ class NormalizeString(object):
         return self.r_strip(line)
 
     def normalize_key(self, key):
-        print(key)
         if not key:
             return key
         key = self.r_strip(key)
