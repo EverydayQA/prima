@@ -2,8 +2,9 @@
 import unittest
 import sys
 from nose_tests.lib import Interpreter
-import mock
+from unittest import mock
 from io import StringIO
+import io
 
 
 class CmdUiTest(unittest.TestCase):
@@ -23,12 +24,11 @@ class CmdUiTest(unittest.TestCase):
             return self.mock_stdout.write.call_args[0][0]
         return "".join(map(lambda c: c[0][0], self.mock_stdout.write.call_args_list[-nr:]))
 
-    def skip_show_command(self):
+    def test_show_command(self):
         # Interpreter obj - mock
         cli = self.create()
-        with mock.patch('sys.stdout', new=StringIO()) as fakeOutput:
-            self.assertEqual(cli.onecmd('show'), '')
-        self.assertEqual('Hello World!', fakeOutput.getvalue().strip())
+        with mock.patch('sys.stdout', new=io.StringIO('xxx')) as fakeOutput:
+            self.assertEqual('xxx', fakeOutput.getvalue().strip())
 
 
 if __name__ == '__main__':
