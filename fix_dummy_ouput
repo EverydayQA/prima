@@ -1,0 +1,39 @@
+lsmod | grep snd_hda_intel
+snd_hda_intel          49152  2
+snd_hda_codec         159744  2 snd_hda_codec_hdmi,snd_hda_intel
+snd_hda_core          102400  3 snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec
+snd_pcm               114688  4 snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec,snd_hda_core
+snd                    94208  12 snd_seq,snd_seq_device,snd_hda_codec_hdmi,snd_hwdep,snd_hda_intel,snd_hda_codec,snd_timer,snd_pcm
+
+lspci -nnk | grep -A2 Audio
+00:01.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Kabini HDMI/DP Audio [1002:9840]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:1b8d]
+	Kernel driver in use: snd_hda_intel
+--
+00:09.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Carrizo Audio Dummy Host Bridge [1022:157d]
+00:09.2 Audio device [0403]: Advanced Micro Devices, Inc. [AMD] Family 15h (Models 60h-6fh) Audio Controller [1022:157a]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:1b8d]
+	Kernel driver in use: snd_hda_intel
+
+
+/etc/alsa/alsactl.conf
+#
+# ALSA library configuration file for alsactl tool
+# (/usr/share/alsa tree is not necessary for alsactl)
+#
+
+ctl.hw {
+	@args [ CARD ]
+	@args.CARD {
+		type string
+		default "0"
+	}
+	type hw
+	card $CARD
+}
+sudo find /etc/ -name "*alsa*"
+/etc/alsa
+/etc/alsa/alsactl.conf
+
+empty
+/etc/asound.conf

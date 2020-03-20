@@ -17,3 +17,7 @@ for file in `find . -type f -name "*.py"`;
             echo mv -u $file  $newname_with_path;
         fi
     done
+
+echo $0
+echo `realpath $0`
+echo `basename $0`

@@ -1,25 +1,28 @@
 #!/usr/bin/env python
+import sys
 import email
 import argparse
 import smtplib
 import logging
+import os
 
 
 class MimeSend(object):
+
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
 
     @property
     def logger(self):
-        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__ 
+        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
         logger = logging.getLogger(name)
         level = self.kwargs.get('level', 30)
         logger.setLevel(level)
-        el  = logger.getEffectiveLevel()
+        el = logger.getEffectiveLevel()
         line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(logger.level, name, el)
         logger.debug(line)
-        return logger 
+        return logger
 
     @property
     def email_to(self):
@@ -88,13 +91,15 @@ class MimeSend(object):
         s.sendmail(self.email_to, self.email_from, self.msg.as_string())
         s.quit()
 
+
 def init_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('-l', '--level', type=int, default=20, help='logging level')
     parser.add_argument('-t', '--to', type=str, default='', help='email address to send')
 
-    args, args_extra = parser.parse_known_args(sys.argv[1:] )
+    args, args_extra = parser.parse_known_args(sys.argv[1:])
     return args, args_extra
+
 
 def main():
     args, args_extra = init_args()
@@ -104,7 +109,7 @@ def main():
     logger.setLevel(args.logging)
     ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(args.logging)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter('%(asctime)s -(name)s -(levelname)s -(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
     logger.propagate = False
@@ -113,7 +118,6 @@ def main():
     mime_send = MimeSend(sys.argv[0], to=args.email_to, email_from=args.email_from, subject='test subject')
     mime_send.send_smtp()
 
-# argspase - for command line
+
 if __name__ == 'main':
     main()
-

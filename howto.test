@@ -1,0 +1,3 @@
+  993  coverage run --source=pytests -m unittest discover -s pytests
+  994  coverage report -m
+

@@ -1,10 +1,6 @@
 #!/usr/bin/python
 import os
-import json
-import simplejson
-import sys
 import logging
-import argparse
 from random import randint
 from quiz.lib import quiz_logger
 from quiz.lib.color_print import ColorPrint
@@ -12,6 +8,7 @@ from quiz.lib import parse_json
 
 
 class AddQuiz(object):
+
     def __init__(self, *args, **kwargs):
         # default level is 20 in case not defined
         self.args = args
@@ -20,11 +17,11 @@ class AddQuiz(object):
 
     @property
     def logger(self):
-        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__ 
+        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
         logger = logging.getLogger(name)
         log_level = self.kwargs.get('log_level', 30)
         logger.setLevel(log_level)
-        el  = logger.getEffectiveLevel()
+        el = logger.getEffectiveLevel()
         line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(logger.level, name, el)
         logger.debug(line)
         p = parse_json.ParseJson()
@@ -52,7 +49,7 @@ class AddQuiz(object):
         if self.quizid:
             pass
         else:
-            int_random = randint(111,999)
+            int_random = randint(111, 999)
             self.quizid = int_random
         return int_random
 
@@ -86,6 +83,18 @@ class AddQuiz(object):
             input_str = raw_input()
         return input_str
 
+    @property
+    def shared_kwargs(self):
+        return self.update_dict()
+
+    def update_dict(self):
+        d = {}
+        d['d_cli'] = self.kwargs
+        d['ali'] = 1
+        d['foo'] = '--foo'
+        d['boo'] = '--boo'
+        return d
+
     def set_quiz_dict(self):
         quiz_dict = {}
 
@@ -97,4 +106,3 @@ class AddQuiz(object):
         ans = self.set_answers()
         quiz_dict['answers'] = ans
         return quiz_dict
-

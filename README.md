@@ -31,5 +31,9 @@ boost
 ```
 check
 ```
+Maintain source rpms not included by fedora due to licensing or other issues
+srpm with spec
+repo list for fedora
+source with git
 
 

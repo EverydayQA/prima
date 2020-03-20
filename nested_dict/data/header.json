@@ -1,0 +1,70 @@
+{
+    "netcdf-anonymized_1997_06_09_10_1_mri-{\ndimensions:\n\tzspace-=-1": {},
+    "variables:\n\tdouble-zspace(zspace)": {
+        "zspace": {
+            "direction_cosines": "-0., -0., 1."
+        },
+        "yspace": {
+            "direction_cosines": "-0., 1., -0."
+        },
+        "xspace": {
+            "direction_cosines": "1., -0., -0."
+        },
+        "image": {
+            "image-max": "--->image-max"
+        },
+        "rootvariable": {
+            "children": [
+                "image",
+                "patient",
+                "study",
+                "acquisition",
+                "dicominfo",
+                "dicom_groups"
+            ]
+        },
+        "image-min": {
+            "parent": "image"
+        },
+        "image-max": {
+            "parent": "image"
+        },
+        "patient": {
+            "full_name": "Anonymized"
+        },
+        "study": {
+            "study_id": "1997.000010"
+        },
+        "acquisition": {
+            "window_width": "209."
+        },
+        "dicominfo": {
+            "window_max": "209.5"
+        },
+        "dicom_groups": {
+            "children": [
+                "dicom_0x0008",
+                "dicom_0x0010",
+                "dicom_0x0018",
+                "dicom_0x0020",
+                "dicom_0x0028"
+            ]
+        },
+        "dicom_0x0008": {
+            "el_0x1090": "T5"
+        },
+        "dicom_0x0010": {
+            "el_0x0010": "Anonymized"
+        },
+        "dicom_0x0018": {
+            "el_0x1251": "H"
+        },
+        "dicom_0x0020": {
+            "el_0x0020": "L\\P"
+        },
+        "dicom_0x0028": {
+            "el_0x1051": "209"
+        }
+    },
+    "global-attributes:\n\t\t:ident-=-\"guest:www.example.ca:2018.01.26.21.02.31:5400:1\"": {}
+}

@@ -1,0 +1,5 @@
+conda create --name conda36 python=3.6
+  834  source activate conda36
+  835  conda install numpy
+  836  conda install tensorflow
+

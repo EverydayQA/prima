@@ -1,0 +1,24 @@
+package fsample
+version 0.1
+ven27
+setup.py
+requirements.txt
+pip install -r requirements.txt
+
+# set_env.sh PYTHONPATH
+# build.sh
+# install.sh
+# test.sh
+
+# arrange tests
+
+# add wheel
+
+# packaging
+
+# install
++---- fsample
+|
+----- setup.py
+|
++---- tests

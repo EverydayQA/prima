@@ -1,0 +1,11 @@
+<testsuite errors="0" failures="0" name="nose2-junit" skipped="0" tests="3" time="0.006">
+  <testcase classname="test_mongo.TestMongo" name="test_mongo_get_collection_using_magicMock" time="0.001858">
+    <system-err />
+  </testcase>
+  <testcase classname="test_mongo.TestMongo" name="test_mongo_get_collection_using_Mock" time="0.000694">
+    <system-err />
+  </testcase>
+  <testcase classname="test_mongo.TestMongo" name="test_using_mock_patch" time="0.002019">
+    <system-err />
+  </testcase>
+</testsuite>

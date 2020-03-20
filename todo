@@ -19,3 +19,15 @@ http://stackoverflow.com/questions/1732438/how-to-run-all-python-unit-tests-in-a
 http://stackoverflow.com/questions/16176101/python-equivalent-to-perls-prove
 
 # a LAN gitlab for documents
+# nosetests/nose2 coverage configuration?
+# nose2 -s python3_unittests/ --with-coverage --plugin nose2.plugins.junitxml --junit-xml --coverage ~/prima/python3_unittests/
+nose2 --plugin nose2.plugins.junitxml --junit-xml -s python3_unittests/ --with-coverage
+
+# 9 Aug 2018
+bash parallel processing with subshells env testing
+add coverage
+
+# 25 Jan 2019
+transition to python3 and pytest
+
+# individual test using pytest with coverage

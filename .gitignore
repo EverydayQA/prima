@@ -40,12 +40,14 @@ Thumbs.db
 *.pyc
 build
 __pycache__
-
+.cache
+.noseids
 #perl
 /blib/
 /.build/
 _build/
 cover_db/
+coverage.xml
 inc/
 Build
 !Build/
@@ -62,4 +64,4 @@ nytprof.out
 *.o
 *.bs
 /_eumm/
-
+.coverage
