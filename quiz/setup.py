@@ -7,6 +7,6 @@ setup(name='quiz',
     author='Gang Liang',
     author_email='gang.liang.2011@gmail.com',
     license='MIT',
-    packages=['quiz'],
+    packages=['lib', 'take', 'add', 'bin', 'user', 'tests'],
     zip_safe=False)
 

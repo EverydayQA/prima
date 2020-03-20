@@ -6,18 +6,18 @@ import sys
 import logging
 import argparse
 from random import randint
-
 from quiz.lib import quiz_logger
 from quiz.lib.color_print import ColorPrint
 from quiz.lib import parse_json
+
 
 class AddQuiz(object):
     def __init__(self, *args, **kwargs):
         # default level is 20 in case not defined
         self.args = args
         self.kwargs = kwargs
-
         self.quizid = self.kwargs.get('quizid')
+
     @property
     def logger(self):
         name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__ 
@@ -27,21 +27,27 @@ class AddQuiz(object):
         el  = logger.getEffectiveLevel()
         line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(logger.level, name, el)
         logger.debug(line)
+        p = parse_json.ParseJson()
+        p.dict2json({})
         return logger 
 
     def set_category(self):
         self.category = self.kwargs.get('category')
         if not self.category:
-            self.category = self.prompt('Please add or select a category')
+            self.category = self.prompt('Please add or select a category: ')
             self.logger.info('prompt_category')
         return self.category
+
     def set_description(self):
-        desc = self.prompt('add desc')
+        desc = self.prompt('\n*** Enter the full the question content\n')
         return desc
+
     def set_quality(self):
         return 50
+
     def set_weight(self):
         return 1
+
     def set_quizid(self):
         if self.quizid:
             pass
@@ -49,6 +55,7 @@ class AddQuiz(object):
             int_random = randint(111,999)
             self.quizid = int_random
         return int_random
+
     def set_level(self):
         self.level = self.kwargs.get('level')
         if self.level:
@@ -66,7 +73,9 @@ class AddQuiz(object):
     def set_questions(self):
         questions = []
         for i in range(4):
-            que = self.prompt('add a few questions')
+            que = self.prompt('add a few questions(max of 4), q to quit')
+            if 'q' in que:
+                return questions
             questions.append(que)
         return questions
 
@@ -75,8 +84,8 @@ class AddQuiz(object):
         while not input_str:
             print str
             input_str = raw_input()
-            
         return input_str
+
     def set_quiz_dict(self):
         quiz_dict = {}
 

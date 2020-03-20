@@ -43,7 +43,6 @@ class TestWorker(unittest.TestCase):
         real_worker.run = MagicMock(name='run')
         real_worker.return_value = False
         real_worker.run()
-        ddreader.show_contents(contents)
         self.assertFalse(real_worker.run.called,"Fail - run really called!")
 
     # with patch

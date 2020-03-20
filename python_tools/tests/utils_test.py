@@ -7,8 +7,6 @@ pwd = os.path.dirname(os.path.realpath(__file__))
 basedir = os.path.join(pwd,'..')
 sys.path.append(basedir)
 
-from lib import utils
-
 
 class utilsTest(unittest.TestCase):
 

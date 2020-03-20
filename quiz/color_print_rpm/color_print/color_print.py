@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import sys
-
+# just for rpm build
+import termcolor
 
 class ColorPrint(object):
     def __init__(self):

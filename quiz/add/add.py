@@ -6,12 +6,13 @@ import sys
 import logging
 import argparse
 from random import randint
+from quiz.lib import quiz_name
 
 import add_quiz
-from quiz import menu
-from quiz.quiz_logger import QuizLogger
-from quiz.color_print import ColorPrint
-from quiz.parse_json import ParseJson
+from quiz.lib import menu
+from quiz.lib.quiz_logger import QuizLogger
+from quiz.lib.color_print import ColorPrint
+from quiz.lib.parse_json import ParseJson
 
 
 def init_args_addquiz():
@@ -48,13 +49,12 @@ def main():
     quizid = addquiz.quizid
     level  = addquiz.set_level()
 
-    file_to_write = addquiz.category + '_' + str(level) + '_' + str(quizid) + '.json'
-
+    quizName = quiz_name.QuizName(category='QC', level=1, name='eletricity', quiz_id=quizid)
+    dataDir = data_dir.DataDir()
+    json_file = os.path.join(dataDir.json_dir, quizName.json)
     # write to file/not sql
     pjson = ParseJson()
-    data_dir = pjson.data_dir
-    file_to_write  = os.path.join(data_dir, file_to_write)
-    pjson.dict2json(quiz_dict, file_to_write)
+    pjson.dict2json(quiz_dict, json_file)
     qz = pjson.dict2quiz(quiz_dict)
 
     sels = qz.multiple_choices()

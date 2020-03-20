@@ -4,11 +4,18 @@ import quiz
 import glob
 import os
 import sys
-from quiz import menu
-from quiz import parse_json
-from quiz import quiz
+import argparse
+from ..lib import menu
+from ..lib import parse_json
+from ..lib import quiz_name
+from ..lib import quiz_content
+from ..lib import tools
+from ..lib import data_dir
 from collections import OrderedDict
 import uuid
+import mechanize
+from time import sleep
+import subprocess
 
 class Taken(object):
     def __init__(self, *args, **kwargs):
@@ -19,10 +26,12 @@ class Taken(object):
     def session_id(self):
         session_id = self.kwargs.get('session_id')
         return session_id
+
     @property
     def quiz_id(self):
         quiz_id = self.kwargs.get('quiz_id')
         return quiz_id
+
     @property
     def file_name(self):
         file_name = self.kwargs.get('file_name')
@@ -36,6 +45,14 @@ class Taken(object):
     def fail_count(self):
         pass
 
+    def __str__(self):
+        return 'Taken {0} {1} {2} {3} {4} {5}'.format(self.session_id, self.quizid, self.file_name, self.pass_count, self.fail_count)
+
+    def __repr__(self):
+        return '{0}(args: {1} kwargs: {2})' % (self.__class__, self.args, self.kwargs)
+
+    def __dict__(self):
+        return
     # file_name/quiz_id/session_id(same)/ans/result/datetime/userid
     # Users() - with login/password/email/phone/
     # Sessions() - session_id/user/datetime/score
@@ -55,26 +72,24 @@ class Take(object):
         return logger
 
     @property
-    def data_dir(self):    
-        dirname = os.path.dirname(__file__)
-        data_dir = os.path.join(dirname, '../data')
-        return data_dir
-    @property
     def session_id(self):    
         session_id = self.kwargs.get('session_id', 1000)
         return session_id
 
-    def jsons_glob(self, data_dir): 
-        jsons = glob.iglob(data_dir + '/*.json')
+    def jsons_glob(self, jason_dir): 
+        jsons = glob.iglob(jason_dir + '/*.json')
         return jsons
 
-    def jsons_walk(self, data_dir):
+    def jsons_walk(self, jason_dir):
         jsons = []
-        for root, dirs, files in os.walk(data_dir):
+        for root, dirs, files in os.walk(jason_dir):
             for file in files:
+                if 'to_delete' in root:
+                    continue
                 if file.endswith('.json'):
                     jsons.append(os.path.join(root, file))
         return jsons
+
     def sort_quiz_dict_by_desc(self, list_dict):
         print '\n\n*sorted BY DESCRIPTION {0}\n'.format( len(list_dict))    
         sorted_dict_desc = OrderedDict(sorted(list_dict.items(),  key=lambda t: t[1].description) )
@@ -83,6 +98,7 @@ class Take(object):
             self.logger.debug( str(key) + "-----" + str(item.description) )
 
         return sorted_dict_desc
+
     def sort_quiz_dict_by_key(self, list_dict):
 
         print '\n\n*sorted BY KEY {0}\n'.format(len(list_dict))    
@@ -97,29 +113,40 @@ class Score(object):
         self.args = args
         self.kwargs = kwargs
     
+def init_args_take():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--logging', type=int, default=20, help='logging level')
+    parser.add_argument('--category', type=str, default='QC', help='Category')
+    parser.add_argument('--level', type=int, default=20, help='level in category')
+    parser.add_argument('--name', type=str, default='name', help='course name')
+
+    args, args_extra = parser.parse_known_args(sys.argv[1:] )
+    return args, args_extra
 
 def main():
+    args, args_extra = init_args_take()
+
     name = os.path.splitext(os.path.basename(__file__))[0]
     logger = logging.getLogger(name)
 
-    logger.setLevel(10)
+    logger.setLevel(args.logging)
     ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(10)
+    ch.setLevel(args.logging)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
     logger.propagate = False 
+    dataDir = data_dir.DataDir()
 
     # now - a comprised way to get quiz.json first
     take = Take()
-    jsons = take.jsons_walk(take.data_dir)
+    jsons = take.jsons_walk(dataDir.json_dir)
 
     # available Quiz()
     logger.info('find available Quiz()s -- with quiz_id etc')
     
     list_dict = {}
     # choose a List()/Apply same session_id
-    logger.info('put Quiz()s in Dict')
     pjson = parse_json.ParseJson()
     logger.info('test sorting list of class obj')
     for json in jsons:
@@ -157,6 +184,12 @@ def main():
         result = qz.quiz_result(sels)
         logger.info(result)
 
+        # a choice to modify(category/level) or delete the question
+        tool = tools.Tools()
+        prompt = tool.prompt('type r(emove) to delete this question\n')
+        if 'r' in prompt:
+            cmds = ['mv', json, dataDir.json_dir_to_delete]
+            tool.to_system(cmds, True)
 
     logger.info('later - Taken() - ')
     # write back to AnswerList-- Answer()??? or 
