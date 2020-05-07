@@ -3,16 +3,22 @@ import json
 import sys
 import os
 import logging
-from quiz.lib import a_quiz
+import quiz_name
+import quiz_content
+
+
 # Jason -> dict -->  Quiz 
 class ParseJson(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
-        self.logger = logging.getLogger(name)
 
-    # return an instance of Quiz()
+    @property
+    def logger(self):
+        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
+        logger = logging.getLogger(name)
+        return logger
+
     def read_json(self, file_json):
         data_list = []
         quiz_dict = {}
@@ -39,8 +45,10 @@ class ParseJson(object):
         return quiz_dict   
 
     def dict2quiz(self, quiz_dict):
-        qz = quiz.Quiz(quizid=quiz_dict.get('quizid'), description=quiz_dict.get('description'), questions=quiz_dict.get('questions'), answers=quiz_dict.get('answers'), category=quiz_dict.get('category'), weight=quiz_dict.get('weight'))
-        return qz
+        qz_content = quiz_content.QuizContent(quizid=quiz_dict.get('quizid'), description=quiz_dict.get('description'), questions=quiz_dict.get('questions'), answers=quiz_dict.get('answers'), category=quiz_dict.get('category'), weight=quiz_dict.get('weight'))
+
+        return qz_content
+
 
     # dict2json
     def dict2json(self, data_dict, file_json):
@@ -48,9 +56,7 @@ class ParseJson(object):
             j = json.dumps(data_dict, indent=4, sort_keys=True)
             print >> f, j
             f.close()
-    @property
-    def data_dir(self):
-        return base_dir
+
 def main():
     FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(format=FORMAT)

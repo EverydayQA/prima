@@ -4,17 +4,22 @@ import logging
 from . import menu
 import inspect
 import argparse
+import operator
+from . import quiz_name
 logger = logging.getLogger(__name__)
 
 
-# Quiz base class/subclass
-# add *args, **kwargs - all unittest for common usae
-# logger propagate example
+class QuizContent(object):
+    # Quiz base class/subclass
+    # add *args, **kwargs - all unittest for common usae
+    # logger propagate example
+
 class Quiz(object):
 
     def __init__(self, *args, **kwargs):
-        # logger name has to be this way to alow propagate EffetiveLeve
         name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
+        logger.propagate = True    
+        el  = logger.getEffectiveLevel()
         # this is necessary to pass logger handler to subclass?
         logger.propagate = True
         el = logger.getEffectiveLevel()
@@ -22,11 +27,22 @@ class Quiz(object):
         logger.debug(line)
         self.args = args
         self.kwargs = kwargs
+        
+    @property
+    def description(self):
+        description = self.kwargs.get('description')
+        return description
 
     @property
     def questions(self):
         questions = self.kwargs.get('questions')
         return questions
+
+    @property
+    def answers(self):
+        answers = self.kwargs.get('answers')
+        answers = filter(operator.isNumberType, answers) 
+        answers  = map(int, answers)
 
     def get(self):
         import add_quiz
@@ -39,6 +55,11 @@ class Quiz(object):
         answers = self.kwargs.get('answers')
         answers = map(int, answers)
         return answers
+
+    def get(self):
+	    result = add_quiz.Quiz().get()
+	    result = 'from quiz.Quiz {0}'.format(result)
+	    return result
 
     def print_args(self):
         logger.info(self.args)
@@ -58,7 +79,7 @@ class Quiz(object):
     def weight(self):
         weight = self.kwargs.get('weight', 1)
         return weight
-
+        
     @property
     def description(self):
         description = self.kwargs.get('description')
@@ -105,7 +126,7 @@ def init_args():
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("-?", '--help', action="help", help='xxx')
     parser.add_argument("-category", '--category', type=str, default=None, dest='category', help='category')
-    parser.add_argument("-quizid", '--quizid', type=str, default=None, dest='quizid', help='quizid')
+    parser.add_argument("-id", '--id', type=str, default=None, dest='id', help='id')
     parser.add_argument("-weight", '--weight', type=float, default=1, dest='weight', help='weight from 0 to 1')
 
     parser.add_argument("-run", '--run', action='store_true', dest='run', help='run')
@@ -127,7 +148,6 @@ def get_full_func_name():
     func_name = get_full_func_name.__name__
     func_name = inspect.stack()[0][3]
     return func_name
-
 
 def main():
 

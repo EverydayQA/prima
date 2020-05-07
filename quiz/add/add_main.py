@@ -3,7 +3,12 @@ import os
 import sys
 import logging
 import argparse
+from random import randint
+from quiz.lib import quiz_name
+
 import add_quiz
+from quiz.lib import menu
+from quiz.lib.quiz_logger import QuizLogger
 from quiz.lib.color_print import ColorPrint
 from quiz.lib.parse_json import ParseJson
 
@@ -44,10 +49,12 @@ def main():
     quizid = addquiz.quizid
     level = addquiz.set_level()
 
-    file_to_write = addquiz.category + '_' + str(level) + '_' + str(quizid) + '.json'
-
+    quizName = quiz_name.QuizName(category='QC', level=1, name='eletricity', quiz_id=quizid)
+    dataDir = data_dir.DataDir()
+    json_file = os.path.join(dataDir.json_dir, quizName.json)
     # write to file/not sql
     pjson = ParseJson()
+    pjson.dict2json(quiz_dict, json_file)
     data_dir = pjson.data_dir
     file_to_write = os.path.join(data_dir, file_to_write)
     pjson.dict2json(quiz_dict, file_to_write)
