@@ -1,0 +1,27 @@
+convert -delay 10 -loop 0 *.png animation.gif
+ffmpeg -i %03d.png output.gif
+
+# add lines to gif or png?
+# convert --draw
+http://www.imagemagick.org/Usage/draw/
+
+viwers:
+gthumb or firefox
+reverse gif into frames
+
+convert -coalesce animation.gif target.png
+convert animation.gif target.png
+
+mricro -- nii to png
+
+minc 2 png or jpg
+
+     mincpik infile.mnc PNG:- | display -
+
+       To generate a PNG file of the 15th coronal slice
+
+          mincpik -slice 15 -coronal infile.mnc outfile.png     mincpik infile.mnc PNG:- | display -
+
+       To generate a PNG file of the 15th coronal slice
+
+          mincpik -slice 15 -coronal infile.mnc outfile.png

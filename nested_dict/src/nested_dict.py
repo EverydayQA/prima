@@ -6,6 +6,24 @@ class NestedDict(object):
     Before a nested dict in installed, this will be tested and used
     """
 
+    def deep_set(self, keys=[], value=None, **d):
+        """
+        assume a simple set value
+        set to add or replace value with keys
+        # pop() the last item of the list, use your deepGet on it and set the popped off key on the resulting dict
+        """
+        if not keys:
+            return d
+        # keys reduced 1
+        firstkey = keys.pop(0)
+        # set value regardless the previous value
+        vfirst = d.get(firstkey, None)
+        if not isinstance(vfirst, dict):
+            dleft = self.create_nested(keys, value)
+            d[firstkey] = dleft
+            return d
+        return self.deep_set(keys, value=value, **d)
+
     def deep_update(self, source, overrides):
         """Update a nested dictionary or similar mapping.
 
@@ -21,41 +39,97 @@ class NestedDict(object):
         return source
 
     def d_deep_get(self, d_original, keys, default=None):
-        items = list(keys)
-        return self.deep_get_recursive(d_original, items)
+        return self.nested_get(d_original, keys)
 
-    def deep_get_recursive(self, d, keys):
+    def nested_get(self, d, keys):
         if not d:
-            return None
+            return d
         if not keys:
             return None
-        if isinstance(d, dict):
-            key = keys.pop(0)
-            dv = d.get(key, None)
-            if isinstance(dv, dict):
-                return self.deep_get_recursive(dv, keys)
-            else:
-                return dv
-        else:
-            return d
+
+        if not isinstance(d, dict):
+            raise Exception('original d not dict')
+            return None
+
+        firstkey = keys.pop(0)
+        dfirst = d.get(firstkey, None)
+        if not dfirst:
+            return dfirst
+        if not isinstance(dfirst, dict):
+            return dfirst
+
+        # keys reduced 1 by pop(0)
+        # dv reduced by 1 level
+        return self.nested_get(dfirst, keys)
 
     def deep_get(self, d, keys):
         """
+        get the value with keys, default value is None?
         return reduce(lambda d, k: d.get(k) if d else None, keys, sourceDict)
         """
-        dtmp = d
+        dtmp = None
         for key in keys:
             dtmp = dtmp.get(key, None)
-            if isinstance(dtmp, dict):
-                pass
-            else:
+            if not isinstance(dtmp, dict):
                 return dtmp
         return dtmp
 
-    def deep_set(self, sourceDict, value, keys):
-        # pop() the last item of the list, use your deepGet on it and set the popped off key on the resulting dict
-        items = list(keys)
-        last_key = items.pop()
-        d = self.deep_get(sourceDict, items)
-        d[last_key] = value
-        return sourceDict
+    def create_nested(self, keys, value):
+        """
+        create a nested dict
+        """
+        print('create_nested with keys {} value {}'.format(keys, value))
+        if not keys:
+            return {}
+        # keys reduced by 1
+        lastkey = keys.pop()
+        # lastkey changed
+        dnew = {lastkey: value}
+        if not keys:
+            return dnew
+        return self.create_nested(keys, dnew)
+
+    def merge(self, d, dnew):
+        """
+        merge 2 dicts, nested or not
+        """
+        raise Exception('not coded yet')
+
+    def update_nested(self, d, dnest):
+        """
+        update nested with a nested dict
+        assume dnest is a single entry for now, should be compliated
+        """
+        if not dnest:
+            return d
+
+        if not isinstance(dnest, dict):
+            print('dnest is {}'.format(dnest))
+            raise Exception('update nested not dict')
+            return d
+
+        # first level keys
+        for key in dnest.keys():
+            # updated dkey should automatically change d
+            v = d.get(key, None)
+            vnest = dnest.get(key, None)
+            if not isinstance(v, dict):
+                # value or not being set in original d
+                # set value to be value of dnest(or dnest_sub)
+                # the original v is replaced
+                d[key] = vnest
+                return d
+
+            if not isinstance(vnest, dict):
+                # replace existing dict with a value, loosing information
+                # d[key] = vnest
+                # return d
+                print('key {} v is {}'.format(key, v))
+                print(vnest)
+                raise Exception('vnest not dict')
+                continue
+
+            vkey = self.update_nested(v, vnest)
+            # replace the original value(v) with vkey
+            d[key] = vkey
+        return d

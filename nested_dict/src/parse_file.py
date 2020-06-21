@@ -2,6 +2,7 @@
 import re
 from termcolor import cprint
 import json
+from pprint import pprint
 from src.normalize_string import NormalizeString
 from src.parse_line import DParseLine
 from src.nested_dict import NestedDict
@@ -14,7 +15,7 @@ class DPaseFile(object):
 
     def __init__(self, afile):
         self.nm = NormalizeString()
-        self.nd = NestedDict()
+        self.nested = NestedDict()
         self.df = self.d_file(afile)
 
     def fout(self):
@@ -44,43 +45,36 @@ class DPaseFile(object):
         """
         d = {}
         lines = self.lines_file(afile)
-        key = None
-        count = 0
+        lastkey = None
         for line in lines:
-            if len(line) < 3:
-                continue
-            count = count + 1
-            if count > 5:
-                break
             line = line.rstrip('\n')
+            line = line.lstrip('\n')
+            line = line.strip()
+            items = line.split(' ')
+
+            # print('line: <{}> <{}>'.format(line, items))
+
+            if '=' not in items:
+                continue
+
+            # lastkey not changed unless :
+            if ':' in line:
+                eles = items[0].split(':')
+                lastkey = eles[0]
             dpl = DParseLine(line)
-            print('line: <{}>'.format(line))
-            dl = dpl.d_keys_value(line)
-            print(dl)
-            if line.startswith('\t') or line.startswith(' '):
-                if not key:
-                    cprint(line, 'red')
-                    continue
+            d_nexts = dpl.d_keys_value(line, key=lastkey)
+            pprint(d_nexts)
 
-                d_nexts = dpl.d_keys_value(line)
-                subkeys = d_nexts.get('subkeys', [])
-                value = d_nexts.get('value', None)
-                if subkeys:
-                    dd = dpl.d_deep_set_keys_value(subkeys, value)
-                    # previous entries in d for the key
-                    d_key = d.get(key, {})
+            keys = d_nexts.get('keys', [])
+            value = d_nexts.get('value', None)
+            cprint('lastkey {} keys {} value {}>'.format(lastkey, keys, value), 'green')
 
-                    # this is a dict internal function to update
-                    # to include dd in the dict
-                    d_key.update(dd)
-                    d[key] = d_key
-            else:
-                # key
-                key = dpl.nm.normalize_key(line)
+            dnest = self.nested.create_nested(keys, value)
+            pprint(dnest)
+            d = self.nested.update_nested(d, dnest)
         return d
 
     def d_deep_get(self, d, keys, default=None):
-        # return self.nd.d_deep_get(d, keys)
         dtmp = d
         for key in keys:
             if isinstance(dtmp, dict):
@@ -90,13 +84,13 @@ class DPaseFile(object):
         return dtmp
 
     def deepGet(self, d, *keys):
-        return self.nd.deep_get(d, *keys)
+        return self.nested.deep_get(d, *keys)
 
     def deep_set(self, d, value, *keys):
-        return self.nd.deep_set(d, value, *keys)
+        return self.nested.deep_set(d, value, *keys)
 
     def d_update(self, d, u):
         """
         u - dict with subkeys to be updated into d
         """
-        return self.nd.deep_update(d, u)
+        return self.nested.deep_update(d, u)

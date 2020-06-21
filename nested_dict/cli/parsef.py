@@ -29,7 +29,7 @@ def main(argv=None):
 
     cli = CliParseFile(**kwargs)
     d = cli.file2d()
-    pprint(d.keys())
+    pprint(d)
 
 
 if __name__ == "__main__":

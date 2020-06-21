@@ -1,0 +1,1000 @@
+    9  vim backup_and_recovery/dir_tree.py 
+   10  python3 backup_and_recovery/dir_tree.py 
+   11  vim backup_and_recovery/dir_tree.py 
+   12  python3 backup_and_recovery/dir_tree.py 
+   13  cat /shared/backup/recup_dir.2231/f1952242156.xml
+   14  vim backup_and_recovery/dir_tree.py 
+   15  python3 backup_and_recovery/dir_tree.py 
+   16  vim backup_and_recovery/dir_tree.py 
+   17  python3 backup_and_recovery/dir_tree.py 
+   18  cat /shared/backup/recup_dir.2231/f1952675416_ftyp.mov
+   19  file /shared/backup/recup_dir.2231/f1952675416_ftyp.mov
+   20  vim backup_and_recovery/dir_tree.py 
+   21  file /shared/backup/recup_dir.2231/f1952675416_ftyp.mov
+   22  python3 backup_and_recovery/dir_tree.py 
+   23  file /shared/backup/recup_dir.2231/f1949990849.mbox
+   24  cat /shared/backup/recup_dir.2231/f1949990849.mbox
+   25  python3 backup_and_recovery/dir_tree.py 
+   26  vim backup_and_recovery/dir_tree.py 
+   27  python3 backup_and_recovery/dir_tree.py 
+   28  cat /shared/backup/recup_dir.2231/f1949988175.txt
+   29  cat /shared/backup/recup_dir.2231/f1949989000.txt
+   30  vim backup_and_recovery/dir_tree.py 
+   31  python3 backup_and_recovery/dir_tree.py 
+   32  vim backup_and_recovery/dir_tree.py 
+   33  python3 backup_and_recovery/dir_tree.py 
+   34  file /shared/backup/recup_dir.105/f17381000_InstallBoot_exe
+   35  vim backup_and_recovery/dir_tree.py 
+   36  file /shared/backup/recup_dir.105/f17381000_InstallBoot_exe
+   37  python3 backup_and_recovery/dir_tree.py 
+   38  vim backup_and_recovery/dir_tree.py 
+   39  python3 backup_and_recovery/dir_tree.py 
+   40  display /shared/backup/recup_dir.105/f17389136.png
+   41  file /shared/backup/recup_dir.105/f17389136.png
+   42  cat /shared/backup/recup_dir.1530/f1688845960.sh
+   43  vim backup_and_recovery/dir_tree.py 
+   44  python3 backup_and_recovery/dir_tree.py 
+   45  vim backup_and_recovery/dir_tree.py 
+   46  python3 backup_and_recovery/dir_tree.py 
+   47  file /shared/backup/recup_dir.105/f17329040.ini
+   48  vim backup_and_recovery/dir_tree.py 
+   49  file /shared/backup/recup_dir.105/f17329040.ini
+   50  python3 backup_and_recovery/dir_tree.py 
+   51  file /shared/backup/recup_dir.2112/f1920487336.apple
+   52  python3 backup_and_recovery/dir_tree.py 
+   53  vim backup_and_recovery/dir_tree.py 
+   54  python3 backup_and_recovery/dir_tree.py 
+   55  vim backup_and_recovery/dir_tree.py 
+   56  python3 backup_and_recovery/dir_tree.py 
+   57  vim backup_and_recovery/dir_tree.py 
+   58  python3 backup_and_recovery/dir_tree.py 
+   59  file /shared/backup/recup_dir.1530/f1679049440.sh
+   60  cat /shared/backup/recup_dir.1530/f1679049440.sh
+   61  vim backup_and_recovery/dir_tree.py 
+   62  python3 backup_and_recovery/dir_tree.py 
+   63  file /shared/backup/recup_dir.266/f483746263.f
+   64  cat /shared/backup/recup_dir.266/f483746263.f
+   65  python3 backup_and_recovery/dir_tree.py 
+   66  vim backup_and_recovery/dir_tree.py 
+   67  python3 backup_and_recovery/dir_tree.py 
+   68  file /shared/backup/recup_dir.105/f17387360.ttf
+   69  vim backup_and_recovery/dir_tree.py 
+   70  file /shared/backup/recup_dir.105/f17387360.ttf
+   71  python3 backup_and_recovery/dir_tree.py 
+   72  cat /shared/backup/recup_dir.105/f17329024.lnk
+   73  file /shared/backup/recup_dir.105/f17329024.lnk
+   74  python3 backup_and_recovery/dir_tree.py 
+   75  vim backup_and_recovery/dir_tree.py 
+   76  python3 backup_and_recovery/dir_tree.py 
+   77  file /shared/backup/recup_dir.105/f17369304.ico
+   78  vim backup_and_recovery/dir_tree.py 
+   79  python3 backup_and_recovery/dir_tree.py 
+   80  file /shared/backup/recup_dir.105/f17289768_apisetstub
+   81  vim backup_and_recovery/dir_tree.py 
+   82  python3 backup_and_recovery/dir_tree.py 
+   83  file /shared/backup/recup_dir.105/f17384752.ogg
+   84  vim backup_and_recovery/dir_tree.py 
+   85  python3 backup_and_recovery/dir_tree.py 
+   86  vim backup_and_recovery/dir_tree.py 
+   87  python3 backup_and_recovery/dir_tree.py 
+   88  vim backup_and_recovery/dir_tree.py 
+   89  python3 backup_and_recovery/dir_tree.py 
+   90  file /shared/backup/recup_dir.578/f992477888.jpg
+   91  display /shared/backup/recup_dir.578/f992477888.jpg
+   92  vim backup_and_recovery/dir_tree.py 
+   93  python3 backup_and_recovery/dir_tree.py 
+   94  file /shared/backup/recup_dir.1878/f1895167936.wav
+   95  cd /shared/
+   96  cd backup
+   97  ls -ltr
+   98  find . -type f|wc -l
+   99  find . -type f -name "*.jpg"|wc -l
+  100  find . -type f -name "*.JPG"|wc -l
+  101  find . -type f -name "*.JPG"
+  102  display ./yke/E0D6-E1FF/DCIM/100MSDCF/DSC00165.JPG
+  103  display ./yke/E0D6-E1FF/DCIM/100MSDCF/DSC00170.JPG
+  104  file ./yke/E0D6-E1FF/DCIM/100MSDCF/DSC00165.JPG
+  105  find . -type f -name "*.jpg"
+  106  file ./recup_dir.105/f17289656.jpg
+  107  display ./recup_dir.105/f17289656.jpg
+  108  file ./recup_dir.1969/f1904026344.jpg
+  109  file ./recup_dir.1848/f1889565792.jpg
+  110  ls -ltr
+  111  cd ..
+  112  ls -ltr
+  113  cd backup_recovery/
+  114  ls -ltr
+  115  cd ..
+  116  ls -ltr
+  117  cd mnt_backup/
+  118  ls -ltr
+  119  cd ..
+  120  cd from_ausdesktop/
+  121  ls -ltr
+  122  cd mockbuild/
+  123  ls -ltr
+  124  cd ..
+  125  ls -ltr
+  126  cd ..
+  127  ls -ltr
+  128  ls -ltr backup
+  129  cd backup
+  130  ls -ltr
+  131  find . -type d -name "recup*"
+  132  cd ./from/recup_dir.1
+  133  pwd
+  134  ls -ltr
+  135  file f0040256.jpg
+  136  display f0040256.jpg
+  137  display f0062960.jpg
+  138  ls -ltr
+  139  cd ..
+  140  ls -ltr
+  141  cd ..
+  142  ls -ltr
+  143  cd ..
+  144  ls -ltr
+  145  mkdir -p connor
+  146  sudo mkdir -p connor
+  147  sudo mv backup/from/ connor/
+  148  sudo mv backup/yke/ connor/
+  149  cd connor/
+  150  ls -ltr
+  151  mv from/ from_usb_blue
+  152  sudo mv from/ from_usb_blue
+  153  ls -ltr
+  154  ls -tlr from_usb_blue/
+  155  ls -tlr from_usb_blue/recup_dir.1/
+  156  ls -ltr
+  157  cd from_usb_blue/
+  158  ls -ltr
+  159  mv recup_dir.1/* .
+  160  ls -ltr
+  161  ls -ltr recup_dir.1
+  162  rm -rvf recup_dir.1
+  163  ls - ltr
+  164  ls -ltr
+  165  cd ..
+  166  ls -ltr
+  167  cd ..
+  168  ls -ltr
+  169  ls -ltr backup
+  170  cd backup
+  171  ls -ltr
+  172  find . -type f
+  173  find . -type f|wc -l
+  174  file ./recup_dir.105/f17360288.png
+  175  file ./recup_dir.105/f17365016_MsSpellCheckingHost_exe_mui
+  176  ls -ltr
+  177  cd ..
+  178  ls  -ltr
+  179  cd ~/prima/
+  180  ls -ltr
+  181  cd backup_and_recovery/
+  182  ls -ltr
+  183  vim dir_tree.py 
+  184  python3 backup_and_recovery/dir_tree.py 
+  185  cd ..
+  186  python3 backup_and_recovery/dir_tree.py 
+  187  vim backup_and_recovery/dir_tree.py 
+  188  python3 backup_and_recovery/dir_tree.py 
+  189  vim backup_and_recovery/dir_tree.py 
+  190  python3 backup_and_recovery/dir_tree.py 
+  191  vim backup_and_recovery/dir_tree.py 
+  192  python3 backup_and_recovery/dir_tree.py 
+  193  display /shared/backup/recup_dir.854/f1304141280.jpg
+  194  vim backup_and_recovery/dir_tree.py 
+  195  ls -ltr /shared/backup
+  196  ls -ltr /shared/
+  197  ls -ltr /shared/from_ausdesktop/
+  198  vim backup_and_recovery/dir_tree.py 
+  199  python3 backup_and_recovery/dir_tree.py 
+  200  display /shared/from_ausdesktop/f1304141280.jpg
+  201  vim backup_and_recovery/dir_tree.py 
+  202  python3 backup_and_recovery/dir_tree.py 
+  203  display /shared/backup/recup_dir.105/f17385440.jpg
+  204  vim backup_and_recovery/dir_tree.py 
+  205  python3 backup_and_recovery/dir_tree.py 
+  206  vim backup_and_recovery/dir_tree.py 
+  207  python3 backup_and_recovery/dir_tree.py 
+  208  vim backup_and_recovery/dir_tree.py 
+  209  python3 backup_and_recovery/dir_tree.py 
+  210  display /SHARED/BACKUP/RECUP_DIR.286/F496361520.JPG
+  211  display /SHARED/BACKUP/RECUP_DIR.286/F496351152.JPG
+  212  vim backup_and_recovery/dir_tree.py 
+  213  python3 backup_and_recovery/dir_tree.py 
+  214  vim backup_and_recovery/dir_tree.py 
+  215  python3 backup_and_recovery/dir_tree.py 
+  216  vim backup_and_recovery/dir_tree.py 
+  217  python3 backup_and_recovery/dir_tree.py 
+  218  vim backup_and_recovery/dir_tree.py 
+  219  sudo dnf search pil
+  220  sudo dnf search pillow
+  221  sud dnf install python3-pillow.x86_64
+  222  sudo dnf install python3-pillow.x86_64
+  223  vim backup_and_recovery/dir_tree.py 
+  224  python3 backup_and_recovery/dir_tree.py 
+  225  vim backup_and_recovery/dir_tree.py 
+  226  python3 backup_and_recovery/dir_tree.py 
+  227  vim backup_and_recovery/dir_tree.py 
+  228  python3 backup_and_recovery/dir_tree.py 
+  229  dnf search exif
+  230  sudo dnf install python3-exif.noarch
+  231  python3 backup_and_recovery/dir_tree.py 
+  232  vim backup_and_recovery/dir_tree.py 
+  233  python3 backup_and_recovery/dir_tree.py 
+  234  vim backup_and_recovery/dir_tree.py 
+  235  python3 backup_and_recovery/dir_tree.py 
+  236  vim backup_and_recovery/dir_tree.py 
+  237  python3 backup_and_recovery/dir_tree.py 
+  238  vim backup_and_recovery/dir_tree.py 
+  239  python3 backup_and_recovery/dir_tree.py 
+  240  display /shared/backup/recup_dir.464/f766126856.jpg
+  241  vim backup_and_recovery/dir_tree.py 
+  242  python3 backup_and_recovery/dir_tree.py 
+  243  display /shared/backup/recup_dir.2114/f1921769120.jpg
+  244  display /shared/backup/recup_dir.2114/f1921868472.jpg
+  245  ls -ltr
+  246  rm 1
+  247  git status
+  248  vim backup_and_recovery/dir_tree.py
+  249  python3 backup_and_recovery/dir_tree.py 
+  250  vim backup_and_recovery/dir_tree.py
+  251  python3 backup_and_recovery/dir_tree.py 
+  252  vim backup_and_recovery/dir_tree.py
+  253  python3 backup_and_recovery/dir_tree.py 
+  254  vim backup_and_recovery/dir_tree.py
+  255  python3 backup_and_recovery/dir_tree.py 
+  256  vim backup_and_recovery/dir_tree.py
+  257  python3 backup_and_recovery/dir_tree.py 
+  258  vim backup_and_recovery/dir_tree.py
+  259  git status
+  260  git commit -a
+  261  git push
+  262  git pull
+  263  git push
+  264  ssh 192.168.0.108
+  265  exit
+  266  sudo dnf update
+  267  term
+  268  te
+  269  uname -r
+  270  pytest -v nose_tests/tests/test_Interpreter.py
+  271  pytest3 -v nose_tests/tests/test_Interpreter.py
+  272  pytest -v nose_tests/tests/test_Interpreter.py
+  273  mkdir -p work
+  274  cd work/
+  275  vim work.py
+  276  touch __init__.py
+  277  ls -ltr
+  278  vim work_caller.py
+  279  vim test_work.py
+  280  pytest-3 test_work.py 
+  281  pytest-3 -v test_work.py 
+  282  vim test_work.py
+  283  python3 -m test_work.py
+  284  ls -ltr
+  285  python3 -m unittest
+  286  ls -ltr
+  287  python3 -m test_work.py
+  288  vim test_work.py
+  289  python3 -m test_work.py
+  290  vim test_work.py
+  291  ls -ltr
+  292  touch __init__.py
+  293  ls -ltr
+  294  ls -ltr ../
+  295  cd ..
+  296  ls -ltr
+  297  cd pytools/
+  298  ls -ltr
+  299  cd ..
+  300  cd work/
+  301  ls -ltr
+  302  vim test_work.py 
+  303  python3 -m test_work.py
+  304  vim test_work.py 
+  305  vim work_caller.py 
+  306  vim test_work.py 
+  307  python3 -m test_work.py
+  308  vim test_work.py 
+  309  python3 -m test_work.py
+  310  vim test_work.py 
+  311  python3 -m test_work.py
+  312  vim test_work.py 
+  313  mkdir tests
+  314  mv test_work.py tests
+  315  python3 -m tests/test_work.py
+  316  vim tests/test_work.py 
+  317  python3 -m tests/test_work.py
+  318  vim tests/test_work.py 
+  319  python3 -m tests/test_work.py
+  320  pytest-3 tests/test_work.py
+  321  pytest-3 -v tests/test_work.py
+  322  ls -ltr
+  323  mv tests/test_work.py .
+  324  ls -ltr
+  325  rm -rvf tests/
+  326  pytest-3 -v tests/test_work.py
+  327  pytest-3 -v test_work.py
+  328  vim test_work.py 
+  329  pytest-3 -v test_work.py
+  330  ls -ltr
+  331  cd ..
+  332  pytest-3 -v work/test_work.py
+  333  vim work/test_work.py 
+  334  pytest-3 -v work/test_work.py
+  335  vim work/test_work.py 
+  336  pytest-3 -v work/test_work.py
+  337  python3 -m work/test_work.py
+  338  python3 -m unittest work/test_work.py
+  339  python3 -m unittest work
+  340  cd work/
+  341  python3 -m unittest work
+  342  vim test_work.py
+  343  python3 -m unittest work
+  344  python3 -m unittest 
+  345  python3 -m unittest work
+  346  python3 -m unittest work.test_work
+  347  python3 -m unittest test_work
+  348  pytest-3 -v work/test_work.py
+  349  pytest-3 -v test_work.py
+  350  pytest-3 -vvv test_work.py
+  351  pytest-3 -vvvv test_work.py
+  352  pytest-3 -h
+  353  pytest-3 -v --debug test_work.py
+  354  cd ..
+  355  python -m unittest
+  356  python -m unittest work
+  357  cd work/
+  358  python -m unittest 
+  359  python3 -m unittest 
+  360  python2 -m unittest 
+  361  python -m unittest
+  362  pytest-3 -v --debug test_work.py
+  363  cat /home/gliang/prima/work/pytestdebug.log
+  364  pytest-3 -v --debug test_work.py
+  365  nosetests test_work.py
+  366  nosetests -v test_work.py
+  367  nosetests3 -v test_work.py
+  368  pytest-3 -v --debug test_work.py
+  369  rm /home/gliang/prima/work/pytestdebug.log
+  370  pytest-3 -v --debug test_work.py
+  371  cat /home/gliang/prima/work/pytestdebug.log
+  372  python3 -m unitest
+  373  python3 -m unittest
+  374  python3 -m unittest test_work.py
+  375  vim test_work.py
+  376  python3 -m unittest test_work.py
+  377  pytest-3 -v --debug test_work.py
+  378  python3 -m unittest test_work
+  379  python3 -m unittest work.test_work
+  380  cd ..
+  381  python3 -m unittest work.test_work
+  382  cd work/
+  383  python3 -m unittest work.test_work
+  384  python3 -m unittest test_work
+  385  ls -ltr
+  386  work.py workm.py
+  387  mv work.py workm.py
+  388  vim work_caller.py 
+  389  vim test_work.py
+  390  python3 -m unittest test_work
+  391  cd ..
+  392  python3 -m unittest test_work
+  393  python3 -m unittest work.test_work
+  394  vim work/test_work.py
+  395  python3 -m unittest work.test_work
+  396  vim work/test_work.py
+  397  python3 -m unittest work.test_work
+  398  vim work/test_work.py
+  399  python3 -m unittest work.test_work
+  400  vim work/test_work.py
+  401  python3 -m unittest work.test_work
+  402  vim work/test_work.py
+  403  python3 -m unittest work.test_work
+  404  vim work/test_work.py
+  405  python3 -m unittest work.test_work
+  406  vim work/test_work.py
+  407  vim work/work_caller.py 
+  408  python3 -m unittest work.test_work
+  409  vim work/work_caller.py 
+  410  vim work/workm.py 
+  411  ls -ltr
+  412  ls -tlr work/
+  413  rm work/*.pyc
+  414  python3 -m unittest work.test_work
+  415  vim work/test_work.py 
+  416  python3 -m unittest work.test_work
+  417  vim work/test_work.py 
+  418  python3 -m unittest work.test_work
+  419  vim work/test_work.py 
+  420  python3 -m unittest work.test_work
+  421  vim work/test_work.py 
+  422  python3 -m unittest work.test_work
+  423  vim work/workm.py 
+  424  vim work/test_work.py 
+  425  vim work/workm.py 
+  426  python3 -m unittest work.test_work
+  427  vim work/workm.py 
+  428  vim work/test_work.py 
+  429  python3 -m unittest work.test_work
+  430  vim work/test_work.py 
+  431  python3 -m unittest work.test_work
+  432  vim work/test_work.py 
+  433  python3 -m unittest work.test_work
+  434  vim work/test_work.py 
+  435  python3 -m unittest work.test_work
+  436  vim work/test_work.py 
+  437  vim work/work_caller.py 
+  438  vim work/test_work.py 
+  439  python3 -m unittest work.test_work
+  440  vim work/test_work.py 
+  441  python3 -m unittest work.test_work
+  442  vim work/test_work.py 
+  443  python3 -m unittest work.test_work
+  444  vim work/test_work.py 
+  445  python3 -m unittest work.test_work
+  446  vim work/test_work.py 
+  447  python3 -m unittest work.test_work
+  448  vim work/test_work.py 
+  449  python3 -m unittest work.test_work
+  450  vim work/test_work.py 
+  451  python3 -m unittest work.test_work
+  452  vim work/test_work.py 
+  453  python3 -m unittest work.test_work
+  454  vim work/test_work.py 
+  455  python3 -m unittest work.test_work
+  456  vim work/test_work.py 
+  457  python3 -m unittest work.test_work
+  458  vim work/test_work.py 
+  459  python3 -m unittest work.test_work
+  460  vim work/test_work.py 
+  461  vim work/workm.py 
+  462  python3 -m unittest work.test_work
+  463  vim work/test_work.py 
+  464  python3 -m unittest work.test_work
+  465  vim work/test_work.py 
+  466  python3 -m unittest work.test_work
+  467  vim work/test_work.py 
+  468  python3 -m unittest work.test_work
+  469  vim work/test_work.py 
+  470  pytest-3 -vvv work/test_work.py 
+  471  python3 -m unittest work.test_work
+  472  vim work/test_work.py 
+  473  python3 -m unittest work.test_work
+  474  vim work/test_work.py 
+  475  python3 -m unittest work.test_work
+  476  vim work/test_work.py 
+  477  python3 -m unittest work.test_work
+  478  vim work/test_work.py 
+  479  python3 -m unittest work.test_work
+  480  vim work/test_work.py 
+  481  python3 -m unittest work.test_work
+  482  vim work/test_work.py 
+  483  python3 -m unittest work.test_work
+  484  vim work/test_work.py 
+  485  python3 -m unittest work.test_work
+  486  vim work/test_work.py 
+  487  python3 -m unittest work.test_work
+  488  vim work/test_work.py 
+  489  python3 -m unittest work.test_work
+  490  vim work/test_work.py 
+  491  python3 -m unittest work.test_work
+  492  vim work/test_work.py 
+  493  python3 -m unittest work.test_work
+  494  vim work/test_work.py 
+  495  python3 -m unittest work.test_work
+  496  vim work/test_work.py 
+  497  python3 -m unittest work.test_work
+  498  vim work/test_work.py 
+  499  python3 -m unittest work.test_work
+  500  vim work/test_work.py 
+  501  python3 -m unittest work.test_work
+  502  vim work/test_work.py 
+  503  python3 -m unittest work.test_work
+  504  vim work/test_work.py 
+  505  python3 -m unittest work.test_work
+  506  rt sys
+  507  python3 -m unittest work.test_work
+  508  vim work/test_work.py 
+  509  python3 -m unittest work.test_work
+  510  vim work/test_work.py 
+  511  python3 -m unittest work.test_work
+  512  vim work/test_work.py 
+  513  python3 -m unittest work.test_work
+  514  vim work/test_work.py 
+  515  python3 -m unittest work.test_work
+  516  vim work/test_work.py 
+  517  python3 -m unittest work.test_work
+  518  vim work/test_work.py 
+  519  cd ..
+  520  cd Downloads/
+  521  ls -ltr
+  522  evince Notice_of_assessment_2019_04_09_12_51_08_61511.pdf
+  523  ls -ltr
+  524  evince Notice_of_assessment_2018_03_15_21_03_31_305252.pdf
+  525  cd prima/
+  526  grep -r --include="*.py" -He StringIO
+  527  vim nose_tests/tests/test_ex1.py
+  528  vim nose_tests/tests/test_Interpreter.py
+  529  vim nose_tests/tests/test_app.py
+  530  vim nose_tests/tests/test_ex1.py
+  531  bpython3\
+  532  bpython3
+  533  sudo dnf search stringio
+  534  sudo dnf search stringioipython
+  535  ipython
+  536  ipython3
+  537  bpython3
+  538  vim nose_tests/tests/test_Interpreter.py
+  539  sudo dnf search pytest
+  540  sudo dnf install python3-pytest.noarch
+  541  pytest -v nose_tests/tests/test_Interpreter.py
+  542  pytest3 -v nose_tests/tests/test_Interpreter.py
+  543  pytest -v nose_tests/tests/test_Interpreter.py
+  544  pytest-3 nose_tests/tests/test_Interpreter.py
+  545  vim nose_tests/tests/test_Interpreter.py
+  546  pytest-3 nose_tests/tests/test_Interpreter.py
+  547  pytest-3 -v nose_tests/tests/test_Interpreter.py
+  548  vim nose_tests/tests/test_Interpreter.py
+  549  pytest-3 -v nose_tests/tests/test_Interpreter.py
+  550  vim nose_tests/tests/test_Interpreter.py
+  551  pytest-3 -v nose_tests/tests/test_Interpreter.py
+  552  vim nose_tests/tests/test_Interpreter.py
+  553  pytest-3 -v nose_tests/tests/test_Interpreter.py
+  554  vim nose_tests/tests/test_Interpreter.py
+  555  pytest-3 -v nose_tests/tests/test_Interpreter.py
+  556  vim nose_tests/tests/test_Interpreter.py
+  557  pytest-3 -v nose_tests/tests/test_Interpreter.py
+  558  vim nose_tests/tests/test_Interpreter.py
+  559  grep -r --include="*.py" -He patch
+  560  vim nose_tests/tests/test_ex1.py
+  561  ssh 192.168.0.108
+  562  reboot
+  563  sudo dnf install evince
+  564  sudo dnf install xpdf
+  565  df
+  566  cd /run/media/gliang/1969-E67C
+  567  ls -tlr
+  568  xpdf 'Scanned at 2019-10-19 10-496.pdf' 
+  569  ls -ltr
+  570  vf ..
+  571  cd ..
+  572  pwd
+  573  cd ~/Downloads/
+  574  ls -ltr
+  575  sudo dnf install imagemagick
+  576  sudo dnf search imagemagick
+  577  sudo dnf install ImageMagick.x86_64
+  578  ls -ltr
+  579  cd connor_doc/
+  580  ls -ltr
+  581  convert amy_custody_quebec_1.jpg amy_custody_quebec_2.jpg amy_custody_quebec.pdf
+  582  ls -ltr
+  583  evince amy_custody_quebec.pdf
+  584  convert amy_ontario1.jpg amy_ontario2.jpg amy_ontario3.jpg amy_ontario4.jpg amy_ontario5.jpg amy_ontario6.jpg amy_ontario6.pdf
+  585  ls -ltr
+  586  convert T42017_li.jpg t4_2017_li.jpg T4_2017_li.pdf
+  587  ls -ltr
+  588  evince T4_2017_li.pdf
+  589  evince amy_ontario6.pdf
+  590  ;s=;tr
+  591  ls -ltr
+  592  cd ..
+  593  ls -ltr
+  594  mv 201910191319441000.jpg swear_custody_amy_2019.jpg
+  595  ls -ltr
+  596  mv swear_custody_amy_2019.jpg swear_custody_connor_2019.jpg
+  597  ls -ltr
+  598  convert swear_custody_connor_2019.jpg swear_custody_connor.pdf
+  599  ls -ltr
+  600  mv swear_custody_connor.pdf connor_doc
+  601  ls -ltr
+  602  rm swear_custody_connor_2019.jpg
+  603  ls -ltr
+  604  convert 201910191319441000.jpg  swear_custody_connor.pdf
+  605  ls  -ltr
+  606  ls -pltr connor_doc/
+  607  mv swear_custody_connor.pdf connor_doc/
+  608  ls -ltr
+  609  exit
+  610  ssh 192.168.0.108
+  611  exit
+  612  reboot
+  613  sudo dnf search chromium
+  614  sudo dnf install chromium.x86_64
+  615  sudo dnf install chromium-libs-media.x86_64
+  616  sudo dnf install fedora-chromium-config.noarch
+  617  sudo dnf install chromium-libs.x86_64
+  618  ls -ltr
+  619  cd prima/
+  620  ls -ltr
+  621  vim howto.test 
+  622  ls -ltr work/
+  623  ls -ltr
+  624  sudo dnf search conda
+  625  sudo dnf install python3-conda.noarch anaconda-core.x86_64 anaconda-gui.x86_64 anaconda-install-env-deps.x86_64
+  626  sudo dnf install  conda.noarch
+  627  conda-env list
+  628  python3 -v
+  629  conda create --name py37 python=3.7
+  630  conda env list
+  631  source activate py37
+  632  conda activate py37
+  633  source activate py37
+  634  conda activate /home/gliang/.conda/envs/py37
+  635  conda init py37
+  636  conda init
+  637  conda -V
+  638  conda info
+  639  conda activate py37
+  640  conda activate
+  641  conda init --help
+  642  conda init bash
+  643  conda activate py37
+  644  exit
+  645  source deactivate
+  646  conda activate py37
+  647  cd prima/
+  648  ls -ltr
+  649  histoyr
+  650  history
+  651  ls -ltr
+  652  conda install pytest
+  653  ls -ltr
+  654  pytest 0v nose_tests/
+  655  pytest vv nose_tests/
+  656  pytest -v nose_tests/
+  657  conda install mock
+  658  pytest -v nose_tests/
+  659  conda install StringIO
+  660  conda instal flask
+  661  conda install flask
+  662  pytest -v nose_tests/
+  663  conda install ddt
+  664  conda install termcolor
+  665  pytest -v nose_tests/
+  666  conda install requests
+  667  pytest -v nose_tests/
+  668  ls -ltr
+  669  pytest -v py_tests/
+  670  git pull
+  671  git status
+  672  ls -ltr work/
+  673  pytest work/
+  674  ls -ltr
+  675  nosetests -vw nose_tests/
+  676  ls-ltr
+  677  ls =ltr
+  678  ls -ltr
+  679  mkdir -p stock
+  680  cd stock/
+  681  vim a_stock.py
+  682  cd ..
+  683  ls-ltr
+  684  ls -ltr
+  685  git status
+  686  git add stock
+  687  git commit -a
+  688  git push
+  689  cd prima/
+  690  ls  -ltr
+  691  git status
+  692  git add work/
+  693  git status
+  694  git commit -a
+  695  git pull
+  696  git status
+  697  git push
+  698  ls -ltr
+  699  cd stock/
+  700  ls -ltr
+  701  vim cli_stock.py 
+  702  vim a_stock.py 
+  703  git rm a_stock.py 
+  704  git status
+  705  git checkout a_stock.py
+  706  git rm a_stock.py 
+  707  git status
+  708  git commit -a
+  709  git push
+  710  ls -ltr
+  711  vim cli_stock.py 
+  712  conda env list
+  713  source deactivate
+  714  conda deactivate
+  715  ifconfig
+  716  scp 102.168.0.108:/opt/openvpn/gliang.tar.gz .
+  717  ls -ltr
+  718  dnf search openvpn
+  719  sudo dnf install NetworkManager-openvpn.x86_64 NetworkManager-openvpn-gnome.x86_64
+  720  sudo dnf install openvpn.x86_64
+  721  mkdir -p /opt/openvpn
+  722  sudo mkdir -p /opt/openvpn
+  723  mv gliang.tar.gz /opt/openvpn/
+  724  sud mv gliang.tar.gz /opt/openvpn/
+  725  sudo mv gliang.tar.gz /opt/openvpn/
+  726  chown -R gliang.gliang /opt/openvpn/
+  727  sudo chown -R gliang.gliang /opt/openvpn/
+  728  cd /opt/openvpn/
+  729  ls -ltr
+  730  tar -xvzf gliang.tar.gz 
+  731  ls -ltr
+  732  cd gliang/
+  733  ls -ltr
+  734  ssh imaging-02
+  735  dmesg
+  736  sudo dnf search nmap
+  737  sudo dnf install nmap.x86_64
+  738  nmap -sU localhost
+  739  sudo nmap -sU localhost
+  740  firewall-cmd  --list-all
+  741  firewall-cmd  --state
+  742  sudo firewall-cmd --zone=public --add-port=443/tcp --permanent
+  743  firewall-cmd  --list-all
+  744  sudo nmap -sU localhost
+  745  sudo netstat -lnp | grep 443
+  746  sudo nmap -sU localhost
+  747  sudo firewall-cmd --zone=public --add-port=22/tcp --permanent
+  748  sudo nmap -sU localhost
+  749  sudo dnf search sshd
+  750  sudo dnf search ssh
+  751  ssh imaging-02
+  752  dmesg
+  753  ssh imaging-02
+  754  exit
+  755  history|grep dnf
+  756  history|grep rpm
+  757  history|grep zoom
+  758  exit
+  759  conda deactivate
+  760  history|grep zoom
+  761  sudo dnf search mesa
+  762  sudo dnf install mesa-dri-drivers.x86_64
+  763  sudo dnf search libasound
+  764  sudo dnf search GL
+  765  sudo dnf search libgl
+  766  sudo dnf install mesa-libGLU.x86_64
+  767  sudo dnf search sqlite
+  768  sudo dnf search sqlite3
+  769  sudo install install libsq3.x86_64
+  770  sudo  install libsq3.x86_64
+  771  sudo dnf  install libsq3.x86_64
+  772  sudo dnf  install qt3
+  773  sudo dnf  search libxcb
+  774  sudo dnf  install libxcb.x86_64 libxcb-devel.x86_64
+  775  sudo dnf  search pulse
+  776  sudo dnf  search libpulse
+  777  sudo dnf  search pulse
+  778  sudo dnf install pu
+  779  ls -ltr 
+  780  sudo search glut
+  781  qwer6677
+  782  sudo dnf search glut
+  783  sudo dnf install freeglut.x86_64 freeglut-devel.x86_64
+  784  sudo dnf search opengl
+  785  sudo dnf search opengl|grep -i glut
+  786  sudo dnf search glut3
+  787  sudo dnf search glut
+  788  sudo dnf groupinstall "X Software Development"
+  789  sudo dnf search mesa
+  790  sudo dnf install mesa-libGLU.x86_64 mesa-libGLU-devel.x86_64 mesa-libGL-devel.x86_64 
+  791  sudo dnf install mesa-dri-drivers mesa-libGL xorg-x11-drv-ati
+  792  conda deactivate
+  793  ssh imaging-02
+  794  dmesg
+  795  conda deactivate
+  796  ssh imaging-02
+  797  conda deactivate
+  798  ssh imaging-02
+  799  source deactivate
+  800  conda deactivate
+  801  ssh imaging-02
+  802  ls -ltr /usr/lib
+  803  ls -ltr /usr/lib/*minc*
+  804  ls -ltr /usr/local/lib/*minc*
+  805  ls -ltr /usr/local/lib64/*minc*
+  806  cd /shared/
+  807  ls -ltr
+  808  cd work/
+  809  ls -ltr
+  810  cd bicpl/
+  811  ls -ltr
+  812  mkdir -p build
+  813  sudo dnf search cmake
+  814  sudo dnf install cmake.x86_64 cmake-gui.x86_64 extra-cmake-modules.noarch
+  815  cd build/
+  816  cmake --version
+  817  cmake ../
+  818  ls -ltr
+  819  cd ..
+  820  ls -ltr
+  821  cd ..
+  822  ls -ltr
+  823  git clone https://github.com/BIC-MNI/minc-toolkit-v2.git
+  824  ls -ltr
+  825  ls -ltr minc-toolkit-v2/
+  826  rm -rvf minc-toolkit-v2/
+  827  git clone --recursive https://github.com/BIC-MNI/minc-toolkit-v2.git
+  828  ls -ltr
+  829  cd minc-toolkit-v2/
+  830  ls -ltr
+  831  mkdir -p build
+  832  cd build/
+  833  cmake ..
+  834  make 
+  835  cat /shared/work/minc-toolkit-v2/build/CMakeFiles/CMakeError.log
+  836  cd ..
+  837  ls ltr
+  838  ls -ltr
+  839  cd Display/
+  840  ls -ltr
+  841  mdkir build
+  842  mkdir -p build
+  843  cd build/
+  844  cmake ..
+  845  sudo dnf search netcdf
+  846  sudo dnf install netcdf.x86_64 netcdf-devel.x86_64 netcdf-static.x86_64
+  847  cmake ..
+  848  cd ..
+  849  ls -ltr
+  850  cd bicpl/
+  851  ls -ltr
+  852  mkdir -p build
+  853  cd build/
+  854  cmake ..
+  855  cd ..
+  856  ls -ltr
+  857  cd libminc/
+  858  ls -ltr
+  859  mkdir -p build
+  860  cd build/
+  861  cmake ..
+  862  make
+  863  cmake-gui ..
+  864  cd ..
+  865  rm -rvf build;mkdir -p build; cd build;
+  866  ls -ltr
+  867  cmake-gui ..
+  868  cmake3 -help
+  869  cmake3 ..
+  870  make 
+  871  make -help
+  872  make install
+  873  sudo make install
+  874  cd ..
+  875  rm -rvf build/
+  876  cd ..
+  877  cd bicgl/
+  878  ls -ltr
+  879  mkdir -p build
+  880  cd build/
+  881  cmake3 ..
+  882  make 
+  883  make install
+  884  cmake3 ..
+  885  make
+  886  cd ..
+  887  cd bicpl/
+  888  ls -ltr
+  889  cd build/
+  890  cmake3 ..
+  891  cd ..
+  892  rm -rvf build/
+  893  mkdir -p build
+  894  cd build/
+  895  cmake3 ..
+  896  make 
+  897  ls -ltr
+  898  make install
+  899  cd ..
+  900  cd Display/
+  901  ls -ltr
+  902  rm -rvf build
+  903  mkdir -p build
+  904  cd build/
+  905  cmake3 ..
+  906  cmake3 ../
+  907  cmake-gui 
+  908  pwd
+  909  cmake-gui ..
+  910  ssh -X imaging-o2
+  911  ssh -X imaging-02
+  912  ssh -Y imaging-02
+  913  xprop 
+  914  xprop -h
+  915  xwininfo
+  916  sudo dnf search devilspie2
+  917  sudo dnf install devilspie2.x86_64
+  918  xwininfo -wm
+  919  devilspie2 -d
+  920  sudo dnf search display
+  921  sudo dnf install gdm.x86_64
+  922  sudo dnf install ImageMagick.x86_64
+  923  xprop 
+  924  ssh -Y imaging-02
+  925  devilspie2
+  926  ssh -Y imaging-02 
+  927  sudo dnf search x11vnc
+  928  sudo dnf install x11vnc.x86_64
+  929  ssh -X imaging-02
+  930  which xauth 
+  931  vim ~/.ssh/config
+  932  ssh -X imaging-02
+  933  vim ~/.ssh/config 
+  934  ssh -X imaging-02
+  935  ssh -Y imaging-02
+  936  ls -ltr ~/.ssh/config 
+  937  rm ~/.ssh/config 
+  938  ssh -X -v imaging-02
+  939  xauth -V
+  940  xauth generate $DISPLAY .
+  941  env|grep ssh
+  942  env|grep -i display
+  943  sudo dnf search askpass
+  944  sudo dnf install x11-ssh-askpass.x86_64 openssh-askpass.x86_64 
+  945   xauth generate $DISPLAY .
+  946  dnf search terminal
+  947  sudo dnf install gnome-terminal-nautilus.x86_64 gnome-terminal.x86_64
+  948  sudo dnf search Shell Extensions
+  949  sudo dnf install gnome-shell-extension-common.noarch chrome-gnome-shell.x86_64
+  950  ssh imaging-02
+  951  ssh -Y imaging-02
+  952  env|grep ssh
+  953  env|grep -i displ
+  954  export DISPLAY=:0.0
+  955  ssh -v -Y imaging-02
+  956  ebv|grep -i disp
+  957  evv|grep -i disp
+  958  env|grep -i disp
+  959  ssh -Y imaging-02
+  960  ssh -Y -v imaging-02
+  961  ssh -v -X imaging-02
+  962  xauth generate $DISPLAY .
+  963  xauth add :0 . `mcookie`
+  964  ls -ltr ~/.Xauthority 
+  965  cat /home/gliang/.Xauthority
+  966  ssh -v -Y imaging-02
+  967   export DISPLAY=localhost:0.0   
+  968  ssh -X -v imaging-02
+  969  ssh -Y imaging-02
+  970  vim firefox.filenotavail 
+  971  ssh imaging-02
+  972  ls -ltr ~/Downloads/
+  973  vim WA40404_pending.2020-03-30.malfNormalizedBV.csv
+  974  vim Downloads/WA40404_pending.2020-03-30.malfNormalizedBV.csv 
+  975  cat Downloads/WA40404_pending.2020-03-30.malfNormalizedBV.csv
+  976  ls -ltr
+  977  cd Downloads/
+  978  ls -ltr
+  979  rm WN39658_DTI_pending.xls WA40404_pending.2020-03-30.malfNormalizedBV.csv
+  980  exit
+  981  ssh -Y imaging-02
+  982  exit
+  983  exit
+  984  exit
+  985  cd /trials/PB006-03-01/8007-DMA-1/subject_8007-003/baseline
+  986  ls -ltr
+  987  ssh -X imaging-02
+  988  exit
+  989  exit
+  990  ssh imaging-02
+  991  ssh imaging-02
+  992  cd ../doc
+  993  ssh nrx3-gliang 
+  994  ssh nrx3-gliang
+  995  ssh -Y imaging-02
+  996  sudo dnf search google
+  997  sudo dnf search google|grep hangout
+  998  sudo dnf search chrome
+  999  sudo dnf search meet
+ 1000  mql
+ 1001  sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+ 1002  dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm
+ 1003  sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm
+ 1004  dnf install -y ffmpeg-libs
+ 1005  sudo dnf install -y ffmpeg-libs
+ 1006  hostory
+ 1007  history
+ 1008  history > ~/prima/docs/howto.html5.fedora
