@@ -3,7 +3,8 @@ import os
 
 
 class Exchange(object):
-    pass
+    STX = 'STX'
+    NYSE = 'NYSE'
 
 
 class Stock(object):
@@ -17,10 +18,16 @@ class Stock(object):
     def description(self):
         pass
 
+    def std_name(self):
+        """
+        TD for TD bank e.g
+        """
+        return 'std'
+
     def long_name(self):
         pass
 
-    def exchange_name(self):
+    def exchange(self):
         pass
 
     def category(self):
@@ -49,7 +56,7 @@ class CliStock(object):
     """
 
     def create_a_stock(self):
-        print('create a stock with what?')
+        print('create a stock with what? prompt to type:/select from list/read from files')
         d = {}
         return d
 

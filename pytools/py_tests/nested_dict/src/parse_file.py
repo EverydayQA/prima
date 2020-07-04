@@ -71,7 +71,7 @@ class DPaseFile(object):
 
             dnest = self.nested.create_nested(keys, value)
             pprint(dnest)
-            d = self.nested.update_nested(d, dnest)
+            d = self.nested.update(d, dnest)
         return d
 
     def d_deep_get(self, d, keys, default=None):

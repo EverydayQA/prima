@@ -24,24 +24,7 @@ class NestedDict(object):
             return d
         return self.deep_set(keys, value=value, **d)
 
-    def deep_update(self, source, overrides):
-        """Update a nested dictionary or similar mapping.
-
-        Modify ``source`` in place.
-        """
-        for key in overrides.keys():
-            value = overrides.get(key, None)
-            if isinstance(value, collections.abc.Mapping) and value:
-                returned = self.deep_update(source.get(key, {}), value)
-                source[key] = returned
-            else:
-                source[key] = overrides[key]
-        return source
-
-    def d_deep_get(self, d_original, keys, default=None):
-        return self.nested_get(d_original, keys)
-
-    def nested_get(self, d, keys):
+    def get(self, d, keys):
         if not d:
             return d
         if not keys:
@@ -89,13 +72,21 @@ class NestedDict(object):
             return dnew
         return self.create_nested(keys, dnew)
 
-    def merge(self, d, dnew):
-        """
-        merge 2 dicts, nested or not
-        """
-        raise Exception('not coded yet')
+    def deep_update(self, source, overrides):
+        """Update a nested dictionary or similar mapping.
 
-    def update_nested(self, d, dnest):
+        Modify ``source`` in place.
+        """
+        for key in overrides.keys():
+            value = overrides.get(key, None)
+            if isinstance(value, collections.abc.Mapping) and value:
+                returned = self.deep_update(source.get(key, {}), value)
+                source[key] = returned
+            else:
+                source[key] = overrides[key]
+        return source
+
+    def update(self, d, dnest):
         """
         update nested with a nested dict
         assume dnest is a single entry for now, should be compliated
@@ -129,7 +120,7 @@ class NestedDict(object):
                 raise Exception('vnest not dict')
                 continue
 
-            vkey = self.update_nested(v, vnest)
+            vkey = self.update(v, vnest)
             # replace the original value(v) with vkey
             d[key] = vkey
         return d

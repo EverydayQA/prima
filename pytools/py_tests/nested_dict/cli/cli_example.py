@@ -1,4 +1,25 @@
 from pprint import pprint
+# import argparse
+
+
+class ArgparseExample(object):
+
+    def __init__(self):
+        pass
+
+    def args_to_passon(self):
+        """
+        passed on to another cli args to be parsed
+        cli.py --cli_type="--house --semi"
+        """
+        pass
+
+    def parser_athome(self):
+        """
+        store a one variable
+        cli.py --stayhome --stay_home --stay-home --athome
+        """
+        pass
 
 
 def main(argv=None):
@@ -12,7 +33,6 @@ def main(argv=None):
     # print(cli2_ascii)
     # cli2_list2 = arg.chr_args(args=cli2_ascii)
     # print(cli2_list2)
-    
     default = args.default
     # or
     default = " --default  2  -m a b c"

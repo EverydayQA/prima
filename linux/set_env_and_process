@@ -13,6 +13,6 @@ else
     eval $@
 fi
 
+# add func
 # usage ./env_set_and_process ./env_set_and_process
 # useful for ssh/cron etc to set env and execute script defined in parameters
-

@@ -93,6 +93,7 @@ PATH_NEW=$(unique_str $PATH)
 echo_var $path $PATH_NEW
 
 echo '1 str_to_be_append'
+# conda or virtualenv -- is this the right way?
 FIRST=/home/joe/ven27p2u/bin
 PATH_NEW=$(append_front $FIRST $PATH_NEW)
 echo_var $path $PATH_NEW
@@ -114,7 +115,7 @@ echo 'parameters opts parsing case switch to be added'
 # “c” and “argc” have required arguments.
 
 # set an initial value for the flag
-ARG_B=0
+ARGB=0
 
 # read the options
 TEMP=`getopt -o a::bc: --long arga::,argb,argc: -n 'test.sh' -- "$@"`
@@ -125,14 +126,14 @@ while true ; do
     case "$1" in
         -a|--arga)
             case "$2" in
-                "") ARG_A='some default value' ; shift 2 ;;
-                *) ARG_A=$2 ; shift 2 ;;
+                "") ARGA='py37' ; shift 2 ;;
+                *) ARGA=$2 ; shift 2 ;;
             esac ;;
-        -b|--argb) ARG_B=1 ; shift ;;
+        -b|--argb) ARGB=1 ; shift ;;
         -c|--argc)
             case "$2" in
                 "") shift 2 ;;
-                *) ARG_C=$2 ; shift 2 ;;
+                *) ARGC=$2 ; shift 2 ;;
             esac ;;
         --) shift ; break ;;
         *) echo "Internal error!" ; exit 1 ;;
@@ -140,6 +141,11 @@ while true ; do
 done
 
 # do something with the variables -- in this case the lamest possible one :-)
-echo "ARG_A = $ARG_A"
-echo "ARG_B = $ARG_B"
-echo "ARG_C = $ARG_C"
+echo "ARGA = $ARGA"
+echo "ARGB = $ARGB"
+echo "ARGC = $ARGC"
+if [ $ARGA -eq "py37"]
+    source /home/gliang/.py37_env.sh
+then
+    echo "not default py37"
+fi
