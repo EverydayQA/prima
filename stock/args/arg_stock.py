@@ -1,7 +1,8 @@
 import argparse
+import datetime
 
 
-class ArgsExample(object):
+class ArgStock(object):
 
     def ord_args(self, args):
         """
@@ -21,6 +22,9 @@ class ArgsExample(object):
 
         # By default it will fail with multiple arguments.
         parser.add_argument('--default')
+
+        # datetime
+        parser.add_argument('--now', default=datetime.datetime.now(), help="It should not be a arg, but did anyway")
 
         # Telling the type to be a list will also fail for multiple arguments,
         # but give incorrect results for a single argument.
