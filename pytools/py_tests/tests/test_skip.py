@@ -2,36 +2,30 @@ import pytest
 import unittest
 
 
-@pytest.fixture(scope='module', autouse=True)
-def skip_if_this_condition():
-    # not the scope usage here
-    # the same condtion will appy to all tests if specified
-    return 'skipIfCertainCondtion'
+def skip_test():
+    return 1
 
 
-skipif = pytest.mark.skipif(func_fixture='skipIfCertainCondition')
+skipmeif = pytest.mark.skipif("skip_test()==1")
 
 
+@skipmeif
 class TestSkipWithoutFixture(unittest.TestCase):
 
     def fixture_sometimes_suck():
         return "fail"
 
-    @pytest.mark.skipif(fixture_sometimes_suck() == 'fail', reason='use good old method to skip')
+    @pytest.mark.skipif(skip_test() == 0, reason='use good old method to skip')
     def test_setting_value(self):
         print("Hello I am in testcase")
 
     def test_to_pass(self):
         pass
 
-    @skipif
+    @skipmeif
     def test_to_pass2(self):
         pass
 
-    @pytest.fixture(scope='class', autouse=True)
-    def fixture_scope_class(self):
-        return 'skipp'
-
-    @skipif
+    @skipmeif
     def test_setting_value2(self):
         print("Hello I am in testcase")

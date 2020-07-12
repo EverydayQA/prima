@@ -20,7 +20,7 @@ class CliStock(object):
 
     def action(self):
         pprint(self.ns)
-        from lib.stock_wrapper import StockWrapper
+        from stock.stock_wrapper import StockWrapper
         wrapper = StockWrapper(**vars(self.ns))
         wrapper.action()
 

@@ -1,8 +1,10 @@
 from pprint import pprint
 import datetime
 import argparse
-from lib.single_stock import ConstStock
-from lib.single_stock import Stock
+from stock.single_stock import ConstStock
+from stock.single_stock import Stock
+from stock.stock_log import StockLog
+from nested_dict.nested_dict import NestedDict
 
 
 class StockWrapper(ConstStock):
@@ -12,15 +14,17 @@ class StockWrapper(ConstStock):
         self.args = args
         self.kwargs = kwargs
         self.ns = argparse.Namespace(**kwargs)
+        self.db = StockLog()
+        self.nested = NestedDict()
 
     def show(self):
-        self.log_stock()
+        self.db.log_stock()
         self.todo()
 
     def action(self):
         if self.ns.add:
             self.add_stock()
-        dall = self.get_all()
+        dall = self.db.get_all()
         pprint(dall)
 
     def add_stock(self):
@@ -30,7 +34,7 @@ class StockWrapper(ConstStock):
         d = {}
         dall = self.get_all()
 
-        from lib.single_stock import ConstStock
+        from stock.single_stock import ConstStock
         st = ConstStock()
         for key in st.keys():
             # value = raw_input('Please type value for {}'.format(key))
@@ -55,42 +59,54 @@ class StockWrapper(ConstStock):
         """
         make it a nested dict with variable length to test
         """
-        # exchange/name/eventid(datetimestr)/event=jsonstr/userid
+        # exchange/name/reviewid(datetimestr)/review=jsonstr/userid
         dt = datetime.datetime.now()
-        eventid = dt.isoformat()
+        reviewid = dt.isoformat()
         userid = 'user'
         s = Stock(**dstock)
         # reord -- initial setup a stock
-        # eventid -- with updated info, another class Event?
+        # reviewid -- with updated info, another class Event?
 
-        dev = {eventid: dstock, 'user': userid}
+        dev = {reviewid: dstock, 'user': userid}
         pprint(dev)
 
-        d = {s.stock.name: {s.stock.exchange: {'event': dev}}}
+        d = {s.stock.name: {s.stock.exchange: {'review': dev}}}
         return d
 
-    def updated_entry(self, name, dold, dnew):
+    def updated_entry(self, name, dold, dstock):
         """
         make it a nested dict with variable length to test
         dold without name
         """
-        # exchange/name/eventid(datetimestr)/event=jsonstr/userid
+        # exchange/name/reviewid(datetimestr)/review=jsonstr/userid
         dt = datetime.datetime.now()
-        eventid = dt.isoformat()
+        reviewid = dt.isoformat()
         userid = 'user'
         keys = list(dold.keys())
+
+        # exchange might be one, but could be more
+        # to be refactored
+        # using select_from
+
         exchange = keys[0]
+
         dev = dold.get(exchange, {})
-        devent = dev.get('event', {})
+
+        # part to be updated
+        dreview = dev.get('review', {})
 
         import copy
-        devent_new = copy.deepcopy(devent)
-        event = {eventid: dnew, 'user': userid}
-        devent_new.update(event)
+        dnew = copy.deepcopy(dreview)
+        review = {reviewid: dstock, 'user': userid}
+        dnew.update(review)
 
-        # add dnew to be new event
+        # add dnew to be new review
         # add new entry
-        d = {name: {exchange: {'event': devent_new}}}
+        # d = {name: {exchange: {'review': dnew}}}
+
+        # d = self.nested.update(dold, dnew)
+        keys = [name, exchange, 'review']
+        d = self.nested.set(dold, keys, dnew)
         return d
 
     def choose_exchange(self, key):
@@ -98,7 +114,7 @@ class StockWrapper(ConstStock):
 
     def update_stock(self, name, d):
         """
-        event with new price/dividend/more info
+        review with new price/dividend/more info
         """
         dnew = {}
         for key in self.keys_update():

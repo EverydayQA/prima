@@ -1,3 +1,4 @@
+import argparse
 
 
 class Exchange(object):
@@ -39,6 +40,7 @@ class Stock(ConstStock):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
+        self.stock = argparse.Namespace(**self.kwargs)
 
     def is_valid_exchange(self, value):
         if not value:

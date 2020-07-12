@@ -1,7 +1,7 @@
 import argparse
 import json
 import os
-from lib.single_stock import ConstStock
+from stock.single_stock import ConstStock
 
 
 class StockLog(ConstStock):
@@ -25,7 +25,7 @@ class StockLog(ConstStock):
 
     def get_logpath(self):
         path = os.path.dirname(__file__)
-        path = os.path.join(path, "../data")
+        path = os.path.join(path, "./data")
         return os.path.abspath(path)
 
     def get_logfile(self):
