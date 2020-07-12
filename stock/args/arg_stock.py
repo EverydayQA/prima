@@ -1,5 +1,4 @@
 import argparse
-import datetime
 
 
 class ArgStock(object):
@@ -23,8 +22,14 @@ class ArgStock(object):
         # By default it will fail with multiple arguments.
         parser.add_argument('--default')
 
+        parser.add_argument('--add', action='store_true', default=False)
+        parser.add_argument('--update', type=str, default=None, help='search string to update a stock')
+
+        # example
+        parser.add_argument('--athome', '--at-home', '--at_home', '--home', dest='home', action='store_true', default=False)
+
         # datetime
-        parser.add_argument('--now', default=datetime.datetime.now(), help="It should not be a arg, but did anyway")
+        # parser.add_argument('--now', default=datetime.datetime.now(), help="It should not be a arg, but did anyway")
 
         # Telling the type to be a list will also fail for multiple arguments,
         # but give incorrect results for a single argument.
@@ -38,6 +43,8 @@ class ArgStock(object):
         # '+' == 1 or more.
         # '*' == 0 or more.
         # '?' == 0 or 1.
+
+        # GNU convention -m short --multiple for long -multiple does not make sense
         # An int is an explicit number of arguments to accept.
         parser.add_argument('-m', '--multiple', nargs='+')
 

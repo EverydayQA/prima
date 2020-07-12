@@ -1,48 +1,51 @@
 
 
 class Exchange(object):
-    STX = 'STX'
+    TSX = 'TSX'
     NYSE = 'NYSE'
 
+    def exchanges(self):
+        return [self.stx, self.NYSE]
 
-class Stock(object):
+    def d_unit(self):
+        d = {}
+        d[self.TSX] = 'CAD'
+        d[self.NYSE] = 'USD'
 
-    def dividend(self):
-        pass
 
-    def volume(self):
-        pass
+class ConstStock(Exchange):
+    DIVIDEND = 'dividend'
+    VOLUME = 'volume'
+    DESCRIPTION = 'description'
+    # TD for TD bank e.g
+    NAME = 'name'
+    # oil/manufacture/edu/pharmaceutical/food/bank/financial/
+    FIELD = 'field'
+    LONGNAME = 'longname'
+    EXCHANGE = 'exchange'
+    SCORE = 'score'
+    PRICE = 'price'
+    ORIGIN = 'origin'
 
-    def description(self):
-        pass
+    def keys(self):
+        return [self.NAME, self.EXCHANGE, self.LONGNAME, self.PRICE, self.DIVIDEND, self.FIELD, self.SCORE, self.ORIGIN, self.DESCRIPTION]
 
-    def std_name(self):
-        """
-        TD for TD bank e.g
-        """
-        return 'std'
+    def keys_update(self):
+        return [self.EXCHANGE, self.PRICE, self.DIVIDEND, self.FIELD, self.SCORE, self.ORIGIN, self.DESCRIPTION]
 
-    def long_name(self):
-        pass
 
-    def exchange(self):
-        pass
+class Stock(ConstStock):
 
-    def category(self):
-        """
-        oil/manufacture/edu/pharmaceutical/food/bank/financial/
-        """
-        pass
+    def __init__(self, *args, **kwargs):
+        self.args = args
+        self.kwargs = kwargs
 
-    def score(self):
-        pass
+    def is_valid_exchange(self, value):
+        if not value:
+            return False
+        if value in self.exchanges():
+            return True
+        return False
 
-    def value(self):
-        pass
-
-    def buy_at(self):
-        pass
-
-    def sell_at(self):
-        pass
-
+    def todo(self):
+        print('input validation -- this class')

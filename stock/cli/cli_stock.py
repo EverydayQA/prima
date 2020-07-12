@@ -1,5 +1,4 @@
 from pprint import pprint
-import os
 
 
 class CliStock(object):
@@ -8,41 +7,29 @@ class CliStock(object):
     Do not take it for real, this is used for practice
     """
 
-    def create_a_stock(self):
-        print('create a stock with what? prompt to type:/select from list/read from files')
-        d = {}
-        return d
+    def __init__(self, *args, **kwargs):
+        self.args = args
+        self.kwargs = kwargs
+        self.ns = self.get_ns()
 
-    def save_stock(self, d):
-        """
-        save to a json file
-        """
-        print('save a stock')
+    def get_ns(self):
+        from args.arg_stock import ArgStock
+        arg = ArgStock()
+        args = arg.init_args(self.args)
+        return args
 
-    def jsonfile(self, exchange, stock):
-        log = '{}_{}.json'.format(exchange, stock)
-        log = os.path.join(self.logdir(), log)
-        return log
-
-    def logdir(self):
-        return '/tmp'
-
-    def add_weight(self):
-        """
-        add sth to a stock
-        exchange
-        """
-        pass
+    def action(self):
+        pprint(self.ns)
+        from lib.stock_wrapper import StockWrapper
+        wrapper = StockWrapper(**vars(self.ns))
+        wrapper.action()
 
 
 def main(argv=None):
-    from arg_stock import ArgsExample
-    arg = ArgsExample()
-    args = arg.init_args(argv)
-    pprint(args)
-    cli = CliStock()
-    d = cli.create_a_stock()
-    cli.save_stock(d)
+
+    # feed into class
+    cli = CliStock(*argv)
+    cli.action()
 
 
 def howto(self):
