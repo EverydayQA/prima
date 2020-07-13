@@ -15,41 +15,41 @@ class Menu(object):
 
     def select_from_menu(self, the_list, prompt):
         logger.debug('select_from_menu')
-        index = 1
+        index = 0
         for item in the_list:
-            print (str(index) + " ## " + item)
+            print(str(index) + " ## " + item)
             index = index + 1
 
-        print prompt
+        print(prompt)
 
         selections = []
-        sels = map(int, raw_input("space separated: ").split())
+        sels = map(int, input("space separated: ").split())
         for sel in sels:
             index = int(sel)
-            selections.append(index)
+            selections.append(the_list[index])
         return selections
 
 
 def print_format_table():
-    for style in xrange(8):
-        for fg in xrange(30, 38):
+    for style in range(8):
+        for fg in range(30, 38):
             s1 = ''
-            for bg in xrange(40, 48):
+            for bg in range(40, 48):
                 format = ';'.join([str(style), str(fg), str(bg)])
                 s1 += '\x1b[%sm %s \x1b[0m' % (format, format)
-            print s1
-        print '\n'
+            print(s1)
+        print('\n')
 
 
 def get_input():
-    input_str = raw_input("Please select one or more from the list: ")
+    input_str = input("Please select one or more from the list: ")
     return input_str
 
 
 def print_menu(the_list):
     index = 0
     for item in the_list:
-        print str(index) + " ## " + item
+        print('{} ## {}'.format(index, item))
         index = index + 1
 
 
@@ -71,7 +71,7 @@ def selections_in_list(sels, the_list):
             index = sel
             selections.append(the_list[index])
         except Exception as e:
-            print e
+            print(e)
     return selections
 
 

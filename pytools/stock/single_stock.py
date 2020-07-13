@@ -1,4 +1,3 @@
-import argparse
 
 
 class Exchange(object):
@@ -29,10 +28,10 @@ class ConstStock(Exchange):
     ORIGIN = 'origin'
 
     def keys(self):
-        return [self.NAME, self.EXCHANGE, self.LONGNAME, self.PRICE, self.DIVIDEND, self.FIELD, self.SCORE, self.ORIGIN, self.DESCRIPTION]
+        return [self.NAME, self.EXCHANGE, self.LONGNAME, self.FIELD, self.ORIGIN, self.DESCRIPTION]
 
-    def keys_update(self):
-        return [self.EXCHANGE, self.PRICE, self.DIVIDEND, self.FIELD, self.SCORE, self.ORIGIN, self.DESCRIPTION]
+    def keys_review(self):
+        return [self.PRICE, self.DIVIDEND, self.SCORE, self.DESCRIPTION]
 
 
 class Stock(ConstStock):
@@ -40,7 +39,6 @@ class Stock(ConstStock):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-        self.stock = argparse.Namespace(**self.kwargs)
 
     def is_valid_exchange(self, value):
         if not value:

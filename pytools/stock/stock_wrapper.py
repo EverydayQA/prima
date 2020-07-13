@@ -2,7 +2,7 @@ from pprint import pprint
 import datetime
 import argparse
 from stock.single_stock import ConstStock
-from stock.single_stock import Stock
+# from stock.single_stock import Stock
 from stock.stock_log import StockLog
 from nested_dict.nested_dict import NestedDict
 
@@ -23,16 +23,26 @@ class StockWrapper(ConstStock):
 
     def action(self):
         if self.ns.add:
-            self.add_stock()
-        dall = self.db.get_all()
-        pprint(dall)
+            return self.add_stock()
+        print('not --add')
+        pprint(self.ns)
+
+    def get_exchange(self, dex):
+        from utils import menu
+        exchanges = list(dex.keys())
+        sels = menu.Menu().select_from_menu(exchanges, 'which Exchange?')
+        if sels:
+            if len(sels) > 1:
+                print(sels)
+                raise Exception('more than 1 exchange selected')
+        return sels[0]
 
     def add_stock(self):
         """
         start with prompt/select manually
         """
         d = {}
-        dall = self.get_all()
+        dall = self.db.get_all()
 
         from stock.single_stock import ConstStock
         st = ConstStock()
@@ -44,16 +54,17 @@ class StockWrapper(ConstStock):
                 value = 'NA'
 
             if key == 'name':
+                name = value
                 print('find stock name')
-                dstock = dall.get(value, {})
-                if dstock:
+                dex = dall.get(value, {})
+                if dex:
+                    exchange = self.get_exchange(dex)
                     print('found stock, add become update')
-                    pprint(dstock)
-                    return self.update_stock(value, dstock)
+                    return self.update_stock(name, exchange)
 
             d[key] = value
         dnew = self.new_entry(d)
-        self.log_append(dnew)
+        self.db.log_append(dnew)
 
     def new_entry(self, dstock):
         """
@@ -63,17 +74,16 @@ class StockWrapper(ConstStock):
         dt = datetime.datetime.now()
         reviewid = dt.isoformat()
         userid = 'user'
-        s = Stock(**dstock)
         # reord -- initial setup a stock
         # reviewid -- with updated info, another class Event?
-
+        s = argparse.Namespace(**dstock)
         dev = {reviewid: dstock, 'user': userid}
         pprint(dev)
 
-        d = {s.stock.name: {s.stock.exchange: {'review': dev}}}
+        d = {s.name: {s.exchange: {'review': dev}}}
         return d
 
-    def updated_entry(self, name, dold, dstock):
+    def updated_entry(self, name, exchange, dold, dreview):
         """
         make it a nested dict with variable length to test
         dold without name
@@ -82,22 +92,24 @@ class StockWrapper(ConstStock):
         dt = datetime.datetime.now()
         reviewid = dt.isoformat()
         userid = 'user'
-        keys = list(dold.keys())
 
-        # exchange might be one, but could be more
-        # to be refactored
-        # using select_from
+        keys = [exchange, 'review']
+        drev = self.nested.get(dold, keys)
 
-        exchange = keys[0]
-
-        dev = dold.get(exchange, {})
-
-        # part to be updated
-        dreview = dev.get('review', {})
+        if not drev:
+            print(name)
+            print(exchange)
+            pprint(dold)
+            pprint(keys)
+            print(drev)
+            pprint(dreview)
+            raise Exception('dnew None')
 
         import copy
-        dnew = copy.deepcopy(dreview)
-        review = {reviewid: dstock, 'user': userid}
+        dnew = copy.deepcopy(drev)
+
+        # single review
+        review = {reviewid: dreview, 'user': userid}
         dnew.update(review)
 
         # add dnew to be new review
@@ -105,23 +117,37 @@ class StockWrapper(ConstStock):
         # d = {name: {exchange: {'review': dnew}}}
 
         # d = self.nested.update(dold, dnew)
-        keys = [name, exchange, 'review']
-        d = self.nested.set(dold, keys, dnew)
-        return d
+        keys = [exchange, 'review']
 
-    def choose_exchange(self, key):
-        pass
+        pprint(dnew)
+        pprint(dold)
+        # dcopy will be udpated
+        dcopy = copy.deepcopy(dold)
+        d = self.nested.set(keys, dnew, **dcopy)
+        return {name: d}
 
-    def update_stock(self, name, d):
+    def update_stock(self, name, exchange):
         """
         review with new price/dividend/more info
         """
+        # get exchane first
+        # prompt or select
+        dall = self.db.get_all()
+
+        # for name
+        d = dall.get(name, {})
+
         dnew = {}
-        for key in self.keys_update():
+        for key in self.keys_review():
             print(key)
             value = input('Value for {} is: '.format(key))
             if not value:
                 value = 'NA'
             dnew[key] = value
-        dline = self.updated_entry(name, d, dnew)
-        self.log_append(dline)
+
+        # updated entry for name
+        dline = self.updated_entry(name, exchange, d, dnew)
+        print('dline')
+        pprint(dline)
+        print('dline end')
+        # self.db.log_append(dline)

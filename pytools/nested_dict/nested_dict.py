@@ -1,4 +1,6 @@
 import collections
+# from termcolor import cprint
+import copy
 
 
 class NestedDict(object):
@@ -6,7 +8,7 @@ class NestedDict(object):
     Before a nested dict in installed, this will be tested and used
     """
 
-    def deep_set(self, keys=[], value=None, **d):
+    def set(self, keys, value, **d):
         """
         assume a simple set value
         set to add or replace value with keys
@@ -14,27 +16,31 @@ class NestedDict(object):
         """
         if not keys:
             return d
-        # keys reduced 1
-        firstkey = keys.pop(0)
-        # set value regardless the previous value
-        vfirst = d.get(firstkey, None)
-        if not isinstance(vfirst, dict):
-            dleft = self.create_nested(keys, value)
-            d[firstkey] = dleft
-            return d
-        return self.deep_set(keys, value=value, **d)
 
-    def get(self, d, keys):
+        # prev = self.get(d, keys)
+
+        dtmp = None
+        count = 0
+        for key in reversed(keys):
+            count = count + 1
+            if count == 1:
+                dtmp = {key: value}
+                continue
+            dtmp = {key: dtmp}
+        return dtmp
+
+    def deep_get(self, d, keys):
+        keysc = copy.deepcopy(keys)
         if not d:
             return d
-        if not keys:
+        if not keysc:
             return None
 
         if not isinstance(d, dict):
             raise Exception('original d not dict')
             return None
 
-        firstkey = keys.pop(0)
+        firstkey = keysc.pop(0)
         dfirst = d.get(firstkey, None)
         if not dfirst:
             return dfirst
@@ -43,18 +49,24 @@ class NestedDict(object):
 
         # keys reduced 1 by pop(0)
         # dv reduced by 1 level
-        return self.nested_get(dfirst, keys)
+        return self.get(dfirst, keysc)
 
-    def deep_get(self, d, keys):
+    def get(self, d, keys):
         """
         get the value with keys, default value is None?
         return reduce(lambda d, k: d.get(k) if d else None, keys, sourceDict)
         """
         dtmp = None
+        count = 0
         for key in keys:
-            dtmp = dtmp.get(key, None)
+            count = count + 1
+            if count == 1:
+                dtmp = d.get(key, {})
+            else:
+                dtmp = dtmp.get(key, {})
             if not isinstance(dtmp, dict):
                 return dtmp
+
         return dtmp
 
     def create_nested(self, keys, value):
