@@ -1,10 +1,10 @@
 
 
 def method_a():
-    print 'A Method'
+    print('A Method')
     return True
 
 
 def method_b():
-    print 'B Method'
+    print('B Method')
     return True
