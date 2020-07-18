@@ -1,10 +1,12 @@
 import psutil
+import datetime
 from pprint import pprint
 
 
 class CallerStack(object):
 
     def __init__(self):
+        self.now = datetime.datetime.now()
         self.d = {}
         self.psme()
 
@@ -20,8 +22,15 @@ class CallerStack(object):
         print(gp.cmdline())
 
     def create_time_iso(self, timestamp):
-        import datetime
-        return datetime.datetime.fromtimestamp(timestamp).strftime("%Y-%m-%dT%H:%M:%S")
+        return datetime.datetime.fromtimestamp(timestamp).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+
+    def create_datetime(self, timestamp):
+        if not timestamp:
+            return None
+        if not isinstance(timestamp, float):
+            return None
+
+        return datetime.datetime.fromtimestamp(timestamp)
 
     def ps_parent(self, ppid):
         if not ppid:
@@ -32,37 +41,63 @@ class CallerStack(object):
             print('not me')
             return
         dp = me.as_dict(attrs=self.keys())
-        create_time = self.create_time_iso(dp.get('create_time', None))
-        dp['create_time'] = create_time
-        self.d[me.ppid()] = dp
+        if self.skip_log_process(dp) is False:
+            create_time = self.create_time_iso(dp.get('create_time', None))
+            dp['create_time'] = create_time
+
+            self.d[me.pid] = dp
+
         return self.ps_parent(me.ppid())
 
     def psme(self):
         print('\n*** psme')
         me = psutil.Process()
         dp = me.as_dict(attrs=self.keys())
-        create_time = self.create_time_iso(dp.get('create_time', None))
-        dp['create_time'] = create_time
-        self.d[me.ppid()] = dp
+        if self.skip_log_process(dp) is False:
+            create_time = self.create_time_iso(dp.get('create_time', None))
+            dp['create_time'] = create_time
+
+            self.d[me.pid] = dp
         self.ps_parent(me.ppid())
+
+    def skip_log_process(self, dp):
+        username = dp.get('username', None)
+        if username == 'root':
+            return True
+        dt_create = self.create_datetime(dp.get('create_time', None))
+        if not dt_create:
+            return False
+        delta = self.now - dt_create
+        if delta.seconds > 6 * 3600:
+            return True
+        return False
 
     def keys_rm(self):
         """
         attrs that do not need for this app
         """
-        return ['memory_percent',
-                'memory_maps',
-                'memory_full_info',
-                'memory_info',
-                'cpu_percent',
+        return ['cpu_percent',
                 'cpu_times',
                 'cpu_num',
                 'cpu_affinity',
-                'ionice',
-                'num_ctx_switches',
-                'threads',
-                'io_counters',
                 'connections',
+
+                'gids',
+                'ionice',
+                'io_counters',
+                'memory_percent',
+                'memory_maps',
+                'memory_full_info',
+                'memory_info',
+                'nice',
+                'num_fds',
+                'num_threads',
+                'num_ctx_switches',
+                'open_files',
+                'status',
+                'threads',
+                'terminal',
+                'uids',
                 'environ']
 
     def keys(self):
