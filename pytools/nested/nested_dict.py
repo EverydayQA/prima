@@ -1,4 +1,3 @@
-import collections
 # from termcolor import cprint
 import copy
 
@@ -16,92 +15,57 @@ class NestedDict(object):
         """
         if not keys:
             return d
+        # do not want to change the original d
+        dcopy = copy.deepcopy(d)
+        vnow = self.get(dcopy, keys)
+        if vnow == value:
+            return d
+        dprev = self.get(dcopy, keys[0:-1])
+        # replace with lastkey
+        dprev[keys[-1]] = value
+        return dcopy
 
-        # prev = self.get(d, keys)
-
+    def create(self, keys, value):
+        """
+        create a single entry nested dict
+        """
         dtmp = None
-        count = 0
         for key in reversed(keys):
-            count = count + 1
-            if count == 1:
+            if not dtmp:
                 dtmp = {key: value}
                 continue
             dtmp = {key: dtmp}
         return dtmp
-
-    def deep_get(self, d, keys):
-        keysc = copy.deepcopy(keys)
-        if not d:
-            return d
-        if not keysc:
-            return None
-
-        if not isinstance(d, dict):
-            raise Exception('original d not dict')
-            return None
-
-        firstkey = keysc.pop(0)
-        dfirst = d.get(firstkey, None)
-        if not dfirst:
-            return dfirst
-        if not isinstance(dfirst, dict):
-            return dfirst
-
-        # keys reduced 1 by pop(0)
-        # dv reduced by 1 level
-        return self.get(dfirst, keysc)
 
     def get(self, d, keys):
         """
         get the value with keys, default value is None?
         return reduce(lambda d, k: d.get(k) if d else None, keys, sourceDict)
         """
-        dtmp = None
+        value = None
         count = 0
         for key in keys:
             count = count + 1
             if count == 1:
-                dtmp = d.get(key, {})
+                value = d.get(key, None)
             else:
-                dtmp = dtmp.get(key, {})
-            if not isinstance(dtmp, dict):
-                return dtmp
+                value = value.get(key, None)
+            if not isinstance(value, dict):
+                return value
+        return value
 
-        return dtmp
-
-    def create_nested(self, keys, value):
+    def update2(self, d, dnew):
         """
-        create a nested dict
+        reversed keys(how?)
+        get old/new, compare, merge/update/replace
         """
-        print('create_nested with keys {} value {}'.format(keys, value))
-        if not keys:
-            return {}
-        # keys reduced by 1
-        lastkey = keys.pop()
-        # lastkey changed
-        dnew = {lastkey: value}
-        if not keys:
-            return dnew
-        return self.create_nested(keys, dnew)
-
-    def deep_update(self, source, overrides):
-        """Update a nested dictionary or similar mapping.
-
-        Modify ``source`` in place.
-        """
-        for key in overrides.keys():
-            value = overrides.get(key, None)
-            if isinstance(value, collections.abc.Mapping) and value:
-                returned = self.deep_update(source.get(key, {}), value)
-                source[key] = returned
-            else:
-                source[key] = overrides[key]
-        return source
+        raise Exception('not coded yet')
 
     def update(self, d, dnest):
         """
         update nested with a nested dict
         assume dnest is a single entry for now, should be compliated
+        merge the deepest dict, not replace
         """
         if not dnest:
             return d
@@ -110,6 +74,8 @@ class NestedDict(object):
             print('dnest is {}'.format(dnest))
             raise Exception('update nested not dict')
             return d
+
+        # how to tell if 2 dict has the same depth?
 
         # first level keys
         for key in dnest.keys():
@@ -125,12 +91,8 @@ class NestedDict(object):
 
             if not isinstance(vnest, dict):
                 # replace existing dict with a value, loosing information
-                # d[key] = vnest
-                # return d
-                print('key {} v is {}'.format(key, v))
-                print(vnest)
-                raise Exception('vnest not dict')
-                continue
+                d[key] = vnest
+                return d
 
             vkey = self.update(v, vnest)
             # replace the original value(v) with vkey

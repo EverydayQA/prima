@@ -1,7 +1,7 @@
 import argparse
 
 
-class ArgsExample(object):
+class ArgsNestedDict(object):
 
     def ord_args(self, args):
         """
@@ -36,6 +36,7 @@ class ArgsExample(object):
         # '?' == 0 or 1.
         # An int is an explicit number of arguments to accept.
         parser.add_argument('-m', '--multiple', nargs='+')
+        parser.add_argument('-f', '--file', nargs='?', help='json file to load')
 
         # To make the input integers
         parser.add_argument('-j', '--job', nargs='+', type=int)
@@ -46,6 +47,6 @@ class ArgsExample(object):
         parser.add_argument('-a', '--append', dest='appending', action='append')
         return parser
 
-    def init_args(self, argv):
+    def parse_args(self, argv):
         parser = self.get_parser()
         return parser.parse_args(argv)
