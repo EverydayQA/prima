@@ -32,7 +32,15 @@ class TestNestedDict(unittest.TestCase):
         self.assertEqual(v, 'E')
 
     def test_set(self):
-        pass
+        dcopy = copy.deepcopy(self.dfood)
+        dnew = self.nd.set(['0002', 'topping', '5001', 'type'],  'topless', **dcopy)
+        value = self.nd.get(dnew, ['0002', 'topping', '5001'])
+        self.assertEqual(value, {'id': '5001', 'type': 'topless'})
+        # new test
+        dcopy = copy.deepcopy(self.dfood)
+        dnew = self.nd.set(['0002', 'topping', '5001', 'price'],  '5.01', **dcopy)
+        value = self.nd.get(dnew, ['0002', 'topping', '5001'])
+        self.assertEqual(value, {'id': '5001', 'type': u'None', 'price': '5.01'})
 
     def test_create(self):
         keys = ['a', 'b', 'c']
