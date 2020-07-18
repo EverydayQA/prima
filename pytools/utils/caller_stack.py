@@ -1,6 +1,5 @@
-import sys
+import psutil
 from pprint import pprint
-import traceback
 
 
 class CallerStack(object):
@@ -8,20 +7,8 @@ class CallerStack(object):
     def __init__(self):
         self.d = {}
         self.psme()
-        pprint(self.d)
-
-    def os_trackback(self):
-        # items = sys.last_traceback()
-        # pprint(items)
-        # items = sys.call_tracing()
-        # pprint(items)
-        pprint(sys.exc_info())
-        pprint(traceback.extract_stack())
-        pprint(traceback.format_exc())
-        pprint(traceback.StackSummary())
 
     def psutil(self):
-        import psutil
         me = psutil.Process()
         print(me)
         print(me.cmdline())
@@ -32,8 +19,11 @@ class CallerStack(object):
         gp = psutil.Process(parent.ppid())
         print(gp.cmdline())
 
+    def create_time_iso(self, timestamp):
+        import datetime
+        return datetime.datetime.fromtimestamp(timestamp).strftime("%Y-%m-%dT%H:%M:%S")
+
     def ps_parent(self, ppid):
-        import psutil
         if not ppid:
             print('not ppid')
             return
@@ -41,15 +31,19 @@ class CallerStack(object):
         if not me:
             print('not me')
             return
-        self.d[me.ppid()] = me.as_dict(attrs=self.keys())
+        dp = me.as_dict(attrs=self.keys())
+        create_time = self.create_time_iso(dp.get('create_time', None))
+        dp['create_time'] = create_time
+        self.d[me.ppid()] = dp
         return self.ps_parent(me.ppid())
 
     def psme(self):
         print('\n*** psme')
-        import psutil
         me = psutil.Process()
-        # pprint(me.as_dict().keys())
-        self.d[me.ppid()] = me.as_dict(attrs=self.keys())
+        dp = me.as_dict(attrs=self.keys())
+        create_time = self.create_time_iso(dp.get('create_time', None))
+        dp['create_time'] = create_time
+        self.d[me.ppid()] = dp
         self.ps_parent(me.ppid())
 
     def keys_rm(self):
@@ -86,6 +80,7 @@ def main():
     ca = CallerStack()
     ca.psutil()
     ca.psme()
+    pprint(ca.d)
 
 
 if __name__ == '__main__':

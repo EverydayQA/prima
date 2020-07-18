@@ -2,7 +2,7 @@ import os
 import unittest
 from pprint import pprint
 import json
-from src.parse_file import DPaseFile
+from nested.parse_file import DPaseFile
 
 
 class TestDPaseFile(unittest.TestCase):

@@ -1,5 +1,5 @@
 import unittest
-from nested_dict.src.normalize_string import NormalizeString
+from nested.normalize_string import NormalizeString
 
 
 class TestNormalizeString(unittest.TestCase):
