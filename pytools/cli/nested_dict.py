@@ -10,7 +10,7 @@ class CliNested(object):
         self.nested = NestedDict()
 
     def read_jsonfile(self, jfile):
-        with open(jfile) as f:
+        with open(jfile, 'r') as f:
             d = json.load(f)
             return d
         return {}

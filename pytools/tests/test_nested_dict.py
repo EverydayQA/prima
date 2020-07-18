@@ -1,4 +1,5 @@
 import unittest
+import json
 import os
 import copy
 from nested.nested_dict import NestedDict
@@ -12,9 +13,14 @@ class TestNestedDict(unittest.TestCase):
         cls.afile = os.path.join(path, '../nested/data/food_nested_dict.json')
         cls.nd = NestedDict()
         cls.d = {'a': {'b': {'c': 'C'}}}
+        with open(cls.afile, 'r') as fp:
+            cls.dfood = json.load(fp)
 
     def test_file(self):
         self.assertTrue(os.path.isfile(self.afile))
+
+    def test_dfood(self):
+        self.assertEqual(self.dfood.keys(), [u'0001', u'0002', u'0003'])
 
     def test_get(self):
         v = self.nd.get(self.d, ['a', 'b', 'c'])
@@ -24,6 +30,16 @@ class TestNestedDict(unittest.TestCase):
         d = self.nd.set(items, 'E', **dc)
         v = self.nd.get(d, ['a', 'b', 'e'])
         self.assertEqual(v, 'E')
+
+    def test_set(self):
+        pass
+
+    def test_create(self):
+        keys = ['a', 'b', 'c']
+        value = {u'd': 1}
+        d = self.nd.create(keys, value)
+        dnew = {'a': {'b': {'c': {u'd': 1}}}}
+        self.assertEqual(d, dnew)
 
     def test_update(self):
         source = {'hello1': 1}

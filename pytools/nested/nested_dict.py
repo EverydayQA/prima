@@ -54,13 +54,6 @@ class NestedDict(object):
                 return value
         return value
 
-    def update2(self, d, dnew):
-        """
-        reversed keys(how?)
-        get old/new, compare, merge/update/replace
-        """
-        raise Exception('not coded yet')
-
     def update(self, d, dnest):
         """
         update nested with a nested dict

@@ -3,9 +3,9 @@ import re
 from termcolor import cprint
 import json
 from pprint import pprint
-from src.normalize_string import NormalizeString
-from src.parse_line import DParseLine
-from src.nested_dict import NestedDict
+from nested.normalize_string import NormalizeString
+from nested.parse_line import DParseLine
+from nested.nested_dict import NestedDict
 
 
 class DPaseFile(object):
@@ -69,28 +69,7 @@ class DPaseFile(object):
             value = d_nexts.get('value', None)
             cprint('lastkey {} keys {} value {}>'.format(lastkey, keys, value), 'green')
 
-            dnest = self.nested.create_nested(keys, value)
+            dnest = self.nested.create(keys, value)
             pprint(dnest)
             d = self.nested.update(d, dnest)
         return d
-
-    def d_deep_get(self, d, keys, default=None):
-        dtmp = d
-        for key in keys:
-            if isinstance(dtmp, dict):
-                dtmp = dtmp.get(key, default)
-            else:
-                return dtmp
-        return dtmp
-
-    def deepGet(self, d, *keys):
-        return self.nested.deep_get(d, *keys)
-
-    def deep_set(self, d, value, *keys):
-        return self.nested.deep_set(d, value, *keys)
-
-    def d_update(self, d, u):
-        """
-        u - dict with subkeys to be updated into d
-        """
-        return self.nested.deep_update(d, u)
