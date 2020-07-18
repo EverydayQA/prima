@@ -14,9 +14,9 @@ perl /home/gliang/prima/perl_path/test_path.pl
 python /home/gliang/prima/app_psutil.py
 # run script every 15 minutes 
 echo "Bash version ${BASH_VERSION}..."
-for i in {0..10..1}
-    do
-        echo "Welcome $i times, execute sth, sleep 60 seconds"
-	sleep 60
-    done
+for i in {1..3}
+do
+    echo "Welcome $i times, execute sth, sleep 60 seconds"
+    sleep 60s
+done
 echo end of pid_simple.sh

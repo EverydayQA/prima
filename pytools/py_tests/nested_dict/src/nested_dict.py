@@ -43,7 +43,7 @@ class NestedDict(object):
 
         # keys reduced 1 by pop(0)
         # dv reduced by 1 level
-        return self.nested_get(dfirst, keys)
+        return self.nested.get(dfirst, keys)
 
     def deep_get(self, d, keys):
         """
