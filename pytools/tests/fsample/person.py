@@ -1,19 +1,19 @@
 
 
 def useless_decorator(func):
-    print "Hi, I'm a decorator that does nothing."
+    print("Hi, I'm a decorator that does nothing.")
     return func
 
 
 class Foo(object):
-    print "Entering Foo class definition"
+    print("Entering Foo class definition")
 
     @useless_decorator
     def bar(self):
         return 42
 
 
-print "OK, we're done with that class definition."
+print("OK, we're done with that class definition.")
 # demo of decorator is applied when is class is created
 # do not know what decorator is used for, for now
 
@@ -25,7 +25,7 @@ def noise_logger(func):
         # In a real-world scenario, the decorator would access an external
         # resource which we don't want our tests to depend on, such as a
         # caching service.
-        print "Pet made noise: ", result
+        print("Pet made noise: {}".format(result))
         return result
     return wrapped
 

@@ -2,8 +2,7 @@
 import unittest
 import mock
 from mock import MagicMock
-# my_worker.py MyWorker(class)
-from my_worker import MyWorker
+from other.my_worker import MyWorker
 
 
 def value_a():
@@ -22,7 +21,7 @@ def abcd_foo(a, b, c, d):
 class TestWorker(unittest.TestCase):
 
     # my_worker.py - mock away sleep
-    @mock.patch('my_worker.sleep')
+    @mock.patch('other.my_worker.sleep')
     def test_my_worker(self, mock_sleep):
         # mock away the sleep()
         mock_sleep.return_value = False
@@ -70,21 +69,21 @@ class TestWorker(unittest.TestCase):
         self.assertTrue(worker.nap(5), 100)
 
     def test_using_with_patch(self):
-        with mock.patch('my_worker.MyWorker.nap') as mock_nap:
+        with mock.patch('other.my_worker.MyWorker.nap') as mock_nap:
             mock_nap.return_value = 1000
             worker = MyWorker()
             self.assertEqual(worker.nap(300), 1000)
 
     def test_using_with_patch_sleep(self):
         # mock away sleep in the module, not the class
-        with mock.patch('my_worker.sleep') as mock_sleep:
+        with mock.patch('other.my_worker.sleep') as mock_sleep:
             mock_sleep.return_value = False
             worker = MyWorker()
             self.assertEqual(worker.nap(10), 10 * 5)
 
     def test_using_with_patch_gevent_sleep(self):
         # mock away module.sleep(since from gevent import sleep)
-        with mock.patch('my_worker.sleep') as mock_sleep:
+        with mock.patch('other.my_worker.sleep') as mock_sleep:
             mock_sleep.return_value = False
             worker = MyWorker()
             self.assertEqual(worker.nap(10), 10 * 5)
@@ -99,8 +98,8 @@ class TestWorker(unittest.TestCase):
             self.assertEqual(worker.gevent_nap(10), 10 * 5)
             mock_sleep.assert_called_with(5)
 
-    @mock.patch('test_my_worker.value_a', return_value='mocking_va')
-    @mock.patch('test_my_worker.another_method', return_value='mocking_another')
+    @mock.patch('tests.mockA.test_my_worker.value_a', return_value='mocking_va')
+    @mock.patch('tests.mockA.test_my_worker.another_method', return_value='mocking_another')
     def test_result(self, mock_value_a, mock_another_method):
         """
         The return_value better to be defined outside the test function with multiple patch

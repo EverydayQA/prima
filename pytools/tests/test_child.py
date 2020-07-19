@@ -1,6 +1,6 @@
 import unittest
 import mock
-from nose_tests.fsample.child import Child
+from tests.fsample.child import Child
 from StringIO import StringIO
 
 

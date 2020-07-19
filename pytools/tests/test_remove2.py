@@ -5,7 +5,7 @@ import os
 import os.path
 import unittest
 import mock
-from ..fsample import remove_file
+from .fsample import remove_file
 
 
 class Testcalc(unittest.TestCase):

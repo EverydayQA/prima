@@ -7,19 +7,19 @@ class MyWorker(object):
 
     def nap(self, n):
         for _ in range(n):
-            print ("sleep")
+            print("sleep")
             sleep(5)
         return n * 5
 
     def gevent_nap(self, n):
         for _ in range(n):
-            print ("sleep")
+            print("sleep")
             gevent.sleep(5)
         return n * 5
 
     def jogging(self, n):
         for i in range(n):
-            print "jogging"
+            print("jogging")
         return n * 3
 
     def working(self, n):

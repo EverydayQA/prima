@@ -1,5 +1,5 @@
 import mock
-from nose_tests.fsample import person
+from tests.fsample import person
 import unittest
 
 
@@ -11,10 +11,10 @@ class TestPerson(unittest.TestCase):
     @mock.patch('person.get_name') # not working
 
     package_name.dir_name.file_name(person.py).func_name(get_name())
-    @mock.patch('nose_tests.fsample.person.get_name')
+    @mock.patch('tests.fsample.person.get_name')
     """
 
-    @mock.patch('nose_tests.fsample.person.get_name')
+    @mock.patch('tests.fsample.person.get_name')
     def test_name(self, mock_get_name):
         # set a return value for our mock object
         mock_get_name.return_value = "Bob"
@@ -22,7 +22,7 @@ class TestPerson(unittest.TestCase):
         name = ps.name()
         self.assertEqual(name, "Bob")
 
-    @mock.patch('nose_tests.fsample.person.Pet')
+    @mock.patch('tests.fsample.person.Pet')
     def test_dog_noise(self, mock_pet):
         # mock_pet.noise.return_value= "Meoow"
         mock_pet.return_value.noise.return_value = "Meoow"
@@ -30,7 +30,7 @@ class TestPerson(unittest.TestCase):
         ps = person.Person()
         self.assertEqual(ps.pet.noise, "Meoow")
 
-    @mock.patch('nose_tests.fsample.person.noise_logger', lambda x: x)
+    @mock.patch('tests.fsample.person.noise_logger', lambda x: x)
     def test_decorator(self):
         ps = person.Person()
         self.assertEqual(ps.pet.noise, 'Woof')

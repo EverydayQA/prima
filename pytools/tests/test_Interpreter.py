@@ -1,9 +1,8 @@
 #!/usr/bin/python3.5
 import unittest
 import sys
-from nose_tests.lib import Interpreter
-from unittest import mock
-from io import StringIO
+from tests.lib import Interpreter
+import mock
 import io
 
 
@@ -26,7 +25,7 @@ class CmdUiTest(unittest.TestCase):
 
     def test_show_command(self):
         # Interpreter obj - mock
-        cli = self.create()
+        self.create()
         with mock.patch('sys.stdout', new=io.StringIO('xxx')) as fakeOutput:
             self.assertEqual('xxx', fakeOutput.getvalue().strip())
 
