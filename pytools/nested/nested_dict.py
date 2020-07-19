@@ -1,5 +1,4 @@
 # from termcolor import cprint
-import copy
 
 
 class NestedDict(object):
@@ -16,23 +15,23 @@ class NestedDict(object):
         if not keys:
             return d
         # do not want to change the original d
-        dcopy = copy.deepcopy(d)
-        vnow = self.get(*keys, **dcopy)
+        vnow = self.get(*keys, **d)
         if vnow == value:
-            return dcopy
-        dprev = self.get(*keys[0:-1], **dcopy)
+            return d
+
+        if len(keys) == 1:
+            # shallow
+            d[keys[0]] = value
+            return d
+        dprev = self.get(*keys[0:-1], **d)
         # replace with lastkey
         dprev[keys[-1]] = value
-        return dcopy
+        return d
 
-    def remove(self, *keys, **d):
+    def todo(self):
         """
-        not sure if needed
+        remove/reorder/reverse?
         """
-        pass
-
-    def reorder(self):
-        # reorder keys
         pass
 
     def create(self, value, *keys):
@@ -70,11 +69,79 @@ class NestedDict(object):
                 return value
         return value
 
+    def merge_shallow(self, dnew, **d):
+        for key in dnew.keys():
+            v = d.get(key, None)
+            vnew = dnew.get(key, None)
+            if v == vnew:
+                # no change
+                continue
+            d[key] = vnew
+        return d
+
+    def deepset_keys(self, **d):
+        """
+        single key at each level
+        """
+        if len(d.keys()) > 1:
+            return []
+        keys = []
+        for key in d.keys():
+            v = d.get(key, None)
+            # keep lastkey that is not uniq
+            keys.append(key)
+            if isinstance(v, dict):
+                if v.keys() > 1:
+                    return keys
+        return keys
+
+    def shallow_setstar(self, key, value, **d):
+        """
+        if d is not to be changed outside this func, use this
+        """
+        d[key] = value
+        return d
+
+    def shallow_set(self, key, value, d):
+        """
+        if d is to be changed outside this func, use this way
+        """
+        d[key] = value
+        return d
+
+    def update2(self, dnew, **d):
+        """
+        update nested with a nested dict
+        assume dnew is a single entry for now, should be complicated
+        merge the deepest dict, not to replace
+        No need to do deepcopy with **d
+        the return d changed, but d is not from the place where d is provided as input
+        """
+        if not dnew:
+            return d
+
+        if not isinstance(dnew, dict):
+            print('dnew is {}'.format(dnew))
+            raise Exception('update nested not dict')
+            return d
+
+        deepkeys = self.deepset_keys(**dnew)
+        if not deepkeys:
+            return self.merge_shallow(dnew, **d)
+
+        vdeep = self.get(*deepkeys, **d)
+        vdeep_new = self.get(*deepkeys, **dnew)
+
+        if isinstance(vdeep_new, dict) and isinstance(vdeep, dict):
+            vmerge = self.merge_shallow(vdeep_new, **vdeep)
+            return self.set(vmerge, *deepkeys, **d)
+        return self.set(vdeep_new, *deepkeys, **d)
+
     def update(self, dnew, **d):
         """
         update nested with a nested dict
-        assume dnew is a single entry for now, should be compliated
-        merge the deepest dict, not replace
+        assume dnew is a single entry for now, should be complicated
+        merge the deepest dict, not to replace
         """
         if not dnew:
             return d
