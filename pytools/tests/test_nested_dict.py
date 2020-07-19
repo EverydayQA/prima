@@ -23,59 +23,65 @@ class TestNestedDict(unittest.TestCase):
         self.assertEqual(self.dfood.keys(), [u'0001', u'0002', u'0003'])
 
     def test_get(self):
-        v = self.nd.get(self.d, ['a', 'b', 'c'])
+        v = self.nd.get(*['a', 'b', 'c'], **self.d)
         self.assertEqual(v, 'C')
         dc = copy.deepcopy(self.d)
         items = ['a', 'b', 'e']
-        d = self.nd.set(items, 'E', **dc)
-        v = self.nd.get(d, ['a', 'b', 'e'])
+        dnew = self.nd.set('E', *items, **dc)
+        v = self.nd.get(*['a', 'b', 'e'], **dnew)
         self.assertEqual(v, 'E')
 
     def test_set(self):
+        # update the lastdict with new value of the same key
         dcopy = copy.deepcopy(self.dfood)
-        dnew = self.nd.set(['0002', 'topping', '5001', 'type'],  'topless', **dcopy)
-        value = self.nd.get(dnew, ['0002', 'topping', '5001'])
+        dnew = self.nd.set('topless', *['0002', 'topping', '5001', 'type'],  **dcopy)
+
+        value = self.nd.get(*['0002', 'topping', '5001'], **dnew)
         self.assertEqual(value, {'id': '5001', 'type': 'topless'})
-        # new test
+        # update the lastdict with new key: value, but not new dict
         dcopy = copy.deepcopy(self.dfood)
-        dnew = self.nd.set(['0002', 'topping', '5001', 'price'],  '5.01', **dcopy)
-        value = self.nd.get(dnew, ['0002', 'topping', '5001'])
+        dnew = self.nd.set('5.01', *['0002', 'topping', '5001', 'price'], **dcopy)
+        value = self.nd.get(*['0002', 'topping', '5001'], **dnew)
         self.assertEqual(value, {'id': '5001', 'type': u'None', 'price': '5.01'})
 
     def test_create(self):
         keys = ['a', 'b', 'c']
         value = {u'd': 1}
-        d = self.nd.create(keys, value)
+        d = self.nd.create(value, *keys)
         dnew = {'a': {'b': {'c': {u'd': 1}}}}
         self.assertEqual(d, dnew)
 
     def test_update(self):
         source = {'hello1': 1}
         overrides = {'hello2': 2}
-        d = self.nd.update(source, overrides)
-        self.assertEqual(source, {'hello1': 1, 'hello2': 2})
-        self.assertEqual(d, source)
-        value = self.nd.get(d, ['hello2'])
+        d = self.nd.update(overrides, **source)
+        self.assertEqual(d, {'hello1': 1, 'hello2': 2})
+
+        # source did not change
+        self.assertEqual(set(d.keys()), set(['hello1', 'hello2']))
+        self.assertEqual(source.keys(), ['hello1'])
+
+        value = self.nd.get(*['hello2'], **d)
         self.assertEqual(value, 2)
 
         source = {'hello': 'to_override'}
         overrides = {'hello': 'over'}
-        self.nd.update(source, overrides)
-        self.assertEqual(source, {'hello': 'over'})
+        d = self.nd.update(overrides, **source)
+        self.assertEqual(d, {'hello': 'over'})
 
         source = {'hello': {'value': 'to_override', 'no_change': 1}}
         overrides = {'hello': {'value': 'over'}}
-        self.nd.update(source, overrides)
-        self.assertEqual(source, {'hello': {'value': 'over', 'no_change': 1}})
-        value = self.nd.get(source, ['hello', 'no_change'])
+        d = self.nd.update(overrides, **source)
+        self.assertEqual(d, {'hello': {'value': 'over', 'no_change': 1}})
+        value = self.nd.get(*['hello', 'no_change'], **source)
         self.assertEqual(value, 1)
 
         source = {'hello': {'value': 'to_override', 'no_change': 1}}
         overrides = {'hello': {'value': {}}}
-        self.nd.update(source, overrides)
-        self.assertEqual(source, {'hello': {'value': {}, 'no_change': 1}})
+        dnew = self.nd.update(overrides, **source)
+        self.assertEqual(dnew, {'hello': {'value': {}, 'no_change': 1}})
 
         source = {'hello': {'value': {}, 'no_change': 1}}
         overrides = {'hello': {'value': 2}}
-        self.nd.update(source, overrides)
-        self.assertEqual(source, {'hello': {'value': 2, 'no_change': 1}})
+        dnew = self.nd.update(overrides, **source)
+        self.assertEqual(dnew, {'hello': {'value': 2, 'no_change': 1}})
