@@ -4,7 +4,7 @@ import argparse
 from stock.single_stock import ConstStock
 # from stock.single_stock import Stock
 from stock.stock_log import StockLog
-from nested_dict.nested_dict import NestedDict
+from nested.nested_dict import NestedDict
 
 
 class StockWrapper(ConstStock):
@@ -94,7 +94,7 @@ class StockWrapper(ConstStock):
         userid = 'user'
 
         keys = [exchange, 'review']
-        drev = self.nested.get(dold, keys)
+        drev = self.nested.get(*keys, **dold)
 
         if not drev:
             print(name)
@@ -116,14 +116,12 @@ class StockWrapper(ConstStock):
         # add new entry
         # d = {name: {exchange: {'review': dnew}}}
 
-        # d = self.nested.update(dold, dnew)
         keys = [exchange, 'review']
 
         pprint(dnew)
         pprint(dold)
         # dcopy will be udpated
-        dcopy = copy.deepcopy(dold)
-        d = self.nested.set(keys, dnew, **dcopy)
+        d = self.nested.set(dnew, *keys, **dold)
         return {name: d}
 
     def update_stock(self, name, exchange):

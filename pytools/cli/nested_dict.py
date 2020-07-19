@@ -28,22 +28,22 @@ class CliNested(object):
 
         # set float
         keys = ['0003', 'topping', '5002', 'price']
-        dnew = self.nested.set(keys, 1.99, **d)
+        dnew = self.nested.set(1.99, *keys, **d)
         pprint(dnew)
-        value = self.nested.get(dnew, keys)
+        value = self.nested.get(*keys, **dnew)
         print(value)
 
         # dict
-        dnew = self.nested.set(keys, {u'CAD': 1.99}, **d)
+        dnew = self.nested.set({u'CAD': 1.99}, *keys, **d)
         pprint(dnew)
-        value = self.nested.get(dnew, keys)
+        value = self.nested.get(*keys, **d)
         print(value)
 
         # existing
         keys = ['0003', 'topping', '5002', 'type']
-        dnew = self.nested.set(keys, 'topless', **d)
+        dnew = self.nested.set('topless', *keys, **d)
         pprint(dnew)
-        value = self.nested.get(dnew, keys)
+        value = self.nested.get(*keys, **dnew)
         print(value)
 
     def dump_to_json(self, dnew):

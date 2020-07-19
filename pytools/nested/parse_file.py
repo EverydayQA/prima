@@ -69,7 +69,7 @@ class DPaseFile(object):
             value = d_nexts.get('value', None)
             cprint('lastkey {} keys {} value {}>'.format(lastkey, keys, value), 'green')
 
-            dnest = self.nested.create(keys, value)
+            dnest = self.nested.create(value, *keys)
             pprint(dnest)
-            d = self.nested.update(d, dnest)
+            d = self.nested.update(dnest, **d)
         return d
