@@ -1,4 +1,4 @@
-from src.main import Main
+from utils.main import Main
 
 
 def internal_side_effect(num):

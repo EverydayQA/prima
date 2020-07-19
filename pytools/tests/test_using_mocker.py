@@ -1,4 +1,4 @@
-import test_hello
+from tests import test_hello
 
 
 def bonjour(name):
@@ -62,8 +62,8 @@ def test_os_path_isfile():
 def test_f():
     import mock
     import pytest
-    with mock.patch('src.utils.helper', side_effect=Exception('fail to call helper')):
-        from src import funcA
+    with mock.patch('utils.utils.helper', side_effect=Exception('fail to call helper')):
+        from utils import funcA
         with pytest.raises(Exception):
             funcA.f()
 
@@ -72,6 +72,6 @@ def test_f2():
     import mock
     import pytest
     from src import funcA
-    with mock.patch('src.funcA.helper', side_effect=Exception('fail to call helper')):
+    with mock.patch('utils.funcA.helper', side_effect=Exception('fail to call helper')):
         with pytest.raises(Exception):
             funcA.f()
