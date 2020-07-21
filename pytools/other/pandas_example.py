@@ -72,6 +72,7 @@ def foo_func():
     foo = pd.DataFrame(np.random.randn(2, 3), columns=[Col('aaa', {'z': 5}), Col('bbb', {'y': True}), Col('ccc', {})])
     pprint(foo)
     df = foo.unstack()
+    pprint(df)
     foo.to_hdf('foo.h5', 'foo')
     bar = pd.read_hdf('foo.h5', 'foo')
     pprint(bar)

@@ -1,4 +1,5 @@
 # from termcolor import cprint
+import copy
 
 
 class NestedDict(object):
@@ -14,18 +15,44 @@ class NestedDict(object):
         """
         if not keys:
             return d
-        # do not want to change the original d
-        vnow = self.get(*keys, **d)
-        if vnow == value:
-            return d
 
-        if len(keys) == 1:
-            # shallow
-            d[keys[0]] = value
-            return d
-        dprev = self.get(*keys[0:-1], **d)
-        # replace with lastkey
-        dprev[keys[-1]] = value
+        # dnew = self.create(value, *keys)
+        # return self.update(dnew, **d)
+
+        if not d:
+            return None
+        items = copy.deepcopy(list(keys))
+        v = None
+        keys_past = []
+        keys_left = copy.deepcopy(items)
+        dprev = None
+        for key in items:
+            if not keys_past:
+                v = d.get(key)
+            else:
+                v = v.get(key)
+
+            keys_past.append(key)
+
+            keys_left.pop(0)
+
+            # None or empty [] {}
+            if not v:
+                # final
+                if dprev is None:
+                    d[key] = self.create(value, *keys_left)
+                    return d
+                else:
+                    dprev[key] = value
+                return d
+
+            if not isinstance(v, dict):
+                # final
+                # replacement?
+                dprev[key] = value
+                return d
+
+            dprev = v
         return d
 
     def todo(self):
@@ -51,48 +78,65 @@ class NestedDict(object):
         get the value with keys, default value is None?
         return reduce(lambda d, k: d.get(k) if d else None, keys, sourceDict)
         """
+        items = copy.deepcopy(list(keys))
+
         if not d:
             return None
 
         value = None
-        count = 0
-        for key in keys:
-            count = count + 1
-            if count == 1:
+        keys_past = []
+        for key in items:
+            if not keys_past:
                 value = d.get(key, None)
             else:
+                if not isinstance(value, dict):
+                    return value
                 value = value.get(key, None)
+
+            keys_past.append(key)
             # cannot continue
-            if not isinstance(value, dict):
-                if count == len(keys) - 1:
-                    raise Exception('keys is not right')
+            if not value:
                 return value
         return value
 
     def merge_shallow(self, dnew, **d):
+        for key in d.keys():
+            v = d.get(key, None)
+            vnew = dnew.get(key, None)
+            if key in dnew.keys():
+                d[key] = vnew
+            else:
+                d[key] = v
+
         for key in dnew.keys():
             v = d.get(key, None)
             vnew = dnew.get(key, None)
-            if v == vnew:
-                # no change
-                continue
             d[key] = vnew
+
         return d
 
-    def deepset_keys(self, **d):
+    def deep_keys(self, keys, **d):
         """
-        single key at each level
+        assume single key at each level
+        if multiple keys in a dict, not consider as a key, but a value
+        keys to get, will miss one if lastkey is in dict with multiple keys
+        set -- dict with multiple keys
+        update -- dict with multiple keys
         """
+        if not isinstance(d, dict):
+            return keys
+
         if len(d.keys()) > 1:
-            return []
-        keys = []
+            return keys
+
         for key in d.keys():
             v = d.get(key, None)
             # keep lastkey that is not uniq
             keys.append(key)
-            if isinstance(v, dict):
-                if v.keys() > 1:
-                    return keys
+            if not isinstance(v, dict):
+                return keys
+
+            return self.deep_keys(keys, **v)
         return keys
 
     def shallow_setstar(self, key, value, **d):
@@ -124,8 +168,8 @@ class NestedDict(object):
             print('dnew is {}'.format(dnew))
             raise Exception('update nested not dict')
             return d
-
-        deepkeys = self.deepset_keys(**dnew)
+        deepkeys = []
+        deepkeys = self.deep_keys(deepkeys, **dnew)
         if not deepkeys:
             return self.merge_shallow(dnew, **d)
 
@@ -133,6 +177,8 @@ class NestedDict(object):
         vdeep_new = self.get(*deepkeys, **dnew)
 
         if isinstance(vdeep_new, dict) and isinstance(vdeep, dict):
+            pass
+            # do not want to merge
             vmerge = self.merge_shallow(vdeep_new, **vdeep)
             return self.set(vmerge, *deepkeys, **d)
         return self.set(vdeep_new, *deepkeys, **d)
@@ -152,12 +198,15 @@ class NestedDict(object):
             return d
 
         # how to tell if 2 dict has the same depth?
-
-        # first level keys
-        for key in dnew.keys():
+        deepkeys = []
+        deepkeys = self.deep_keys(deepkeys, **dnew)
+        keys = copy.deepcopy(list(deepkeys))
+        for key in deepkeys:
             # updated dkey should automatically change d
             v = d.get(key, None)
             vnest = dnew.get(key, None)
+            keys.pop(0)
+
             if not isinstance(v, dict):
                 # value or not being set in original d
                 # set value to be value of dnew(or dnew_sub)
@@ -169,6 +218,12 @@ class NestedDict(object):
                 # replace existing dict with a value, loosing information
                 d[key] = vnest
                 return d
+
+            if isinstance(v, dict) and isinstance(vnest, dict):
+                if len(keys) == 1:
+                    vkey = self.merge_shallow(vnest, **v)
+                    d[key] = vkey
+                    return d
 
             vkey = self.update(vnest, **v)
             # replace the original value(v) with vkey
