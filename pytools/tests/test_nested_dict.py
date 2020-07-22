@@ -24,187 +24,167 @@ class TestNestedDict(unittest.TestCase):
         self.assertEqual(self.dfood.keys(), [u'0001', u'0002', u'0003'])
 
     def test_get(self):
-        v = self.nd.get(keys=['a', 'b', 'c'], dold=self.d)
+        v = self.nd.get(keys=['a', 'b', 'c'], dnow=self.d)
         self.assertEqual(v, 'C')
 
         # depth 0
         dc = copy.deepcopy(self.d)
         items = ['x', 'y', 'z']
-        dnew = self.nd.set(value='E', keys=items, dold=dc)
-        v = self.nd.get(keys=['x', 'y', 'z'], dold=dnew)
+        dchg = self.nd.set(value='E', keys=items, dnow=dc)
+        v = self.nd.get(keys=['x', 'y', 'z'], dnow=dchg)
         self.assertEqual(v, 'E')
 
         # depth 1
         dc = copy.deepcopy(self.d)
         items = ['a', 'y', 'z']
-        dnew = self.nd.set(value='E', keys=items, dold=dc)
-        v = self.nd.get(keys=['a', 'y', 'z'], dold=dnew)
+        dchg = self.nd.set(value='E', keys=items, dnow=dc)
+        v = self.nd.get(keys=['a', 'y', 'z'], dnow=dchg)
         self.assertEqual(v, 'E')
 
         # depth 2
         dc = copy.deepcopy(self.d)
         items = ['a', 'b', 'e']
-        dnew = self.nd.set(value='E', keys=items, dold=dc)
-        v = self.nd.get(keys=['a', 'b', 'e'], dold=dnew)
+        dchg = self.nd.set(value='E', keys=items, dnow=dc)
+        v = self.nd.get(keys=['a', 'b', 'e'], dnow=dchg)
         self.assertEqual(v, 'E')
 
         # depth 3
         dc = copy.deepcopy(self.d)
         items = ['a', 'b', 'c']
-        dnew = self.nd.set(value='E', keys=items, dold=dc)
-        v = self.nd.get(keys=['a', 'b', 'c'], dold=dnew)
+        dchg = self.nd.set(value='E', keys=items, dnow=dc)
+        v = self.nd.get(keys=['a', 'b', 'c'], dnow=dchg)
         self.assertEqual(v, 'E')
 
     def test_set(self):
         # update the lastdict with new value of the same key
         dcopy = copy.deepcopy(self.dfood)
-        dnew = self.nd.set(value='topless', keys=[u'0002', u'topping', u'5001', u'type'],  dold=dcopy)
-        value = self.nd.get(keys=[u'0002', u'topping', u'5001'], dold=dnew)
+        dchg = self.nd.set(value='topless', keys=[u'0002', u'topping', u'5001', u'type'],  dnow=dcopy)
+        value = self.nd.get(keys=[u'0002', u'topping', u'5001'], dnow=dchg)
         self.assertEqual(value, {'id': '5001', 'type': 'topless'})
 
         # update the lastdict with new key: value, but not new dict
         dcopy = copy.deepcopy(self.dfood)
-        dnew = self.nd.set(value='5.01', keys=['0002', 'topping', '5001', 'price'], dold=dcopy)
-        value = self.nd.get(keys=['0002', 'topping', '5001'], dold=dnew)
+        dchg = self.nd.set(value='5.01', keys=['0002', 'topping', '5001', 'price'], dnow=dcopy)
+        value = self.nd.get(keys=['0002', 'topping', '5001'], dnow=dchg)
         self.assertEqual(value, {'id': '5001', 'type': u'None', 'price': '5.01'})
 
         # int key
         dcopy = copy.deepcopy(self.dfood)
-        dnew = self.nd.set(value='topless', keys=[35, 'topping', '5001', 'type'],  dold=dcopy)
-        pprint(dnew)
+        dchg = self.nd.set(value='topless', keys=[35, 'topping', '5001', 'type'],  dnow=dcopy)
+        pprint(dchg)
         argv = [35, 'topping', '5001']
-        value = self.nd.get(keys=argv, dold=dnew)
+        value = self.nd.get(keys=argv, dnow=dchg)
         self.assertEqual(value, {'type': 'topless'})
+
+        # special condition  value to be dict
+        dcopy = copy.deepcopy(self.dfood)
+        dnew = {'id': 555, 'type': 'berry', 'price': 0.99}
+        dchg = self.nd.set(value=dnew, keys=['0002', 'topping', '5001'], dnow=dcopy)
+
+        value = self.nd.get(keys=['0002', 'topping', '5001'], dnow=dchg)
+        pprint(value)
+        self.assertEqual(value, dnew)
+
+        # without id
+        dcopy = copy.deepcopy(self.dfood)
+        dnew = {'Type': 'berry', 'price': 0.99}
+        dchg = self.nd.set(value=dnew, keys=['0002', 'topping', '5001'], dnow=dcopy)
+        value = self.nd.get(keys=['0002', 'topping', '5001'], dnow=dchg)
+        self.assertEqual(value, {u'id': u'5001', 'Type': 'berry', 'price': 0.99, u'type': u'None'})
 
     def test_create(self):
         keys = ['a', 'b', 'c']
         value = {u'd': 1}
         d = self.nd.create(value=value, keys=keys)
-        dnew = {'a': {'b': {'c': {u'd': 1}}}}
-        self.assertEqual(d, dnew)
+        dchg = {'a': {'b': {'c': {u'd': 1}}}}
+        self.assertEqual(d, dchg)
 
     def test_update(self):
         d_original = {'hello1': 1}
         dup = {'hello2': 2}
-        d = self.nd.update(dnew=dup, dold=d_original)
+        d = self.nd.update(dchg=dup, dnow=d_original)
         self.assertEqual(d, {'hello1': 1, 'hello2': 2})
 
         # d_original did not change
         self.assertEqual(set(d.keys()), set(['hello1', 'hello2']))
-        # dold in parameters will be updated(!)
+        # dnow in parameters will be updated(!)
         # self.assertEqual(d_original.keys(), ['hello1'])
 
-        value = self.nd.get(keys=['hello2'], dold=d)
+        value = self.nd.get(keys=['hello2'], dnow=d)
         self.assertEqual(value, 2)
 
         d_original = {'hello': 'to_override'}
         dup = {'hello': 'over'}
-        d = self.nd.update(dnew=dup, dold=d_original)
+        d = self.nd.update(dchg=dup, dnow=d_original)
         self.assertEqual(d, {'hello': 'over'})
 
         d_original = {'hello': {'value': 'to_override', 'no_change': 1}}
         dup = {'hello': {'value': 'over'}}
-        d = self.nd.update(dnew=dup, dold=d_original)
+        d = self.nd.update(dchg=dup, dnow=d_original)
         self.assertEqual(d, {'hello': {'value': 'over', 'no_change': 1}})
-        value = self.nd.get(keys=['hello', 'no_change'], dold=d_original)
+        value = self.nd.get(keys=['hello', 'no_change'], dnow=d_original)
         self.assertEqual(value, 1)
 
         d_original = {'hello': {'value': 'to_override', 'no_change': 1}}
         dup = {'hello': {'value': {}}}
-        dnew = self.nd.update(dnew=dup, dold=d_original)
-        self.assertEqual(dnew, {'hello': {'value': {}, 'no_change': 1}})
+        dchg = self.nd.update(dchg=dup, dnow=d_original)
+        self.assertEqual(dchg, {'hello': {'value': {}, 'no_change': 1}})
 
         d_original = {'hello': {'value': {}, 'no_change': 1}}
         dup = {'hello': {'value': 2}}
-        dnew = self.nd.update(dnew=dup, dold=d_original)
-        self.assertEqual(dnew, {'hello': {'value': 2, 'no_change': 1}})
+        dchg = self.nd.update(dchg=dup, dnow=d_original)
+        self.assertEqual(dchg, {'hello': {'value': 2, 'no_change': 1}})
 
     def test_merge_shallow(self):
         d = {}
-        dnew = {}
-        du = self.nd.merge_shallow(dnew=dnew, dold=d)
+        dchg = {}
+        du = self.nd.merge_shallow(dchg=dchg, dnow=d)
         self.assertEqual(du, d)
 
         d_original = {'hello1': 1}
         dup = {'hello2': 2}
-        du = self.nd.merge_shallow(dnew=dup, dold=d_original)
+        du = self.nd.merge_shallow(dchg=dup, dnow=d_original)
         self.assertEqual(du, {'hello1': 1, 'hello2': 2})
 
         # this is not shallow
         d_original = {'hello': {'value': 'to_override', 'no_change': 1}}
         dup = {'hello': {'value': 'over'}}
 
-        d = self.nd.merge_shallow(dnew=dup, dold=d_original)
+        d = self.nd.merge_shallow(dchg=dup, dnow=d_original)
         self.assertEqual(d, {'hello': {'value': 'over'}})
 
     def test_update2(self):
         d_original = {'hello1': 1}
         dup = {'hello2': 2}
-        d = self.nd.update2(dnew=dup, dold=d_original)
+        d = self.nd.update2(dchg=dup, dnow=d_original)
         self.assertEqual(d, {'hello1': 1, 'hello2': 2})
 
         # d_original did not change
         self.assertEqual(set(d.keys()), set(['hello1', 'hello2']))
         # self.assertEqual(d_original.keys(), ['hello1'])
 
-        value = self.nd.get(keys=['hello2'], dold=d)
+        value = self.nd.get(keys=['hello2'], dnow=d)
         self.assertEqual(value, 2)
 
         d_original = {'hello': 'to_override'}
         dup = {'hello': 'over'}
-        d = self.nd.update2(dnew=dup, dold=d_original)
+        d = self.nd.update2(dchg=dup, dnow=d_original)
         self.assertEqual(d, {'hello': 'over'})
 
         d_original = {'hello': {'value': 'to_override', 'no_change': 1}}
         dup = {'hello': {'value': 'over'}}
-        d = self.nd.update2(dnew=dup, dold=d_original)
+        d = self.nd.update2(dchg=dup, dnow=d_original)
         self.assertEqual(d, {'hello': {'value': 'over', 'no_change': 1}})
 
-        value = self.nd.get(keys=['hello', 'no_change'], dold=d_original)
+        value = self.nd.get(keys=['hello', 'no_change'], dnow=d_original)
         self.assertEqual(value, 1)
 
         d_original = {'hello': {'value': 'to_override', 'no_change': 1}}
         dup = {'hello': {'value': {}}}
-        dnew = self.nd.update2(dnew=dup, dold=d_original)
-        self.assertEqual(dnew, {'hello': {'value': {}, 'no_change': 1}})
+        dchg = self.nd.update2(dchg=dup, dnow=d_original)
+        self.assertEqual(dchg, {'hello': {'value': {}, 'no_change': 1}})
 
         d_original = {'hello': {'value': {}, 'no_change': 1}}
         dup = {'hello': {'value': 2}}
-        dnew = self.nd.update2(dnew=dup, dold=d_original)
-        self.assertEqual(dnew, {'hello': {'value': 2, 'no_change': 1}})
-
-    def test_update_a(self):
-        d_original = {'hello1': 1}
-        dup = {'hello2': 2}
-        d = self.nd.update(dnew=dup, dold=d_original)
-        self.assertEqual(d, {'hello1': 1, 'hello2': 2})
-
-        # d_original did not change
-        self.assertEqual(set(d.keys()), set(['hello1', 'hello2']))
-        # self.assertEqual(d_original.keys(), ['hello1'])
-
-        value = self.nd.get(keys=['hello2'], dold=d)
-        self.assertEqual(value, 2)
-
-        d_original = {'hello': 'to_override'}
-        dup = {'hello': 'over'}
-        d = self.nd.update(dnew=dup, dold=d_original)
-        self.assertEqual(d, {'hello': 'over'})
-
-        d_original = {'hello': {'value': 'to_override', 'no_change': 1}}
-        dup = {'hello': {'value': 'over'}}
-        d = self.nd.update(dnew=dup, dold=d_original)
-        self.assertEqual(d, {'hello': {'value': 'over', 'no_change': 1}})
-
-        value = self.nd.get(keys=['hello', 'no_change'], dold=d_original)
-        self.assertEqual(value, 1)
-
-        d_original = {'hello': {'value': 'to_override', 'no_change': 1}}
-        dup = {'hello': {'value': {}}}
-        dnew = self.nd.update(dnew=dup, dold=d_original)
-        self.assertEqual(dnew, {'hello': {'value': {}, 'no_change': 1}})
-
-        d_original = {'hello': {'value': {}, 'no_change': 1}}
-        dup = {'hello': {'value': 2}}
-        dnew = self.nd.update(dnew=dup, dold=d_original)
-        self.assertEqual(dnew, {'hello': {'value': 2, 'no_change': 1}})
+        dchg = self.nd.update2(dchg=dup, dnow=d_original)
+        self.assertEqual(dchg, {'hello': {'value': 2, 'no_change': 1}})

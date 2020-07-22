@@ -1,6 +1,5 @@
 import collections
 import copy
-import sys
 
 
 class NestedDict(object):
@@ -8,76 +7,76 @@ class NestedDict(object):
     set/update -- assume it is a single key per depth/level
     """
 
-    def update(self, dnew={}, dold={}):
+    def update(self, dchg={}, dnow={}):
         """
         recursive
         this func has some flaws by design
 
         this is the same for set/update/update2/merge_shallow
-        dold in parameters will be updated, this is unavoidable, make a deepcopy before(and outside) this func
+        dnow in parameters will be updated, this is unavoidable, make a deepcopy before(and outside) this func
 
         --set has the logic of merging if both were dict with multiple keys?
         the logic might not be reached, need to add tests to verify this
 
         --update do not have the logic, apply a simple replacement?
         """
-        if not dnew:
-            return dold
+        if not dchg:
+            return dnow
 
-        if not isinstance(dnew, dict):
-            print('dnew is {}'.format(dnew))
+        if not isinstance(dchg, dict):
+            print('dchg is {}'.format(dchg))
             raise Exception('update nested not dict')
 
         # first level keys
-        for key in dnew.keys():
+        for key in dchg.keys():
             # updated dkey should automatically change d
-            v = dold.get(key, None)
-            vnest = dnew.get(key, None)
+            v = dnow.get(key, None)
+            vnest = dchg.get(key, None)
             if not isinstance(v, dict):
                 # value or not being set in original d
-                # set value to be value of dnew(or dnew_sub)
+                # set value to be value of dchg(or dchg_sub)
                 # the original v is replaced
-                dold[key] = vnest
-                return dold
+                dnow[key] = vnest
+                return dnow
 
             if not isinstance(vnest, dict):
                 # replace existing dict with a value, loosing information
-                dold[key] = vnest
-                return dold
+                dnow[key] = vnest
+                return dnow
 
-            vkey = self.update(dnew=vnest, dold=v)
+            vkey = self.update(dchg=vnest, dnow=v)
             # replace the original value(v) with vkey
-            dold[key] = vkey
-        return dold
+            dnow[key] = vkey
+        return dnow
 
-    def update2(self, dnew={}, dold={}):
+    def update2(self, dchg={}, dnow={}):
         """
         recursive
-        assume dnew is complicated with multiple keys at the same depth
-        dold in the parameter will be updated, expected or side effect?
+        assume dchg is complicated with multiple keys at the same depth
+        dnow in the parameter will be updated, expected or side effect?
         """
-        if not dnew:
-            return dold
-        if not isinstance(dnew, dict):
-            return dold
+        if not dchg:
+            return dnow
+        if not isinstance(dchg, dict):
+            return dnow
 
-        for key, value in dnew.iteritems():
+        for key, value in dchg.iteritems():
             if isinstance(value, collections.Mapping) and value:
-                vinput = dold.get(key)
-                dold[key] = self.update2(dold=vinput, dnew=value)
+                vinput = dnow.get(key)
+                dnow[key] = self.update2(dnow=vinput, dchg=value)
             else:
-                dold[key] = value
-        return dold
+                dnow[key] = value
+        return dnow
 
-    def get(self, keys=[], dold={}):
+    def get(self, keys=[], dnow={}):
         """
         """
-        if not dold:
+        if not dnow:
             return None
-        if not isinstance(dold, dict):
+        if not isinstance(dnow, dict):
             return None
 
-        value = dold
+        value = dnow
         for key in keys:
             value = value.get(key)
             if not value:
@@ -88,53 +87,71 @@ class NestedDict(object):
                 return value
         return value
 
-    def set(self, value=None, keys=[], dold={}):
+    def set(self, value=None, keys=[], dnow={}):
         """
-        refactor -- for keys len from 1 to len(keys)
-        if the value is a dict, it will replaced the previous one if exists
+        replace in general
+        if value and the existing one are both dict, merge
         """
         if not keys:
-            return dold
+            # not going to return silently
+            raise Exception('Keys must not be empty')
 
-        if not dold:
-            # create a new one if empty
-            dold = self.create(value=value, keys=keys)
-            return dold
+        if not dnow:
+            # create one with keys and value
+            dnow = self.create(value=value, keys=keys)
+            return dnow
 
-        if not isinstance(dold, dict):
-            raise Exception('dold is expected to be dict')
+        if not isinstance(dnow, dict):
+            raise Exception('Expecting type dict')
 
         # keys looped already
         items = []
         # keys has not been used yet
         others = copy.deepcopy(keys)
         for key in keys:
+
+            # make sure items(keys) is not empty
             items.append(key)
-            vkey = self.get(keys=items, dold=dold)
+            vkey = self.get(keys=items, dnow=dnow)
 
-            if not vkey or not isinstance(vkey, dict):
-                # set value
-                # the value has to be set in the depth of the key
-                dnew = self.create(keys=others, value=value)
-                print('key {} empty vin others {}, value {} dnew {}'.format(key, others, value, dnew))
+            if vkey and isinstance(vkey, dict):
+                others.pop(0)
+                # keep going if type dict
+                if items == keys:
+                    # last one
+                    if isinstance(value, dict):
+                        # merge? same as update
+                        # vkey changed
+                        self.merge_shallow(dchg=value, dnow=vkey)
 
-                if len(items) > 1:
-                    print(items[0:-1])
-                    vkey_prev = self.get(keys=items[0:-1], dold=dold)
-                    if isinstance(vkey_prev, dict):
-                        vmerge = self.merge_shallow(dnew=dnew, dold=vkey_prev)
-                        dold[items[-1]] = vmerge
-                        return dold
-                    else:
-                        dold[items[-1]] = dnew
-                        return dold
-                else:
-                    return dnew
-                # this is odd, there is overlapping of key and others[0]
-                dold[key] = dnew.get(key)
-            others.pop(0)
+                        # value fully replacement, no merge
+                        # vkey[key] = value
+                        return dnow
+                continue
 
-        return dold
+            # None/empty list|set|dict/ type not dict/
+            # not vkey or not isinstance(vkey, dict):
+            # set value(?) with proper keys(?)
+            dchg = self.create(keys=others, value=value)
+            print('key {} empty vin others {}, value {} dchg {}'.format(key, others, value, dchg))
+
+            if len(items) == 1:
+                # first item
+                # no need to pop others since return
+                return dchg
+
+            print(items[0:-1])
+            vkey_prev = self.get(keys=items[0:-1], dnow=dnow)
+            if isinstance(vkey_prev, dict):
+                # vkey_prev merged and changed
+                self.merge_shallow(dchg=dchg, dnow=vkey_prev)
+                return dnow
+            else:
+                # same result
+                # dnow[items[-1]] = dchg
+                vkey_prev = dchg
+                return dnow
+        return dnow
 
     def create(self, keys=[], value=None):
         """
@@ -151,22 +168,19 @@ class NestedDict(object):
             d = {key: d}
         return d
 
-    def merge_shallow(self, dnew={}, dold={}):
+    def merge_shallow(self, dchg={}, dnow={}):
         """
-        this will be replaced by {**d, **d2} in python3.8
+        must be the same depth
         """
-        if sys.version_info[0] > 2:
-            return {**dold, **dnew}
+        # first loop
+        for key in dnow.keys():
+            if key in dchg:
+                # replace or update with new value at the same depth
+                dnow[key] = dchg.get(key)
 
-        # first loop -- update dold if key in dnew
-        for key in dold.keys():
-            vnew = dnew.get(key)
-            if key in dnew:
-                dold[key] = vnew
-
-        # second loop -- update dold if key not in dold
-        # add if missing
-        for key, value in dnew.iteritems():
-            if key not in dold:
-                dold[key] = value
-        return dold
+        # second loop
+        for key in dchg.keys():
+            if key not in dnow:
+                # add a new entry
+                dnow[key] = dchg.get(key)
+        return dnow
