@@ -1,5 +1,6 @@
 import collections
 import copy
+import sys
 
 
 class NestedDict(object):
@@ -11,8 +12,14 @@ class NestedDict(object):
         """
         recursive
         this func has some flaws by design
-        dold in parameers will be updated?!
-        use copy if do not want this to be changed
+
+        this is the same for set/update/update2/merge_shallow
+        dold in parameters will be updated, this is unavoidable, make a deepcopy before(and outside) this func
+
+        --set has the logic of merging if both were dict with multiple keys?
+        the logic might not be reached, need to add tests to verify this
+
+        --update do not have the logic, apply a simple replacement?
         """
         if not dnew:
             return dold
@@ -148,6 +155,9 @@ class NestedDict(object):
         """
         this will be replaced by {**d, **d2} in python3.8
         """
+        if sys.version_info[0] > 2:
+            return {**dold, **dnew}
+
         # first loop -- update dold if key in dnew
         for key in dold.keys():
             vnew = dnew.get(key)

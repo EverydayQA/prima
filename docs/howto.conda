@@ -10,3 +10,10 @@ conda-env list
  1003  ls -ltra
  1004  ls -ltr ~/.conda/
  1005  ls -ltr ~/.conda/envs/
+
+conda env list
+conda activate py37
+
+ 1029  conda create --name py2 python=2.7
+ 1030  conda env list
+ 1031  conda activate py2
