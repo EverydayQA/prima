@@ -1,231 +1,141 @@
-# from termcolor import cprint
+import collections
 import copy
 
 
 class NestedDict(object):
     """
-    Before a nested dict in installed, this will be tested and used
+    set/update -- assume it is a single key per depth/level
     """
 
-    def set(self, value, *keys, **d):
+    def update(self, dnew={}, dinput={}):
         """
-        assume a simple set value
-        set to add or replace value with keys
-        # pop() the last item of the list, use your deepGet on it and set the popped off key on the resulting dict
+        recursive
+        this func has some flaws by design
         """
-        if not keys:
-            return d
+        if not dnew:
+            return dinput
 
-        # dnew = self.create(value, *keys)
-        # return self.update(dnew, **d)
+        if not isinstance(dnew, dict):
+            print('dnew is {}'.format(dnew))
+            raise Exception('update nested not dict')
 
-        if not d:
-            return None
-        items = copy.deepcopy(list(keys))
-        v = None
-        keys_past = []
-        keys_left = copy.deepcopy(items)
-        dprev = None
-        for key in items:
-            if not keys_past:
-                v = d.get(key)
-            else:
-                v = v.get(key)
-
-            keys_past.append(key)
-
-            keys_left.pop(0)
-
-            # None or empty [] {}
-            if not v:
-                # final
-                if dprev is None:
-                    d[key] = self.create(value, *keys_left)
-                    return d
-                else:
-                    dprev[key] = value
-                return d
-
-            if not isinstance(v, dict):
-                # final
-                # replacement?
-                dprev[key] = value
-                return d
-
-            dprev = v
-        return d
-
-    def todo(self):
-        """
-        remove/reorder/reverse?
-        """
-        pass
-
-    def create(self, value, *keys):
-        """
-        create a single entry nested dict
-        """
-        dtmp = None
-        for key in reversed(keys):
-            if not dtmp:
-                dtmp = {key: value}
-                continue
-            dtmp = {key: dtmp}
-        return dtmp
-
-    def get(self, *keys, **d):
-        """
-        get the value with keys, default value is None?
-        return reduce(lambda d, k: d.get(k) if d else None, keys, sourceDict)
-        """
-        items = copy.deepcopy(list(keys))
-
-        if not d:
-            return None
-
-        value = None
-        keys_past = []
-        for key in items:
-            if not keys_past:
-                value = d.get(key, None)
-            else:
-                if not isinstance(value, dict):
-                    return value
-                value = value.get(key, None)
-
-            keys_past.append(key)
-            # cannot continue
-            if not value:
-                return value
-        return value
-
-    def merge_shallow(self, dnew, **d):
-        for key in d.keys():
-            v = d.get(key, None)
-            vnew = dnew.get(key, None)
-            if key in dnew.keys():
-                d[key] = vnew
-            else:
-                d[key] = v
-
+        # first level keys
         for key in dnew.keys():
-            v = d.get(key, None)
-            vnew = dnew.get(key, None)
-            d[key] = vnew
-
-        return d
-
-    def deep_keys(self, keys, **d):
-        """
-        assume single key at each level
-        if multiple keys in a dict, not consider as a key, but a value
-        keys to get, will miss one if lastkey is in dict with multiple keys
-        set -- dict with multiple keys
-        update -- dict with multiple keys
-        """
-        if not isinstance(d, dict):
-            return keys
-
-        if len(d.keys()) > 1:
-            return keys
-
-        for key in d.keys():
-            v = d.get(key, None)
-            # keep lastkey that is not uniq
-            keys.append(key)
-            if not isinstance(v, dict):
-                return keys
-
-            return self.deep_keys(keys, **v)
-        return keys
-
-    def shallow_setstar(self, key, value, **d):
-        """
-        if d is not to be changed outside this func, use this
-        """
-        d[key] = value
-        return d
-
-    def shallow_set(self, key, value, d):
-        """
-        if d is to be changed outside this func, use this way
-        """
-        d[key] = value
-        return d
-
-    def update2(self, dnew, **d):
-        """
-        update nested with a nested dict
-        assume dnew is a single entry for now, should be complicated
-        merge the deepest dict, not to replace
-        No need to do deepcopy with **d
-        the return d changed, but d is not from the place where d is provided as input
-        """
-        if not dnew:
-            return d
-
-        if not isinstance(dnew, dict):
-            print('dnew is {}'.format(dnew))
-            raise Exception('update nested not dict')
-            return d
-        deepkeys = []
-        deepkeys = self.deep_keys(deepkeys, **dnew)
-        if not deepkeys:
-            return self.merge_shallow(dnew, **d)
-
-        vdeep = self.get(*deepkeys, **d)
-        vdeep_new = self.get(*deepkeys, **dnew)
-
-        if isinstance(vdeep_new, dict) and isinstance(vdeep, dict):
-            pass
-            # do not want to merge
-            vmerge = self.merge_shallow(vdeep_new, **vdeep)
-            return self.set(vmerge, *deepkeys, **d)
-        return self.set(vdeep_new, *deepkeys, **d)
-
-    def update(self, dnew, **d):
-        """
-        update nested with a nested dict
-        assume dnew is a single entry for now, should be complicated
-        merge the deepest dict, not to replace
-        """
-        if not dnew:
-            return d
-
-        if not isinstance(dnew, dict):
-            print('dnew is {}'.format(dnew))
-            raise Exception('update nested not dict')
-            return d
-
-        # how to tell if 2 dict has the same depth?
-        deepkeys = []
-        deepkeys = self.deep_keys(deepkeys, **dnew)
-        keys = copy.deepcopy(list(deepkeys))
-        for key in deepkeys:
             # updated dkey should automatically change d
-            v = d.get(key, None)
+            v = dinput.get(key, None)
             vnest = dnew.get(key, None)
-            keys.pop(0)
-
             if not isinstance(v, dict):
                 # value or not being set in original d
                 # set value to be value of dnew(or dnew_sub)
                 # the original v is replaced
-                d[key] = vnest
-                return d
+                dinput[key] = vnest
+                return dinput
 
             if not isinstance(vnest, dict):
                 # replace existing dict with a value, loosing information
-                d[key] = vnest
-                return d
+                dinput[key] = vnest
+                return dinput
 
-            if isinstance(v, dict) and isinstance(vnest, dict):
-                if len(keys) == 1:
-                    vkey = self.merge_shallow(vnest, **v)
-                    d[key] = vkey
-                    return d
-
-            vkey = self.update(vnest, **v)
+            vkey = self.update(dnew=vnest, dinput=v)
             # replace the original value(v) with vkey
-            d[key] = vkey
+            dinput[key] = vkey
+        return dinput
+
+    def update2(self, dinput={}, dnew={}):
+        """
+        recursive
+        assume dnew is complicated with multiple keys at the same depth
+        """
+        raise Exception('has not been tested yet')
+        if not dnew:
+            return dinput
+        if not isinstance(dnew, dict):
+            return dinput
+
+        for key, value in dnew.iteritems():
+            if isinstance(value, collections.Mapping) and value:
+                vinput = dinput.get(key)
+                dinput[key] = self.update2(dinput=vinput, dnew=value)
+            else:
+                dinput[key] = value
+        return dinput
+
+    def get(self, keys=[], dinput={}):
+        """
+        """
+        if not dinput:
+            return None
+        if not isinstance(dinput, dict):
+            return None
+
+        value = dinput
+        for key in keys:
+            value = value.get(key)
+            if not value:
+                return value
+            if not isinstance(value, dict):
+                return value
+        return value
+
+    def set(self, value=None, keys=[], dinput={}):
+        """
+        refactor -- for keys len from 1 to len(keys)
+        if the value is a dict, it will replaced the previous one if exists
+        """
+        if not keys:
+            return dinput
+
+        if not dinput:
+            # create a new one if empty
+            dinput = self.create(value=value, keys=keys)
+            return dinput
+
+        if not isinstance(dinput, dict):
+            raise Exception('dinput is expected to be dict')
+
+        # keys looped already
+        items = []
+        # keys has not been used yet
+        others = copy.deepcopy(keys)
+        for key in keys:
+            items.append(key)
+            others.pop(0)
+            vin = self.get(keys=items, dinput=dinput)
+            if not vin or not isinstance(vin, dict):
+                # set value
+                # the value has to be set in the depth of the key
+                dnew = self.create(keys=others, value=value)
+                dinput[key] = dnew
+        return dinput
+
+    def create(self, keys=[], value=None):
+        """
+        create a nested dict with single entry on each depth
+        """
+        if not keys:
+            return {}
+
+        d = None
+        for key in reversed(keys):
+            if d is None:
+                d = {key: value}
+                continue
+            d = {key: d}
         return d
+
+    def merge_shallow(self, dnew={}, dinput={}):
+        """
+        this will be replaced by {**d, **d2} in python3.8
+        """
+        # first loop -- update dinput if key in dnew
+        for key in dinput.keys():
+            vnew = dnew.get(key)
+            if key in dnew:
+                dinput[key] = vnew
+
+        # second loop -- update dinput if key not in dinput
+        # add if missing
+        for key, value in dnew.iteritems():
+            if key not in dinput:
+                dinput[key] = value
+        return dinput
