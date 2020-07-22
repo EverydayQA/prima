@@ -11,6 +11,8 @@ class NestedDict(object):
         """
         recursive
         this func has some flaws by design
+        dinput in parameers will be updated?!
+        use copy if do not want this to be changed
         """
         if not dnew:
             return dinput
@@ -45,8 +47,8 @@ class NestedDict(object):
         """
         recursive
         assume dnew is complicated with multiple keys at the same depth
+        dinput in the parameter will be updated, expected or side effect?
         """
-        raise Exception('has not been tested yet')
         if not dnew:
             return dinput
         if not isinstance(dnew, dict):
@@ -72,8 +74,10 @@ class NestedDict(object):
         for key in keys:
             value = value.get(key)
             if not value:
+                # print('key {} value {} is None'.format(key, value))
                 return value
             if not isinstance(value, dict):
+                # print('key {} value {} is not dict type'.format(key, value))
                 return value
         return value
 
@@ -99,13 +103,30 @@ class NestedDict(object):
         others = copy.deepcopy(keys)
         for key in keys:
             items.append(key)
-            others.pop(0)
-            vin = self.get(keys=items, dinput=dinput)
-            if not vin or not isinstance(vin, dict):
+            vkey = self.get(keys=items, dinput=dinput)
+
+            if not vkey or not isinstance(vkey, dict):
                 # set value
                 # the value has to be set in the depth of the key
                 dnew = self.create(keys=others, value=value)
-                dinput[key] = dnew
+                print('key {} empty vin others {}, value {} dnew {}'.format(key, others, value, dnew))
+
+                if len(items) > 1:
+                    print(items[0:-1])
+                    vkey_prev = self.get(keys=items[0:-1], dinput=dinput)
+                    if isinstance(vkey_prev, dict):
+                        vmerge = self.merge_shallow(dnew=dnew, dinput=vkey_prev)
+                        dinput[items[-1]] = vmerge
+                        return dinput
+                    else:
+                        dinput[items[-1]] = dnew
+                        return dinput
+                else:
+                    return dnew
+                # this is odd, there is overlapping of key and others[0]
+                dinput[key] = dnew.get(key)
+            others.pop(0)
+
         return dinput
 
     def create(self, keys=[], value=None):
