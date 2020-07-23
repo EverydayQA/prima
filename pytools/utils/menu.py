@@ -29,6 +29,15 @@ class Menu(object):
             selections.append(the_list[index])
         return selections
 
+    def todo(self):
+        """
+        max number of times to choose
+        number 0 - all
+        separator
+        timeout
+        """
+        pass
+
 
 def print_format_table():
     for style in range(8):
