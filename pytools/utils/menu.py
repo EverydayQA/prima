@@ -1,9 +1,13 @@
 import logging
 import re
+import sys
 logger = logging.getLogger(__name__)
 
 
 class Menu(object):
+    """
+    a solid menu is the start of everything
+    """
 
     def __init__(self, *args, **kwargs):
         self.kwargs = kwargs
@@ -13,28 +17,95 @@ class Menu(object):
     def fake(self):
         return 'fake'
 
-    def select_from_menu(self, the_list, prompt):
-        logger.debug('select_from_menu')
+    def get_selections(self, s):
+        """
+        - range 0-3
+        separator space only, comma not supported
+        tight on the rules instead of guessing
+        """
+        sels = []
+
+        # 0-2 only, 0 - 2 not supported
+
+        # 0-2 4 6 9-16
+
+        # 0-2,4,6,9-12 not supported
+
+        if ',' in s:
+            return None
+
+        s = s.rstrip()
+        items = s.split(' ')
+        if '-' in items:
+            return None
+        for item in items:
+            if '-' in item:
+                eles = item.split('-')
+                ss = range(int(eles[0]), int(eles[1]) + 1)
+                sels.extend(ss)
+            else:
+                sels.append(int(item))
+        return sels
+
+    def select_once(self, items, prompt):
+        """
+        --timeout
+        --prompt
+        --search
+        --range check
+        --separator
+        --cycle(number of times to make it right)
+        --limit 0 or 1 or any
+        --default
+        """
         index = 0
-        for item in the_list:
+        for item in items:
             print(str(index) + " ## " + item)
             index = index + 1
 
         print(prompt)
+        if sys.version_info[0] > 2:
+            # input of py2 only accept number, string is needed
+            inputstr = input('range or number:')
+        else:
+            inputstr = raw_input('range or number:')
 
-        selections = []
-        sels = map(int, input("space separated: ").split())
-        for sel in sels:
-            index = int(sel)
-            selections.append(the_list[index])
-        return selections
+        print("inputstr {}".format(inputstr))
+        sels = self.get_selections(str(inputstr))
+        return sels
+
+    def select_from_menu(self, items, prompt, cycle=3, timeout=30):
+        """
+        args class for this?
+        --check max < len(items), duplicated
+        --cycle, default 3 max 5
+        --timeout
+        --warning
+        --limit
+        --search a b --and --or
+        """
+        count = 0
+        sels = []
+        while count < cycle:
+            # timeout
+            sels = self.select_once(items, prompt)
+            count = count + 1
+            if sels:
+                # --check
+                return sels
+            if count > 5:
+                # max cycles
+                return None
+        return None
 
     def todo(self):
         """
         max number of times to choose
         number 0 - all
         separator
+        range index check
         timeout
+        search + --and --or
         """
         pass
 
@@ -55,36 +126,40 @@ def get_input():
     return input_str
 
 
-def print_menu(the_list):
+def print_menu(items):
     index = 0
-    for item in the_list:
+    for item in items:
         print('{} ## {}'.format(index, item))
         index = index + 1
 
 
-def select_from_list(the_list):
+def select_from_list(items):
     # multiple select
     logger.info('select_from_list')
-    print_menu(the_list)
+    print_menu(items)
     input_str = get_input()
     sels = parse_input_string(input_str)
-    selections = selections_in_list(sels, the_list)
+    selections = selections_in_list(sels, items)
     return selections
 
 
-def selections_in_list(sels, the_list):
+def selections_in_list(sels, items):
     selections = []
     for sel in sels:
         try:
             sel = int(sel)
             index = sel
-            selections.append(the_list[index])
+            selections.append(items[index])
         except Exception as e:
             print(e)
     return selections
 
 
 def parse_input_string(s):
+    """
+    - range 0-3
+    separator space comma
+    """
     selections = []
     try:
         float(s)
@@ -97,6 +172,7 @@ def parse_input_string(s):
 
     s = s.rstrip()
     count_comma = s.count(",")
+    # what about 2 spaces by mistake --confirmation
     count_space = s.count(" ")
     if count_comma == 0 and count_space == 0:
         selections.append(s)

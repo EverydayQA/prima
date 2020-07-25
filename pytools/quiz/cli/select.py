@@ -21,14 +21,14 @@ class CliSelect(object):
         """
         # read 1 json file, 1 quiz from take_quiz()
         the_list = ['aaa', 'bbb', 'ccc', 'ddd']
-        selections = menu.select_from_list(the_list)
+        selections = menu.Menu().select_from_menu(the_list, "select")
         print(selections)
 
 
 def main(argv):
 
     cli = CliSelect()
-    cli.slect()
+    cli.select()
     # menu.print_format_table()
 
     # user
