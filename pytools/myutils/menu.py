@@ -1,6 +1,10 @@
 import logging
 import re
 import sys
+import time
+# selectors2
+from select import select
+
 logger = logging.getLogger(__name__)
 
 
@@ -58,6 +62,8 @@ class Menu(object):
         --limit 0 or 1 or any
         --default
         """
+        t1 = time.time()
+
         index = 0
         for item in items:
             print(str(index) + " ## " + item)
@@ -70,7 +76,18 @@ class Menu(object):
         else:
             inputstr = raw_input('range or number:')
 
+        t2 = time.time()
+        print(t1)
+        print(t2)
         print("inputstr {}".format(inputstr))
+
+        print("select to wair srsin: ")
+        rlist, _, _ = select([sys.stdin], [], [], 10)
+        if rlist:
+            s = sys.stdin.readline()
+            print(s)
+        else:
+            print("timeout")
         sels = self.get_selections(str(inputstr))
         return sels
 

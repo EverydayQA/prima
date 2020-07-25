@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import sys
-from utils import menu
+from myutils import menu
 
 
 class CliSelect(object):
