@@ -16,7 +16,7 @@ class Menu(object):
         self.kwargs = kwargs
         self.args = args
 
-    def get_selections(self, s):
+    def parse_selected_input(self, s):
         """
         - range 0-3
         separator space only, comma not supported
@@ -71,6 +71,24 @@ class Menu(object):
             inputstr = raw_input('range or number:')
         return inputstr
 
+    def get_input(self, timeout=20):
+
+        rlist,  _,  _ = select([sys.stdin], [], [], timeout)
+        if rlist:
+            s = sys.stdin.readline()
+        else:
+            print("timeout")
+        return s
+
+    def pre_selection(self, items, prompt):
+        # refactor to a func
+        index = 0
+        for item in items:
+            print(str(index) + " ## " + item)
+            index = index + 1
+        print(prompt)
+        print('select: ')
+
     def select_once(self, items, prompt, timeout=20):
         """
         --timeout
@@ -83,20 +101,9 @@ class Menu(object):
         --limit 0 or 1 or any
         --default if no selections
         """
-
-        index = 0
-        for item in items:
-            print(str(index) + " ## " + item)
-            index = index + 1
-
-        print(prompt)
-        print('select: ')
-        rlist,  _,  _ = select([sys.stdin], [], [], timeout)
-        if rlist:
-            s = sys.stdin.readline()
-        else:
-            print("timeout")
-        sels = self.get_selections(str(s))
+        self.pre_selection(items, prompt)
+        s = self.get_input(timeout=timeout)
+        sels = self.parse_selected_input(str(s))
         return sels
 
     def get_valid_items(self, sels, items):
