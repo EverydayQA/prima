@@ -1,7 +1,6 @@
 import logging
-import re
 import sys
-import time
+from termcolor import cprint
 # selectors2
 from select import select
 
@@ -16,10 +15,6 @@ class Menu(object):
     def __init__(self, *args, **kwargs):
         self.kwargs = kwargs
         self.args = args
-
-    @property
-    def fake(self):
-        return 'fake'
 
     def get_selections(self, s):
         """
@@ -51,7 +46,7 @@ class Menu(object):
                 sels.append(int(item))
         return sels
 
-    def select_once(self, items, prompt):
+    def select_raw_input(self, items, prompt):
         """
         --timeout
         --prompt
@@ -62,7 +57,6 @@ class Menu(object):
         --limit 0 or 1 or any
         --default
         """
-        t1 = time.time()
 
         index = 0
         for item in items:
@@ -75,21 +69,47 @@ class Menu(object):
             inputstr = input('range or number:')
         else:
             inputstr = raw_input('range or number:')
+        return inputstr
 
-        t2 = time.time()
-        print(t1)
-        print(t2)
-        print("inputstr {}".format(inputstr))
+    def select_once(self, items, prompt, timeout=20):
+        """
+        --timeout
+        --prompt
+        --separator
+        --cycle(number of times to make it right)
 
-        print("select to wair srsin: ")
-        rlist, _, _ = select([sys.stdin], [], [], 10)
+        --search
+        --range check
+        --limit 0 or 1 or any
+        --default if no selections
+        """
+
+        index = 0
+        for item in items:
+            print(str(index) + " ## " + item)
+            index = index + 1
+
+        print(prompt)
+        print('select: ')
+        rlist,  _,  _ = select([sys.stdin], [], [], timeout)
         if rlist:
             s = sys.stdin.readline()
-            print(s)
         else:
             print("timeout")
-        sels = self.get_selections(str(inputstr))
+        sels = self.get_selections(str(s))
         return sels
+
+    def get_valid_items(self, sels, items):
+        if not sels:
+            return None
+        maxindex = len(items)
+
+        selections = []
+        for sel in sels:
+            if sel >= maxindex:
+                return False
+            selections.append(items[sel])
+        return selections
 
     def select_from_menu(self, items, prompt, cycle=3, timeout=30):
         """
@@ -105,96 +125,15 @@ class Menu(object):
         sels = []
         while count < cycle:
             # timeout
-            sels = self.select_once(items, prompt)
+            sels = self.select_once(items, prompt, timeout=timeout)
+            print(sels)
+            selected = self.get_valid_items(sels, items)
+            print(selected)
+            if selected:
+                return selected
             count = count + 1
-            if sels:
-                # --check
-                return sels
+            cprint('try another selection', 'yellow')
             if count > 5:
                 # max cycles
                 return None
         return None
-
-    def todo(self):
-        """
-        max number of times to choose
-        number 0 - all
-        separator
-        range index check
-        timeout
-        search + --and --or
-        """
-        pass
-
-
-def print_format_table():
-    for style in range(8):
-        for fg in range(30, 38):
-            s1 = ''
-            for bg in range(40, 48):
-                format = ';'.join([str(style), str(fg), str(bg)])
-                s1 += '\x1b[%sm %s \x1b[0m' % (format, format)
-            print(s1)
-        print('\n')
-
-
-def get_input():
-    input_str = input("Please select one or more from the list: ")
-    return input_str
-
-
-def print_menu(items):
-    index = 0
-    for item in items:
-        print('{} ## {}'.format(index, item))
-        index = index + 1
-
-
-def select_from_list(items):
-    # multiple select
-    logger.info('select_from_list')
-    print_menu(items)
-    input_str = get_input()
-    sels = parse_input_string(input_str)
-    selections = selections_in_list(sels, items)
-    return selections
-
-
-def selections_in_list(sels, items):
-    selections = []
-    for sel in sels:
-        try:
-            sel = int(sel)
-            index = sel
-            selections.append(items[index])
-        except Exception as e:
-            print(e)
-    return selections
-
-
-def parse_input_string(s):
-    """
-    - range 0-3
-    separator space comma
-    """
-    selections = []
-    try:
-        float(s)
-        selections.append(s)
-        return selections
-    except ValueError:
-        pass
-    else:
-        pass
-
-    s = s.rstrip()
-    count_comma = s.count(",")
-    # what about 2 spaces by mistake --confirmation
-    count_space = s.count(" ")
-    if count_comma == 0 and count_space == 0:
-        selections.append(s)
-    elif count_space > 0:
-        selections = re.split(' ', s)
-    elif count_comma > 0:
-        selections = re.split(',', s)
-    return selections

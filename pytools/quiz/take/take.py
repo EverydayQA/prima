@@ -6,17 +6,10 @@ import sys
 import argparse
 from ..lib import menu
 from ..lib import parse_json
-from ..lib import quiz_name
-from ..lib import quiz_content
 from ..lib import tools
 from ..lib import data_dir
-from quiz import menu
-from quiz import parse_json
 from collections import OrderedDict
 import uuid
-import mechanize
-from time import sleep
-import subprocess
 
 
 class Taken(object):
@@ -77,19 +70,6 @@ class Take(object):
         return logger
 
     @property
-    def session_id(self):    
-        session_id = self.kwargs.get('session_id', 1000)
-        return session_id
-
-    def jsons_glob(self, jason_dir): 
-        jsons = glob.iglob(jason_dir + '/*.json')
-
-    def data_dir(self):
-        dirname = os.path.dirname(__file__)
-        data_dir = os.path.join(dirname, '../data')
-        return data_dir
-
-    @property
     def session_id(self):
         session_id = self.kwargs.get('session_id', 1000)
         return session_id
@@ -109,7 +89,7 @@ class Take(object):
         return jsons
 
     def sort_quiz_dict_by_desc(self, list_dict):
-        print '\n\n*sorted BY DESCRIPTION {0}\n'.format(len(list_dict))
+        print('\n\n*sorted BY DESCRIPTION {0}\n'.format(len(list_dict)))
         sorted_dict_desc = OrderedDict(sorted(list_dict.items(), key=lambda t: t[1].description))
         for key in sorted_dict_desc:
             item = sorted_dict_desc[key]
@@ -119,7 +99,7 @@ class Take(object):
 
     def sort_quiz_dict_by_key(self, list_dict):
 
-        print '\n\n*sorted BY KEY {0}\n'.format(len(list_dict))
+        print('\n\n*sorted BY KEY {0}\n'.format(len(list_dict)))
 
         list_dict = OrderedDict(sorted(list_dict.items(), key=lambda t: t[0]))
         for key in list_dict:
@@ -133,7 +113,8 @@ class Score(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-    
+
+
 def init_args_take():
     parser = argparse.ArgumentParser()
     parser.add_argument('--logging', type=int, default=20, help='logging level')
@@ -141,7 +122,7 @@ def init_args_take():
     parser.add_argument('--level', type=int, default=20, help='level in category')
     parser.add_argument('--name', type=str, default='name', help='course name')
 
-    args, args_extra = parser.parse_known_args(sys.argv[1:] )
+    args, args_extra = parser.parse_known_args(sys.argv[1:])
     return args, args_extra
 
 
@@ -157,7 +138,7 @@ def main():
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     ch.setFormatter(formatter)
     logger.addHandler(ch)
-    logger.propagate = False 
+    logger.propagate = False
     dataDir = data_dir.DataDir()
 
     # now - a comprised way to get quiz.json first
@@ -181,12 +162,14 @@ def main():
 
     # sorted_dict = take.sort_quiz_dict_by_desc(list_dict)
     sorted_dict = take.sort_quiz_dict_by_key(list_dict)
-    print sorted_dict
+    print(sorted_dict)
     logger.info('now - take Quiz -- json-Quiz()')
 
     # select Quiz()
-    files = menu.select_from_list(jsons)
-    print files
+    prompt = "Please select sth from list:"
+    mu = menu.Menu()
+    files = mu.select_from_menu(jsons, prompt, cycle=3, timeout=20)
+    print(files)
 
     # file_name/quiz_id/session_id(same)/ans/result/datetime/userid
 

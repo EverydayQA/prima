@@ -21,7 +21,7 @@ class CliSelect(object):
         """
         # read 1 json file, 1 quiz from take_quiz()
         the_list = ['aaa', 'bbb', 'ccc', 'ddd']
-        selections = menu.Menu().select_from_menu(the_list, "select")
+        selections = menu.Menu().select_from_menu(the_list, "select", cycle=4, timeout=40)
         print(selections)
 
 

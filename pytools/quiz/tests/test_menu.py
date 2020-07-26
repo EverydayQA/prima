@@ -22,35 +22,34 @@ class MenuTest(unittest.TestCase):
 
     # menu.py - mock builtin function in other function
     @mock.patch('__builtin__.raw_input')
-    def test_select_from_list(self, mock_raw_input):
+    def test_select_from_menu(self, mock_raw_input):
         mock_raw_input.return_value = '1,2'
         alist = ['aaa', 'bbb', 'ccc', 'ddd']
-        sels = menu.select_from_list(alist)
-        print sels
+        sels = menu.select_from_menu(alist)
         self.assertEqual(sels, ['bbb', 'ccc'])
 
     @mock.patch('quiz.lib.menu.get_input')
-    def test_select_from_list2(self, mock_get_input):
+    def test_select_from_menu2(self, mock_get_input):
         mock_get_input.return_value = '1 2'
         alist = ['aaa', 'bbb', 'ccc', 'ddd']
-        sels = menu.select_from_list(alist)
+        sels = menu.select_from_menu(alist)
         self.assertEqual(sels, ['bbb', 'ccc'])
 
     @unittest.skip("disabled - example of mock not working")
-    def test_select_from_list_using_mock(self):
+    def test_select_from_menu_using_mock(self):
         mocked = mock.Mock()
         mocked.menu = menu
         mocked.menu.get_input.return_value = '1 2'
         alist = ['aaa', 'bbb', 'ccc', 'ddd']
-        sels = mocked.menu.select_from_list(alist)
+        sels = mocked.menu.select_from_menu(alist)
         self.assertEqual(sels, ['bbb', 'ccc'])
 
-    def test_select_from_list_using_mock2(self):
+    def test_select_from_menu_using_mock2(self):
         mocked = mock.Mock()
         mocked.menu = menu
         mocked.menu.get_input.return_value = '1 2'
         alist = ['aaa', 'bbb', 'ccc', 'ddd']
-        sels = mocked.menu.select_from_list(alist)
+        sels = mocked.menu.select_from_menu(alist)
         self.assertEqual(sels, ['bbb', 'ccc'])
 
     @mock.patch('__builtin__.raw_input')
@@ -65,19 +64,15 @@ class MenuTest(unittest.TestCase):
         selections = menu.selections_in_list(sels, alist)
         self.assertEqual(selections, ['bbb', 'ddd'])
 
-    def test_select_from_menu(self):
+    def test_select_from_menux(self):
         # this is an alternative to mock.patch
-        __builtin__.raw_input =  lambda x: '1 3'
-        alist=['aaa','bbb','ccc', 'ddd']
+        __builtin__.raw_input = lambda x: '1 3'
+        alist = ['aaa', 'bbb', 'ccc', 'ddd']
         menu_obj = menu.Menu()
         selections = menu_obj.select_from_menu(alist, "anything")
-        self.assertEqual(selections,[1,3])
+        self.assertEqual(selections, [1, 3])
 
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(MenuTest)
     unittest.TextTestRunner(verbosity=2).run(suite)
-
-    def test_fake(self):
-        mn = menu.Menu()
-        self.assertEqual(mn.fake, 'fake')
