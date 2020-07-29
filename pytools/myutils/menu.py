@@ -1,8 +1,11 @@
 import logging
 import sys
 from termcolor import cprint
+import argparse
+from pprint import pprint
 # selectors2
 from select import select
+from collections import defaultdict
 
 logger = logging.getLogger(__name__)
 
@@ -13,8 +16,31 @@ class Menu(object):
     """
 
     def __init__(self, *args, **kwargs):
+        """
+        --timeout
+        --cycle
+        --limit 1(only 1) 0(1 or many)
+        """
         self.kwargs = kwargs
         self.args = args
+        self.dns = self.update_kwargs(kwargs)
+        self.ns = argparse.Namespace(**self.dns)
+
+    def default_setting(self):
+        """
+        default dict
+        """
+        return [('timeout', 30), ('cycle', 3), ('limit', 0)]
+
+    def update_kwargs(self, kwargs):
+        d = defaultdict(None)
+        for k, v in self.default_setting():
+            vk = kwargs.get(k)
+            if vk:
+                d[k] = vk
+            else:
+                d[k] = v
+        return d
 
     def parse_selected_input(self, s):
         """
@@ -46,34 +72,9 @@ class Menu(object):
                 sels.append(int(item))
         return sels
 
-    def select_raw_input(self, items, prompt):
-        """
-        --timeout
-        --prompt
-        --search
-        --range check
-        --separator
-        --cycle(number of times to make it right)
-        --limit 0 or 1 or any
-        --default
-        """
+    def get_input(self):
 
-        index = 0
-        for item in items:
-            print(str(index) + " ## " + item)
-            index = index + 1
-
-        print(prompt)
-        if sys.version_info[0] > 2:
-            # input of py2 only accept number, string is needed
-            inputstr = input('range or number:')
-        else:
-            inputstr = raw_input('range or number:')
-        return inputstr
-
-    def get_input(self, timeout=20):
-
-        rlist,  _,  _ = select([sys.stdin], [], [], timeout)
+        rlist,  _,  _ = select([sys.stdin], [], [], self.ns.timeout)
         if rlist:
             s = sys.stdin.readline()
         else:
@@ -84,12 +85,13 @@ class Menu(object):
         # refactor to a func
         index = 0
         for item in items:
-            print(str(index) + " ## " + item)
+            line = '{} ## {}'.format(str(index), str(item))
+            print(line)
             index = index + 1
         print(prompt)
         print('select: ')
 
-    def select_once(self, items, prompt, timeout=20):
+    def select_once(self, items, prompt):
         """
         --timeout
         --prompt
@@ -102,7 +104,9 @@ class Menu(object):
         --default if no selections
         """
         self.pre_selection(items, prompt)
-        s = self.get_input(timeout=timeout)
+        s = self.get_input()
+        print('s <{}>'.format(s))
+        raise Exception(s)
         sels = self.parse_selected_input(str(s))
         return sels
 
@@ -118,7 +122,7 @@ class Menu(object):
             selections.append(items[sel])
         return selections
 
-    def select_from_menu(self, items, prompt, cycle=3, timeout=30):
+    def select_from_menu(self, items, prompt, default=None):
         """
         args class for this?
         --check max < len(items), duplicated
@@ -128,16 +132,20 @@ class Menu(object):
         --limit
         --search a b --and --or
         """
+        pprint(self.ns)
         count = 0
         sels = []
-        while count < cycle:
+        while count < self.ns.cycle:
             # timeout
-            sels = self.select_once(items, prompt, timeout=timeout)
+            sels = self.select_once(items, prompt)
             print(sels)
             selected = self.get_valid_items(sels, items)
             print(selected)
             if selected:
                 return selected
+            else:
+                if default:
+                    return default
             count = count + 1
             cprint('try another selection', 'yellow')
             if count > 5:
