@@ -21,8 +21,16 @@ class CliSelect(object):
         """
         # read 1 json file, 1 quiz from take_quiz()
         the_list = ['aaa', 'bbb', 'ccc', 'ddd']
-        men = menu.Menu(default='cccd', timeout=100)
-        selections = men.select_from_menu(the_list, "select")
+        # timeout cycle limit
+        men = menu.Menu(cycle=10, limit=0, timeout=4)
+        selections = men.select_from_menu(the_list, "select one or more")
+        print(selections)
+
+        men = menu.Menu(cycle=5, timeout=4, limit=1)
+        selections = men.select_from_menu(the_list, "select only one item")
+        print(selections)
+
+        selections = men.select_from_menu(the_list, "select only one item with default", default='default')
         print(selections)
 
 

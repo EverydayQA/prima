@@ -60,15 +60,22 @@ class Menu(object):
             return None
 
         s = s.rstrip()
+        if not s:
+            return []
+
         items = s.split(' ')
         if '-' in items:
             return None
+
         for item in items:
             if '-' in item:
                 eles = item.split('-')
                 ss = range(int(eles[0]), int(eles[1]) + 1)
                 sels.extend(ss)
             else:
+                if item.isdigit() is False:
+                    cprint('{} is not digit', 'red')
+                    return None
                 sels.append(int(item))
         return sels
 
@@ -77,9 +84,11 @@ class Menu(object):
         rlist,  _,  _ = select([sys.stdin], [], [], self.ns.timeout)
         if rlist:
             s = sys.stdin.readline()
+            return s
         else:
-            print("timeout")
-        return s
+            print("timeout {} secconds reached".format(self.ns.timeout))
+            return None
+        return None
 
     def pre_selection(self, items, prompt):
         # refactor to a func
@@ -88,8 +97,8 @@ class Menu(object):
             line = '{} ## {}'.format(str(index), str(item))
             print(line)
             index = index + 1
-        print(prompt)
-        print('select: ')
+        line = "{}: ".format(prompt)
+        cprint(line, 'green')
 
     def select_once(self, items, prompt):
         """
@@ -105,8 +114,8 @@ class Menu(object):
         """
         self.pre_selection(items, prompt)
         s = self.get_input()
-        print('s <{}>'.format(s))
-        raise Exception(s)
+        if not s:
+            return None
         sels = self.parse_selected_input(str(s))
         return sels
 
@@ -120,6 +129,11 @@ class Menu(object):
             if sel >= maxindex:
                 return False
             selections.append(items[sel])
+
+        if self.ns.limit == 1:
+            if len(selections) == 1:
+                return selections
+            return None
         return selections
 
     def select_from_menu(self, items, prompt, default=None):
@@ -138,17 +152,13 @@ class Menu(object):
         while count < self.ns.cycle:
             # timeout
             sels = self.select_once(items, prompt)
-            print(sels)
             selected = self.get_valid_items(sels, items)
-            print(selected)
             if selected:
                 return selected
-            else:
-                if default:
-                    return default
             count = count + 1
             cprint('try another selection', 'yellow')
-            if count > 5:
-                # max cycles
-                return None
+
+        if default:
+            # only return default after cycle reached
+            return default
         return None
