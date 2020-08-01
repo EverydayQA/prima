@@ -1,6 +1,6 @@
 import unittest
 import mock
-from utils import func_ab
+from myutils import func_ab
 
 
 class TestUtils(unittest.TestCase):
@@ -9,7 +9,7 @@ class TestUtils(unittest.TestCase):
     def test_method_a(self):
         # the following 2 lines demo only - mock method_a for no pratical use here
         # does not affect anything else
-        self.patchA = mock.patch('utils.func_ab.method_b', return_value=None).start()
+        self.patchA = mock.patch('myutils.func_ab.method_b', return_value=None).start()
         # scope is everywhere? the stop is not working
         self.patchA.stop()
 
@@ -21,7 +21,7 @@ class TestUtils(unittest.TestCase):
         """
         mock scope is within the 'with' statement
         """
-        with mock.patch('utils.func_ab.method_b') as mock_method_a:
+        with mock.patch('myutils.func_ab.method_b') as mock_method_a:
             mock_method_a.return_value = None
             # method_a is not mocked
             actual_result = func_ab.method_a()

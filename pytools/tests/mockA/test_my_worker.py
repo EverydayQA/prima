@@ -5,7 +5,7 @@ from mock import MagicMock
 from other.my_worker import MyWorker
 
 
-def value_a():
+def get_value_a():
     return 'a'
 
 
@@ -98,14 +98,37 @@ class TestWorker(unittest.TestCase):
             self.assertEqual(worker.gevent_nap(10), 10 * 5)
             mock_sleep.assert_called_with(5)
 
-    @mock.patch('tests.mockA.test_my_worker.value_a', return_value='mocking_va')
-    @mock.patch('tests.mockA.test_my_worker.another_method', return_value='mocking_another')
-    def test_result(self, mock_value_a, mock_another_method):
+    @mock.patch('tests.mockA.test_my_worker.get_value_a')
+    def test_get_value_a(self, mock_get_value_a):
         """
+        """
+        mock_get_value_a.return_value = 'mocka'
+        a = get_value_a()
+        self.assertEqual(a, 'mocking_va')
+
+    @mock.patch('other.some_methods.get_value_a')
+    def test_get_value_a_other(self, mock_get_value_a):
+        """
+        mock get_value_a() in other module is fine
+        this only exists after mock failed if get_value_a() in this test module
+        """
+        mock_get_value_a.return_value = 'mocka'
+        # the import is fine to be here or at top of the module
+        from other import some_methods
+        a = some_methods.get_value_a()
+        self.assertEqual(a, 'mocka')
+
+    @mock.patch('tests.mockA.test_my_worker.get_value_a', return_value='mocking_va')
+    @mock.patch('tests.mockA.test_my_worker.another_method', return_value='mocking_another')
+    def test_result(self, mock_another_method, mock_get_value_a):
+        """
+        The innermost patch should be the first parameter
+
         The return_value better to be defined outside the test function with multiple patch
         This is just an example show how multiple patch works
         """
-        a = value_a()
+        mock_get_value_a.return_value = 'mocka'
+        a = get_value_a()
         self.assertEqual(a, 'mocking_va')
         result = abcd_foo(a, 'b', 'c', 'd')
         self.assertEqual(result, 'mocking_another')

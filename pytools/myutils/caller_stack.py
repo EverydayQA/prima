@@ -6,9 +6,16 @@ from pprint import pprint
 class CallerStack(object):
 
     def __init__(self):
-        self.now = datetime.datetime.now()
+        self.now = self.get_datetime_now()
+
         self.d = {}
         self.psme()
+
+    def get_datetime_now(self):
+        """
+        easier to test or mock
+        """
+        return datetime.datetime.now()
 
     def psutil(self):
         me = psutil.Process()
