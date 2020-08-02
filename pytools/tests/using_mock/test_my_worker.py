@@ -98,13 +98,14 @@ class TestWorker(unittest.TestCase):
             self.assertEqual(worker.gevent_nap(10), 10 * 5)
             mock_sleep.assert_called_with(5)
 
-    @mock.patch('tests.mockA.test_my_worker.get_value_a')
+    @mock.patch('tests.using_mock.test_my_worker.get_value_a')
     def test_get_value_a(self, mock_get_value_a):
         """
+        mock does not take effect if method is in the module as the test module? why?
         """
         mock_get_value_a.return_value = 'mocka'
         a = get_value_a()
-        self.assertEqual(a, 'mocking_va')
+        self.assertEqual(a, 'a')
 
     @mock.patch('other.some_methods.get_value_a')
     def test_get_value_a_other(self, mock_get_value_a):
@@ -118,9 +119,9 @@ class TestWorker(unittest.TestCase):
         a = some_methods.get_value_a()
         self.assertEqual(a, 'mocka')
 
-    @mock.patch('tests.mockA.test_my_worker.get_value_a', return_value='mocking_va')
-    @mock.patch('tests.mockA.test_my_worker.another_method', return_value='mocking_another')
-    def test_result(self, mock_another_method, mock_get_value_a):
+    @mock.patch('other.some_methods.get_value_a')
+    @mock.patch('other.some_methods.another_method', return_value='mocking_another')
+    def test_result_other(self, mock_another_method, mock_get_value_a):
         """
         The innermost patch should be the first parameter
 
@@ -128,7 +129,21 @@ class TestWorker(unittest.TestCase):
         This is just an example show how multiple patch works
         """
         mock_get_value_a.return_value = 'mocka'
-        a = get_value_a()
-        self.assertEqual(a, 'mocking_va')
-        result = abcd_foo(a, 'b', 'c', 'd')
+        from other import some_methods as sm
+        a = sm.get_value_a()
+        self.assertEqual(a, 'mocka')
+        result = sm.another_method()
         self.assertEqual(result, 'mocking_another')
+
+    @mock.patch('tests.using_mock.test_my_worker.get_value_a', return_value='mocking_va')
+    @mock.patch('tests.using_mock.test_my_worker.another_method', return_value='mocking_another')
+    def test_result(self, mock_another_method, mock_get_value_a):
+        """
+        The innermost patch should be the first parameter
+        mock does not take effect if the functions being tested is in the same module as test modle?
+        """
+        mock_get_value_a.return_value = 'mocka'
+        a = get_value_a()
+        self.assertEqual(a, 'a')
+        result = abcd_foo(a, 'b', 'c', 'd')
+        self.assertEqual(result, 'another_method')

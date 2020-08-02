@@ -62,16 +62,16 @@ def test_os_path_isfile():
 def test_f():
     import mock
     import pytest
-    with mock.patch('utils.utils.helper', side_effect=Exception('fail to call helper')):
-        from utils import funcA
+    with mock.patch('myutils.helper_utils.helper', side_effect=Exception('fail to call helper')):
+        from myutils import func_a
         with pytest.raises(Exception):
-            funcA.f()
+            func_a.f()
 
 
 def test_f2():
     import mock
     import pytest
-    from src import funcA
-    with mock.patch('utils.funcA.helper', side_effect=Exception('fail to call helper')):
+    from myutils import func_a
+    with mock.patch('myutils.func_a.helper', side_effect=Exception('fail to call helper')):
         with pytest.raises(Exception):
-            funcA.f()
+            func_a.f()
