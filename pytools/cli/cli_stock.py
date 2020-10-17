@@ -26,7 +26,8 @@ class CliStock(object):
 
 
 def main(argv=None):
-
+    print(argv)
+    print(sys.argv[1:])
     # feed into class
     cli = CliStock(*argv)
     cli.action()
