@@ -16,3 +16,4 @@ line   27:
 # EXTRANEOUS_WHITESPACE_REGEX = re.compile(r'[[({] | []}),;:]')
 EXTRANEOUS_WHITESPACE_REGEX = re.compile(r'[\[({] | [\]}),;:]')
 
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
