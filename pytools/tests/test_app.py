@@ -1,6 +1,6 @@
 import mock
-from tests.fsample.app import App
-from tests.fsample.app import Base
+from other.fsample.app import App
+from other.fsample.app import Base
 import unittest
 from StringIO import StringIO
 
@@ -56,13 +56,13 @@ class TestApp(unittest.TestCase):
         """
         test_mock_instance_var_2
         The following patch will generator this error
-        # AttributeError: <class 'tests.fsample.app.Base'> does not have the attribute 'instance_var'
+        # AttributeError: <class 'other.fsample.app.Base'> does not have the attribute 'instance_var'
         # with mock.patch.object(Base, 'instance_var') as mock_instance_var:
-        # with mock.patch('tests.fsample.app.Base.instance_var') as mock_attr:
+        # with mock.patch('other.fsample.app.Base.instance_var') as mock_attr:
         This test will failed, and kept to show the scope is only in Base class, not App unless using self.ibase = base
         """
 
-        patcher = mock.patch('tests.fsample.app.Base')
+        patcher = mock.patch('other.fsample.app.Base')
         mock_base = patcher.start()
         mock_base.instance_var = 'mmm'
         self.assertEqual(mock_base.instance_var, 'mmm')
@@ -83,7 +83,7 @@ class TestApp(unittest.TestCase):
         When Base is mocked, The whole Base() is mocked
         Base is not affected?!
         """
-        with mock.patch('tests.fsample.app.Base') as mock_base:
+        with mock.patch('other.fsample.app.Base') as mock_base:
             mock_base.instance_var = 'aaa'
             self.assertEqual(mock_base.instance_var, 'aaa')
             # Base class not changed
@@ -104,7 +104,7 @@ class TestApp(unittest.TestCase):
         Base is fully mocked in class App with instance_var mocked, others mocked
         The patch() decorators makes it easy to temporarily replace classes in a particular module with a Mock object. By default patch() will create a MagicMock for you.
         """
-        with mock.patch('tests.fsample.app.Base', autospec=True, spec_set=None) as mock_base:
+        with mock.patch('other.fsample.app.Base', autospec=True, spec_set=None) as mock_base:
             # these return value set- not working, reason unknown
             # instance = mock_base.return_value
             # instance.instance_var = 'xxx'
@@ -129,7 +129,7 @@ class TestApp(unittest.TestCase):
         Not working -- whenever class Base is patched this way, the class is not affected
         Test passed but showing base class attribute still the same
         """
-        with mock.patch('tests.fsample.app.Base', cls_attr='mocked', autospec=True) as mock_Base:
+        with mock.patch('other.fsample.app.Base', cls_attr='mocked', autospec=True) as mock_Base:
             self.assertEqual(mock_Base.cls_attr, 'mocked')
             # Base class is not affeced as at all
             self.assertEqual(Base.cls_attr, 'cls_attr')
@@ -159,8 +159,8 @@ class TestApp(unittest.TestCase):
         """
         test_cls_property with mock.PropertyMock
         these will not work
-        patch.object('tests.fsample.app.Base')
-        patch('tests.fsample.app.Base')
+        patch.object('other.fsample.app.Base')
+        patch('other.fsample.app.Base')
         """
         prop_mock = mock.PropertyMock()
         with mock.patch.object(Base, 'cls_property', prop_mock):
@@ -173,7 +173,7 @@ class TestApp(unittest.TestCase):
     def test_cls_property_with_property_mock2(self):
         """
         """
-        with mock.patch('tests.fsample.app.Base.cls_property', new_callable=mock.PropertyMock) as mock_cls_property:
+        with mock.patch('other.fsample.app.Base.cls_property', new_callable=mock.PropertyMock) as mock_cls_property:
             mock_cls_property.return_value = 'mocked_cls_property'
             base = Base()
             self.assertEqual(base.cls_property, 'mocked_cls_property')
@@ -182,7 +182,7 @@ class TestApp(unittest.TestCase):
             with self.assertRaises(Exception):
                 app.ibase.cls_property()
 
-    @mock.patch('tests.fsample.app.Base.static_add')
+    @mock.patch('other.fsample.app.Base.static_add')
     def test_static_add_1(self, mock_add):
         mock_add.return_value = 23
         num = Base.static_add(12)

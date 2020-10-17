@@ -1,16 +1,16 @@
-
-# content of ./test_smtpsimple.py
-import pytest
+import unittest
 
 
-@pytest.fixture
-def smtp_connection():
-    import smtplib
+class TestSMTP(unittest.TestCase):
 
-    return smtplib.SMTP("smtp.gmail.com", 587, timeout=5)
+    # @pytest.fixture
+    def smtp_connection(self):
+        import smtplib
+        return smtplib.SMTP("smtp.gmail.com", 587, timeout=5)
 
-
-def test_ehlo(smtp_connection):
-    response, msg = smtp_connection.ehlo()
-    assert response == 250
-    assert 0  # for demo purposes
+    def test_ehlo(self):
+        """
+        do not know how to use fixture
+        """
+        response, msg = self.smtp_connection().ehlo()
+        self.assertEqual(response, 250)

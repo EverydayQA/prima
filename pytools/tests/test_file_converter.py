@@ -1,4 +1,4 @@
-from tests.fsample.file_converter import FileConverter
+from other.fsample.file_converter import FileConverter
 import os
 import unittest
 import mock

@@ -1,4 +1,4 @@
-from .fsample import pop_item
+from other.fsample import pop_item
 import unittest
 
 

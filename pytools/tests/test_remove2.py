@@ -5,12 +5,12 @@ import os
 import os.path
 import unittest
 import mock
-from .fsample import remove_file
+from other.fsample import remove_file
 
 
 class Testcalc(unittest.TestCase):
 
-    @mock.patch('fsample.remove_file.globalvar')
+    @mock.patch('other.fsample.remove_file.globalvar')
     def test_calc(self, mocked_globalvar):
         # this will not work with mocked_globalvar
         keys = [1, 2, 3]
@@ -19,7 +19,7 @@ class Testcalc(unittest.TestCase):
         sum = remove_file.calc(keys, values)
         self.assertEqual(sum, 6)
 
-    @mock.patch('fsample.remove_file.globalvar', 'calc')
+    @mock.patch('other.fsample.remove_file.globalvar', 'calc')
     def test_calc3(self):
         # there is no mocked_globalvar, no no no globalvar
         keys = [1, 2, 3]
@@ -47,8 +47,8 @@ class TestcalcNoMock(unittest.TestCase):
 @unittest.skip("classing skipping")
 class RmTestCase(unittest.TestCase):
 
-    @mock.patch('fsample.remove_file.os.path')
-    @mock.patch('fsample.remove_file.os')
+    @mock.patch('other.fsample.remove_file.os.path')
+    @mock.patch('other.fsample.remove_file.os')
     def test_rm(self, mock_os, mock_path):
         # setup the mock
         mock_path.isfile.return_value = False
@@ -72,8 +72,8 @@ def mock_fc():
 
 class TestDoCmd(unittest.TestCase):
 
-    @mock.patch('fsample.remove_file.subprocess.Popen.returncode', 1)
-    @mock.patch('fsample.remove_file.subprocess.Popen')
+    @mock.patch('other.fsample.remove_file.subprocess.Popen.returncode', 1)
+    @mock.patch('other.fsample.remove_file.subprocess.Popen')
     def test_do_cmd(self, mockp):
         # Popen() __init__(self): self.returncode = None
         mockp.communicate = mock.Mock(return_value=[6, 7])

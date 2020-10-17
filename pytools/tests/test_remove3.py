@@ -1,9 +1,9 @@
 #!/usr/bin/python
 import unittest
 import mock
-from tests.fsample.remove3 import RemovalService
-from tests.fsample.remove3 import UploadService
-from tests.fsample.read import Foo
+from other.fsample.remove3 import RemovalService
+from other.fsample.remove3 import UploadService
+from other.fsample.read import Foo
 
 
 def local_glob(a, b):
@@ -14,8 +14,8 @@ def local_glob(a, b):
 class TestRemovalService(unittest.TestCase):
 
     # patch 2 sub
-    @mock.patch('tests.fsample.remove3.os.path')
-    @mock.patch('tests.fsample.remove3.os')
+    @mock.patch('other.fsample.remove3.os.path')
+    @mock.patch('other.fsample.remove3.os')
     def test_rm(self, mock_os, mock_path):
         reference = RemovalService()
 
@@ -50,7 +50,7 @@ class TestRemovalService(unittest.TestCase):
         rm_ser = RemovalService()
         self.assertEqual(rm_ser.glob_files('/tmp', '-'), ['anything', 'not_this_file'])
 
-    @mock.patch('tests.fsample.remove3.glob')
+    @mock.patch('other.fsample.remove3.glob')
     def test_glob_files_3(self, mock_glob):
         mock_glob.glob.return_value = ['/tmp/mock.txt']
         rm_ser = RemovalService()
@@ -79,8 +79,8 @@ class TestUploadService(unittest.TestCase):
 class TestRemoval3(unittest.TestCase):
 
     # patch 2 sub *** attention *** the order is very important - reversed
-    @mock.patch('tests.fsample.remove3.os.path')
-    @mock.patch('tests.fsample.remove3.os')
+    @mock.patch('other.fsample.remove3.os.path')
+    @mock.patch('other.fsample.remove3.os')
     def test_rm(self, mock_os, mock_path):
         reference = RemovalService()
 
@@ -132,9 +132,11 @@ class TestMockOpen(unittest.TestCase):
         This actually works as expected, this should be the prefered way
         better than mock with __builtin.open
         """
-        with mock.patch("tests.fsample.read.open",
+        with mock.patch("other.fsample.read.open",
                         mock.mock_open(read_data=TEST_DATA), create=True):
+            # read an empty input file
             fee = Foo(self.input)
+            # got data that is not empty? with mocking?
             self.assertEqual(fee.data, self.expected)
 
     def test_mock_open_class(self):
@@ -142,7 +144,7 @@ class TestMockOpen(unittest.TestCase):
         This is not the proper way to mock a builtin open()
         mock patch open inside a class
         """
-        with mock.patch("tests.fsample.read.Foo.open",
+        with mock.patch("other.fsample.read.Foo.open",
                         mock.mock_open(read_data=TEST_DATA), create=True):
             fee = Foo(self.input)
             self.assertEqual(fee.data, self.expected)

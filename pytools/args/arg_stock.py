@@ -16,6 +16,7 @@ class ArgStock(object):
             cli2.append(chr(int(item)))
         return ''.join(cli2)
 
+
     def get_parser(self):
         parser = argparse.ArgumentParser()
 

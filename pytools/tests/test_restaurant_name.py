@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import unittest
-from .fsample.restaurant import RestaurantName
+from other.fsample.restaurant import RestaurantName
 
 
 class TestRestaurantName(unittest.TestCase):
