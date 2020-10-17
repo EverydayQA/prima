@@ -1,5 +1,5 @@
 from pprint import pprint
-from src.dict_merge import DictMerge
+from nested.dict_merge import DictMerge
 
 
 class ConstDemo(object):
@@ -77,6 +77,7 @@ def main():
 
     from const import course
     print(course.FRENCH)
+    print(course.french)
     # these is nothing prevent it being changed
     course.FRENCH = 'anglais'
     print(course.FRENCH)
