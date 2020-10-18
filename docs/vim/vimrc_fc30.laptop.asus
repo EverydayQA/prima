@@ -9,34 +9,42 @@
 
    " let Vundle manage Vundle, required
    Plugin 'VundleVim/Vundle.vim'
-" pep8 plugin
+
+" some errors, python version? *62 2020-10-18
+" too picky, but was sth I get used to, one regex bug and fix recorded
+" keep this 2020-10-18, I will add a star to the gitrepo
 Plugin 'andviro/flake8-vim'
 
-" jedi complete
-" Plugin 'davidhalter/jedi-vim'
-" YCM autocomplete, similar to jedi-vim, must be version 8.1.2269+
-Plugin 'Valloric/YouCompleteMe'
+" less warnings, *956 2020-10-18
+Plugin 'nvie/vim-flake8'
+
+" python syntax checking *10.6k 2020-10-18
+Plugin 'vim-syntastic/syntastic'
+
+" jedi complete for python *4.6k
+Plugin 'davidhalter/jedi-vim'
+
+" YCM generic autocomple **22k
+" YouCompleteMe unavailable: requires Vim compiled with Python (3.6.0+) support.
+" vim must be version 8.1.2269+
+" python3 ./install.py --clang-completer given error cannot find python lib in
+" /lib64/
+" extra conf is needed
+" Bundle 'Valloric/YouCompleteMe'
+
+" nerdtree for productivity
 
 " perl5
+" perl syntax checking is not working
 Plugin 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plugin 'c9s/perlomni.vim'
 Plugin 'vim-scripts/perl-support.vim'
-
-"Plugin 'git://github.com/Valloric/YouCompleteMe.git'
 
    " The following are examples of different formats supported.
    " Keep Plugin commands between vundle#begin/end.
    " plugin on GitHub repo
    Plugin 'tpope/vim-fugitive'
-   " plugin from http://vim-scripts.org/vim/scripts.html
-   " Plugin 'L9'
-   " Git plugin not hosted on GitHub
-   Plugin 'git://git.wincent.com/command-t.git'
-   " git repos on your local machine (i.e. when working on your own plugin)
-   " Plugin 'file:///home/gmarik/path/to/plugin'
-   " The sparkup vim script is in a subdirectory of this repo called vim.
-   " Pass the path to set the runtimepath properly.
-   Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
    " Install L9 and avoid a Naming conflict if you've already installed a
    " different version somewhere else.
    " Plugin 'ascenator/L9', {'name': 'newL9'}
@@ -58,5 +66,7 @@ Plugin 'vim-scripts/perl-support.vim'
 syntax on
 " Use perl compiler for all *.pl and *.pm files.
 autocmd BufNewFile,BufRead *.p? compiler perl
-let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
+let g:syntastic_enable_signs = 1
+
