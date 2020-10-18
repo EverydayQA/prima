@@ -49,8 +49,16 @@ class PlotAny(object):
         plt.show()
 
     def plot_csv(self):
-        npx = self.csv_to_npa('/tmp/iden.csv')
-        print(npx)
+        npx = self.csv_to_npa('/tmp/one.csv')
+        np2 = self.csv_to_npa('/tmp/other.csv')
+        plt.xlabel('correlation')
+        plt.ylabel('Probability')
+        plt.title('Histogram of pre-study and others')
+
+        plt.hist([npx, np2], bins=30)
+        plt.grid(True)
+
+        plt.show()
 
     def plot_hist_np(self, x):
         # the histogram of the data
@@ -67,7 +75,8 @@ class PlotAny(object):
 
 def main():
     pa = PlotAny()
-    pa.plot_df()
+    pa.plot_csv()
+    # pa.plot_df()
     # pa.plot_demo()
 
 
