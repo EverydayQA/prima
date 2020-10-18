@@ -1,7 +1,7 @@
 import mock
 import sys
 import unittest
-from tests.fsample.input_cls import GameDisplay
+from other.fsample.input_cls import GameDisplay
 from StringIO import StringIO
 
 
@@ -61,7 +61,7 @@ class TestMockReturnValue(unittest.TestCase):
             self.assertEqual(p, '0')
             self.assertEqual(mock_stdout.getvalue(), 'Choose 0: \n')
 
-    @mock.patch('tests.fsample.input_cls.GameDisplay.prompt', return_value='0')
+    @mock.patch('other.fsample.input_cls.GameDisplay.prompt', return_value='0')
     def test_prompt_output2(self, mock_prompt):
         """
         prompt being mocked, the return value should be xxx

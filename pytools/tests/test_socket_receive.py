@@ -23,7 +23,7 @@ class TestSocketRecv(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        msg = ['0000000066{key=value', ', key=value}']
+        # msg = ['0000000066{key=value', ', key=value}']
         msg_mock = ['0000000022{key=value', ', key=value}']
         cls.mock_value = msg_mock
         cls.expected = msg_mock
@@ -44,7 +44,7 @@ class TestSocketRecv(unittest.TestCase):
         self.assertEquals(result, self.expected)
 
     def test_recvsocket_recv_single_msg3(self):
-        recv_obj = SocketRecv()
+        # recv_obj = SocketRecv()
         mockRecv = mock.Mock(spec=SocketRecv)
         mock_obj = mockRecv()
         mock_obj.socket_recv_single_msg.return_value = self.mock_value

@@ -1,5 +1,5 @@
 from flask import Flask
-from .fsample import flask_session
+from other.fsample import flask_session
 import unittest
 
 

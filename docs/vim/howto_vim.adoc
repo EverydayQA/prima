@@ -87,3 +87,23 @@ lter/jedi-vim.git' '/home/gliang/.vim/bundle/jedi-vim'
 =with possibility to make srpm and rpm with this for reference
 https://copr-be.cloud.fedoraproject.org/results/mcepl/vim8/epel-7-x86_64/00752800-vim/vim.spec
 
+vim 
+
+= With Package Manager Vundle
+
+Vundle howto+
+clone to home directory
+ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+copy example section to ~/.vimrc
+ vim -o2 ~/.vim/bundle/Vundle.vim/README.md ~/.vimrc
+
+# add extra plugins
+ .vimrc
+" pep8 plugin
+Plugin 'andviro/flake8-vim'
+" jedi complete
+Plugin 'davidhalter/jedi-vim'
+
+= With fedora dnf/rpm
+// vim: set syntax=asciidoc:
