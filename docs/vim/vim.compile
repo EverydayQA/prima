@@ -1,0 +1,54 @@
+Vim can be built in four ways:
+
+No Python support (-python, -python3)
+Python 2 support only (+python or +python/dyn, -python3)
+Python 3 support only (-python, +python3 or +python3/dyn)
+Python 2 and 3 support (+python/dyn, +python3/dyn)
+
+will try this at fedora30, use prefix=/tmp/vim-p2s(system)c(conda)
+vim-p2n3(system) both versions
+vim-p2n3(conda)
+
+and then centos6 docker?
+
+git clone https://github.com/vim/vim.git
+
+checking for tgetent in -ltinfo... no
+checking for tgetent in -lncurses... no
+checking for tgetent in -ltermlib... no
+checking for tgetent in -ltermcap... no
+checking for tgetent in -lcurses... no
+no terminal library found
+checking for tgetent()... configure: error: NOT FOUND!
+      You need to install a terminal library; for example ncurses.
+      Or specify the name of the library with --with-tlib.
+
+for centos6/7
+yum -y groupinstall 'Development Tools'
+yum -y install ruby perl-devel python-devel ruby-devel perl-ExtUtils-Embed ncurses-devel
+
+install dependencies on fedora(too many)
+ 1008  sudo dnf install -y ruby ruby-devel lua lua-devel luajit      luajit-devel ctags git python python-devel      python3 python3-devel tcl-devel      perl perl-devel perl-ExtUtils-ParseXS      perl-ExtUtils-XSpp perl-ExtUtils-CBuilder      perl-ExtUtils-Embed
+ 1009  sudo dnf install ncurses
+ 1013  sudo dnf install ncurses-devel
+
+# mixed p2 and p3 in fedora
+
+make distclean
+# the config-dir both were wrong in fedora30
+1092  CPPFLAGS="-fPIC -D_FORTIFY_SOURCE=2 -O3"  CFLAGS=-fPIC ./configure --with-features=huge --enable-multibyte --enable-rubyinterp --enable-pythoninterp=dynamic --with-python-config-dir=/usr/lib64/python2.7/config --enable-perlinterp --enable-luainterp --enable-cscope --enable-gui=auto --enable-gtk2-check --with-x --prefix=/tmp/vim-p2n3  --with-tlib=ncurses --enable-python3interp=dynamic --with-python3-config-dir=/usr/lib64/python3.5/config-3.5m
+
+issue after compile
+YouCompleteMe unavailable: unable to load Python.
+reason: configure with the wrong --with-python-config-dir=/usr/lib64/python2.7/config --with-python3-config-dir=/usr/lib64/python3.5/config-3.5m
+the right ones:
+--with-python3-config-dir=/lib64/python3.7/config-3.7m-x86_64-linux-gnu/
+--with-python-config-dir=/lib64/python2.7/config
+
+# with correct config-dir, same for CentOS7(x86_64) and fedora
+1109  CPPFLAGS="-fPIC -D_FORTIFY_SOURCE=2 -O3"  CFLAGS=-fPIC ./configure --with-features=huge --enable-multibyte --enable-rubyinterp --enable-pythoninterp=yes --with-python-config-dir=/lib64/python2.7/config --enable-perlinterp --enable-luainterp --enable-cscope --enable-gui=auto --enable-gtk2-check --with-x --prefix=/tmp/vim-p2n3  --with-tlib=ncurses --enable-python3interp=yes --with-python3-config-dir=/lib64/python3.7/config-3.7m-x86_64-linux-gnu/
+ 1110  make;make install
+
+yes vs dynamic should not matter.
+CPPFLAGS="-fPIC -D_FORTIFY_SOURCE=2 -O3" just to supress warning - 
+

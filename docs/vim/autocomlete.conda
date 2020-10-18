@@ -1,0 +1,25 @@
+
+# autocomplete for conda is not always being recognized
+
+possible solutions:
+
+1)
+cjrh/vim-conda to be included in the vundle plugin in ~/.vimrc, author prefer junegunn/vim-plug over Vundle?
+more of :!python % to execute in the conda env instead of autocomplete?
+
+2) recompile vim including conda lib?
+https://gist.github.com/hxhc/778d7c3a3ad491dedf3675a47275a979
+$ git clone https://github.com/vim/vim.git
+$ cd vim
+$ ./configure --with-features=huge \
+--enable-pythoninterp=yes \
+--with-python-config-dir=/home/hxhc/Anaconda2/lib/python2.7/config \
+--enable-python3interp=yes \
+--with-python3-config-dir=/home/hxhc/Anaconda2/envs/py35/lib/python3.5/config-3.5m
+$ sudo make
+$ sudo make install
+
+3) how dangerous this is? in ~/.bashrc
+export $PYTHONPATH = $PYTHONPATH:/home/user1/anaconda3/lib/python3.5/site-packages
+
+should just export PYTHONPATH="." in conda env? as there is no PYTHONPATH in conda
