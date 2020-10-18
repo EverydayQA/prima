@@ -50,12 +50,18 @@ Plugin 'davidhalter/jedi-vim'
 Bundle 'Valloric/YouCompleteMe'
 
 " nerdtree for productivity
+Plugin 'scrooloose/nerdtree'
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+" conda env for :python % and possible for autocomplete, :CondaChangeEnv<ENTER>
+Plugin 'cjrh/vim-conda'
 
 " perl5
 " Plugin 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 " Plugin 'c9s/perlomni.vim'
 " Plugin 'vim-scripts/perl-support.vim'
 
+"python with virtualenv support -- not the same conda?
 
    " All of your Plugins must be added before the following line
    call vundle#end()            " required
@@ -71,8 +77,11 @@ Bundle 'Valloric/YouCompleteMe'
    "
    " see :h vundle for more details or wiki for FAQ
    " Put your non-Plugin stuff after this line
+   
+ " make your code look pretty
 let python_highlight_all=1
 syntax on
+
 " Use perl compiler for all *.pl and *.pm files.
 autocmd BufNewFile,BufRead *.p? compiler perl
 let g:syntastic_check_on_open = 0
