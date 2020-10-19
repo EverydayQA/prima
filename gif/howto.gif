@@ -6,7 +6,8 @@ ffmpeg -i %03d.png output.gif
 http://www.imagemagick.org/Usage/draw/
 
 viwers:
-gthumb or firefox
+display, gthumb or firefox
+
 reverse gif into frames
 
 convert -coalesce animation.gif target.png

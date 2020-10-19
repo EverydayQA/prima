@@ -1,5 +1,4 @@
 import os
-import sys
 import random
 import subprocess
 from pprint import pprint
@@ -96,6 +95,7 @@ class TreeFromArgs(object):
                 continue
             for afile in files:
                 self.remove_file_with_ext(path, afile)
+
     @property
     def dest(self):
         return '/shared/from_ausdesktop'
@@ -106,7 +106,7 @@ class TreeFromArgs(object):
         items = basename.split('.')
         ext = items.pop()
         file_root = '.'.join(items)
-        
+
         # avoid same file in different subdir
         newid = random.randrange(10000, 99999)
         if not extra:
@@ -164,6 +164,7 @@ def get_exif(fn):
         return {}
     return {}
 
+
 def main():
     path = os.getcwd()
     path = '/shared/backup/'
@@ -172,7 +173,6 @@ def main():
     d['dpath'] = dt.dpath
     d['path'] = path
     d['dns'] = {}
-    tm = TreeManipulation(**d)
     dt.remove_exts()
 
 
