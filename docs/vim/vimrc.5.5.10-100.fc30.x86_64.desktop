@@ -34,9 +34,9 @@
 
 " vim-flake8 or flake8-vim?
 " some errors, python version? *62 2020-10-18
-" Plugin 'andviro/flake8-vim'
+Plugin 'andviro/flake8-vim'
 " no error but less warnings, *956 2020-10-18
-Plugin 'nvie/vim-flake8'
+" Plugin 'nvie/vim-flake8'
 
 " python syntax checking *10.6k 2020-10-18
 Plugin 'vim-syntastic/syntastic'
@@ -55,6 +55,9 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 " conda env for :python % and possible for autocomplete, :CondaChangeEnv<ENTER>
 Plugin 'cjrh/vim-conda'
+
+" it does not seem this is needed, added anyway to experience
+" Plugin 'Vimjas/vim-python-pep8-indent'
 
 " perl5
 " Plugin 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
