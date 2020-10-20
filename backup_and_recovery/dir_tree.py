@@ -1,9 +1,7 @@
 import os
-import random
 import subprocess
-from pprint import pprint
-from PIL import Image
-from PIL.ExifTags import TAGS
+from termcolor import cprint
+from img.image_header_jpeg import ImageHeaderJpeg
 
 
 class DPath(object):
@@ -85,95 +83,146 @@ class TreeFromArgs(object):
             '.html.gz',
             '.html']
 
-    def remove_exts(self):
-        for path in self.dpath.keys():
-            if 'ecup_dir' not in path:
-                continue
+    def newname(self, name):
+        if not name:
+            return name
+        name = name.replace('(', '')
+        name = name.replace(')', '')
+        name = name.replace('\'', '')
+        name = name.replace('\"', '')
+        name = name.replace(' ', '')
+        name = name.replace('+', '')
+        name = name.replace('[', '')
+        name = name.replace(']', '')
+        name = name.replace(',', '')
+        name = name.replace(';', '')
+        name = name.replace(':', '')
+        name = name.replace('!', '')
+        name = name.replace('\0', '')
 
+        return name
+
+    def newpath(self, path):
+        basename = os.path.basename(path)
+        newname = self.newname(basename)
+        dirname = os.path.dirname(path)
+        newpath = os.path.join(dirname, newname)
+        return newpath
+
+    def rename_file(self, path, afile):
+        """
+        same as rename_path()?
+        """
+        afile = os.path.join(path, afile)
+        if not os.path.isfile(afile):
+            cprint('skip missing file {}'.format(afile), 'red')
+            return None
+        newfile = self.newpath(afile)
+        if newfile != afile:
+            cmds = ['mv', afile, newfile]
+            cprint(cmds, 'blue')
+            # subprocess.call(cmds)
+            return True
+        return False
+
+    def rename_path(self, path):
+        if not os.path.isdir(path):
+            cprint('skip missing path {}'.format(path), 'red')
+            return None
+
+        newpath = self.newpath(path)
+        if newpath != path:
+            cmds = ['mv', path, newpath]
+            cprint(cmds, 'yellow')
+            # subprocess.call(cmds)
+            return True
+        return False
+
+    def post_recovery_rename(self):
+        for path in self.dpath.keys():
+            # if self.rename_path(path) is True:
+            #    continue
+            if 'ecup_dir' not in path:
+                pass
             files = self.dpath.get(path)
             if not files:
                 continue
             for afile in files:
-                self.remove_file_with_ext(path, afile)
+                # self.rename_file(path, afile)
+                self.handle_afile(path, afile)
 
     @property
     def dest(self):
         return '/shared/from_ausdesktop'
 
-    def move_file(self, afile, extra=None):
-        dest = self.dest
+    def move_jpeg(self, afile, extra=None):
+        """
+        rename and move jpeg files
+        """
+        hdr = ImageHeaderJpeg()
+        newname = hdr.get_newname(afile)
+        cprint('move and rename {}'.format(afile), 'green')
+        print(afile)
+        print(newname)
+        print(self.dest)
+        if not newname:
+            raise Exception('no newname')
         basename = os.path.basename(afile)
-        items = basename.split('.')
-        ext = items.pop()
-        file_root = '.'.join(items)
+        newfile = '{}.{}'.format(newname, basename)
+        newdir = os.path.join(self.dest, newname)
+        newfile = os.path.join(newdir, newfile)
+        print(newdir)
+        print(newfile)
+        cmds = ['mkdir', '-p', newdir]
+        print(cmds)
+        # subprocess.check_call(cmds)
+        if not os.path.isdir(newdir):
+            return
+        if os.path.isfile(newfile):
+            print(afile)
+            print(newfile)
+            raise Exception('newfile already exist')
 
-        # avoid same file in different subdir
-        newid = random.randrange(10000, 99999)
-        if not extra:
-            extra = random.randrange(100, 999)
-
-        newfile = '{}.{}.{}.{}'.format(file_root, newid, extra, ext)
-        dest = os.path.join(self.dest, newfile)
-        print(dest)
+        cmds = ['mv', '-v', afile, newfile]
+        print(cmds)
+        # subprocess.call(cmds)
         return
-        cmds = ['mv', '-v', afile, dest]
-        subprocess.call(cmds)
 
-    def remove_file_with_ext(self, path, afile):
+    def glob_jpgs(self, path):
+        import glob
+        files = glob.glob('{}/*.jpg'.format(path))
+        for afile in files:
+            self.move_jpeg(afile)
+
+    def handle_afile(self, path, afile):
+        """
+        move if identified, but do not remove
+        """
         for ext in self.exts_remove:
             if afile.endswith(ext):
                 afile = os.path.join(path, afile)
-                print('remove {}'.format(afile))
-                os.remove(afile)
+                print('skip but not remove {}'.format(afile))
+                # os.remove(afile)
                 return
         afile = os.path.join(path, afile)
         print(afile)
-
         if afile.endswith('.jpg'):
-            d = get_exif(afile)
-            pprint(d)
-            cmds = ['file', afile]
-            out = subprocess.check_output(cmds)
-            out = out.decode("utf-8")
-            pprint(out)
-            print(afile)
-            out = out.upper()
-            if '2017' in out:
-                print('found {}'.format(afile))
-                self.move_file(afile, extra='2017')
-                return
-            if 'iPhone'.upper() in out:
-                print('found {}'.format(afile))
-                self.move_file(afile, exra='iphone')
-                return
-
-
-def get_exif(fn):
-    ret = {}
-    i = Image.open(fn)
-    try:
-        info = i._getexif()
-        if not info:
-            return {}
-        for tag, value in info.items():
-            decoded = TAGS.get(tag, tag)
-            ret[decoded] = value
-        return ret
-    except Exception as e:
-        pprint(e)
-        return {}
-    return {}
+            self.move_jpeg(afile)
+        else:
+            return
+            print('skip as {} is not jpg'.format(afile))
 
 
 def main():
     path = os.getcwd()
-    path = '/shared/backup/'
     dt = DPath(path)
     d = {}
     d['dpath'] = dt.dpath
     d['path'] = path
     d['dns'] = {}
-    dt.remove_exts()
+    tf = TreeFromArgs(**d)
+    # tf.post_recovery_rename()
+    tf.glob_jpgs(path)
 
 
 if __name__ == '__main__':
