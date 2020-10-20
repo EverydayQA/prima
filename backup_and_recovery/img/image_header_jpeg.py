@@ -4,12 +4,11 @@ from pprint import pprint
 import subprocess
 
 
-class ImgJpeg(object):
+class ImageHeaderJpeg(object):
     """
+    The initial purpose is to reader jpegs after data recovery after lvreduce(extend)
+    group by date, device etc
     get header info from a jpeg file
-    date
-    device
-    user?
     """
 
     def hdr_from_file(self, afile):
@@ -54,17 +53,20 @@ class ImgJpeg(object):
             print("Key: {}, value {}".format(tag, tags[tag]))
         return tags
 
+    def headers(self, img):
+        d = self.header_from_exif(img)
+        pprint(d)
+        print(img)
+        print('\n** header')
+        self.header3(img)
+
 
 def main():
     img = None
     if not img:
         return
-    jpg = ImgJpeg()
-    d = jpg.header_from_exif(img)
-    pprint(d)
-    print(img)
-    print('\n** header')
-    jpg.header3(img)
+    jpg = ImageHeaderJpeg()
+    jpg.headers()
 
 
 if __name__ == '__main__':
