@@ -1,0 +1,9 @@
+move all rename related in this sub
+
+# do not need to change location
+# raise Exception when target exists!
+# tranverse walk?
+# add a rename cli
+rename_path() first
+rename_file() later
+# merely normalize path and file name?!

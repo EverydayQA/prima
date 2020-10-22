@@ -70,20 +70,21 @@ class RenameImages(object):
                 # self.rename_file(path, afile)
                 self.handle_afile(path, afile)
 
-    def rename_jpegs_path(self, path):
+    def rename_files_path(self, path):
         import glob
-        files = glob.glob('{}/*.jpg'.format(path))
+        # could be file or path?!
+        files = glob.glob('{}/*'.format(path))
         from img.image_rename import ImageRename
         ren = ImageRename(**self.kwargs)
         for afile in files:
-            cmds = ren.move_jpeg(afile)
+            cmds = ren.rename_move_file(afile)
             if not cmds:
                 continue
             for items in cmds:
                 cprint(items, 'blue')
                 if self.ns.run:
                     subprocess.run(items)
-            # raise Exception('once for test')
+            raise Exception('once for test')
 
     def handle_afile(self, path, afile):
         """
@@ -100,10 +101,10 @@ class RenameImages(object):
         afile = os.path.join(path, afile)
         print(afile)
         if afile.endswith('.jpg'):
-            ren.move_jpeg(afile)
+            ren.rename_move_file(afile)
         else:
             return
             print('skip as {} is not jpg'.format(afile))
 
     def rename(self, path):
-        self.rename_jpegs_path(path)
+        self.rename_files_path(path)

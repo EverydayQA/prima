@@ -52,7 +52,7 @@ class ImageRename(object):
         cmds = ['mkdir', '-p', newdir]
         return cmds
 
-    def move_jpeg(self, afile, extra=None):
+    def rename_move_file(self, afile, extra=None):
         """
         create subdir first in newpath
         mv file to newpath as newname
