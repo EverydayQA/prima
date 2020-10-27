@@ -4,9 +4,10 @@ from PIL.ExifTags import TAGS
 from pprint import pprint
 from const.exif_jpeg import ConstExifJpeg
 from img.file_datetime import FileDatetime
+from rename.normalize_name import NormalizeName
 
 
-class ImageHeaderJpeg(ConstExifJpeg, FileDatetime):
+class ImageHeaderJpeg(ConstExifJpeg, FileDatetime, NormalizeName):
     """
     The initial purpose is to reader jpegs after data recovery after lvreduce(extend)
     group by date, device etc
@@ -45,23 +46,7 @@ class ImageHeaderJpeg(ConstExifJpeg, FileDatetime):
         print(img)
 
     def normalize(self, name):
-        if not name:
-            return name
-        name = name.replace('(', '')
-        name = name.replace(')', '')
-        name = name.replace('\'', '')
-        name = name.replace('\"', '')
-        name = name.replace(' ', '')
-        name = name.replace('+', '')
-        name = name.replace('[', '')
-        name = name.replace(']', '')
-        name = name.replace(',', '')
-        name = name.replace(';', '')
-        name = name.replace(':', '')
-        name = name.replace('!', '')
-        # null byte
-        name = name.replace('\0', '')
-        return name
+        return self.normalize_name(name)
 
     def get_datestr(self, d):
         keys = [self.DATETIME_ORIGINAL, self.DATETIIME]

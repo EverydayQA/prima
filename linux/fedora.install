@@ -1,0 +1,5 @@
+   55  sudo dnf install eog
+# image viewer, support path as input, comlepment of gthumbviewer
+   75  sudo dnf install feh
+ # diagram
+ 1003  sudo dnf install dia.x86_64
