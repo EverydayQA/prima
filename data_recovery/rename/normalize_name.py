@@ -1,11 +1,20 @@
 import os
 from logg import logging_config
-logger = logging_config.get_logger(__file__, logfile=None)
 
 
 class NormalizeName(object):
     """
     """
+
+    def __init__(self, *args, **kwargs):
+        """
+        logfile/level to be in kwargs
+        """
+        afile = os.path.basename(__file__)
+        # cname = self.__class__.__name__
+        # names = [afile, cname]
+        # name = '.'.join(names)
+        self.logger = logging_config.get_logger(afile, level=10, logfile=None)
 
     def normalize_name(self, name):
         original = name
@@ -29,7 +38,7 @@ class NormalizeName(object):
         # ?
         # others?
         if original != name:
-            logger.info([original, name])
+            self.logger.info([original, name])
         return name
 
     def normalize_path(self, path):
