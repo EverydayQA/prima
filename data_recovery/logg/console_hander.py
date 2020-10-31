@@ -1,13 +1,12 @@
-import os
 import logging
 import logging.config
 import colorlog
-from logg.logging_common import LoggingCommon
+from logg.logging_config import LoggingConfig
 
 
-class ConsoleLogging(LoggingCommon):
+class ConsoleHandler(LoggingConfig):
 
-    def get_color_console_logger(self, name=None, level=None):
+    def get_color_console_handler(self, name=None, level=None):
 
         formatter = colorlog.ColoredFormatter(
             self.CFORMAT_LONG,
@@ -26,37 +25,35 @@ class ConsoleLogging(LoggingCommon):
 
         level = self.use_logging_level(level=level)
         handler.setLevel(level)
+        return handler
 
-        if not name:
-            name = self.get_name()
-        logger = logging.getLogger(name)
-        logger.setLevel(level)
+    def get_logger(self, handler):
+        """
+        more like add handler
+        """
+        logger = logging.getLogger(__name__)
+        # generic -- level should be set in handler(specific)
+        logger.setLevel(logging.INFO)
         logger.addHandler(handler)
         return logger
 
-    def console_logger(self, name=None, color=True, level=None):
+    def console_handler(self, name=None, color=True, level=None):
         """
         dictconfig is not recommended, it has its own syntax
         """
         if color is True:
-            return self.get_color_console_logger(name=name, level=level)
+            return self.get_color_console_handler(name=name, level=level)
 
         handler = logging.StreamHandler()
         formatter = logging.Formatter(self.format_simple)
         handler.setFormatter(formatter)
         level = self.use_logging_level(level=level)
         handler.setLevel(level)
-
-        if not name:
-            name = self.get_name()
-        logger = logging.getLogger(name)
-        logger.addHandler(handler)
-        logger.setLevel(level)
-
-        return logger
+        return handler
 
     def use_logging_level(self, level=None):
         """
+        logger.getEffectiveLevel()?
         level first if defined
         use env level second
         """
@@ -72,11 +69,13 @@ class ConsoleLogging(LoggingCommon):
     def getenv_logging_level_console(self):
         """
         str(int)
+        for handler
         """
         return self.getenv_logging_level(self.LOGGING_LEVEL_CONSOLE)
 
     def setenv_logging_level_console(self, level):
         """
+        for handler
         input: type int
         :rtype: int
         """
@@ -86,18 +85,15 @@ class ConsoleLogging(LoggingCommon):
 def main():
     # console only
     # for developping
-    cl = ConsoleLogging()
+    ch = ConsoleHandler()
     # set logging-level once at env
-    cl.setenv_logging_level_console(logging.DEBUG)
-    logger = cl.console_logger(color=False, level=None)
+    ch.setenv_logging_level_console(logging.DEBUG)
+    chander = ch.console_handler(color=True, level=None)
+    logger = ch.get_logger(chander)
 
-    logger.critical(cl.LOGGING_LEVEL_CONSOLE)
-    logger.critical(os.environ.get(cl.LOGGING_LEVEL_CONSOLE))
-    logger.critical(cl.LOGGING_LEVEL_FILE)
-    logger.critical(os.environ.get(cl.LOGGING_LEVEL_FILE))
-    logger.critical(cl.LOGGING_FILE)
-    logger.critical(os.environ.get(cl.LOGGING_FILE))
-    logger.info(cl.names())
+    d = ch.get_envconfig()
+    logger.critical(d)
+    logger.critical(logging.getLevelName(logger.getEffectiveLevel()))
     return
 
 
