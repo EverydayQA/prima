@@ -1,5 +1,10 @@
 import os
-from logg import logging_config
+import logging
+from logg import console_logging
+# module has its own level
+logger = console_logging.ConsoleLogging().console_logger(color=True, level=logging.DEBUG)
+# default logger using env level
+logger = console_logging.ConsoleLogging().console_logger()
 
 
 class NormalizeName(object):
@@ -10,11 +15,15 @@ class NormalizeName(object):
         """
         logfile/level to be in kwargs
         """
-        afile = os.path.basename(__file__)
+        self.afile = os.path.basename(__file__)
         # cname = self.__class__.__name__
         # names = [afile, cname]
         # name = '.'.join(names)
-        self.logger = logging_config.get_logger(afile, level=10, logfile=None)
+        logger.warn('NormalizeName')
+        logger.info('NormalizeName')
+        logger.debug('NormalizeName')
+        logger.critical('NormalizeName')
+        logger.info('{}.{}'.format(self.__module__, self.__class__.__name__))
 
     def normalize_name(self, name):
         original = name
@@ -38,7 +47,7 @@ class NormalizeName(object):
         # ?
         # others?
         if original != name:
-            self.logger.info([original, name])
+            logger.info([original, name])
         return name
 
     def normalize_path(self, path):
