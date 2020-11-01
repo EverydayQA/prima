@@ -5,7 +5,35 @@ from logg.file_hander import FileHandler
 
 class OtherLogger(object):
 
-    def logger(self, color=True, level=None, file_level=None):
+    @classmethod
+    def console_logger(self, color=True, level=None):
+        """
+        console only logger
+        """
+        # console only
+        ch = ConsoleHandler()
+        chander = ch.console_handler(color=color, level=level)
+        # add console handler
+        logger = ch.get_logger(chander)
+        return logger
+
+    @classmethod
+    def setenv_console(self, level=None):
+        """
+        # set logging-level once at env
+        # set should be seperated and only at cli once
+        """
+        ch = ConsoleHandler()
+        ch.setenv(level=str(level))
+
+    @classmethod
+    def setenv_file(self, level=None, name=None):
+        fh = FileHandler()
+        # set logging-level once at env
+        fh.setenv(level=str(level), name=name)
+
+    @classmethod
+    def file_logger(self, level=None, name=None):
         """
         with some basic information
         color for console handler
@@ -14,47 +42,54 @@ class OtherLogger(object):
         logfile name
         error_logname
         """
-        pass
-        # console only
-        ch = ConsoleHandler()
-        # set logging-level once at env
-        ch.setenv_logging_level_console(logging.DEBUG)
-        chander = ch.console_handler(color=True, level=None)
-
-        # add console handler
-        logger = ch.get_logger(chander)
 
         fh = FileHandler()
-        # set logging-level once at env
-        fh.setenv_logging_level_logfile(logging.DEBUG)
-        # set logfile/error_log
-        log = fh.get_logfile_basename()
-        fh.setenv_logfile(log)
-        fh.setenv_errlog(log)
-
         chander = fh.file_handler(level=None)
-        # add file handler/err handler
+        # add file handler
         logger = fh.get_logger(chander)
+
+        errhandler = fh.error_handler()
+        # add err handler
+        logger.addHandler(errhandler)
+
         return logger
-        raise Exception('error handler to be added')
 
+    @classmethod
+    def logger(self, color=True, level=None, file_level=None, name=None):
+        """
+        """
+        # console
+        ch = ConsoleHandler()
+        chandler = ch.console_handler(color=color, level=None)
+        # add console handler
+        logger = logging.getLogger(__name__)
+        logger.addHandler(chandler)
+        logger.setLevel(logging.DEBUG)
 
-def todo():
-    print('add args to set logging config')
-    print('add class to set logger')
+        # file
+        fh = FileHandler()
+        fhandler = fh.file_handler(level=file_level)
+        # add file handler
+        logger.addHandler(fhandler)
+        # err handler
+        errhandler = fh.error_handler()
+        # add err handler
+        logger.addHandler(errhandler)
+        return logger
 
 
 def main():
     """
     move all these to Logger.logger()
     """
-    other = OtherLogger()
-    logger = other.logger()
-    d = other.get_envconfig()
-    logger.critical(d)
-    logger.critical(logging.getLevelName(logger.getEffectiveLevel()))
+    OtherLogger.setenv_console(level=logging.DEBUG)
+    clogger = OtherLogger.console_logger()
+    clogger.info('console logger')
+
+    OtherLogger.setenv_file(level=logging.DEBUG, name=None)
+    flogger = OtherLogger.file_logger()
+    flogger.info('file logger')
 
 
 if __name__ == '__main__':
-    todo()
     main()

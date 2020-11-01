@@ -1,11 +1,9 @@
 import os
 import argparse
-from logg import console_logging
+from logg import other_logger
 # module could have its own level
-# logger = console_logging.ConsoleLogging().console_logger(name=None, color=True, level=30)
-
 # use env level, default behavior, no need to provide any parameters
-logger = console_logging.ConsoleLogging().console_logger(color=False)
+logger = other_logger.OtherLogger.logger(name=__name__)
 
 
 class CliNormalizeName(object):

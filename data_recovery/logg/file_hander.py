@@ -1,80 +1,77 @@
 import logging
+import os
 from logg.logging_config import LoggingConfig
 from logging.handlers import RotatingFileHandler
+from logg.log_name import LogName
 
 
 class FileHandler(LoggingConfig):
+
+    def __init__(self):
+        self.lname = LogName()
 
     def get_logger(self, handler):
         """
         more like add handler
         """
         logger = logging.getLogger(__name__)
-        # generic -- level should be set in handler(specific)
-        logger.setLevel(logging.INFO)
+        # has to be lowest DEBUG in logger, handler level to be effective
+        logger.setLevel(logging.DEBUG)
         logger.addHandler(handler)
         return logger
 
-    def error_handler(self, name=None, level=None):
+    def error_handler(self, name=None):
         """
         dictconfig is not recommended, it has its own syntax
         """
-        raise Exception('get_errlog to be coded')
-        handler = RotatingFileHandler('/tmp/my_log.log', maxBytes=2000, backupCount=10)
+        errlog = os.environ.get(self.ERROR_LOGGING_FILE, None)
+        handler = RotatingFileHandler(errlog, maxBytes=2000, backupCount=10)
         formatter = logging.Formatter(self.format_simple)
         handler.setFormatter(formatter)
-        level = self.use_logging_level(level=level)
-        handler.setLevel(level)
+        # always ERROR level
+        handler.setLevel(logging.ERROR)
         return handler
 
     def file_handler(self, name=None, level=None):
         """
         dictconfig is not recommended, it has its own syntax
         """
-        raise Exception('get_logfile to be coded')
-        handler = RotatingFileHandler('/tmp/my_log.log', maxBytes=2000, backupCount=10)
+        log = os.environ.get(self.LOGGING_FILE, None)
+        handler = RotatingFileHandler(log, maxBytes=0, backupCount=10)
         formatter = logging.Formatter(self.format_simple)
         handler.setFormatter(formatter)
-        level = self.use_logging_level(level=level)
+        level = self.logging_level_handler(level=level)
         handler.setLevel(level)
         return handler
 
-    def use_logging_level(self, level=None):
+    def logging_level_handler(self, level=None):
         """
+        keep level=None for the purpose to use different level at certain modules to debug
         logger.getEffectiveLevel()?
         level first if defined
         use env level second
         """
         if level and isinstance(level, int):
             return level
-        level_env = self.getenv_logging_level_logfile()
-        if level_env:
-            return int(level_env)
-        # not to set env
+
         # default LEVEL, not too much info
-        return logging.WARN
+        level_env = os.environ.get(self.LOGGING_LEVEL_FILE, logging.WARN)
+        # environ level is string
+        return int(level_env)
 
-    def getenv_logging_level_logfile(self):
+    def setenv(self, level=logging.INFO, name=None):
         """
-        str(int)
-        for handler
-        """
-        return self.getenv_logging_level(self.LOGGING_LEVEL_FILE)
-
-    def setenv_logging_level_logfile(self, level):
-        """
+        Default level -- logging.INFO
         for handler
         input: type int
         :rtype: int
         """
-        return self.setenv_logging_level(self.LOGGING_LEVEL_FILE, level)
+        # log
+        os.environ[self.LOGGING_LEVEL_FILE] = str(level)
+        os.environ[self.LOGGING_FILE] = self.lname.get_log(name=name)
 
-    def todo(self):
-        """
-        seperate class for LogName()
-        __name__/date/userid?
-        """
-        pass
+        # errlog, level is always logging.ERROR
+        os.environ[self.ERROR_LOGGING_FILE] = self.lname.get_errlog(name=name)
 
 
 def main():
@@ -82,12 +79,9 @@ def main():
     """
     ch = FileHandler()
     # set logging-level once at env
-    ch.setenv_logging_level_logfile(logging.DEBUG)
-    # set logfile/error_log
-    log = ch.get_logfile_basename()
-    ch.setenv_logfile(log)
-    ch.setenv_errlog(log)
+    ch.setenv(level=logging.DEBUG, log=None)
 
+    # others
     chander = ch.file_handler(level=None)
     logger = ch.get_logger(chander)
 

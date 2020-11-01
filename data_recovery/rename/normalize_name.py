@@ -1,10 +1,8 @@
 import os
-import logging
-from logg import console_logging
+from logg import other_logger
 # module has its own level
-logger = console_logging.ConsoleLogging().console_logger(color=True, level=logging.DEBUG)
 # default logger using env level
-logger = console_logging.ConsoleLogging().console_logger()
+logger = other_logger.OtherLogger.logger(name=__name__)
 
 
 class NormalizeName(object):

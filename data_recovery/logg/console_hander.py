@@ -1,4 +1,5 @@
 import logging
+import os
 import logging.config
 import colorlog
 from logg.logging_config import LoggingConfig
@@ -22,8 +23,7 @@ class ConsoleHandler(LoggingConfig):
 
         handler = colorlog.StreamHandler()
         handler.setFormatter(formatter)
-
-        level = self.use_logging_level(level=level)
+        level = self.logging_level_handler(level=level)
         handler.setLevel(level)
         return handler
 
@@ -33,13 +33,16 @@ class ConsoleHandler(LoggingConfig):
         """
         logger = logging.getLogger(__name__)
         # generic -- level should be set in handler(specific)
-        logger.setLevel(logging.INFO)
+        # level = self.logging_level_handler()
+        # has to be DEBUG, lowest in order for handler level to be effective
+        logger.setLevel(logging.DEBUG)
         logger.addHandler(handler)
         return logger
 
     def console_handler(self, name=None, color=True, level=None):
         """
-        dictconfig is not recommended, it has its own syntax
+        keep level=None, module logging-level could be changed at a level
+        that is different from env
         """
         if color is True:
             return self.get_color_console_handler(name=name, level=level)
@@ -47,11 +50,11 @@ class ConsoleHandler(LoggingConfig):
         handler = logging.StreamHandler()
         formatter = logging.Formatter(self.format_simple)
         handler.setFormatter(formatter)
-        level = self.use_logging_level(level=level)
+        level = self.logging_level_handler(level=level)
         handler.setLevel(level)
         return handler
 
-    def use_logging_level(self, level=None):
+    def logging_level_handler(self, level=None):
         """
         logger.getEffectiveLevel()?
         level first if defined
@@ -59,27 +62,19 @@ class ConsoleHandler(LoggingConfig):
         """
         if level and isinstance(level, int):
             return level
-        level_env = self.getenv_logging_level_console()
+        level_env = os.environ.get(self.LOGGING_LEVEL_CONSOLE)
         if level_env:
+            # environ return string(int)
             return int(level_env)
-        # not to set env
-        # default LEVEL, not too much info
         return logging.WARN
 
-    def getenv_logging_level_console(self):
-        """
-        str(int)
-        for handler
-        """
-        return self.getenv_logging_level(self.LOGGING_LEVEL_CONSOLE)
-
-    def setenv_logging_level_console(self, level):
+    def setenv(self, level=logging.INFO):
         """
         for handler
         input: type int
         :rtype: int
         """
-        return self.setenv_logging_level(self.LOGGING_LEVEL_CONSOLE, level)
+        os.environ[self.LOGGING_LEVEL_CONSOLE] = str(level)
 
 
 def main():
@@ -87,7 +82,7 @@ def main():
     # for developping
     ch = ConsoleHandler()
     # set logging-level once at env
-    ch.setenv_logging_level_console(logging.DEBUG)
+    ch.setenv(level=logging.DEBUG)
     chander = ch.console_handler(color=True, level=None)
     logger = ch.get_logger(chander)
 
