@@ -1,5 +1,4 @@
 import sys
-import os
 from logg import other_logger
 
 
@@ -14,8 +13,7 @@ def main():
     args = ren.parse_args(sys.argv[1:])
     # this is very import to debugging-level for the whole session in every modules
     other_logger.OtherLogger.setenv_console(level=args.logging_level)
-    name = os.path.basename(sys.argv[0])
-    other_logger.OtherLogger.setenv_file(level=args.logging_level, name=name)
+    other_logger.OtherLogger.setenv_file(level=args.logging_level, name=sys.argv[0])
 
     logger = other_logger.OtherLogger.logger()
     from logg.logging_config import LoggingConfig

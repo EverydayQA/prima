@@ -3,7 +3,7 @@ import argparse
 from logg import other_logger
 # module could have its own level
 # use env level, default behavior, no need to provide any parameters
-logger = other_logger.OtherLogger.logger(name=__name__)
+logger = other_logger.OtherLogger.logger()
 
 
 class CliNormalizeName(object):

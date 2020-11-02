@@ -20,7 +20,8 @@ class LogName(object):
         user = getpass.getuser()
         d['name'] = __name__
         if name:
-            d['name'] = name
+            items = name.split('/')
+            d['name'] = '.'.join(items)
         d['date'] = datestr
         d['user'] = user
         return d

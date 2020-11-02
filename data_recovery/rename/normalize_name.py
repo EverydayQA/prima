@@ -2,7 +2,7 @@ import os
 from logg import other_logger
 # module has its own level
 # default logger using env level
-logger = other_logger.OtherLogger.logger(name=__name__)
+logger = other_logger.OtherLogger.logger()
 
 
 class NormalizeName(object):
