@@ -2,8 +2,8 @@ import os
 from logg import other_logger
 # module has its own level
 # default logger using env level
-logger = other_logger.OtherLogger.console_logger()
-elogger = other_logger.OtherLogger.error_logger()
+logger = other_logger.OtherLogger.logger(__name__)
+logger.info(__name__)
 
 
 class NormalizeName(object):
@@ -21,7 +21,6 @@ class NormalizeName(object):
         logger.info(logger.handlers)
         logger.info('{}.{}'.format(self.__module__, self.__class__.__name__))
         logger.debug(logger.handlers)
-        elogger.critical(logger.handlers)
 
     def normalize_name(self, name):
         original = name

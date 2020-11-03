@@ -15,7 +15,7 @@ def main():
     other_logger.OtherLogger.setenv_console(level=args.logging_level)
     other_logger.OtherLogger.setenv_file(level=args.logging_level, name=sys.argv[0])
 
-    logger = other_logger.OtherLogger.logger()
+    logger = other_logger.OtherLogger.logger(__name__)
     from logg.logging_config import LoggingConfig
     conf = LoggingConfig()
 
@@ -23,6 +23,7 @@ def main():
     d = conf.get_envconfig()
     logger.critical(d)
     logger.critical(logger.getEffectiveLevel())
+    logger.critical(logger.propagate)
 
     from rename.cli_normalize_name import CliNormalizeName
     cli = CliNormalizeName(**vars(args))

@@ -7,7 +7,7 @@ from logg.logging_config import LoggingConfig
 
 class ConsoleHandler(LoggingConfig):
 
-    def get_color_console_handler(self, name=None, level=None):
+    def get_color_console_handler(self, level=None):
 
         formatter = colorlog.ColoredFormatter(
             self.CFORMAT_LONG,
@@ -27,11 +27,11 @@ class ConsoleHandler(LoggingConfig):
         handler.setLevel(level)
         return handler
 
-    def get_logger(self, handler):
+    def get_logger(self, name, handler):
         """
         more like add handler
         """
-        logger = logging.getLogger('same_name')
+        logger = logging.getLogger(name)
         for hl in logger.handlers:
             if isinstance(hl, logging.StreamHandler):
                 # remove only stream handler
@@ -43,16 +43,16 @@ class ConsoleHandler(LoggingConfig):
         logger.addHandler(handler)
         return logger
 
-    def console_handler(self, name=None, color=True, level=None):
+    def console_handler(self, color=True, level=None):
         """
         keep level=None, module logging-level could be changed at a level
         that is different from env
         """
         if color is True:
-            return self.get_color_console_handler(name=name, level=level)
+            return self.get_color_console_handler(level=level)
 
         handler = logging.StreamHandler()
-        formatter = logging.Formatter(self.format_simple)
+        formatter = logging.Formatter(self.format_verbose)
         handler.setFormatter(formatter)
         level = self.logging_level_handler(level=level)
         handler.setLevel(level)
@@ -88,7 +88,7 @@ def main():
     # set logging-level once at env
     ch.setenv(level=logging.DEBUG)
     chander = ch.console_handler(color=True, level=None)
-    logger = ch.get_logger(chander)
+    logger = ch.get_logger(__name__, chander)
 
     d = ch.get_envconfig()
     logger.critical(d)

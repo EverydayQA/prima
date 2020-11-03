@@ -1,8 +1,7 @@
 import os
 import argparse
 from logg import other_logger
-logger = other_logger.OtherLogger.logger()
-flogger = other_logger.OtherLogger.file_logger()
+logger = other_logger.OtherLogger.logger(__name__)
 
 
 class CliNormalizeName(object):
@@ -44,7 +43,6 @@ class CliNormalizeName(object):
                 logger.debug('no change between {} and {}'.format(path_tmp, newpath))
             else:
                 logger.info('change from {} to {}'.format(path_tmp, newpath))
-                flogger.info('from {} to {}'.format(path_tmp, newpath))
 
         logger.info(logger.handlers)
         logger.warn(logger.getEffectiveLevel())

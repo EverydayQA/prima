@@ -6,7 +6,7 @@ from logg.file_hander import MyFileHandler
 class OtherLogger(object):
 
     @classmethod
-    def console_logger(self, color=True, level=None):
+    def console_logger(self, name, color=True, level=None):
         """
         console only logger
         """
@@ -14,7 +14,7 @@ class OtherLogger(object):
         ch = ConsoleHandler()
         chander = ch.console_handler(color=color, level=level)
         # add console handler
-        logger = ch.get_logger(chander)
+        logger = ch.get_logger(name, chander)
         return logger
 
     @classmethod
@@ -33,7 +33,7 @@ class OtherLogger(object):
         fh.setenv(level=str(level), name=name)
 
     @classmethod
-    def error_logger(self, level=None, name=None):
+    def error_logger(self, name, level=None):
         """
         with some basic information
         color for console handler
@@ -44,9 +44,11 @@ class OtherLogger(object):
         """
 
         fh = MyFileHandler()
-        logger = logging.getLogger('same_name')
+        # this must be set on each module to avoid the duplication
+        logger = logging.getLogger(name)
 
         for hl in logger.handlers:
+            continue
             if isinstance(hl, logging.FileHandler):
                 if not isinstance(hl, logging.handlers.RotatingFileHandler):
                     logger.removeHandler(logger.handlers[0])
@@ -57,7 +59,7 @@ class OtherLogger(object):
         return logger
 
     @classmethod
-    def file_logger(self, level=None, name=None):
+    def file_logger(self, name, level=None):
         """
         with some basic information
         color for console handler
@@ -69,8 +71,11 @@ class OtherLogger(object):
 
         fh = MyFileHandler()
         fhandler = fh.file_handler(level=level)
-        logger = logging.getLogger('same_name')
+        # this must be set in every module to avoid the duplication lines!!!
+        # and there is no need to remove handlers
+        logger = logging.getLogger(name)
         for hl in logger.handlers:
+            continue
             if isinstance(hl, logging.handlers.RotatingFileHandler):
                 logger.removeHandler(hl)
         logger.addHandler(fhandler)
@@ -81,47 +86,39 @@ class OtherLogger(object):
         return logger
 
     @classmethod
-    def logger(self, color=True, level=None, file_level=None, name=None):
+    def logger(self, name, color=True, level=None, file_level=None):
         """
         messy with multiple handlers, duplicated handers always present
         """
         # return self.file_logger()
-        return self.console_logger()
+        # return self.console_logger(name)
         # console
         ch = ConsoleHandler()
-        chandler = ch.console_handler(color=color, level=level)
+        chandler = ch.console_handler(color=True, level=level)
         # add console handler
-        logger = logging.getLogger('same_name')
+        logger = logging.getLogger(name)
+        # logger.propagate = True
         for hl in logger.handlers:
             # remove duplicated handlers
-            logger.removeHandler(hl)
+            # logger.removeHandler(hl)
+            pass
 
         logger.addHandler(chandler)
         logger.setLevel(logging.DEBUG)
+        # True or False does not matter to duplication
+        logger.propagate = False
+        # return logger
 
         # file
         fh = MyFileHandler()
         # err handler
         errhandler = fh.error_handler()
         logger.addHandler(errhandler)
+        # return logger
 
         fhandler = fh.file_handler(level=file_level)
         logger.addHandler(fhandler)
         return logger
-
-    @classmethod
-    def loggers(self):
-        items = []
-        items.append(self.console_logger())
-        items.append(self.file_logger())
-        items.append(self.error_logger())
-        return items
-
-    def log(self, method, msg):
-        """
-        loop method using different loggers
-        """
-        pass
 
 
 def main():
@@ -129,11 +126,11 @@ def main():
     move all these to Logger.logger()
     """
     OtherLogger.setenv_console(level=logging.DEBUG)
-    clogger = OtherLogger.console_logger()
+    clogger = OtherLogger.console_logger(__name__)
     clogger.info('console logger')
 
     OtherLogger.setenv_file(level=logging.DEBUG, name=None)
-    flogger = OtherLogger.file_logger()
+    flogger = OtherLogger.file_logger(__name__)
     flogger.info('file logger')
 
 

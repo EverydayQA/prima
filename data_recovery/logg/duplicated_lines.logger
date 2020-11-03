@@ -1,0 +1,50 @@
+https://stackoverflow.com/questions/7173033/duplicate-log-output-when-using-python-logging-module/64656227#64656227
+
+After a few hours of frustrustration, here is what I found logger.getLogger(__name__) in every modules
+
+I have 3 handlers in one logger
+
+
+	StreamHandler setLevel(args.logging_level)
+	logging.FileHandler(logging.ERROR)
+	RotatingFileHandler(args.logging_level)
+	logger.setLevel(args.logging_level)
+
+
+
+
+I had my code using
+
+
+    logger = logging.getLogger('same_name_everywhere')
+
+
+
+resulting duplicated lines and duplicated handlers like this, 2 Stream Handlers, 3 Rotating FileHanders
+While 1 Stream Handler + 2 Rotating FileHanders(1 for errlog, 1 for generic log)
+This is done by 
+
+
+	logger.warn(logger.handlers)
+	cli_normalize_string: WARNING  [<StreamHandler <stderr> (DEBUG)>, <RotatingFileHandler /tmp/cli.normalize_string.py.2020-11-02.user.errlog (ERROR)>, <StreamHandler <stderr> (DEBUG)>, <RotatingFileHandler /tmp/cli.normalize_string.py.2020-11-02.user.log (DEBUG)>, <RotatingFileHandler /tmp/cli.normalize_string.py.2020-11-02.user.errlog (ERROR)>]
+
+
+After I changed to
+
+	# The name is now become change.cli_normalize_string or change.normalize_string
+	logger = logger.getLogger(__name__)
+
+in every modules, issue resolved, no duplicated lines, 1 StreamHeader, 1 FileHandler for err logging, 1 RotatingFileHandler for generic logging
+ 
+
+	2020-11-02 21:26:05,856 cli_normalize_string INFO     [<StreamHandler <stderr> (DEBUG)>, <FileHandler /tmp/cli.normalize_string.py.2020-11-02.user.errlog (ERROR)>, <RotatingFileHandler /tmp/cli.normalize_string.py.2020-11-02.user.log (DEBUG)>]
+
+
+The details is in this document
+https://docs.python.org/3/library/logging.html
+
+
+Note that Loggers should NEVER be instantiated directly, but always through the module-level function logging.getLogger(name). Multiple calls to getLogger() with the same name will always return a reference to the same Logger object.
+ 
+
+The name is potentially a period-separated hierarchical value, like foo.bar.baz (though it could also be just plain foo, for example). Loggers that are further down in the hierarchical list are children of loggers higher up in the list. For example, given a logger with a name of foo, loggers with names of foo.bar, foo.bar.baz, and foo.bam are all descendants of foo. The logger name hierarchy is analogous to the Python package hierarchy, and identical to it if you organise your loggers on a per-module basis using the recommended construction logging.getLogger(__name__). That’s because in a module, __name__ is the module’s name in the Python package namespace.
