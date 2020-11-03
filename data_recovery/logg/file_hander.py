@@ -2,10 +2,11 @@ import logging
 import os
 from logg.logging_config import LoggingConfig
 from logging.handlers import RotatingFileHandler
+from logging import FileHandler
 from logg.log_name import LogName
 
 
-class FileHandler(LoggingConfig):
+class MyFileHandler(LoggingConfig):
 
     def __init__(self):
         self.lname = LogName()
@@ -15,6 +16,9 @@ class FileHandler(LoggingConfig):
         more like add handler
         """
         logger = logging.getLogger(__name__)
+        for hl in logger.handlers:
+            if isinstance(hl, RotatingFileHandler):
+                logger.removeHandler(hl)
         # has to be lowest DEBUG in logger, handler level to be effective
         logger.setLevel(logging.DEBUG)
         logger.addHandler(handler)
@@ -25,8 +29,10 @@ class FileHandler(LoggingConfig):
         dictconfig is not recommended, it has its own syntax
         """
         errlog = os.environ.get(self.ERROR_LOGGING_FILE, None)
-        handler = RotatingFileHandler(errlog, maxBytes=2000, backupCount=10)
-        formatter = logging.Formatter(self.format_simple)
+        if not errlog:
+            return None
+        handler = FileHandler(errlog)
+        formatter = logging.Formatter(self.format_verbose)
         handler.setFormatter(formatter)
         # always ERROR level
         handler.setLevel(logging.ERROR)
@@ -37,8 +43,10 @@ class FileHandler(LoggingConfig):
         dictconfig is not recommended, it has its own syntax
         """
         log = os.environ.get(self.LOGGING_FILE, None)
+        if not log:
+            return None
         handler = RotatingFileHandler(log, maxBytes=0, backupCount=10)
-        formatter = logging.Formatter(self.format_simple)
+        formatter = logging.Formatter(self.format_verbose)
         handler.setFormatter(formatter)
         level = self.logging_level_handler(level=level)
         handler.setLevel(level)
@@ -55,9 +63,11 @@ class FileHandler(LoggingConfig):
             return level
 
         # default LEVEL, not too much info
-        level_env = os.environ.get(self.LOGGING_LEVEL_FILE, logging.WARN)
+        level_env = os.environ.get(self.LOGGING_LEVEL_FILE)
         # environ level is string
-        return int(level_env)
+        if level_env:
+            return int(level_env)
+        return logging.WARN
 
     def setenv(self, level=logging.INFO, name=None):
         """
@@ -77,7 +87,7 @@ class FileHandler(LoggingConfig):
 def main():
     """
     """
-    ch = FileHandler()
+    ch = MyFileHandler()
     # set logging-level once at env
     ch.setenv(level=logging.DEBUG, log=None)
 

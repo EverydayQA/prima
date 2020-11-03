@@ -11,7 +11,7 @@ class ConsoleHandler(LoggingConfig):
 
         formatter = colorlog.ColoredFormatter(
             self.CFORMAT_LONG,
-            datefmt="%H:%M:%S",
+            # datefmt="%H:%M:%S",
             reset=True,
             log_colors={
                 'DEBUG': 'cyan',
@@ -31,7 +31,11 @@ class ConsoleHandler(LoggingConfig):
         """
         more like add handler
         """
-        logger = logging.getLogger(__name__)
+        logger = logging.getLogger('same_name')
+        for hl in logger.handlers:
+            if isinstance(hl, logging.StreamHandler):
+                # remove only stream handler
+                logger.removeHandler(hl)
         # generic -- level should be set in handler(specific)
         # level = self.logging_level_handler()
         # has to be DEBUG, lowest in order for handler level to be effective

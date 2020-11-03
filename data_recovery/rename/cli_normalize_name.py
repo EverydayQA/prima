@@ -1,9 +1,8 @@
 import os
 import argparse
 from logg import other_logger
-# module could have its own level
-# use env level, default behavior, no need to provide any parameters
 logger = other_logger.OtherLogger.logger()
+flogger = other_logger.OtherLogger.file_logger()
 
 
 class CliNormalizeName(object):
@@ -12,7 +11,7 @@ class CliNormalizeName(object):
         self.args = args
         self.kwargs = kwargs
         self.ns = argparse.Namespace(**self.kwargs)
-        logger.warn('CliNormalizeName')
+        print('CliNormalizeName() called once')
 
     def d_walk(self, rootdir):
         df = {}
@@ -27,6 +26,9 @@ class CliNormalizeName(object):
         return df
 
     def rename(self):
+        logger.info(logger.handlers)
+        logger.warn(logger.getEffectiveLevel())
+
         path = self.ns.path
         logger.info(path)
         logger.critical(path)
@@ -40,6 +42,9 @@ class CliNormalizeName(object):
             newpath = norm.normalize_path(path_tmp)
             if path_tmp == newpath:
                 logger.debug('no change between {} and {}'.format(path_tmp, newpath))
-                pass
             else:
                 logger.info('change from {} to {}'.format(path_tmp, newpath))
+                flogger.info('from {} to {}'.format(path_tmp, newpath))
+
+        logger.info(logger.handlers)
+        logger.warn(logger.getEffectiveLevel())
