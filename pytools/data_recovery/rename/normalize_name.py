@@ -1,9 +1,6 @@
 import os
 from logg import other_logger
-# module has its own level
-# default logger using env level
-logger = other_logger.OtherLogger.logger(__name__)
-logger.info(__name__)
+logger = other_logger.logger(__name__)
 
 
 class NormalizeName(object):
@@ -15,12 +12,7 @@ class NormalizeName(object):
         logfile/level to be in kwargs
         """
         self.afile = os.path.basename(__file__)
-        # cname = self.__class__.__name__
-        # names = [afile, cname]
-        # name = '.'.join(names)
-        logger.info(logger.handlers)
         logger.info('{}.{}'.format(self.__module__, self.__class__.__name__))
-        logger.debug(logger.handlers)
 
     def normalize_name(self, name):
         original = name

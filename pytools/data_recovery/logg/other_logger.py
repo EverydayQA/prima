@@ -121,6 +121,13 @@ class OtherLogger(object):
         return logger
 
 
+def logger(name, color=True, level=None, file_level=None):
+    """
+    easiert to call
+    """
+    return OtherLogger.console_logger(__name__)
+
+
 def main():
     """
     move all these to Logger.logger()

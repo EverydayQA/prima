@@ -1,7 +1,7 @@
 import os
 import argparse
 from logg import other_logger
-logger = other_logger.OtherLogger.logger(__name__)
+logger = other_logger.logger(__name__)
 
 
 class CliNormalizeName(object):
@@ -10,7 +10,6 @@ class CliNormalizeName(object):
         self.args = args
         self.kwargs = kwargs
         self.ns = argparse.Namespace(**self.kwargs)
-        print('CliNormalizeName() called once')
 
     def d_walk(self, rootdir):
         df = {}
