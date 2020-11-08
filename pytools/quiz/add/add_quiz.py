@@ -2,8 +2,6 @@
 import os
 import logging
 from random import randint
-from quiz.lib import quiz_logger
-from quiz.lib.color_print import ColorPrint
 from quiz.lib import parse_json
 
 
@@ -79,7 +77,7 @@ class AddQuiz(object):
     def prompt(self, str):
         input_str = None
         while not input_str:
-            print str
+            print(str)
             input_str = raw_input()
         return input_str
 

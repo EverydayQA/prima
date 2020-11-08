@@ -31,7 +31,7 @@ class CliNormalizeName(object):
         logger.info(path)
         logger.critical(path)
         d = self.d_walk(path)
-        from data_recovery.rename.normalize_name import NormalizeName
+        from recovery.rename.normalize_name import NormalizeName
         norm = NormalizeName()
         for path_tmp in d.keys():
             logger.debug(path_tmp)

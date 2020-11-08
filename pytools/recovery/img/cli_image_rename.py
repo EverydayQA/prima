@@ -10,7 +10,7 @@ class CliImageRename(object):
 
     def rename(self):
         path = self.ns.path
-        from data_recovery.img.rename_images import RenameImages
+        from recovery.img.rename_images import RenameImages
         ren = RenameImages(**self.kwargs)
         # ren.post_recovery_rename()
         ren.rename(path)

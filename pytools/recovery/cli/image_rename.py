@@ -3,7 +3,7 @@ import sys
 
 def main():
     # args
-    from data_recovery.args.image_rename import ArgImageRename
+    from recovery.args.image_rename import ArgImageRename
     ren = ArgImageRename()
     args = ren.parse_args(sys.argv[1:])
 
@@ -13,7 +13,7 @@ def main():
     other_logger.OtherLogger.setenv_file(level=args.logging_level, name=sys.argv[0])
 
     # cli class
-    from data_recovery.img.cli_image_rename import CliImageRename
+    from recovery.img.cli_image_rename import CliImageRename
     cli = CliImageRename(**vars(args))
     cli.rename()
 

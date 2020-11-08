@@ -1,9 +1,7 @@
 # from add_quiz import AddQuiz
 from pprint import pprint
-from quiz.add import french
-"""
-import all class names to have variable class name works
-"""
+from logg import other_logger
+logger = other_logger.logger(__name__)
 
 
 class AddWrapper(object):
@@ -25,16 +23,15 @@ class AddWrapper(object):
         addquiz = AddQuiz(self.args, **self.kwargs)
         pprint(addquiz.shared_kwargs)
         """
-        print('\n\n*** AddWrapper.dispatch')
+        logger.debug(self.__module__.__class__.__name__)
         cls_name = self.match_d_cli_with_class()
-        print cls_name
 
+        from quiz.add import french
         klass = getattr(french, cls_name)
         cls_obj = klass(**self.kwargs)
         d = cls_obj.check_course()
-        print 'variable cls name with check_course()'
+        logger.debug('variable class name')
         pprint(d)
-        print('\n\n*** AddWrapper.dispatch')
 
         # to do
         #

@@ -8,8 +8,6 @@ from quiz.lib import quiz_name
 
 import add_quiz
 from quiz.lib import menu
-from quiz.lib.quiz_logger import QuizLogger
-from quiz.lib.color_print import ColorPrint
 from quiz.lib.parse_json import ParseJson
 
 
@@ -35,12 +33,7 @@ def main():
     logger.addHandler(ch)
     logger.propagate = False
 
-    cp = ColorPrint()
-    cstr = cp.cstr('logging color string', cp.RED)
-    logger.info(cstr)
-    print cstr
     kwargs = vars(args)
-    print kwargs
     # extra args as args, while args serves as kwargs for class AddQuiz
     addquiz = add_quiz.AddQuiz(args_extra, **vars(args))
     quiz_dict = addquiz.set_quiz_dict()
