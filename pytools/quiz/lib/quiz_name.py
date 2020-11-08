@@ -1,24 +1,11 @@
-import json
-import simplejson
-import sys
-import os
-from pprint import pprint
-import logging
-from . import menu
-import inspect
-import argparse
-import operator
-logger = logging.getLogger(__name__)
 
 
 class QuizName(object):
+
     def __init__(self, *args, **kwargs):
-        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
-        logger.propagate = True    
-        el  = logger.getEffectiveLevel()
         self.args = args
         self.kwargs = kwargs
-    
+
     def __repr__(self):
         return 'QuizName({0}, {1}, {2}, {3})'.format(self.category, self.level, self.name, self.quizquiz_id)
 

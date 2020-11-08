@@ -23,5 +23,3 @@ output -- right/wrong
 get_quiz_lists()
 input - quiz_number
 output - 1 list of multiple questions or simple question
-
-

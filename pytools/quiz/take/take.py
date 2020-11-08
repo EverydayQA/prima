@@ -1,5 +1,4 @@
 #!/usr/bin/python
-import logging
 import glob
 import os
 import sys
@@ -64,12 +63,6 @@ class Take(object):
         self.kwargs = kwargs
 
     @property
-    def logger(self):
-        logger = logging.getLogger(__name__)
-        logger.setLevel(10)
-        return logger
-
-    @property
     def session_id(self):
         session_id = self.kwargs.get('session_id', 1000)
         return session_id
@@ -93,7 +86,6 @@ class Take(object):
         sorted_dict_desc = OrderedDict(sorted(list_dict.items(), key=lambda t: t[1].description))
         for key in sorted_dict_desc:
             item = sorted_dict_desc[key]
-            self.logger.debug(str(key) + "-----" + str(item.description))
 
         return sorted_dict_desc
 
@@ -104,7 +96,6 @@ class Take(object):
         list_dict = OrderedDict(sorted(list_dict.items(), key=lambda t: t[0]))
         for key in list_dict:
             item = list_dict[key]
-            self.logger.debug(str(key) + "-----" + str(item.description))
         return list_dict
 
 
@@ -128,17 +119,6 @@ def init_args_take():
 
 def main():
     args, args_extra = init_args_take()
-
-    name = os.path.splitext(os.path.basename(__file__))[0]
-    logger = logging.getLogger(name)
-
-    logger.setLevel(args.logging)
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(args.logging)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
-    logger.propagate = False
     dataDir = data_dir.DataDir()
 
     # now - a comprised way to get quiz.json first
@@ -146,24 +126,20 @@ def main():
     jsons = take.jsons_walk(dataDir.json_dir)
 
     # available Quiz()
-    logger.info('find available Quiz()s -- with quiz_id etc')
 
     list_dict = {}
     # choose a List()/Apply same session_id
     pjson = parse_json.ParseJson()
-    logger.info('test sorting list of class obj')
     for json in jsons:
         quiz_dict = pjson.read_json(json)
         qz = pjson.dict2quiz(quiz_dict)
         rand_str = str(uuid.uuid4())
         key = rand_str + "." + json
-        logger.info(key)
         list_dict[key] = qz
 
     # sorted_dict = take.sort_quiz_dict_by_desc(list_dict)
     sorted_dict = take.sort_quiz_dict_by_key(list_dict)
     print(sorted_dict)
-    logger.info('now - take Quiz -- json-Quiz()')
 
     # select Quiz()
     prompt = "Please select sth from list:"
@@ -175,17 +151,13 @@ def main():
 
     for json in files:
         quiz_dict = pjson.read_json(json)
-        logger.info(quiz_dict)
 
         qz = pjson.dict2quiz(quiz_dict)
 
         sels = qz.multiple_choices()
-        logger.info(sels)
 
         ans = qz.answers
-        logger.info(ans)
         result = qz.quiz_result(sels)
-        logger.info(result)
 
         # a choice to modify(category/level) or delete the question
         tool = tools.Tools()
@@ -194,10 +166,7 @@ def main():
             cmds = ['mv', json, dataDir.json_dir_to_delete]
             tool.to_system(cmds, True)
 
-    logger.info('later - Taken() - ')
     # write back to AnswerList-- Answer()??? or
-
-    logger.info('later - Summary() or Score()')
 
 
 if __name__ == '__main__':

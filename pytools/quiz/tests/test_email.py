@@ -1,4 +1,3 @@
-#!/usr/bin/python
 from ..lib import quiz_email
 
 

@@ -2,8 +2,8 @@ import json
 import sys
 import os
 import logging
-# from quiz import quiz_name
-from quiz.lib import quiz_content
+from logg import other_logger
+logger = other_logger.logger(__name__)
 
 
 class ParseJson(object):
@@ -11,12 +11,6 @@ class ParseJson(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-
-    @property
-    def logger(self):
-        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
-        logger = logging.getLogger(name)
-        return logger
 
     def read_json(self, file_json):
         data_list = []
@@ -43,6 +37,7 @@ class ParseJson(object):
         return quiz_dict
 
     def dict2quiz(self, quiz_dict):
+        from quiz.lib import quiz_content
         qz_content = quiz_content.QuizContent(quizid=quiz_dict.get('quizid'), description=quiz_dict.get('description'), questions=quiz_dict.get('questions'), answers=quiz_dict.get('answers'), category=quiz_dict.get('category'), weight=quiz_dict.get('weight'))
 
         return qz_content

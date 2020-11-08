@@ -1,25 +1,11 @@
-#!/usr/bin/python
-import sys
 import os
-import logging
 import inspect
 import argparse
 
 
-# User base class/subclass
-# add *args, **kwargs - all unittest for common usae
-# logger propagate example
 class User(object):
 
     def __init__(self, *args, **kwargs):
-        # logger name has to be this way to alow propagate EffetiveLeve
-        name = __name__ + "." + self.__class__.__name__
-        self.logger = logging.getLogger(name)
-        # this is necessary to pass logger handler to subclass?
-        self.logger.propagate = True
-        el = self.logger.getEffectiveLevel()
-        line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(self.logger.level, name, el)
-        self.logger.debug(line)
         self.args = args
         self.kwargs = kwargs
 
@@ -50,12 +36,6 @@ class Taker(User):
 
         self.category = kwargs.get('category', 'QA')
         super(Taker, self).__init__(args, kwargs)
-        name = __name__ + "." + self.__class__.__name__
-        self.logger.info('self.logger alreay defined in base class {0}'.format(name))
-        # self.logger = logging.getLogger(name)
-        el = self.logger.getEffectiveLevel()
-        line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(self.logger.level, name, el)
-        self.logger.debug(line)
         self.args = args
         self.kwargs = kwargs
 
@@ -85,33 +65,12 @@ def get_full_func_name():
 
 def main():
     args, args_extra = init_args()
-    logger = logging.getLogger(__name__)
-
-    logger.setLevel(args.logging)
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(args.logging)
-    el = logger.getEffectiveLevel()
-    line = 'logger level is: {0} args logging {1} EffectiveLevel {2}\n'.format(logger.level, args.logging, el)
-    logger.debug(line)
-    # std_formatter
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
-    # prevent duplicate logging
-    logger.propagate = True
-
-    logger.info(args)
-    logger.info(args_extra)
-
-    logger.info('This is only for development!')
 
     aper = User(*args_extra, **vars(args))
     cls_name = get_full_class_name(aper)
-    logger.info('class_name: {0}'.format(cls_name))
-
     taker = Taker(*args_extra, **vars(args))
     cls_name = get_full_class_name(taker)
-    logger.info('class_name: {0}'.format(cls_name))
+    print(cls_name)
 
 
 if __name__ == '__main__':

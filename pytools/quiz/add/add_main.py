@@ -1,13 +1,10 @@
 #!/usr/bin/python
 import os
 import sys
-import logging
 import argparse
-from random import randint
 from quiz.lib import quiz_name
 
 import add_quiz
-from quiz.lib import menu
 from quiz.lib.parse_json import ParseJson
 
 
@@ -22,25 +19,12 @@ def init_args_addquiz():
 
 def main():
     args, args_extra = init_args_addquiz()
-    name = os.path.splitext(os.path.basename(__file__))[0]
-    logger = logging.getLogger(name)
 
-    logger.setLevel(args.logging)
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(args.logging)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
-    logger.propagate = False
-
-    kwargs = vars(args)
     # extra args as args, while args serves as kwargs for class AddQuiz
     addquiz = add_quiz.AddQuiz(args_extra, **vars(args))
     quiz_dict = addquiz.set_quiz_dict()
-    logger.info(quiz_dict)
 
     quizid = addquiz.quizid
-    level = addquiz.set_level()
 
     quizName = quiz_name.QuizName(category='QC', level=1, name='eletricity', quiz_id=quizid)
     dataDir = data_dir.DataDir()
@@ -54,13 +38,8 @@ def main():
     qz = pjson.dict2quiz(quiz_dict)
 
     sels = qz.multiple_choices()
-    logger.info(sels)
-
-    ans = qz.answers
-    logger.info(ans)
-
-    result = qz.quiz_result(sels)
-    logger.info(result)
+    qz.answers
+    qz.quiz_result(sels)
 
 
 if __name__ == '__main__':

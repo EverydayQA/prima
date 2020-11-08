@@ -2,7 +2,6 @@ import importlib
 from .match_make import ModuleFunc
 import inspect
 import pkgutil
-import pprint
 import sys
 
 
@@ -77,5 +76,3 @@ class ModuleInfo(object):
                         pass
                     else:
                         print("value %s" % element_name)
-
-

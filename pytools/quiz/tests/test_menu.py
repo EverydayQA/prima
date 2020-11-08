@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import unittest
 import mock
 from myutils.menu import Menu
@@ -55,8 +54,3 @@ class MenuTest(unittest.TestCase):
     def test_select_from_menu3(self):
         # items, prompt, cycle=3, timeout=30):
         pass
-
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(MenuTest)
-    unittest.TextTestRunner(verbosity=2).run(suite)

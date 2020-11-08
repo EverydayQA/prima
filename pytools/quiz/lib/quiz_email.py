@@ -3,7 +3,6 @@ import sys
 import email
 import argparse
 import smtplib
-import logging
 import os
 
 
@@ -12,17 +11,6 @@ class MimeSend(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
-
-    @property
-    def logger(self):
-        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
-        logger = logging.getLogger(name)
-        level = self.kwargs.get('level', 30)
-        logger.setLevel(level)
-        el = logger.getEffectiveLevel()
-        line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(logger.level, name, el)
-        logger.debug(line)
-        return logger
 
     @property
     def email_to(self):
@@ -103,17 +91,6 @@ def init_args():
 
 def main():
     args, args_extra = init_args()
-    name = os.path.splitext(os.path.basename(__file__))[0]
-    logger = logging.getLogger(name)
-
-    logger.setLevel(args.logging)
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(args.logging)
-    formatter = logging.Formatter('%(asctime)s -(name)s -(levelname)s -(message)s')
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
-    logger.propagate = False
-
     # sys.args[0] as text attachment
     mime_send = MimeSend(sys.argv[0], to=args.email_to, email_from=args.email_from, subject='test subject')
     mime_send.send_smtp()

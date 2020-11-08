@@ -1,8 +1,4 @@
-#!/usr/bin/python
-import os
-import logging
 from random import randint
-from quiz.lib import parse_json
 
 
 class AddQuiz(object):
@@ -12,19 +8,6 @@ class AddQuiz(object):
         self.args = args
         self.kwargs = kwargs
         self.quizid = self.kwargs.get('quizid')
-
-    @property
-    def logger(self):
-        name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
-        logger = logging.getLogger(name)
-        log_level = self.kwargs.get('log_level', 30)
-        logger.setLevel(log_level)
-        el = logger.getEffectiveLevel()
-        line = 'logger level is: {0} args cls {1} EffectiveLevel {2}\n'.format(logger.level, name, el)
-        logger.debug(line)
-        p = parse_json.ParseJson()
-        p.dict2json({})
-        return logger 
 
     def set_category(self):
         self.category = self.kwargs.get('category')
