@@ -1,4 +1,4 @@
-from course import Course
+from quiz.subjects.course import Course
 
 
 class French(Course):

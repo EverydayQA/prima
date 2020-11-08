@@ -1,11 +1,10 @@
-import sys
 import os
 import logging
-from . import menu
+from myutils import menu
 import inspect
 import argparse
 import operator
-from . import quiz_name
+# from . import quiz_name
 logger = logging.getLogger(__name__)
 
 
@@ -13,13 +12,15 @@ class QuizContent(object):
     # Quiz base class/subclass
     # add *args, **kwargs - all unittest for common usae
     # logger propagate example
+    pass
+
 
 class Quiz(object):
 
     def __init__(self, *args, **kwargs):
         name = os.path.splitext(os.path.basename(__file__))[0] + "." + self.__class__.__name__
-        logger.propagate = True    
-        el  = logger.getEffectiveLevel()
+        logger.propagate = True
+        el = logger.getEffectiveLevel()
         # this is necessary to pass logger handler to subclass?
         logger.propagate = True
         el = logger.getEffectiveLevel()
@@ -27,7 +28,7 @@ class Quiz(object):
         logger.debug(line)
         self.args = args
         self.kwargs = kwargs
-        
+
     @property
     def description(self):
         description = self.kwargs.get('description')
@@ -41,25 +42,14 @@ class Quiz(object):
     @property
     def answers(self):
         answers = self.kwargs.get('answers')
-        answers = filter(operator.isNumberType, answers) 
-        answers  = map(int, answers)
+        answers = filter(operator.isNumberType, answers)
+        answers = map(int, answers)
 
     def get(self):
         import add_quiz
         result = add_quiz.Quiz().get()
         result = 'from quiz.Quiz {0}'.format(result)
         return result
-
-    @property
-    def answers(self):
-        answers = self.kwargs.get('answers')
-        answers = map(int, answers)
-        return answers
-
-    def get(self):
-	    result = add_quiz.Quiz().get()
-	    result = 'from quiz.Quiz {0}'.format(result)
-	    return result
 
     def print_args(self):
         logger.info(self.args)
@@ -79,11 +69,6 @@ class Quiz(object):
     def weight(self):
         weight = self.kwargs.get('weight', 1)
         return weight
-        
-    @property
-    def description(self):
-        description = self.kwargs.get('description')
-        return description
 
     def multiple_choices(self):
         sels = menu.Menu().select_from_menu(self.kwargs.get('questions'), "Select the one(s) you think is correct")
@@ -149,27 +134,9 @@ def get_full_func_name():
     func_name = inspect.stack()[0][3]
     return func_name
 
+
 def main():
-
     args, args_extra = init_args()
-    logger.setLevel(args.logging)
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(args.logging)
-    el = logger.getEffectiveLevel()
-    line = 'logger level is: {0} args logging {1} EffectiveLevel {2}\n'.format(logger.level, args.logging, el)
-    logger.debug(line)
-    # std_formatter
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
-    # prevent duplicate logging
-    logger.propagate = True
-
-    logger.info(args)
-    logger.info(args_extra)
-
     qz = Quiz(*args_extra, **vars(args))
     sels = qz.multiple_choices()
-    logger.info(sels)
-    result = qz.quiz_result(sels)
-    logger.info(result)
+    qz.quiz_result(sels)
