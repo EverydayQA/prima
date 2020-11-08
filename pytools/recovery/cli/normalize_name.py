@@ -7,7 +7,7 @@ def main():
     normalize path first
     normalize_files then
     """
-    from args.normalize_name import ArgNormalizeName
+    from data_recovery.args.normalize_name import ArgNormalizeName
     ren = ArgNormalizeName()
     args = ren.parse_args(sys.argv[1:])
     # this is very import to debugging-level for the whole session in every modules
@@ -25,7 +25,7 @@ def main():
     logger.critical(logger.getEffectiveLevel())
     logger.critical(logger.propagate)
 
-    from rename.cli_normalize_name import CliNormalizeName
+    from data_recovery.rename.cli_normalize_name import CliNormalizeName
     cli = CliNormalizeName(**vars(args))
     cli.rename()
 
