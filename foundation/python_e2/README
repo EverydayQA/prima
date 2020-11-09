@@ -1,6 +1,0 @@
-https://www.ibm.com/developerworks/cn/linux/l-pyunit/
- 1088  python main_runner.py 
- 1089  python main_runner.py WidgetTestCase.testSize
- 1090  python main_runner.py -h
- 1091  python unittestgui main_runner.py 
- 1092  history |tail -n 5 >> README 
